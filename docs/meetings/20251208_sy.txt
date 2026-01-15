@@ -1,0 +1,3 @@
+- mention deltaStar dependence
+- add figure stability curves
+- add some images from simulations

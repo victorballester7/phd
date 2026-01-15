@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NEKTAR>  
+  <EXPANSIONS>    
+    <E COMPOSITE="C[100,101,102]" NUMMODES="9" FIELDS="u,v" TYPE="MODIFIED" />  
+    <E COMPOSITE="C[100,101,102]" NUMMODES="8" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
+  </EXPANSIONS>
+  
+  <CONDITIONS>    
+    <SOLVERINFO>
+      <I PROPERTY="SolverType"                            VALUE="VelocityCorrectionScheme"   />
+      <I PROPERTY="EqType"                                VALUE="UnsteadyNavierStokes"       />
+      <I PROPERTY="Projection"                            VALUE="Galerkin"                   /> 
+      <I PROPERTY="EvolutionOperator"                     VALUE="Nonlinear"                  />
+      <I PROPERTY="TimeIntegrationMethod"                 VALUE="IMEXOrder2"                 />
+      <I PROPERTY="SPECTRALHPDEALIASING"                  VALUE="True"           />
+      <I PROPERTY="GlobalSysSoln"                         VALUE="XxtMultiLevelStaticCond" />
+    </SOLVERINFO>    
+
+    <PARAMETERS>
+     <!--General parameters-->
+      <P> TimeStep        = 0.0005      </P>
+      <P> NumSteps        = 0     </P>
+
+      <!-- create a surface with 1 outside this square and 0 inside -->
+      <P> x0            = 500.0         </P>
+      <P> y0            = 0.0         </P>
+      <P> x1            = 1016.0        </P>
+      <P> y1            = 30.0         </P>
+      <P> eps           = 3           </P>
+    
+      <P> Re       = 1000       </P> <!-- Reynolds number based on deltaStar_leadingEdge !-->
+      <P> Kinvis                = 1/Re                 </P>
+    </PARAMETERS>
+    
+    <VARIABLES>
+      <V ID="0"> u </V>
+      <V ID="1"> v </V>  
+      <V ID="2"> p </V>
+    </VARIABLES>
+    
+    <BOUNDARYREGIONS>
+      <B ID="0"> C[1] </B>    <!-- inlet !-->  
+      <B ID="1"> C[2] </B>    <!-- outlet !-->
+      <B ID="2"> C[3] </B>    <!-- top !-->
+      <B ID="3"> C[4] </B>    <!-- bottom + left & right gap walls !-->
+    </BOUNDARYREGIONS>    
+
+    <BOUNDARYCONDITIONS>
+      <REGION REF="0">  <!-- inlet !-->                  
+        <!-- I do it like that (when y>=yMax) in order to avoid discontinuities in the velocity field at the inflow (I had discontinuities, which affect the presure field and therefore the whole domain), the error is of the order of 10^-7 for u and 10^-10 for v ! -->
+        <D VAR="u" VALUE="1" />
+        <D VAR="v" VALUE="1" />
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" /> <!-- high-order boundary condition, VALUE is not used !-->
+      </REGION>
+
+      <REGION REF="1">   <!-- outlet !-->
+        <N VAR="u" VALUE="0" />
+        <N VAR="v" VALUE="0" />
+        <D VAR="p" VALUE="0" />
+      </REGION>  
+            
+      <REGION REF="2">   <!-- top = far-field !-->
+        <!-- I do it like that in order to avoid discontinuities in the velocity field at the top boundary, the error is of the order of 10^-7 for u and 10^-10 for v ! -->
+        <D VAR="u" VALUE="1" />
+        <D VAR="v" VALUE="1" />
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />      
+      </REGION>
+
+      <REGION REF="3">  <!-- bottom = wall no slip !-->  
+        <D VAR="u" VALUE="0" />
+        <D VAR="v" VALUE="0" />        
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />  
+      </REGION>    
+    </BOUNDARYCONDITIONS>
+    
+    <FUNCTION NAME="InitialConditions">
+        <E VAR="u" VALUE="1 - 0.25*0.25*(1 + tanh((x - x0)/eps))*(1 - tanh((x - x1)/eps))*(1 + tanh((y - y0)/eps))*(1 - tanh((y - y1)/eps))" />
+        <E VAR="v" VALUE="1 - 0.25*0.25*(1 + tanh((x - x0)/eps))*(1 - tanh((x - x1)/eps))*(1 + tanh((y - y0)/eps))*(1 - tanh((y - y1)/eps))" />
+        <E VAR="p" VALUE="1 - 0.25*0.25*(1 + tanh((x - x0)/eps))*(1 - tanh((x - x1)/eps))*(1 + tanh((y - y0)/eps))*(1 - tanh((y - y1)/eps))" />
+    </FUNCTION>
+
+
+
+  </CONDITIONS>
+</NEKTAR>
+

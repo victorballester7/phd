@@ -1,0 +1,15 @@
+- global mode?
+
+
+Change things:
+ - remove sweep
+ - add delta* parameter (boundary layer parameter): (more or less) boundary layer thinkness 
+ - reproduce graph w/delta* vs d/delta*, d=depht domain and w=width domain
+ - take d/delta* = 4 and keep increasing w/delta* from 10. the critical line is at around 20.
+ - which Re? jeffrey will tell us: Re_delta* = 1000
+ - compressible solver or incompressible solver? incompressible but try also a round with the compressible solver.
+ - baseflow? to get the baseflow use SFD method
+ - amplification curves (e^N factor, i think). check the plot. there are two numbers 1, 2 relating how the amplification number is amplified.
+ - start doing the same kind of analysis with the single mode.
+ - rossiter modes: compressible mode
+ - run in 2d!!!!

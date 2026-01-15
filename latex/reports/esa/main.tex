@@ -1,0 +1,43 @@
+% !TEX program = lualatex
+\documentclass{article}
+
+\usepackage{../preamble}
+\usepackage{../preamble_style}
+\usepackage{../preamble_bib}
+
+
+\renewcommand\title{Flow transition over surface gaps in 2D incompressible laminar boundary layers}
+\renewcommand\author{Víctor Ballester}
+\renewcommand\date{August 13, 2025}
+\newcommand\supervisorA{Spencer Sherwin}
+\newcommand\supervisorB{Yongyun Hwang}
+\newcommand\supervisorC{Jeffrey Crouch}
+\newcommand\textA{\small Department of Aeronautics, Imperial College London.}
+\newcommand\textB{\small The Boeing Company, USA.}
+\newcommand\faculty{Imperial College London}
+\newcommand\department{Department of Aeronautics}
+
+
+\begin{document}
+\subfile{sections/00title}
+\newpage
+% \blankpage
+
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+{
+	\hypersetup{linkcolor=black}
+	\tableofcontents
+}
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\subfile{sections/10intro}
+\subfile{sections/20theory}
+\subfile{sections/30results}
+\subfile{sections/90conclusions}
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\printbibliography
+\end{document}

@@ -1,0 +1,1 @@
+Click the following link to launch these notebooks on Binder: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/git/https%3A%2F%2Fgitlab.nektar.info%2Fdmoxey%2Fnektar-icosahom-tutorials.git/master?urlpath=git-pull?repo=https%3A%2F%2Fgitlab.nektar.info%2Fdmoxey%2Fnektar-icosahom-tutorials.git%26urlpath%3Dlab)

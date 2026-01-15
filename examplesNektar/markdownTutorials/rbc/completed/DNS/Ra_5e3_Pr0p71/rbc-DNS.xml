@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <EXPANSIONS>
+        <E COMPOSITE="C[0]" NUMMODES="10" FIELDS="u,v,T,p" TYPE="GLL_LAGRANGE_SEM" />
+    </EXPANSIONS>
+
+
+    <CONDITIONS>
+        <SOLVERINFO>
+          <I PROPERTY="SOLVERTYPE"              VALUE="VelocityCorrectionScheme"/>
+          <I PROPERTY="EQTYPE"                  VALUE="UnsteadyNavierStokes"    />
+          <I PROPERTY="TimeIntegrationMethod"   VALUE="IMEXOrder3"              />
+          <I PROPERTY="EvolutionOperator"       VALUE="Nonlinear"               />
+          <I PROPERTY="Projection"              VALUE="Continuous"              />
+          <I PROPERTY="Driver"                  VALUE="Standard"                />
+        </SOLVERINFO>
+
+        <PARAMETERS>
+            <P> TimeStep      = 0.001   </P>
+            <P> T_Final = 10</P>
+            <P> NumSteps      = T_Final/TimeStep     </P>
+            <P> IO_InfoSteps  = 100       </P>
+            <P> Ra            = 5000      </P>
+            <P> Pr            = 0.71      </P>
+            <P> Kinvis        = Pr    </P>
+        </PARAMETERS>
+
+        <VARIABLES>
+            <V ID="0"> u </V>
+            <V ID="1"> v </V>
+            <V ID="2"> T </V>
+            <V ID="3"> p </V>
+        </VARIABLES>
+        
+        <BOUNDARYREGIONS>
+            <B ID="0"> C[1] </B>
+            <B ID="1"> C[2] </B>
+            <B ID="2"> C[3] </B>
+            <B ID="3"> C[4] </B>
+        </BOUNDARYREGIONS>
+
+        <BOUNDARYCONDITIONS>
+            <REGION REF="0">
+                <D VAR="u" VALUE="0" />
+                <D VAR="v" VALUE="0" />
+                <D VAR="T" VALUE="1" />
+                <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />
+            </REGION>
+            <REGION REF="1">
+                <D VAR="u" VALUE="0" />
+                <D VAR="v" VALUE="0" />
+                <D VAR="T" VALUE="0" />
+                <N VAR="p" USERDEFINEDTYPE="H"  VALUE="0" />
+            </REGION>
+            <REGION REF="2">
+                <P VAR="u" VALUE="[3]" />
+                <P VAR="v" VALUE="[3]" />
+                <P VAR="T" VALUE="[3]" />
+                <P VAR="p" VALUE="[3]" />
+            </REGION>
+            <REGION REF="3">
+                <P VAR="u" VALUE="[2]" />
+                <P VAR="v" VALUE="[2]" />
+                <P VAR="T" VALUE="[2]" />
+                <P VAR="p" VALUE="[2]" />
+            </REGION>
+        </BOUNDARYCONDITIONS>
+
+        <FUNCTION NAME="InitialConditions">
+            <E VAR="u" VALUE="0" />
+            <E VAR="v" VALUE="0" />
+            <E VAR="T" VALUE="1-y" />
+            <E VAR="p" VALUE="0" />
+        </FUNCTION>
+
+        <FUNCTION NAME="BodyForce">
+            <E VAR="u" VALUE="0" EVARS="u v T" />
+            <E VAR="v" VALUE="Ra*Pr*T" EVARS="u v T" />
+            <E VAR="T" VALUE="0" EVARS="u v T"  />
+        </FUNCTION>
+
+        <FUNCTION NAME="DiffusionCoefficient">
+            <E VAR="T" VALUE="1.0" />
+        </FUNCTION>
+    </CONDITIONS>
+
+    <FILTERS>
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">rbc</PARAM>
+            <PARAM NAME="OutputFrequency">10</PARAM>
+            <PARAM NAME="Points">
+                1.0 0.5 0
+            </PARAM>
+        </FILTER>
+    </FILTERS>
+
+    <FORCING>
+        <FORCE TYPE="Body">
+            <BODYFORCE> BodyForce </BODYFORCE>
+        </FORCE>
+    </FORCING>
+    <GEOMETRY DIM="2" SPACE="2">
+        <VERTEX COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJx9lX9MlHUcx4kEzsMU0PAgCn913gmBQvKzMAQ8BfkhoZyHEBEgv5ST4LopkUpOUSNK0qUYJMpImTPXWoZLu60N9A+tbMwY5lJSpLWTpgMMq+Pzvue5z/da98+LZy/e49nr+d6Di8v/f54Ar4UMXp3X37tM9K5geTj5xuL3Dq/adkL6vSfFgYn7KeD5GNoP3PXZMXSnW/Juwnyby0zm3cHjSbTfmbSv5YfuS5L3EPaqfO4VoC6L9gdqxwJOj/wk+anCvucA90qwsoj2rSttVzcl7ynsz+i5nwY2m2gfcbD+fqf7oOSfEvbvtnI/HYzZRfvtyQN6zzVDkp8h7Hemcu8Fzm+i/fq2gSuu9b9L3lvYuwjeB6w+RPuLmuzilM4/JD9TmLcLfhbo0eJ4vqySf1r8+4L3BRsX2PbXnc7nbHBQS94/m58/FVgVRl73PT9/fmDQMvLWRfz8+IMJGeQLivj5eMbuC8k3Rtmu5OcfAK4wk7+7nz/fZ0FDA/ntOv78nrN3Okj+c+H5BIJtn5C/IfSfA461O/aT+84FH107FWAovOXUdx6Ycp18p473nQ+G3iT/2TnedwG45R55gxfv+zwYPUo+JI33VYO5iq5J/7bGdiX3XQi+oyJ/uJ731YCJavK1ibyvFtyzmLzyU953Ebgpkvy40DcIPB/b5dBP7hsMjvvZ+g859X0BvB1IPiKK9w0BM7XkPY/xvqFgXiT5ngd7Wd/FYFwy+YkI3ncJqM8nXzH5hZH7hoFVJvKrt/K+4fb7ayBfG8/7vmi/v0Pk84W+S8ErbeR9tbxvBPhlh2M/uW8kWBf6vuWBxurUN8reIZy8RcP7RoN+0eRr9vK+MeBgPPmwft43FvwqlXxvIO/7EtiUQ94w+Q9J7vsyWFJK/rGR942zd6ghb47jfe0/uNaRPyf0fQUcrsf9C33jwaO7HfvJHZeDE7ds388/nfomgLd/I5/ux/smgg3D5PuqeN8kcPMI+ZaLvO8K8ItH5JsVvK8ObHTvmvQfWP/+9/OL5FeCpd7kz27kfVeBp/3Jm2N532SweS5572O8bwoYrSafJvRdDc7Rdjn0k/umgt0f95i+aX3o1DcN/PEI+RtTed90UN1KPiaH980AVcfJKzt43zWg5ST5wvujrG8m+OFZ8sarvO+rYO7X2Ofxvlmg4lvy1VG871rw8XfkS4W+6+z32Uu+QuibDRZdduwn99WDfWm298eYU9/1oE8G+bLx/ayvAfTMJN+ewPvmgA+zyJv38b4bwDt68kt+5n1zwbpc8ulneN880L+AvO9a3vc10KOYfPVS3jcfHCkhf0Ho+zo4XEZ+j9C3AFRXOPaT+74BfjTFNWi374RT30JQ5UZ+9B7vWwRa4d2Ded9iMMiD/K9G3ncj2Kcg/5eF9y0BLyvJBzfxvqXghWnke1J43zKwfDp5YxjvWw6enEF+djvvWwHWeZHvEPpuAt28HfvJfTeD2g2297P0Opc+lYLf1c/7GgVfOYv33SL4jHW8b5XgL53ifd8UvNLI+1YLfuty3rdG8MZQ3tck3r/Q9y3BW4S+5v/sJ/f9B+NzhZ8A</VERTEX>
+        <EDGE COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJx1llO3XEEUBm9s2xPb9sS2PbFt27Zt27bt5M/kpeshtda5L73qW+f2nJnavXcnJf3/lyxiTR6xpohY+Uup5+FUEZxazH5p9DzPpRXzXDox+6WP+P8MYv4/Y8R+mfQ8+2YWs28WMftl1fN8XjYxn5ddzH459DzvkVPMe+QSs19uPc/75RHzfnnF7JdPz/Pe+cW8dwEx+xXU83yfQmK+T2Ex+xUJK/XM94yJ+Z5FxdRvMeV8/+Ji6rSEcn6XkmLqsZRyfq/SYuqujHJ+x7Ji6quccn7f8mLqqIJyfveKYuqlknJ8VBZTF1WU46mqGP/VlMfCWl1MXdQIK37xWlOM11piPNdWju86YjzXVU4d1BPjub5y6qOBGM8NlVM3jcR4bqyceoqL8dxEOXXWVIznZsqpv+ZiPLdQTl22FOO5lXLqtbU4FtY2YcUvddxWTB23E+O5vXLqu4MYzx2VU/edxHjurJzz0EWM567KOSfdxHjurpzz00OM557KOVe9xHjurZzz1keM577KOYf9xHjur5zzOUCM/4FhxS/ndpCYc5sQ43mwcs7zEDGehyrnnA8T43m4cs7/CDGeRyqnL4wS43m0cvrFGDGexyqnj4wT43m8cvrLBDGeJyqPh3WSGM+TldOPpojxPzWs+KVPTRPTp6aL8TxDOf1rphjPs5TT12aL8TxHOf1urhjP85TTB+eL8bxAOf1xoRjPi5TTNxeL8bxEOf10qRjPy5TTZ5eL42FdoZz+u1KM/1VhxS99ebWYvrxGjOe1yunX68R4Xq+cPr5BjOeNyunvm8R43qycvr9FjOetypkH28R43q6cObFDjOedypkfu8R43q2cubJHjOe9ypk3+8T43x9W/DKHDoiZQwfFeD6knPl0WIznI8qZW0fFeD6mnHl2XIznE8qZcyfFeD6lnPl3WoznM8qZi2fFeD6nPBHW82I8X1DOHL0oxvMl5czXy2L8Xwkrfpm7V8XM3WtiPF9Xzjy+IcbzTeXM6VtiPN9Wzvy+I8bzXeXM9XtiPN9Xzrx/IMbzQ+XcAx6J8fxYOfeDJ+JEWJ8q597wTIzn58q5T7wQ4/9lWPHLPeOVmHvGazGe3yjn/vFWjOd3yrmXvBfj+YNy7isfxXj+pJx7zGcxnr8o537zVYznb8q593wX4/mHcu5DP8V4/qWce9JvMZ7/KOf+9FeM/3/uUMT6</EDGE>
+        <ELEMENT>
+            <Q COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJx11dVTlGEAhXHswC5CVBRExQAlFAzAQlHAwg7A7u7C7u7u7u7u7v5nvHnOhWfGvfnNPDvz7bvf2QgI+PdRCAtjkf/0olgMi9vz6iWwJJay66qXxkAsY6+jXhbLYXl7PfUKWBEr2TnVK2MVrGrnVq+GQRhs51cPwVCsjqWsh2ENrIm6D7UwHGujdgi0XgcjUPetjPVIrIt6n2WtR2E9O1c56/WxgV2nvPVobIgVTPVG2Bi1T0XrTTAGtU8l67HYFLVPZevNMA61j/aPxwRMxHCsar05tkDtU816Eiaj9gmy3hJbofYJtt4a26D2CbGegqmofUKtp2Fb1D7VrbfD9qh9wqx3wI6ofWpYT8dOqH30PemMGdgFtU8t610xE7VPuPUszEbtU9t6N+yO2qeO9R7YE7VPhPVemIPaJ9J6b+yD2qeu9b7YD7VPlPX+OAC1Tz3rA3EQah99vgbjEMxF7dPAeh7mo/aJtj4Uh6H2aWh9OI5A7dPI+kgchdqnsfXROAa1TxPrY3Ecap8Y6+NxAmqfWOsTcRJqn6bWJ+MU1D76nkzFaTgdtU+c9Rk4E7VPvPVZOBu1T4L1OTgXtU+i9Xk4H7VPc+sLcCFqnxbWC3ARap8k64txCWqfZOtLcRlqn5bWl+MK1D76XV6Jq3A1ap/W1tfgWtQ+bayvw/WofVKsb8CNqH1SrW/Czah90qxvwa2ofdpa34bbsQDbWd+BO1H7tLe+C3ej9ulgfQ/uRe2j/5d9uB8PoPZJt34QD6H26WT9MB5B7dPZ+lE8htonw/pxPIHap4v1k3gKtU9X66fxDGqfTOtn8Rxqnyzr5/ECap9s6xfxEmof/U5fxit4FbVPd+vX8DoexB7Wb+BN1D49rd/C26h9elm/g3dR++RYv4f3Ufv0tv4AH6L26WP9ET5G7dPX+hN8itqnn/Vn+By1j/5vXuBLfIXaZ4D11/gGtc9A62/xHWqfQdbf4wfUPoOtf8RPqH2GWP+MX1D75Fr/it9Q++RZ/44/UPvkW/+Jv1D7DLX+G/+g9vkL54O91QAA</Q>
+        </ELEMENT>
+        <COMPOSITE>
+            <C ID="0"> Q[0-99] </C>
+            <C ID="1"> E[0,31,52,73,94,115,136,157,178,199] </C>
+            <C ID="2"> E[219,198,177,156,135,114,93,72,51,29] </C>
+            <C ID="3"> E[30,27,24,21,18,15,12,9,6,3] </C>
+            <C ID="4"> E[218,216,214,212,210,208,206,204,202,200] </C>
+        </COMPOSITE>
+        <DOMAIN> C[0] </DOMAIN>
+    </GEOMETRY>
+</NEKTAR>

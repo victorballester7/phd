@@ -1,0 +1,5 @@
+- book for comNS: The dynamics and thermodynamics of compressible flow, by A. Shapiro
+- which BC do we use for the temperature at the wall? Dirichlet (e.g. isothermal) or homogeneous Neumann (e.g. adiabatic)?
+- why is 2nd viscosity coefficient =0?
+- cruise regime is around 0.8 mach
+

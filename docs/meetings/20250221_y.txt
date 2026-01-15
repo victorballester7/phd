@@ -1,0 +1,8 @@
+Some notes to clarify concepts:
+
+- Solving the Orr-Somerfeld Squire (OSS) equation is for knowing the ts lengthscale. 
+- with transient growth we would see TS waves as the interactions of the most usntable modes
+- ts wave is convective instability
+- OSS is to detect the local convective instability. For absolute instability, we use the normal approach (Arnoldi method on linearized NS)
+- try to create a diagram like lecture 19, page 16 of Yongyun, but with varying width of the gap instead of Re.
+- in orr-squire BC are fine, I just need to change the stretching of the grid (I think it's defined for the BL). If I have doubts, check book "Canuto et al. 1988 Spectral Method in Fluid Dynamics".

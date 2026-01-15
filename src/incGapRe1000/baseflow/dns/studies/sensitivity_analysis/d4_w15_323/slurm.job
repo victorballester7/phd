@@ -1,0 +1,33 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=56
+#SBATCH --mem=50GB
+#SBATCH --time=0-23:59:59
+#SBATCH --job-name=d4_w15_fR
+#SBATCH --partition=medium
+#SBATCH --output=output.txt
+#SBATCH --error=log.txt
+
+# Calculate the total number of processors
+NP=$SLURM_NTASKS
+
+# Paths and solvers
+INC_SOLVER=IncNavierStokesSolver
+SCRIPTS_DIR=$HOME/Desktop/PhD/scripts
+
+# Run the job start script
+python3 $SCRIPTS_DIR/jobStart.py
+
+rm -f output.txt log.txt
+# Sleep for the calculated time, then kill mpirun if it's still running
+mpirun -np $NP $INC_SOLVER -v mesh_d4_w15.xml gap_incNS.xml > output.txt 2> log.txt
+# timeout $SLEEP_TIME $program &
+
+# # Check if mpirun was killed due to timeout
+# if ps -p $MPIRUN_PID > /dev/null 2>&1; then
+#     kill $MPIRUN_PID
+#     echo "Simulation was terminated due to timeout" >> log.txt
+# fi
+
+# Run the final Python script
+python3 $SCRIPTS_DIR/jobFinish.py .

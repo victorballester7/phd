@@ -1,0 +1,3 @@
+- change blowing-suction to only half wavelength.
+- try again linear solver, now that i changed the BC.
+- do phase diagram d vs w for linear instability

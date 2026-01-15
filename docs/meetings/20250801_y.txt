@@ -1,0 +1,9 @@
+Questions:
+  - Points in the y directcion need to follow a sqrt(x) trend?
+  - Why not use Parabolized Stability equations?
+
+- imporve intoduction literature review
+- rewrite part e^N method
+- change absolute instability to globally unstable
+- merge boundary in ncountour plot
+- change Breakdown wor to "Transition to chaos"

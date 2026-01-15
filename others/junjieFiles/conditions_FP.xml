@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+  <EXPANSIONS>
+    <E COMPOSITE="C[100,101]" NUMMODES="2" FIELDS="rho,rhou,rhov,E" TYPE="MODIFIED" />  
+  </EXPANSIONS>
+  
+  <CONDITIONS>  
+    <PARAMETERS>
+      <!-- Flow parameters -->  
+      <P> Gamma                 = 1.4                       </P>     
+      <P> Ma                    = 0.8                       </P>
+      <P> GasConstant           = 1.0/(Gamma*Ma^2)          </P>
+      <P> Re                    = 5000                      </P> <!-- 4900000 -->
+      <P> mu                    = 1.0/Re                    </P> 
+      <P> Pr                    = 0.71                      </P>
+      <P> Tref                  = 288.0                     </P> <!--[K], ref. for Sutherland's law-->
+      <!-- Customized parameters -->
+      <P> rhoInf                = 1.0                       </P>
+      <P> TInf                  = 1.0                       </P> <!--[1], scaled farfield parameter-->
+      <P> Twall                 = TInf                      </P>
+      <P> pInf                  = rhoInf*GasConstant*TInf   </P>
+      <P> Sweep                 = 0.0/180.0*PI              </P>        
+      <P> uInf                  = 1.0                       </P>    
+      <P> vInf                  = 0.0                       </P>   
+      <P> wInf                  = 0.0                       </P>
+
+      <!-- Inflow profile parameters and coefficients--> 
+      <P> etaMax            =  6.0                      </P> <!--Max is 7, not used-->
+      <P> y_etaMax_nonDim   =  5.523239366859993e-04    </P> <!--[1], profile edge at etaMax--> 
+      <P> Lref_dim          =  0.268534575114531        </P> <!--[m]-->
+      <P> x0_dim            =  0.005453618349451        </P> <!--[m]-->
+      <P> coef_y2eta        =  sqrt(Re*(Lref_dim/(2*x0_dim))) </P> <!--1/[m]-->       
+      <P> c0_eta            =  0.002092735536896        </P> <!--y_nonDim*coef_y2eta = f(eta)  -->
+      <P> c1_eta            =  0.978584990473404        </P> <!--eta = P2(y_nonDim*coef_y2eta) -->
+
+      <P> c0_u              = -1.318920938021723e-05    </P> <!-- u/Uinf = df/deta = P8(eta) -->
+      <P> c1_u              =  3.900663579739873e-04    </P>
+      <P> c2_u              = -0.004604514707273        </P>
+      <P> c3_u              =  0.027003747235155        </P>
+      <P> c4_u              = -0.077436688814747        </P>
+      <P> c5_u              =  0.082832634863448        </P>
+      <P> c6_u              = -0.044218377187954        </P>
+      <P> c7_u              =  0.477300675581974        </P>
+        
+      <P> coef_eta2vNonDim  =  sqrt(Lref_dim/(2*x0_dim)/Re)         </P>        <!--[1]-->
+      <P> v_nonDim          =  1.266553400152837 * coef_eta2vNonDim </P> <!--[1]-->
+      <P> c0_v              = -2.920589758881166e-05    </P>     <!-- v/Uinf = P8(eta) -->
+      <P> c1_v              =  9.508379753809486e-04    </P>
+      <P> c2_v              = -0.012558471168520        </P>
+      <P> c3_v              =  0.084850688931922        </P>
+      <P> c4_v              = -0.298189812534968        </P>
+      <P> c5_v              =  0.456248953651436        </P>
+      <P> c6_v              = -0.062099441047515        </P>
+      <P> c7_v              =  0.069491930013799        </P>
+
+      <P> rhoWall_nonDim    =  1.0                      </P> <!--[1]-->
+      <P> c0_rho            = -8.474022353909049e-07    </P> <!--rho/rhoInf = P8(eta) -->
+      <P> c1_rho            =  2.964340440423713e-05    </P>
+      <P> c2_rho            = -4.204345258974348e-04    </P>
+      <P> c3_rho            =  0.003052801868675        </P>
+      <P> c4_rho            = -0.011508770433071        </P>
+      <P> c5_rho            =  0.017951505442374        </P>
+      <P> c6_rho            =  0.008023540937486        </P>
+      <P> c7_rho            = -0.041450058977616        </P>
+      <P> c8_rho            =  rhoWall_nonDim           </P>
+        
+
+      <!-- Disturbance strip -->
+      <P> Amp     = 0.000001                            </P>
+      <P> f_dim   = 19000                               </P>
+      <P> f       = f_dim * Lref_dim/274.58940          </P>
+      <P> x0      = 0.015                               </P>
+      <P> length  = 0.005                               </P>
+        
+      <!-- CFL control-->
+      
+      <P> CFL                   = 1.0                   </P>
+      <P> CFLGrowth             = 1.1                   </P>
+      <P> CFLEnd                = 500.0                 </P>
+     
+
+      <!-- Number of steps-->
+      <!-- <P> Timestep = 1e-5                             </P>    -->
+      <P> NumSteps              = 2000                 </P> 
+      <P> IO_InfoSteps          = 10                   </P>
+      <!-- <P> IO_CheckSteps         = 50                  </P> -->
+      <P> IO_CFLSteps           = 10                    </P>
+
+        
+      <!-- Iteration parameters-->
+      <P> PreconMatFreezNumb        = 10               </P>
+      <P> NonlinIterTolRelativeL2   = 1.0E-2            </P>
+      <P> LinSysRelativeTolInNonlin = 1.0E-2            </P>  
+      <P> NewtonRelativeIteTol      = 1.0E-10           </P>    
+      <P> PreconItsStep             = 7                 </P>
+
+    </PARAMETERS>
+
+    <SOLVERINFO>
+        
+      <I PROPERTY="EQType"                VALUE="NavierStokesImplicitCFE"/>  
+      <I PROPERTY="Projection"            VALUE="DisContinuous"          />
+      <I PROPERTY="AdvectionType"         VALUE="WeakDG"                 />
+      <I PROPERTY="DiffusionType"         VALUE="InteriorPenalty"        />
+      <I PROPERTY="AdvectionAdvancement"  VALUE="Implicit"               />
+      <I PROPERTY="DiffusionAdvancement"  VALUE="Implicit"               />
+      <I PROPERTY="UpwindType"            VALUE="Roe"                    />
+      <I PROPERTY="ProblemType"           VALUE="General"                />
+      <I PROPERTY="ViscosityType"         VALUE="Variable"               />
+      <!--
+      <I PROPERTY="ShockCaptureType"      VALUE="Physical"               />
+      <I PROPERTY="Smoothing"             VALUE="C0"                     />
+      -->
+      <!--To avoid additional field output for now-->
+      <I PROPERTY="OutputExtraFields"     VALUE="False"               />
+    </SOLVERINFO>
+
+    <TIMEINTEGRATIONSCHEME>
+        <METHOD> DIRK </METHOD>
+        <ORDER> 2 </ORDER>
+    </TIMEINTEGRATIONSCHEME>
+
+    <VARIABLES>
+      <V ID="0"> rho  </V>
+      <V ID="1"> rhou </V>
+      <V ID="2"> rhov </V>
+      <V ID="3"> E    </V>
+    </VARIABLES>
+
+    <BOUNDARYREGIONS>
+      <B ID="0"> C[1] </B>  <!-- Wall !-->
+      <B ID="1"> C[2] </B>  <!-- Outlet !-->
+      <B ID="2"> C[4] </B>  <!-- Inlet !-->
+      <B ID='3'> C[3] </B>  <!-- Free stream !-->
+    </BOUNDARYREGIONS>
+
+    <BOUNDARYCONDITIONS>
+      <!-- Wall --><!--Amp*sin(2*PI*f*t)*sin(2*PI*(x-x0)/length)*(x>=x0)*(x<=(x0+length))-->
+      <REGION REF="0">
+        <D VAR="rho"  USERDEFINEDTYPE="WallViscous" VALUE="0" />
+        <D VAR="rhou" USERDEFINEDTYPE="WallViscous" VALUE="0" />
+        <D VAR="rhov" USERDEFINEDTYPE="WallViscous" VALUE="0" />
+        <D VAR="E"    USERDEFINEDTYPE="WallViscous" VALUE="0" />
+      </REGION>
+      <!-- Outlet -->
+      <REGION REF="1">             
+        <D VAR="rho"  USERDEFINEDTYPE="PressureOutflow" VALUE="0" />
+        <D VAR="rhou" USERDEFINEDTYPE="PressureOutflow" VALUE="0" />
+        <D VAR="rhov" USERDEFINEDTYPE="PressureOutflow" VALUE="0" />
+        <D VAR="E"    USERDEFINEDTYPE="PressureOutflow" VALUE="pInf" />
+      </REGION>
+
+      <!-- Inlet -->
+      <!-- eta = (c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta)) -->
+      <!-- u   = c0_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8   + c1_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7 
+               + c2_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6   + c3_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+               + c4_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4   + c5_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3 
+               + c6_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2   + c7_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))-->
+      <!-- v   = c0_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8   + c1_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7 
+               + c2_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6   + c3_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+               + c4_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4   + c5_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3 
+               + c6_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2   + c7_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))-->
+      <!-- rho = c0_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8 + c1_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7 
+               + c2_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6 + c3_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+               + c4_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4 + c5_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3 
+               + c6_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2 + c7_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))
+               + c8_rho-->
+      <REGION REF="2">
+        <D VAR="rho"  VALUE="rhoInf * (  
+                 (c0_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8 + c1_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7 
+                + c2_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6 + c3_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+                + c4_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4 + c5_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3 
+                + c6_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2 + c7_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))
+                + c8_rho)*(y<y_etaMax_nonDim) + 1.0*(y>=y_etaMax_nonDim) )" />
+        <D VAR="rhou" VALUE="rhoInf * uInf * (
+                 (c0_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8 + c1_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7 
+                + c2_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6 + c3_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+                + c4_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4 + c5_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3 
+                + c6_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2 + c7_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))
+                + c8_rho) * 
+                 (c0_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8   + c1_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7 
+                + c2_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6   + c3_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+                + c4_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4   + c5_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3 
+                + c6_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2   + c7_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta)))
+                  *(y<y_etaMax_nonDim) + 1.0*(y>=y_etaMax_nonDim))" />
+        <D VAR="rhov" VALUE="rhoInf * uInf * coef_eta2vNonDim * (
+                 (c0_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8 + c1_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7 
+                + c2_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6 + c3_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+                + c4_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4 + c5_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3 
+                + c6_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2 + c7_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))
+                + c8_rho) *
+                 (c0_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8   + c1_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7 
+                + c2_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6   + c3_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+                + c4_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4   + c5_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3 
+                + c6_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2   + c7_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta)))
+                  *(y<y_etaMax_nonDim) + 1.266553400152837*(y>=y_etaMax_nonDim))" />
+        <D VAR="E"    VALUE="pInf / (Gamma - 1) + 0.5 * rhoInf * (uInf * uInf) * 
+                ((c0_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8 + c1_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7
+                + c2_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6 + c3_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+                + c4_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4 + c5_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3
+                + c6_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2 + c7_rho*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))
+                + c8_rho) *
+                ((c0_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8   + c1_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7
+                + c2_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6   + c3_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+                + c4_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4   + c5_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3
+                + c6_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2   + c7_u*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta)))^2
+                + coef_eta2vNonDim^2 *
+                 (c0_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^8   + c1_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^7
+                + c2_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^6   + c3_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^5
+                + c4_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^4   + c5_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^3
+                + c6_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta))^2   + c7_v*(c0_eta*(y*coef_y2eta)^2 + c1_eta*(y*coef_y2eta)))^2)
+                  * (y<y_etaMax_nonDim) + (1.0 * (1.0 + v_nonDim^2)) * (y>=y_etaMax_nonDim))" />                          
+      </REGION>
+      
+      <!-- Freestream -->
+      <REGION REF="3">
+        <D VAR="rho"   VALUE="rhoInf" />
+        <D VAR="rhou"  VALUE="rhoInf * uInf" />
+        <D VAR="rhov"  VALUE="rhoInf * uInf * v_nonDim * sqrt(x0_dim / (x0_dim + x * Lref_dim))" />
+        <D VAR="E"     VALUE="pInf / (Gamma - 1) + 0.5 * rhoInf * uInf*uInf *(1.0 + v_nonDim*v_nonDim* x0_dim/(x0_dim + x * Lref_dim))" />
+      </REGION>
+ 
+    </BOUNDARYCONDITIONS>
+
+    
+    <FUNCTION NAME="InitialConditions">
+      <!--
+      <F VAR="rho,rhou,rhov,E" FILE="/disk_two/test_cases/4_small_FP_junjie/base_P2_con.fld"/>
+      --> 
+
+      <!-- <E VAR="rho"  VALUE="0.0"   />
+      <E VAR="rhou" VALUE="0.0"   />
+      <E VAR="rhov" VALUE="0.0"   />
+      <E VAR="E"    VALUE="0.0"   /> -->
+
+      <E VAR="rho"    VALUE="rhoInf"     />
+      <E VAR="rhou"   VALUE="rhoInf * uInf"   />
+      <E VAR="rhov"   VALUE="rhoInf * vInf"   />
+      <E VAR="E"      VALUE="pInf / (Gamma - 1) + 0.5 * rhoInf * (uInf * uInf + vInf * vInf + wInf * wInf)"/>
+    </FUNCTION> 
+
+  </CONDITIONS>
+  <!--
+  <FILTERS>
+    <FILTER TYPE="MaxMinFields">
+      <PARAM NAME="OutputFile">FP_clean2_max</PARAM>
+      <PARAM NAME="RestartFile">3_P4_FP_clean2_45_f19k.chk</PARAM>
+      <PARAM NAME="OutputFrequency">100</PARAM>
+      <PARAM NAME="SampleFrequency">1</PARAM>
+      <PARAM NAME="MaxMin">max</PARAM>
+    </FILTER>
+  </FILTERS>
+  -->
+</NEKTAR>
+
+
+

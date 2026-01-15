@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <Metadata>
+        <Provenance>
+            <Hostname>carnotaurus</Hostname>
+            <NektarVersion>5.6.0</NektarVersion>
+            <Timestamp>21-Oct-2024 14:44:34</Timestamp>
+        </Provenance>
+        <ChkFileNum>0</ChkFileNum>
+        <SessionName0>mesh-25elmnt.opt</SessionName0>
+        <SessionName1>mesh-25elmnt.xml</SessionName1>
+        <SessionName2>errorAnalysisSession.xml</SessionName2>
+        <SessionName3>exp2.xml</SessionName3>
+    </Metadata>
+    <ELEMENTS FIELDS="u" SHAPE="Quadrilateral" BASIS="Modified_A,Modified_A" NUMMODESPERDIR="UNIORDER:2,2" ID="0-24" COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJxjYEAFC+fPlOvcd85eIMH9s533bXt0fs3pJctS79/Y7zpX9ecZkWf70fmvypaC+PaO88B8e3S+6L05IPP2LxMEm7cfnc9AAMDcMaVwW9qEm8/2o/Nh7ihNODQhteaTPTof5o53YWD+fnQ+zB3bVMDm2aPzCbkP5g4PP4h6dD7MHQ45EPvQ+TB3zEqCiKPzYe7oy4KYi84n5D6YOz5nQ/yFzoe5o+IKJFzQ+TB3hLZAwhWdD3PH9HhIvKDzCbkP5g6mqrngdIHOh7mj23kZOF2h82HumFcPSZfofJg7OKwg6Rqdj+4eAOdQY8YA</ELEMENTS>
+</NEKTAR>

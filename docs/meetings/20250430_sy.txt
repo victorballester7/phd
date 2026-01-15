@@ -1,0 +1,3 @@
+- see the compressible solver 
+- reproduce blowing-suction with with new lengthscale
+- put all the points in the phase diagram d vs w.

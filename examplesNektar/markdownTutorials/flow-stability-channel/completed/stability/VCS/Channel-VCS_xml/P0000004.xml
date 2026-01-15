@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <GEOMETRY DIM="2" SPACE="2" PARTITION="4">
+        <VERTEX>
+            <V ID="18">3.14159265e+00 -5.00000007e-01 0.00000000e+00</V>
+            <V ID="19">2.35619449e+00 -5.00000007e-01 0.00000000e+00</V>
+            <V ID="20">1.57079633e+00 -5.00000007e-01 0.00000000e+00</V>
+            <V ID="21">7.85398163e-01 -5.00000007e-01 0.00000000e+00</V>
+            <V ID="22">-3.94884125e-12 -5.00000007e-01 0.00000000e+00</V>
+            <V ID="27">3.14159265e+00 -4.47863968e-12 0.00000000e+00</V>
+            <V ID="28">2.35619449e+00 -3.35893119e-12 0.00000000e+00</V>
+            <V ID="29">1.57079633e+00 -2.23933372e-12 0.00000000e+00</V>
+            <V ID="30">7.85398163e-01 -1.11960441e-12 0.00000000e+00</V>
+            <V ID="31">-1.11022302e-16 -2.77555869e-17 0.00000000e+00</V>
+            <V ID="36">3.14159265e+00 5.00000007e-01 0.00000000e+00</V>
+            <V ID="37">2.35619449e+00 5.00000007e-01 0.00000000e+00</V>
+            <V ID="38">1.57079633e+00 5.00000007e-01 0.00000000e+00</V>
+            <V ID="39">7.85398163e-01 5.00000007e-01 0.00000000e+00</V>
+            <V ID="40">3.94917432e-12 5.00000007e-01 0.00000000e+00</V>
+        </VERTEX>
+        <EDGE>
+            <E ID="26">18 19</E>
+            <E ID="28">19 20</E>
+            <E ID="30">20 21</E>
+            <E ID="32">21 22</E>
+            <E ID="42">18 27</E>
+            <E ID="43">27 28</E>
+            <E ID="44">28 19</E>
+            <E ID="45">28 29</E>
+            <E ID="46">29 20</E>
+            <E ID="47">29 30</E>
+            <E ID="48">30 21</E>
+            <E ID="49">30 31</E>
+            <E ID="50">31 22</E>
+            <E ID="59">27 36</E>
+            <E ID="60">36 37</E>
+            <E ID="61">37 28</E>
+            <E ID="62">37 38</E>
+            <E ID="63">38 29</E>
+            <E ID="64">38 39</E>
+            <E ID="65">39 30</E>
+            <E ID="66">39 40</E>
+            <E ID="67">40 31</E>
+        </EDGE>
+        <ELEMENT>
+            <Q ID="16">42 43 44 26</Q>
+            <Q ID="17">44 45 46 28</Q>
+            <Q ID="18">46 47 48 30</Q>
+            <Q ID="19">48 49 50 32</Q>
+            <Q ID="24">59 60 61 43</Q>
+            <Q ID="25">61 62 63 45</Q>
+            <Q ID="26">63 64 65 47</Q>
+            <Q ID="27">65 66 67 49</Q>
+        </ELEMENT>
+        <CURVED />
+        <COMPOSITE>
+            <C ID="0"> Q[16-19,24-27] </C>
+            <C ID="3"> E[59,42] </C>
+        </COMPOSITE>
+        <DOMAIN>
+            <D ID="0"> C[0] </D>
+        </DOMAIN>
+    </GEOMETRY>
+    <CONDITIONS>
+        <SOLVERINFO>
+            <I PROPERTY="SolverType" VALUE="VelocityCorrectionScheme" />
+            <I PROPERTY="EQTYPE" VALUE="UnsteadyNavierStokes" />
+            <I PROPERTY="Projection" VALUE="Continuous" />
+            <I PROPERTY="TimeIntegrationMethod" VALUE="IMEXOrder3" />
+            <I PROPERTY="EvolutionOperator" VALUE="Direct" />
+            <I PROPERTY="Driver" VALUE="ModifiedArnoldi" />
+            <!-- <I PROPERTY="ArpackProblemType"     VALUE="LargestMag"              /> -->
+        </SOLVERINFO>
+        <PARAMETERS>
+            <P>TimeStep = 0.001</P>
+            <P>NumSteps = 500</P>
+            <P>IO_CheckSteps = 1000</P>
+            <P>IO_InfoSteps = 500</P>
+            <P>Re = 7500</P>
+            <P>Kinvis = 1.0/Re</P>
+            <P>kdim = 16</P>
+            <P>nvec = 4</P>
+            <P>nits = 500</P>
+            <P>evtol = 1e-06</P>
+        </PARAMETERS>
+        <VARIABLES>
+            <V ID="0">u</V>
+            <V ID="1">v</V>
+            <V ID="2">p</V>
+        </VARIABLES>
+        <BOUNDARYREGIONS>
+            <B ID="1">C[3]</B>
+        </BOUNDARYREGIONS>
+        <BOUNDARYCONDITIONS>
+            <REGION REF="1">
+                <P VAR="u" VALUE="[2]" />
+                <P VAR="v" VALUE="[2]" />
+                <P VAR="p" VALUE="[2]" />
+            </REGION>
+        </BOUNDARYCONDITIONS>
+        <FUNCTION NAME="InitialConditions">
+            <F FILE="Channel-VCS.rst" />
+        </FUNCTION>
+        <FUNCTION NAME="BaseFlow">
+            <F FILE="Channel-VCS.bse" />
+        </FUNCTION>
+    </CONDITIONS>
+    <COLLECTIONS>
+        <OPERATOR TYPE="BwdTrans">
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="Helmholtz">
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="LinearAdvectionDiffusionReaction">
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="IProductWRTBase">
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="SumFac" />
+        </OPERATOR>
+        <OPERATOR TYPE="IProductWRTDerivBase">
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="SumFac" />
+        </OPERATOR>
+        <OPERATOR TYPE="PhysDeriv">
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="PhysInterp1DScaled">
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+    </COLLECTIONS>
+    <EXPANSIONS>
+        <E COMPOSITE="C[0]" NUMMODES="11" TYPE="GLL_LAGRANGE" FIELDS="u,v,p" />
+    </EXPANSIONS>
+</NEKTAR>

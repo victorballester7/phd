@@ -1,0 +1,15 @@
+Questions:
+  1. Value for CFL? I took 0.4.
+  2. How should split taks in cores efficiently in quasi-3d sim?
+  3. Let's talk about physics. What we are supposed to observe? Should I try to output exaclty the same results as in ganlins's report?
+
+Answers:
+  1. try to lower it because in the simulations it increase till 1.6
+  2. is a good practise to use an even number of proc in the fourier expansion because the derivatives go from a cosine to a sine and viceversa.
+  3. follow ganiln form the moment.
+
+
+get base flow in 3d with 2 fourier modes, and then run the linear stability analysis on it (with 'full' fourier mode) 
+Check "SingleMode" parameter and set it to True. Check in the Tests folder inside solvers/Incompressible.../ to see if there are examples there.
+
+- ask ganlin for parameter setup and how gmsh was use dor if he used nekmesh.

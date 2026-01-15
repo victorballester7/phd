@@ -1,0 +1,3101 @@
+<?xml version="1.0"?>
+<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian">
+  <UnstructuredGrid>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.00000003e-01 -1.00000000e+00 0.00000000e+00 
+3.54833901e-01 -8.07620287e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+2.20374092e-01 -7.56155908e-01 0.00000000e+00 
+2.97791034e-01 -6.59965992e-01 0.00000000e+00 
+3.75207990e-01 -5.63776135e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          2.81600877e+24 2.93448178e+21 3.17151715e+24 1.05879779e+24 -3.35639380e+23 -2.34662315e+23 2.74701442e+24 2.74701442e+24 2.74701442e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -2.00000003e-01 -1.00000000e+00 0.00000000e+00 
+-2.20374092e-01 -7.56155908e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+-3.54833901e-01 -8.07620287e-01 0.00000000e+00 
+-3.65020931e-01 -6.85698211e-01 0.00000000e+00 
+-3.75207990e-01 -5.63776135e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          5.43627073e+23 -2.27772205e+21 7.29422785e+23 1.16057329e+23 -6.62937973e+22 7.07564020e+22 4.17908136e+23 4.17908136e+23 4.17908136e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -2.00000003e-01 -1.00000000e+00 0.00000000e+00 
+-1.00000001e-01 -8.27462375e-01 0.00000000e+00 
+-4.76585459e-13 -6.54924691e-01 0.00000000e+00 
+-2.20374092e-01 -7.56155908e-01 0.00000000e+00 
+-1.70374095e-01 -6.69887066e-01 0.00000000e+00 
+-1.20374091e-01 -5.83618224e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.19315909e+24 -8.68963121e+22 -1.56278951e+24 -3.79586408e+23 1.67305260e+23 6.86579339e+22 -1.21495239e+24 -1.21495239e+24 -1.21495239e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.00000003e-01 -1.00000000e+00 0.00000000e+00 
+2.20374092e-01 -7.56155908e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+1.00000001e-01 -8.27462375e-01 0.00000000e+00 
+1.10187046e-01 -7.05540299e-01 0.00000000e+00 
+1.20374091e-01 -5.83618224e-01 0.00000000e+00 
+-4.76590989e-13 -6.54924691e-01 0.00000000e+00 
+-4.76618744e-13 -6.54924691e-01 0.00000000e+00 
+-4.76590989e-13 -6.54924691e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -2.27444271e+24 -1.64807457e+23 -2.70800176e+24 -3.32324723e+23 2.91300516e+23 -2.48281633e+23 -1.62334505e+24 -1.62334505e+24 -1.62334505e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.00000003e-01 -1.00000000e+00 0.00000000e+00 
+4.00000006e-01 -1.00000000e+00 0.00000000e+00 
+6.00000024e-01 -1.00000000e+00 0.00000000e+00 
+3.54833901e-01 -8.07620287e-01 0.00000000e+00 
+4.54833895e-01 -8.07620287e-01 0.00000000e+00 
+5.54833889e-01 -8.07620287e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.43017760e+24 1.38812682e+22 -1.39286627e+24 -5.16312582e+23 1.24330644e+23 5.22722683e+22 -2.09185641e+24 -2.09185641e+24 -2.09185641e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -6.00000024e-01 -1.00000000e+00 0.00000000e+00 
+-4.00000006e-01 -1.00000000e+00 0.00000000e+00 
+-2.00000003e-01 -1.00000000e+00 0.00000000e+00 
+-5.54833889e-01 -8.07620287e-01 0.00000000e+00 
+-4.54833895e-01 -8.07620287e-01 0.00000000e+00 
+-3.54833901e-01 -8.07620287e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -3.30408575e+23 7.66310845e+22 -1.45534511e+23 -3.73677721e+22 1.66993560e+22 -8.65348298e+22 7.08390165e+22 7.08390165e+22 7.08390165e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+5.00000000e-01 -2.50000000e-01 0.00000000e+00 
+3.33333343e-01 -2.50000000e-01 0.00000000e+00 
+5.88167250e-01 -4.32620257e-01 0.00000000e+00 
+5.04833877e-01 -4.32620257e-01 0.00000000e+00 
+4.21500564e-01 -4.32620257e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.68737678e+24 1.26848250e+23 -1.32694743e+24 1.36600600e+23 1.12907826e+23 -7.27790126e+23 -1.76747651e+24 -1.76747651e+24 -1.76747651e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -3.33333343e-01 -2.50000000e-01 0.00000000e+00 
+-5.00000000e-01 -2.50000000e-01 0.00000000e+00 
+-6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+-4.21500564e-01 -4.32620257e-01 0.00000000e+00 
+-5.04833877e-01 -4.32620257e-01 0.00000000e+00 
+-5.88167250e-01 -4.32620257e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          9.69899205e+23 1.15047770e+23 6.13344993e+23 -1.87823021e+23 -7.98045297e+22 3.66501126e+23 1.82686674e+24 1.82686674e+24 1.82686674e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -2.00000003e-01 -1.00000000e+00 0.00000000e+00 
+0.00000000e+00 -1.00000000e+00 0.00000000e+00 
+2.00000003e-01 -1.00000000e+00 0.00000000e+00 
+-1.00000001e-01 -8.27462375e-01 0.00000000e+00 
+-2.38295494e-13 -8.27462375e-01 0.00000000e+00 
+1.00000001e-01 -8.27462375e-01 0.00000000e+00 
+-4.76590989e-13 -6.54924691e-01 0.00000000e+00 
+-4.76590989e-13 -6.54924691e-01 0.00000000e+00 
+-4.76590989e-13 -6.54924691e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          6.96207434e+23 2.66117286e+21 8.79622025e+23 3.64206597e+23 -6.76246122e+22 -1.06829043e+23 1.26775409e+24 1.26775409e+24 1.26775409e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.75224288e-12 -2.50000000e-01 0.00000000e+00 
+-1.20374091e-01 -3.81155878e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+1.13782876e-12 -4.52462345e-01 0.00000000e+00 
+-6.01870455e-02 -5.18040299e-01 0.00000000e+00 
+-1.20374091e-01 -5.83618224e-01 0.00000000e+00 
+-4.76585459e-13 -6.54924691e-01 0.00000000e+00 
+-4.76590989e-13 -6.54924691e-01 0.00000000e+00 
+-4.76590989e-13 -6.54924691e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.59403459e+24 -2.68334642e+23 -1.21787327e+24 -2.77346500e+23 2.10673204e+23 1.29883265e+23 -9.12342595e+23 -9.12342595e+23 -9.12342595e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.75224288e-12 -2.50000000e-01 0.00000000e+00 
+1.13782876e-12 -4.52462345e-01 0.00000000e+00 
+-4.76585459e-13 -6.54924691e-01 0.00000000e+00 
+1.20374091e-01 -3.81155878e-01 0.00000000e+00 
+1.20374091e-01 -4.82387066e-01 0.00000000e+00 
+1.20374091e-01 -5.83618224e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          2.70043108e+24 1.05810284e+24 1.47750438e+24 -4.24840740e+23 -4.44709080e+23 5.08550251e+22 3.06381504e+24 3.06381504e+24 3.06381504e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -3.33333343e-01 -2.50000000e-01 0.00000000e+00 
+-4.21500564e-01 -4.32620257e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-2.87040770e-01 -3.81155878e-01 0.00000000e+00 
+-3.31124365e-01 -4.72466022e-01 0.00000000e+00 
+-3.75207990e-01 -5.63776135e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.74829320e+24 -4.03986077e+23 -2.37335459e+24 -3.76135988e+23 3.04608860e+23 1.56934798e+23 -2.19678976e+24 -2.19678976e+24 -2.19678976e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          3.33333343e-01 -2.50000000e-01 0.00000000e+00 
+2.87040770e-01 -3.81155878e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+4.21500564e-01 -4.32620257e-01 0.00000000e+00 
+3.98354262e-01 -4.98198211e-01 0.00000000e+00 
+3.75207990e-01 -5.63776135e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.78338915e+24 6.38667748e+23 1.92241967e+24 3.53877666e+23 -3.09109045e+23 -3.64977425e+23 1.78449778e+24 1.78449778e+24 1.78449778e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+5.88167250e-01 -4.32620257e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+7.14519322e-01 -3.79084826e-01 0.00000000e+00 
+6.75269604e-01 -4.70394939e-01 0.00000000e+00 
+6.36019886e-01 -5.61705053e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          3.60116762e+24 7.86870563e+23 2.83172930e+24 9.28608230e+22 -5.24133755e+23 7.36606149e+22 3.56378001e+24 3.56378001e+24 3.56378001e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+-7.14519322e-01 -3.79084826e-01 0.00000000e+00 
+-7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+-5.88167250e-01 -4.32620257e-01 0.00000000e+00 
+-6.12093568e-01 -4.97162670e-01 0.00000000e+00 
+-6.36019886e-01 -5.61705053e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.12279635e+24 -6.46519739e+23 -1.15734587e+24 3.82468615e+22 1.93686415e+23 1.02350283e+23 -2.23615043e+24 -2.23615043e+24 -2.23615043e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 -2.50000000e-01 0.00000000e+00 
+8.81186008e-01 -3.79084826e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+1.00000000e+00 -4.37500000e-01 0.00000000e+00 
+9.40593004e-01 -5.02042413e-01 0.00000000e+00 
+8.81186008e-01 -5.66584826e-01 0.00000000e+00 
+1.00000000e+00 -6.25000000e-01 0.00000000e+00 
+1.00000000e+00 -6.25000000e-01 0.00000000e+00 
+1.00000000e+00 -6.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.53472182e+24 4.97833488e+23 9.95729424e+23 1.11713693e+23 -3.03553892e+23 -3.35125409e+23 3.19328749e+23 3.19328749e+23 3.19328749e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -1.00000000e+00 -2.50000000e-01 0.00000000e+00 
+-1.00000000e+00 -4.37500000e-01 0.00000000e+00 
+-1.00000000e+00 -6.25000000e-01 0.00000000e+00 
+-8.81186008e-01 -3.79084826e-01 0.00000000e+00 
+-8.81186008e-01 -4.72834826e-01 0.00000000e+00 
+-8.81186008e-01 -5.66584826e-01 0.00000000e+00 
+-7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+-7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+-7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -2.42470882e+24 -5.70553281e+23 -2.53321292e+23 5.94902269e+23 3.02375997e+23 -3.74381162e+23 -1.55518765e+24 -1.55518765e+24 -1.55518765e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.75224288e-12 -2.50000000e-01 0.00000000e+00 
+-1.66666672e-01 -2.50000000e-01 0.00000000e+00 
+-3.33333343e-01 -2.50000000e-01 0.00000000e+00 
+-1.20374091e-01 -3.81155878e-01 0.00000000e+00 
+-2.03707427e-01 -3.81155878e-01 0.00000000e+00 
+-2.87040770e-01 -3.81155878e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+-2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.87186197e+24 -4.35254189e+22 1.28216203e+24 -2.47574079e+23 -1.25159984e+23 8.07522821e+23 2.31352791e+24 2.31352791e+24 2.31352791e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          3.33333343e-01 -2.50000000e-01 0.00000000e+00 
+1.66666672e-01 -2.50000000e-01 0.00000000e+00 
+2.75224288e-12 -2.50000000e-01 0.00000000e+00 
+2.87040770e-01 -3.81155878e-01 0.00000000e+00 
+2.03707427e-01 -3.81155878e-01 0.00000000e+00 
+1.20374091e-01 -3.81155878e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+2.40748182e-01 -5.12311757e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.62512583e+24 -1.22106775e+23 -1.64369429e+24 -1.68620730e+22 1.72004383e+23 -3.95280801e+23 -2.91651249e+24 -2.91651249e+24 -2.91651249e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -1.00000000e+00 -2.50000000e-01 0.00000000e+00 
+-8.81186008e-01 -3.79084826e-01 0.00000000e+00 
+-7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+-8.33333313e-01 -2.50000000e-01 0.00000000e+00 
+-7.73926318e-01 -3.14542413e-01 0.00000000e+00 
+-7.14519322e-01 -3.79084826e-01 0.00000000e+00 
+-6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+-6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+-6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.35602242e+24 -8.68093364e+22 1.09491130e+24 -1.04572604e+22 -1.54268882e+23 3.58057593e+23 5.85584132e+23 5.85584132e+23 5.85584132e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 -2.50000000e-01 0.00000000e+00 
+8.33333313e-01 -2.50000000e-01 0.00000000e+00 
+6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+8.81186008e-01 -3.79084826e-01 0.00000000e+00 
+7.97852635e-01 -3.79084826e-01 0.00000000e+00 
+7.14519322e-01 -3.79084826e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -2.48597630e+24 1.24360780e+23 -2.32726363e+24 4.90703343e+22 2.02862356e+23 -9.08835996e+23 -3.02810607e+24 -3.02810607e+24 -3.02810607e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -6.00000024e-01 -1.00000000e+00 0.00000000e+00 
+-5.54833889e-01 -8.07620287e-01 0.00000000e+00 
+-5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-6.87172651e-01 -8.87944460e-01 0.00000000e+00 
+-6.64589643e-01 -7.91754603e-01 0.00000000e+00 
+-6.42006576e-01 -6.95564747e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          5.81099946e+23 3.69654921e+22 -1.75133801e+23 -5.89264594e+22 -2.29258726e+22 9.60835047e+22 2.89438773e+23 2.89438773e+23 2.89438773e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.00000024e-01 -1.00000000e+00 0.00000000e+00 
+6.87172651e-01 -8.87944460e-01 0.00000000e+00 
+7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+5.54833889e-01 -8.07620287e-01 0.00000000e+00 
+5.98420203e-01 -7.51592517e-01 0.00000000e+00 
+6.42006576e-01 -6.95564747e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          2.01057911e+24 2.97858486e+23 2.69637383e+24 6.80054074e+23 -3.05238877e+23 -2.62722834e+23 2.94314406e+24 2.94314406e+24 2.94314406e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 -1.00000000e+00 0.00000000e+00 
+8.87172699e-01 -8.87944460e-01 0.00000000e+00 
+7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+8.00000012e-01 -1.00000000e+00 0.00000000e+00 
+7.43586361e-01 -9.43972230e-01 0.00000000e+00 
+6.87172651e-01 -8.87944460e-01 0.00000000e+00 
+6.00000024e-01 -1.00000000e+00 0.00000000e+00 
+6.00000024e-01 -1.00000000e+00 0.00000000e+00 
+6.00000024e-01 -1.00000000e+00 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.23088050e+24 1.57280168e+23 -1.70270954e+24 3.36124566e+22 1.37370768e+23 -5.70908516e+23 -1.02198152e+24 -1.02198152e+24 -1.02198152e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -1.00000000e+00 -1.00000000e+00 0.00000000e+00 
+-8.00000012e-01 -1.00000000e+00 0.00000000e+00 
+-6.00000024e-01 -1.00000000e+00 0.00000000e+00 
+-8.87172699e-01 -8.87944460e-01 0.00000000e+00 
+-7.87172675e-01 -8.87944460e-01 0.00000000e+00 
+-6.87172651e-01 -8.87944460e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -3.71904971e+23 3.17055092e+22 -7.88341322e+23 -4.83287003e+23 2.37508878e+22 2.24874451e+23 -9.85624271e+23 -9.85624271e+23 -9.85624271e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -1.00000000e+00 -1.00000000e+00 0.00000000e+00 
+-8.87172699e-01 -8.87944460e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+-1.00000000e+00 -8.12500000e-01 0.00000000e+00 
+-9.43586349e-01 -7.56472230e-01 0.00000000e+00 
+-8.87172699e-01 -7.00444460e-01 0.00000000e+00 
+-1.00000000e+00 -6.25000000e-01 0.00000000e+00 
+-1.00000000e+00 -6.25000000e-01 0.00000000e+00 
+-1.00000000e+00 -6.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          6.49489712e+23 5.23622693e+23 1.55223023e+24 3.50742095e+23 -1.83350400e+23 -4.28824256e+23 2.46884987e+24 2.46884987e+24 2.46884987e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 -1.00000000e+00 0.00000000e+00 
+1.00000000e+00 -8.12500000e-01 0.00000000e+00 
+1.00000000e+00 -6.25000000e-01 0.00000000e+00 
+8.87172699e-01 -8.87944460e-01 0.00000000e+00 
+8.87172699e-01 -7.94194460e-01 0.00000000e+00 
+8.87172699e-01 -7.00444460e-01 0.00000000e+00 
+7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -6.33515165e+23 7.86350733e+22 -1.90429651e+24 4.71800756e+22 1.30464516e+23 -4.60021498e+23 -5.91907025e+23 -5.91907025e+23 -5.91907025e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+-6.36019886e-01 -5.61705053e-01 0.00000000e+00 
+-7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+-6.42006576e-01 -6.95564747e-01 0.00000000e+00 
+-7.05182612e-01 -6.68797016e-01 0.00000000e+00 
+-7.68358648e-01 -6.42029285e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.12957257e+24 -5.29424677e+22 4.80491642e+22 -3.98524815e+23 -2.42184420e+22 6.70964598e+23 7.72784287e+23 7.72784287e+23 7.72784287e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          5.09667814e-01 -6.15240514e-01 0.00000000e+00 
+6.42006576e-01 -6.95564747e-01 0.00000000e+00 
+7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+6.36019886e-01 -5.61705053e-01 0.00000000e+00 
+7.02189267e-01 -6.01867199e-01 0.00000000e+00 
+7.68358648e-01 -6.42029285e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -2.52399153e+24 -3.11024287e+23 -3.07959127e+24 -3.43048628e+23 3.20873325e+23 -2.60588278e+23 -3.02711280e+24 -3.02711280e+24 -3.02711280e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -1.00000000e+00 -6.25000000e-01 0.00000000e+00 
+-8.87172699e-01 -7.00444460e-01 0.00000000e+00 
+-7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+-8.81186008e-01 -5.66584826e-01 0.00000000e+00 
+-8.24772298e-01 -6.04307055e-01 0.00000000e+00 
+-7.68358648e-01 -6.42029285e-01 0.00000000e+00 
+-7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+-7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+-7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.09297730e+24 2.61576647e+22 -5.18006904e+23 3.59457827e+23 1.03598782e+23 -5.68085145e+23 9.00839856e+22 9.00839856e+22 9.00839856e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 -6.25000000e-01 0.00000000e+00 
+8.81186008e-01 -5.66584826e-01 0.00000000e+00 
+7.62371957e-01 -5.08169651e-01 0.00000000e+00 
+8.87172699e-01 -7.00444460e-01 0.00000000e+00 
+8.27765644e-01 -6.71236873e-01 0.00000000e+00 
+7.68358648e-01 -6.42029285e-01 0.00000000e+00 
+7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+7.74345338e-01 -7.75888920e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          4.98631883e+24 -1.60369640e+23 3.91718226e+24 -1.98121688e+23 -4.59887911e+23 1.58440596e+24 4.20582015e+24 4.20582015e+24 4.20582015e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.00000003e-01 1.00000000e+00 0.00000000e+00 
+2.20374092e-01 7.56155908e-01 0.00000000e+00 
+2.40748182e-01 5.12311757e-01 0.00000000e+00 
+3.54833901e-01 8.07620287e-01 0.00000000e+00 
+3.65020931e-01 6.85698211e-01 0.00000000e+00 
+3.75207990e-01 5.63776135e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          2.56545793e+23 1.94517789e+23 3.31268602e+23 -2.97605772e+22 -7.38271064e+22 -6.81989313e+22 4.03044485e+23 4.03044485e+23 4.03044485e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -2.00000003e-01 1.00000000e+00 0.00000000e+00 
+-3.54833901e-01 8.07620287e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+-2.20374092e-01 7.56155908e-01 0.00000000e+00 
+-2.97791034e-01 6.59965992e-01 0.00000000e+00 
+-3.75207990e-01 5.63776135e-01 0.00000000e+00 
+-2.40748182e-01 5.12311757e-01 0.00000000e+00 
+-2.40748182e-01 5.12311757e-01 0.00000000e+00 
+-2.40748182e-01 5.12311757e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.28768038e+22 -4.49672696e+21 -6.86342139e+22 -9.67449607e+21 8.03962493e+21 7.62435498e+21 -9.54362276e+21 -9.54362276e+21 -9.54362276e+21 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.00000003e-01 1.00000000e+00 0.00000000e+00 
+1.00000001e-01 8.27462375e-01 0.00000000e+00 
+2.14988032e-12 6.54924691e-01 0.00000000e+00 
+2.20374092e-01 7.56155908e-01 0.00000000e+00 
+1.70374095e-01 6.69887066e-01 0.00000000e+00 
+1.20374091e-01 5.83618224e-01 0.00000000e+00 
+2.40748182e-01 5.12311757e-01 0.00000000e+00 
+2.40748182e-01 5.12311757e-01 0.00000000e+00 
+2.40748182e-01 5.12311757e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -3.11315440e+23 -4.60128366e+22 -3.33836263e+23 -9.45157249e+22 3.13653949e+22 1.89650075e+22 -3.66978829e+23 -3.66978829e+23 -3.66978829e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -2.00000003e-01 1.00000000e+00 0.00000000e+00 
+-2.20374092e-01 7.56155908e-01 0.00000000e+00 
+-2.40748182e-01 5.12311757e-01 0.00000000e+00 
+-1.00000001e-01 8.27462375e-01 0.00000000e+00 
+-1.10187046e-01 7.05540299e-01 0.00000000e+00 
+-1.20374091e-01 5.83618224e-01 0.00000000e+00 
+2.14989138e-12 6.54924691e-01 0.00000000e+00 
+2.14989138e-12 6.54924691e-01 0.00000000e+00 
+2.14989138e-12 6.54924691e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.60499633e+23 -5.34593614e+22 -1.55189826e+23 -1.97855410e+22 2.00643263e+22 7.72150944e+21 -2.90420863e+23 -2.90420863e+23 -2.90420863e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.00000024e-01 1.00000000e+00 0.00000000e+00 
+4.00000006e-01 1.00000000e+00 0.00000000e+00 
+2.00000003e-01 1.00000000e+00 0.00000000e+00 
+5.54833889e-01 8.07620287e-01 0.00000000e+00 
+4.54833895e-01 8.07620287e-01 0.00000000e+00 
+3.54833901e-01 8.07620287e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -2.74072938e+22 -1.91238937e+22 -5.21757866e+22 7.59217413e+21 5.59746827e+21 -6.73106084e+21 -1.54357218e+23 -1.54357218e+23 -1.54357218e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -2.00000003e-01 1.00000000e+00 0.00000000e+00 
+-4.00000006e-01 1.00000000e+00 0.00000000e+00 
+-6.00000024e-01 1.00000000e+00 0.00000000e+00 
+-3.54833901e-01 8.07620287e-01 0.00000000e+00 
+-4.54833895e-01 8.07620287e-01 0.00000000e+00 
+-5.54833889e-01 8.07620287e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          2.65453411e+22 -8.69520096e+21 7.39314701e+22 1.93641556e+22 -5.31926177e+21 -5.35875828e+20 1.63731794e+22 1.63731794e+22 1.63731794e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.66666687e-01 2.50000000e-01 0.00000000e+00 
+5.88167250e-01 4.32620257e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+5.00000000e-01 2.50000000e-01 0.00000000e+00 
+4.60750282e-01 3.41310143e-01 0.00000000e+00 
+4.21500564e-01 4.32620257e-01 0.00000000e+00 
+3.33333343e-01 2.50000000e-01 0.00000000e+00 
+3.33333343e-01 2.50000000e-01 0.00000000e+00 
+3.33333343e-01 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          4.30721153e+23 -2.54317893e+22 4.76582292e+23 -1.09347087e+22 -5.28494928e+22 1.44777479e+23 3.04002226e+23 3.04002226e+23 3.04002226e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -3.33333343e-01 2.50000000e-01 0.00000000e+00 
+-4.21500564e-01 4.32620257e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+-5.00000000e-01 2.50000000e-01 0.00000000e+00 
+-5.44083595e-01 3.41310143e-01 0.00000000e+00 
+-5.88167250e-01 4.32620257e-01 0.00000000e+00 
+-6.66666687e-01 2.50000000e-01 0.00000000e+00 
+-6.66666687e-01 2.50000000e-01 0.00000000e+00 
+-6.66666687e-01 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -3.61174587e+23 5.13740641e+22 -5.60462131e+23 -9.98439967e+21 4.87764853e+22 -1.48558841e+23 -2.80864071e+23 -2.80864071e+23 -2.80864071e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.00000003e-01 1.00000000e+00 0.00000000e+00 
+0.00000000e+00 1.00000000e+00 0.00000000e+00 
+-2.00000003e-01 1.00000000e+00 0.00000000e+00 
+1.00000001e-01 8.27462375e-01 0.00000000e+00 
+1.07494569e-12 8.27462375e-01 0.00000000e+00 
+-1.00000001e-01 8.27462375e-01 0.00000000e+00 
+2.14989138e-12 6.54924691e-01 0.00000000e+00 
+2.14989138e-12 6.54924691e-01 0.00000000e+00 
+2.14989138e-12 6.54924691e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          2.04451409e+23 1.03404611e+22 1.29239463e+23 -3.67243831e+22 -1.47883461e+22 8.54001784e+22 3.26310685e+23 3.26310685e+23 3.26310685e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.75224288e-12 2.50000000e-01 0.00000000e+00 
+2.45106149e-12 4.52462345e-01 0.00000000e+00 
+2.14988032e-12 6.54924691e-01 0.00000000e+00 
+-1.20374091e-01 3.81155878e-01 0.00000000e+00 
+-1.20374091e-01 4.82387066e-01 0.00000000e+00 
+-1.20374091e-01 5.83618224e-01 0.00000000e+00 
+-2.40748182e-01 5.12311757e-01 0.00000000e+00 
+-2.40748182e-01 5.12311757e-01 0.00000000e+00 
+-2.40748182e-01 5.12311757e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          5.92517730e+22 -4.41176162e+22 4.02530605e+22 -9.93252018e+21 -3.32537649e+21 5.02167837e+22 -3.38840973e+22 -3.38840973e+22 -3.38840973e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.75224288e-12 2.50000000e-01 0.00000000e+00 
+1.20374091e-01 3.81155878e-01 0.00000000e+00 
+2.40748182e-01 5.12311757e-01 0.00000000e+00 
+2.45106149e-12 4.52462345e-01 0.00000000e+00 
+6.01870455e-02 5.18040299e-01 0.00000000e+00 
+1.20374091e-01 5.83618224e-01 0.00000000e+00 
+2.14988032e-12 6.54924691e-01 0.00000000e+00 
+2.14989138e-12 6.54924691e-01 0.00000000e+00 
+2.14989138e-12 6.54924691e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          6.84911071e+22 -3.59830571e+22 2.00092635e+23 8.99471380e+22 -9.42427585e+21 -2.36582257e+22 5.07766369e+22 5.07766369e+22 5.07766369e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          3.33333343e-01 2.50000000e-01 0.00000000e+00 
+4.21500564e-01 4.32620257e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+2.87040770e-01 3.81155878e-01 0.00000000e+00 
+3.31124365e-01 4.72466022e-01 0.00000000e+00 
+3.75207990e-01 5.63776135e-01 0.00000000e+00 
+2.40748182e-01 5.12311757e-01 0.00000000e+00 
+2.40748182e-01 5.12311757e-01 0.00000000e+00 
+2.40748182e-01 5.12311757e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -3.12076339e+23 1.46875448e+22 -3.31896398e+23 -5.33037953e+22 3.51855892e+22 -4.46619832e+22 -5.00002039e+22 -5.00002039e+22 -5.00002039e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -3.33333343e-01 2.50000000e-01 0.00000000e+00 
+-2.87040770e-01 3.81155878e-01 0.00000000e+00 
+-2.40748182e-01 5.12311757e-01 0.00000000e+00 
+-4.21500564e-01 4.32620257e-01 0.00000000e+00 
+-3.98354262e-01 4.98198211e-01 0.00000000e+00 
+-3.75207990e-01 5.63776135e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          4.00555540e+23 1.00011991e+23 3.48064684e+23 6.86312706e+22 -5.84773245e+22 -4.84368589e+22 5.76948742e+23 5.76948742e+23 5.76948742e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.66666687e-01 2.50000000e-01 0.00000000e+00 
+7.14519322e-01 3.79084826e-01 0.00000000e+00 
+7.62371957e-01 5.08169651e-01 0.00000000e+00 
+5.88167250e-01 4.32620257e-01 0.00000000e+00 
+6.12093568e-01 4.97162670e-01 0.00000000e+00 
+6.36019886e-01 5.61705053e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.37360554e+24 -5.22464873e+22 -1.41423837e+24 -3.05545456e+23 1.71899528e+23 -2.14932226e+22 -1.04982009e+24 -1.04982009e+24 -1.04982009e+24 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -6.66666687e-01 2.50000000e-01 0.00000000e+00 
+-5.88167250e-01 4.32620257e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+-7.14519322e-01 3.79084826e-01 0.00000000e+00 
+-6.75269604e-01 4.70394939e-01 0.00000000e+00 
+-6.36019886e-01 5.61705053e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          5.34209708e+23 1.48238215e+22 7.87674430e+23 2.13723723e+23 -6.14772099e+22 -1.36190192e+22 5.35826194e+23 5.35826194e+23 5.35826194e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -1.00000000e+00 2.50000000e-01 0.00000000e+00 
+-8.81186008e-01 3.79084826e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+-1.00000000e+00 4.37500000e-01 0.00000000e+00 
+-9.40593004e-01 5.02042413e-01 0.00000000e+00 
+-8.81186008e-01 5.66584826e-01 0.00000000e+00 
+-1.00000000e+00 6.25000000e-01 0.00000000e+00 
+-1.00000000e+00 6.25000000e-01 0.00000000e+00 
+-1.00000000e+00 6.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.32847185e+24 -2.48859738e+23 9.23664789e+23 3.23849827e+23 -1.08065764e+23 1.47482674e+23 3.61135395e+23 3.61135395e+23 3.61135395e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 2.50000000e-01 0.00000000e+00 
+1.00000000e+00 4.37500000e-01 0.00000000e+00 
+1.00000000e+00 6.25000000e-01 0.00000000e+00 
+8.81186008e-01 3.79084826e-01 0.00000000e+00 
+8.81186008e-01 4.72834826e-01 0.00000000e+00 
+8.81186008e-01 5.66584826e-01 0.00000000e+00 
+7.62371957e-01 5.08169651e-01 0.00000000e+00 
+7.62371957e-01 5.08169651e-01 0.00000000e+00 
+7.62371957e-01 5.08169651e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -9.91126265e+23 -2.74556600e+22 -4.39172576e+23 -1.89201155e+23 8.54699864e+22 1.62942478e+22 -5.54504986e+23 -5.54504986e+23 -5.54504986e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.75224288e-12 2.50000000e-01 0.00000000e+00 
+-1.20374091e-01 3.81155878e-01 0.00000000e+00 
+-2.40748182e-01 5.12311757e-01 0.00000000e+00 
+-1.66666672e-01 2.50000000e-01 0.00000000e+00 
+-2.26853713e-01 3.15577954e-01 0.00000000e+00 
+-2.87040770e-01 3.81155878e-01 0.00000000e+00 
+-3.33333343e-01 2.50000000e-01 0.00000000e+00 
+-3.33333343e-01 2.50000000e-01 0.00000000e+00 
+-3.33333343e-01 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.64068976e+23 4.91712536e+21 -5.77649675e+22 5.19746327e+22 2.76587650e+21 -1.04359928e+23 -1.97321094e+23 -1.97321094e+23 -1.97321094e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          3.33333343e-01 2.50000000e-01 0.00000000e+00 
+2.87040770e-01 3.81155878e-01 0.00000000e+00 
+2.40748182e-01 5.12311757e-01 0.00000000e+00 
+1.66666672e-01 2.50000000e-01 0.00000000e+00 
+1.43520385e-01 3.15577954e-01 0.00000000e+00 
+1.20374091e-01 3.81155878e-01 0.00000000e+00 
+2.75224288e-12 2.50000000e-01 0.00000000e+00 
+2.75224288e-12 2.50000000e-01 0.00000000e+00 
+2.75224288e-12 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -7.35962395e+21 -5.46305478e+21 -1.24088974e+23 -1.61783443e+22 1.15256879e+22 9.09909785e+21 -4.00418681e+22 -4.00418681e+22 -4.00418681e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 2.50000000e-01 0.00000000e+00 
+8.81186008e-01 3.79084826e-01 0.00000000e+00 
+7.62371957e-01 5.08169651e-01 0.00000000e+00 
+8.33333313e-01 2.50000000e-01 0.00000000e+00 
+7.73926318e-01 3.14542413e-01 0.00000000e+00 
+7.14519322e-01 3.79084826e-01 0.00000000e+00 
+6.66666687e-01 2.50000000e-01 0.00000000e+00 
+6.66666687e-01 2.50000000e-01 0.00000000e+00 
+6.66666687e-01 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.11428029e+24 -4.55521918e+22 1.24368828e+24 -6.96404745e+22 -1.28771228e+23 4.24366259e+23 9.76090272e+23 9.76090272e+23 9.76090272e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -1.00000000e+00 2.50000000e-01 0.00000000e+00 
+-8.33333313e-01 2.50000000e-01 0.00000000e+00 
+-6.66666687e-01 2.50000000e-01 0.00000000e+00 
+-8.81186008e-01 3.79084826e-01 0.00000000e+00 
+-7.97852635e-01 3.79084826e-01 0.00000000e+00 
+-7.14519322e-01 3.79084826e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -6.70346008e+23 6.06503531e+21 -3.45177142e+23 -1.45762948e+22 5.76133103e+22 -1.27110390e+23 -5.97919619e+23 -5.97919619e+23 -5.97919619e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.00000024e-01 1.00000000e+00 0.00000000e+00 
+5.54833889e-01 8.07620287e-01 0.00000000e+00 
+5.09667814e-01 6.15240514e-01 0.00000000e+00 
+6.87172651e-01 8.87944460e-01 0.00000000e+00 
+6.64589643e-01 7.91754603e-01 0.00000000e+00 
+6.42006576e-01 6.95564747e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.05557424e+23 -1.77756450e+22 4.02107012e+22 2.84545213e+22 4.69095711e+21 -2.65214653e+22 -9.15756639e+22 -9.15756639e+22 -9.15756639e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -6.00000024e-01 1.00000000e+00 0.00000000e+00 
+-6.87172651e-01 8.87944460e-01 0.00000000e+00 
+-7.74345338e-01 7.75888920e-01 0.00000000e+00 
+-5.54833889e-01 8.07620287e-01 0.00000000e+00 
+-5.98420203e-01 7.51592517e-01 0.00000000e+00 
+-6.42006576e-01 6.95564747e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+-5.09667814e-01 6.15240514e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.57658416e+23 -4.57325904e+22 -6.43552802e+22 2.84379403e+22 2.21519528e+22 -1.67711636e+22 -7.18053252e+22 -7.18053252e+22 -7.18053252e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -1.00000000e+00 1.00000000e+00 0.00000000e+00 
+-8.87172699e-01 8.87944460e-01 0.00000000e+00 
+-7.74345338e-01 7.75888920e-01 0.00000000e+00 
+-8.00000012e-01 1.00000000e+00 0.00000000e+00 
+-7.43586361e-01 9.43972230e-01 0.00000000e+00 
+-6.87172651e-01 8.87944460e-01 0.00000000e+00 
+-6.00000024e-01 1.00000000e+00 0.00000000e+00 
+-6.00000024e-01 1.00000000e+00 0.00000000e+00 
+-6.00000024e-01 1.00000000e+00 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          2.38748125e+23 8.32266308e+22 3.41818418e+23 -3.76728631e+21 -5.54820744e+22 -3.66854224e+21 2.29005918e+23 2.29005918e+23 2.29005918e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 1.00000000e+00 0.00000000e+00 
+8.00000012e-01 1.00000000e+00 0.00000000e+00 
+6.00000024e-01 1.00000000e+00 0.00000000e+00 
+8.87172699e-01 8.87944460e-01 0.00000000e+00 
+7.87172675e-01 8.87944460e-01 0.00000000e+00 
+6.87172651e-01 8.87944460e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          5.34740836e+22 7.08959970e+20 6.89694092e+22 4.07388739e+21 -6.47015759e+21 1.32421906e+22 9.13868294e+22 9.13868294e+22 9.13868294e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 1.00000000e+00 0.00000000e+00 
+8.87172699e-01 8.87944460e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+1.00000000e+00 8.12500000e-01 0.00000000e+00 
+9.43586349e-01 7.56472230e-01 0.00000000e+00 
+8.87172699e-01 7.00444460e-01 0.00000000e+00 
+1.00000000e+00 6.25000000e-01 0.00000000e+00 
+1.00000000e+00 6.25000000e-01 0.00000000e+00 
+1.00000000e+00 6.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          2.90897361e+23 1.51127256e+22 1.78391410e+23 -3.24184604e+22 -1.46642675e+22 1.12855756e+23 4.65372091e+23 4.65372091e+23 4.65372091e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -1.00000000e+00 1.00000000e+00 0.00000000e+00 
+-1.00000000e+00 8.12500000e-01 0.00000000e+00 
+-1.00000000e+00 6.25000000e-01 0.00000000e+00 
+-8.87172699e-01 8.87944460e-01 0.00000000e+00 
+-8.87172699e-01 7.94194460e-01 0.00000000e+00 
+-8.87172699e-01 7.00444460e-01 0.00000000e+00 
+-7.74345338e-01 7.75888920e-01 0.00000000e+00 
+-7.74345338e-01 7.75888920e-01 0.00000000e+00 
+-7.74345338e-01 7.75888920e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -4.38695322e+23 -1.08332512e+23 -5.07711113e+23 -2.58018482e+22 7.92194967e+22 1.80548876e+21 -4.95388009e+23 -4.95388009e+23 -4.95388009e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -5.09667814e-01 6.15240514e-01 0.00000000e+00 
+-6.42006576e-01 6.95564747e-01 0.00000000e+00 
+-7.74345338e-01 7.75888920e-01 0.00000000e+00 
+-6.36019886e-01 5.61705053e-01 0.00000000e+00 
+-7.02189267e-01 6.01867199e-01 0.00000000e+00 
+-7.68358648e-01 6.42029285e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -2.42236108e+23 1.39796940e+23 -4.16653652e+23 -9.32311988e+22 2.19831082e+22 -9.74234952e+22 8.37139596e+22 8.37139596e+22 8.37139596e+22 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          5.09667814e-01 6.15240514e-01 0.00000000e+00 
+6.36019886e-01 5.61705053e-01 0.00000000e+00 
+7.62371957e-01 5.08169651e-01 0.00000000e+00 
+6.42006576e-01 6.95564747e-01 0.00000000e+00 
+7.05182612e-01 6.68797016e-01 0.00000000e+00 
+7.68358648e-01 6.42029285e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          4.75846533e+23 1.26269902e+23 7.88019745e+23 4.25030070e+22 -8.53718690e+22 3.95848733e+22 5.84934772e+23 5.84934772e+23 5.84934772e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 6.25000000e-01 0.00000000e+00 
+8.87172699e-01 7.00444460e-01 0.00000000e+00 
+7.74345338e-01 7.75888920e-01 0.00000000e+00 
+8.81186008e-01 5.66584826e-01 0.00000000e+00 
+8.24772298e-01 6.04307055e-01 0.00000000e+00 
+7.68358648e-01 6.42029285e-01 0.00000000e+00 
+7.62371957e-01 5.08169651e-01 0.00000000e+00 
+7.62371957e-01 5.08169651e-01 0.00000000e+00 
+7.62371957e-01 5.08169651e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.06512653e+24 -2.50777293e+22 -7.24479527e+23 1.24533778e+23 1.01594727e+23 -3.56206972e+23 -9.97022174e+23 -9.97022174e+23 -9.97022174e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -1.00000000e+00 6.25000000e-01 0.00000000e+00 
+-8.81186008e-01 5.66584826e-01 0.00000000e+00 
+-7.62371957e-01 5.08169651e-01 0.00000000e+00 
+-8.87172699e-01 7.00444460e-01 0.00000000e+00 
+-8.27765644e-01 6.71236873e-01 0.00000000e+00 
+-7.68358648e-01 6.42029285e-01 0.00000000e+00 
+-7.74345338e-01 7.75888920e-01 0.00000000e+00 
+-7.74345338e-01 7.75888920e-01 0.00000000e+00 
+-7.74345338e-01 7.75888920e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.25695005e+23 -1.34728104e+23 -1.22417047e+23 9.52843396e+22 4.16222816e+22 5.61437649e+22 1.90514846e+23 1.90514846e+23 1.90514846e+23 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 -2.50000000e-01 0.00000000e+00 
+1.00000000e+00 -1.87500000e-01 0.00000000e+00 
+1.00000000e+00 -1.25000000e-01 0.00000000e+00 
+8.33333313e-01 -2.50000000e-01 0.00000000e+00 
+8.33333313e-01 -1.87500000e-01 0.00000000e+00 
+8.33333313e-01 -1.25000000e-01 0.00000000e+00 
+6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+6.66666687e-01 -1.87500000e-01 0.00000000e+00 
+6.66666687e-01 -1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -2.53271354e+12 2.62202197e+14 4.87114433e+14 -2.19111542e+11 2.26897156e+13 4.21525745e+13 1.74445397e+12 -1.80626555e+14 -3.35564888e+14 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 -1.25000000e-01 0.00000000e+00 
+1.00000000e+00 -6.25000000e-02 0.00000000e+00 
+1.00000000e+00 -6.87561119e-13 0.00000000e+00 
+8.33333313e-01 -1.25000000e-01 0.00000000e+00 
+8.33333313e-01 -6.25000000e-02 0.00000000e+00 
+8.33333313e-01 -5.72972225e-13 0.00000000e+00 
+6.66666687e-01 -1.25000000e-01 0.00000000e+00 
+6.66666687e-01 -6.25000000e-02 0.00000000e+00 
+6.66666687e-01 -4.58383331e-13 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          4.83532858e+14 6.33012048e+14 6.86351312e+14 4.18426230e+13 5.47778378e+13 5.93935628e+13 -3.33097506e+14 -4.36071160e+14 -4.72815666e+14 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 -6.87561119e-13 0.00000000e+00 
+1.00000000e+00 6.25000000e-02 0.00000000e+00 
+1.00000000e+00 1.25000000e-01 0.00000000e+00 
+8.33333313e-01 -5.72972225e-13 0.00000000e+00 
+8.33333313e-01 6.25000000e-02 0.00000000e+00 
+8.33333313e-01 1.25000000e-01 0.00000000e+00 
+6.66666687e-01 -4.58383331e-13 0.00000000e+00 
+6.66666687e-01 6.25000000e-02 0.00000000e+00 
+6.66666687e-01 1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          6.86351312e+14 6.33012047e+14 4.83532858e+14 5.93935629e+13 5.47778379e+13 4.18426231e+13 -4.72815666e+14 -4.36071161e+14 -3.33097507e+14 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          1.00000000e+00 1.25000000e-01 0.00000000e+00 
+1.00000000e+00 1.87500000e-01 0.00000000e+00 
+1.00000000e+00 2.50000000e-01 0.00000000e+00 
+8.33333313e-01 1.25000000e-01 0.00000000e+00 
+8.33333313e-01 1.87500000e-01 0.00000000e+00 
+8.33333313e-01 2.50000000e-01 0.00000000e+00 
+6.66666687e-01 1.25000000e-01 0.00000000e+00 
+6.66666687e-01 1.87500000e-01 0.00000000e+00 
+6.66666687e-01 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          4.87114312e+14 2.62202257e+14 -2.53307614e+12 4.21525694e+13 2.26897182e+13 -2.19126897e+11 -3.35564927e+14 -1.80626536e+14 1.74433726e+12 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+6.66666687e-01 -1.87500000e-01 0.00000000e+00 
+6.66666687e-01 -1.25000000e-01 0.00000000e+00 
+5.00000000e-01 -2.50000000e-01 0.00000000e+00 
+5.00000000e-01 -1.87500000e-01 0.00000000e+00 
+5.00000000e-01 -1.25000000e-01 0.00000000e+00 
+3.33333343e-01 -2.50000000e-01 0.00000000e+00 
+3.33333343e-01 -1.87500000e-01 0.00000000e+00 
+3.33333343e-01 -1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -7.11514066e+12 7.36670719e+14 1.36857377e+15 2.82896709e+12 -2.92889539e+14 -5.44124923e+14 -1.12337392e+13 1.16306529e+15 2.16072186e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.66666687e-01 -1.25000000e-01 0.00000000e+00 
+6.66666687e-01 -6.25000000e-02 0.00000000e+00 
+6.66666687e-01 -4.58383331e-13 0.00000000e+00 
+5.00000000e-01 -1.25000000e-01 0.00000000e+00 
+5.00000000e-01 -6.25000000e-02 0.00000000e+00 
+5.00000000e-01 -3.43794437e-13 0.00000000e+00 
+3.33333343e-01 -1.25000000e-01 0.00000000e+00 
+3.33333343e-01 -6.25000000e-02 0.00000000e+00 
+3.33333343e-01 -2.29205543e-13 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.35851093e+15 1.77848056e+15 1.92834002e+15 -5.40124116e+14 -7.07097909e+14 -7.66679843e+14 2.14483461e+15 2.80788808e+15 3.04448814e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.66666687e-01 -4.58383331e-13 0.00000000e+00 
+6.66666687e-01 6.25000000e-02 0.00000000e+00 
+6.66666687e-01 1.25000000e-01 0.00000000e+00 
+5.00000000e-01 -3.43794437e-13 0.00000000e+00 
+5.00000000e-01 6.25000000e-02 0.00000000e+00 
+5.00000000e-01 1.25000000e-01 0.00000000e+00 
+3.33333343e-01 -2.29205543e-13 0.00000000e+00 
+3.33333343e-01 6.25000000e-02 0.00000000e+00 
+3.33333343e-01 1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.92834002e+15 1.77848056e+15 1.35851093e+15 -7.66679843e+14 -7.07097908e+14 -5.40124116e+14 3.04448814e+15 2.80788808e+15 2.14483461e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          6.66666687e-01 1.25000000e-01 0.00000000e+00 
+6.66666687e-01 1.87500000e-01 0.00000000e+00 
+6.66666687e-01 2.50000000e-01 0.00000000e+00 
+5.00000000e-01 1.25000000e-01 0.00000000e+00 
+5.00000000e-01 1.87500000e-01 0.00000000e+00 
+5.00000000e-01 2.50000000e-01 0.00000000e+00 
+3.33333343e-01 1.25000000e-01 0.00000000e+00 
+3.33333343e-01 1.87500000e-01 0.00000000e+00 
+3.33333343e-01 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.36857364e+15 7.36670783e+14 -7.11552608e+12 -5.44124914e+14 -2.92889544e+14 2.82899644e+12 2.16072178e+15 1.16306533e+15 -1.12339897e+13 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          3.33333343e-01 -2.50000000e-01 0.00000000e+00 
+3.33333343e-01 -1.87500000e-01 0.00000000e+00 
+3.33333343e-01 -1.25000000e-01 0.00000000e+00 
+1.66666672e-01 -2.50000000e-01 0.00000000e+00 
+1.66666672e-01 -1.87500000e-01 0.00000000e+00 
+1.66666672e-01 -1.25000000e-01 0.00000000e+00 
+2.75224288e-12 -2.50000000e-01 0.00000000e+00 
+2.75227063e-12 -1.87500000e-01 0.00000000e+00 
+2.75229839e-12 -1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          9.64801479e+12 -9.98872946e+14 -1.85568816e+15 -2.60983295e+12 2.70199821e+14 5.01972358e+14 9.48927616e+12 -9.82438738e+14 -1.82515698e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          3.33333343e-01 -1.25000000e-01 0.00000000e+00 
+3.33333343e-01 -6.25000000e-02 0.00000000e+00 
+3.33333343e-01 -2.29205543e-13 0.00000000e+00 
+1.66666672e-01 -1.25000000e-01 0.00000000e+00 
+1.66666672e-01 -6.25000000e-02 0.00000000e+00 
+1.66666672e-01 -1.14602772e-13 0.00000000e+00 
+2.75229839e-12 -1.25000000e-01 0.00000000e+00 
+2.75227063e-12 -6.25000000e-02 0.00000000e+00 
+2.75224288e-12 0.00000000e+00 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.84204380e+15 -2.41149261e+15 -2.61469134e+15 4.98281495e+14 6.52320073e+14 7.07286282e+14 -1.81173711e+15 -2.37181693e+15 -2.57167248e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          3.33333343e-01 -2.29205543e-13 0.00000000e+00 
+3.33333343e-01 6.25000000e-02 0.00000000e+00 
+3.33333343e-01 1.25000000e-01 0.00000000e+00 
+1.66666672e-01 -1.14602772e-13 0.00000000e+00 
+1.66666672e-01 6.25000000e-02 0.00000000e+00 
+1.66666672e-01 1.25000000e-01 0.00000000e+00 
+2.75224288e-12 0.00000000e+00 0.00000000e+00 
+2.75221512e-12 6.25000000e-02 0.00000000e+00 
+2.75218737e-12 1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -2.61469134e+15 -2.41149261e+15 -1.84204380e+15 7.07286282e+14 6.52320073e+14 4.98281495e+14 -2.57167248e+15 -2.37181693e+15 -1.81173711e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          3.33333343e-01 1.25000000e-01 0.00000000e+00 
+3.33333343e-01 1.87500000e-01 0.00000000e+00 
+3.33333343e-01 2.50000000e-01 0.00000000e+00 
+1.66666672e-01 1.25000000e-01 0.00000000e+00 
+1.66666672e-01 1.87500000e-01 0.00000000e+00 
+1.66666672e-01 2.50000000e-01 0.00000000e+00 
+2.75218737e-12 1.25000000e-01 0.00000000e+00 
+2.75221512e-12 1.87500000e-01 0.00000000e+00 
+2.75224288e-12 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.85568816e+15 -9.98872945e+14 9.64800869e+12 5.01972359e+14 2.70199821e+14 -2.60983076e+12 -1.82515699e+15 -9.82438736e+14 9.48926662e+12 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.75224288e-12 -2.50000000e-01 0.00000000e+00 
+2.75227063e-12 -1.87500000e-01 0.00000000e+00 
+2.75229839e-12 -1.25000000e-01 0.00000000e+00 
+-1.66666672e-01 -2.50000000e-01 0.00000000e+00 
+-1.66666672e-01 -1.87500000e-01 0.00000000e+00 
+-1.66666672e-01 -1.25000000e-01 0.00000000e+00 
+-3.33333343e-01 -2.50000000e-01 0.00000000e+00 
+-3.33333343e-01 -1.87500000e-01 0.00000000e+00 
+-3.33333343e-01 -1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -2.53257680e+12 2.62202174e+14 4.87114478e+14 -2.19161172e+11 2.26897239e+13 4.21525580e+13 1.74466944e+12 -1.80626591e+14 -3.35564816e+14 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.75229839e-12 -1.25000000e-01 0.00000000e+00 
+2.75227063e-12 -6.25000000e-02 0.00000000e+00 
+2.75224288e-12 0.00000000e+00 0.00000000e+00 
+-1.66666672e-01 -1.25000000e-01 0.00000000e+00 
+-1.66666672e-01 -6.25000000e-02 0.00000000e+00 
+-1.66666672e-01 1.14592363e-13 0.00000000e+00 
+-3.33333343e-01 -1.25000000e-01 0.00000000e+00 
+-3.33333343e-01 -6.25000000e-02 0.00000000e+00 
+-3.33333343e-01 2.29184727e-13 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          4.83532858e+14 6.33012048e+14 6.86351312e+14 4.18426230e+13 5.47778378e+13 5.93935628e+13 -3.33097506e+14 -4.36071160e+14 -4.72815666e+14 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.75224288e-12 0.00000000e+00 0.00000000e+00 
+2.75221512e-12 6.25000000e-02 0.00000000e+00 
+2.75218737e-12 1.25000000e-01 0.00000000e+00 
+-1.66666672e-01 1.14592363e-13 0.00000000e+00 
+-1.66666672e-01 6.25000000e-02 0.00000000e+00 
+-1.66666672e-01 1.25000000e-01 0.00000000e+00 
+-3.33333343e-01 2.29184727e-13 0.00000000e+00 
+-3.33333343e-01 6.25000000e-02 0.00000000e+00 
+-3.33333343e-01 1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          6.86351312e+14 6.33012047e+14 4.83532858e+14 5.93935629e+13 5.47778379e+13 4.18426231e+13 -4.72815666e+14 -4.36071161e+14 -3.33097507e+14 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          2.75218737e-12 1.25000000e-01 0.00000000e+00 
+2.75221512e-12 1.87500000e-01 0.00000000e+00 
+2.75224288e-12 2.50000000e-01 0.00000000e+00 
+-1.66666672e-01 1.25000000e-01 0.00000000e+00 
+-1.66666672e-01 1.87500000e-01 0.00000000e+00 
+-1.66666672e-01 2.50000000e-01 0.00000000e+00 
+-3.33333343e-01 1.25000000e-01 0.00000000e+00 
+-3.33333343e-01 1.87500000e-01 0.00000000e+00 
+-3.33333343e-01 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          4.87114483e+14 2.62202171e+14 -2.53256159e+12 4.21525561e+13 2.26897248e+13 -2.19166850e+11 -3.35564808e+14 -1.80626595e+14 1.74469480e+12 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -3.33333343e-01 -2.50000000e-01 0.00000000e+00 
+-3.33333343e-01 -1.87500000e-01 0.00000000e+00 
+-3.33333343e-01 -1.25000000e-01 0.00000000e+00 
+-5.00000000e-01 -2.50000000e-01 0.00000000e+00 
+-5.00000000e-01 -1.87500000e-01 0.00000000e+00 
+-5.00000000e-01 -1.25000000e-01 0.00000000e+00 
+-6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+-6.66666687e-01 -1.87500000e-01 0.00000000e+00 
+-6.66666687e-01 -1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -7.11545492e+12 7.36670771e+14 1.36857367e+15 2.82900034e+12 -2.92889545e+14 -5.44124912e+14 -1.12339728e+13 1.16306533e+15 2.16072179e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -3.33333343e-01 -1.25000000e-01 0.00000000e+00 
+-3.33333343e-01 -6.25000000e-02 0.00000000e+00 
+-3.33333343e-01 2.29184727e-13 0.00000000e+00 
+-5.00000000e-01 -1.25000000e-01 0.00000000e+00 
+-5.00000000e-01 -6.25000000e-02 0.00000000e+00 
+-5.00000000e-01 3.43778825e-13 0.00000000e+00 
+-6.66666687e-01 -1.25000000e-01 0.00000000e+00 
+-6.66666687e-01 -6.25000000e-02 0.00000000e+00 
+-6.66666687e-01 4.58372923e-13 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.35851093e+15 1.77848056e+15 1.92834002e+15 -5.40124116e+14 -7.07097908e+14 -7.66679843e+14 2.14483461e+15 2.80788808e+15 3.04448814e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -3.33333343e-01 2.29184727e-13 0.00000000e+00 
+-3.33333343e-01 6.25000000e-02 0.00000000e+00 
+-3.33333343e-01 1.25000000e-01 0.00000000e+00 
+-5.00000000e-01 3.43778825e-13 0.00000000e+00 
+-5.00000000e-01 6.25000000e-02 0.00000000e+00 
+-5.00000000e-01 1.25000000e-01 0.00000000e+00 
+-6.66666687e-01 4.58372923e-13 0.00000000e+00 
+-6.66666687e-01 6.25000000e-02 0.00000000e+00 
+-6.66666687e-01 1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.92834002e+15 1.77848056e+15 1.35851093e+15 -7.66679843e+14 -7.07097908e+14 -5.40124116e+14 3.04448814e+15 2.80788808e+15 2.14483461e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -3.33333343e-01 1.25000000e-01 0.00000000e+00 
+-3.33333343e-01 1.87500000e-01 0.00000000e+00 
+-3.33333343e-01 2.50000000e-01 0.00000000e+00 
+-5.00000000e-01 1.25000000e-01 0.00000000e+00 
+-5.00000000e-01 1.87500000e-01 0.00000000e+00 
+-5.00000000e-01 2.50000000e-01 0.00000000e+00 
+-6.66666687e-01 1.25000000e-01 0.00000000e+00 
+-6.66666687e-01 1.87500000e-01 0.00000000e+00 
+-6.66666687e-01 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          1.36857365e+15 7.36670779e+14 -7.11549969e+12 -5.44124907e+14 -2.92889548e+14 2.82901748e+12 2.16072176e+15 1.16306534e+15 -1.12340497e+13 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -6.66666687e-01 -2.50000000e-01 0.00000000e+00 
+-6.66666687e-01 -1.87500000e-01 0.00000000e+00 
+-6.66666687e-01 -1.25000000e-01 0.00000000e+00 
+-8.33333313e-01 -2.50000000e-01 0.00000000e+00 
+-8.33333313e-01 -1.87500000e-01 0.00000000e+00 
+-8.33333313e-01 -1.25000000e-01 0.00000000e+00 
+-1.00000000e+00 -2.50000000e-01 0.00000000e+00 
+-1.00000000e+00 -1.87500000e-01 0.00000000e+00 
+-1.00000000e+00 -1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          9.64807269e+12 -9.98872955e+14 -1.85568814e+15 -2.60985409e+12 2.70199825e+14 5.01972351e+14 9.48936823e+12 -9.82438753e+14 -1.82515695e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -6.66666687e-01 -1.25000000e-01 0.00000000e+00 
+-6.66666687e-01 -6.25000000e-02 0.00000000e+00 
+-6.66666687e-01 4.58372923e-13 0.00000000e+00 
+-8.33333313e-01 -1.25000000e-01 0.00000000e+00 
+-8.33333313e-01 -6.25000000e-02 0.00000000e+00 
+-8.33333313e-01 5.72967021e-13 0.00000000e+00 
+-1.00000000e+00 -1.25000000e-01 0.00000000e+00 
+-1.00000000e+00 -6.25000000e-02 0.00000000e+00 
+-1.00000000e+00 6.87561119e-13 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.84204380e+15 -2.41149261e+15 -2.61469134e+15 4.98281495e+14 6.52320073e+14 7.07286282e+14 -1.81173711e+15 -2.37181693e+15 -2.57167248e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -6.66666687e-01 4.58372923e-13 0.00000000e+00 
+-6.66666687e-01 6.25000000e-02 0.00000000e+00 
+-6.66666687e-01 1.25000000e-01 0.00000000e+00 
+-8.33333313e-01 5.72967021e-13 0.00000000e+00 
+-8.33333313e-01 6.25000000e-02 0.00000000e+00 
+-8.33333313e-01 1.25000000e-01 0.00000000e+00 
+-1.00000000e+00 6.87561119e-13 0.00000000e+00 
+-1.00000000e+00 6.25000000e-02 0.00000000e+00 
+-1.00000000e+00 1.25000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -2.61469134e+15 -2.41149261e+15 -1.84204380e+15 7.07286282e+14 6.52320073e+14 4.98281495e+14 -2.57167248e+15 -2.37181693e+15 -1.81173711e+15 
+        </DataArray>
+      </PointData>
+    </Piece>
+    <Piece NumberOfPoints="9" NumberOfCells="4">
+      <Points>
+        <DataArray type="Float64" NumberOfComponents="3" format="ascii">
+          -6.66666687e-01 1.25000000e-01 0.00000000e+00 
+-6.66666687e-01 1.87500000e-01 0.00000000e+00 
+-6.66666687e-01 2.50000000e-01 0.00000000e+00 
+-8.33333313e-01 1.25000000e-01 0.00000000e+00 
+-8.33333313e-01 1.87500000e-01 0.00000000e+00 
+-8.33333313e-01 2.50000000e-01 0.00000000e+00 
+-1.00000000e+00 1.25000000e-01 0.00000000e+00 
+-1.00000000e+00 1.87500000e-01 0.00000000e+00 
+-1.00000000e+00 2.50000000e-01 0.00000000e+00 
+
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 4 3
+3 4 7 6
+1 2 5 4
+4 5 8 7
+
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+9 9 9 9 
+        </DataArray>
+      </Cells>
+      <PointData>
+        <DataArray type="Float64" Name="u">
+          -1.85568809e+15 -9.98872978e+14 9.64820684e+12 5.01972334e+14 2.70199833e+14 -2.60990509e+12 -1.82515688e+15 -9.82438791e+14 9.48959437e+12 
+        </DataArray>
+      </PointData>
+    </Piece>
+  </UnstructuredGrid>
+</VTKFile>

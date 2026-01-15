@@ -1,0 +1,3 @@
+- do spod to detect the frequencies of the torus. put more samples points around the gap.
+- continue edge state calculation
+- check that with d= 2 we have the same hopf and torus.

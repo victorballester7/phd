@@ -1,0 +1,5 @@
+- to get the base flow, run the incompressible solver to get the base flow.
+- you can do it with 3 valriables at once (u, v, w) setting only one fourier mode for w.
+- we use quadrialteral elements in the boundary layer, for precisness and adjusting to the boundary layer.
+- see stability concerns for the advection dt ~ dx/p^a.
+- first start without an angle.

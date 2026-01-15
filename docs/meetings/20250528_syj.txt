@@ -1,0 +1,4 @@
+- try transient growth with very low tau with flat plate and gap domain.
+- prepare slides for sardinina for next week
+- if I rescale the gap domain for picture, add the original (unscaled) gap as a side to reference.
+- jeff didn't like the frequency of the abs unstable mode.

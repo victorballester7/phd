@@ -1,0 +1,9 @@
+- do the plot of L2 for a globally stable w (e.g. w=15)
+- normalize the plots (relative errror instead of absolute)
+
+
+slides jeff
+- include non linear simulations (stable and unstable case)
+
+
+- write down that the most unstable mode in w=15 IS NOT TS mode

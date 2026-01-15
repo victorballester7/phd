@@ -1,0 +1,39 @@
+I did a small test with the eigenvalue solver (using linearized Navier Stokes) on the domain with a gap (2d Spectral discretization + only one Fourier mode, the constant one, in the thrid direction)
+The results are the following. Time is in seconds and it was the average time it took to compute 0.1 units of time of the simulation.
+1 Node, 128 core: 31 s
+1 Node, 256 cores: 24 s
+2 Nodes, 128 cores: 12.3 s (sometimes it increased suddenly to 100s, probably due to some connecting lags?)
+3 Nodes, 128 cores: 11.1 s (sometimes it increased suddenly to 100s, probably due to some connecting lags?)
+4 Nodes, 128 cores: 9.7 s
+
+
+
+
+1. Why Does 2 Nodes, 128 Cores Perform Better Than 1 Node, 128 Cores?
+
+This behavior is due to inter-node parallelism and memory bandwidth scaling. Here's why:
+
+    Improved Memory Bandwidth and Cache Availability:
+        Each compute node has its own memory subsystem and cache hierarchy. When you distribute the workload across two nodes, you effectively double the available memory bandwidth and cache resources.
+        This can alleviate memory bottlenecks, especially for memory-intensive applications like eigenvalue solvers.
+
+    Reduced Contention on a Single Node:
+        When running on a single node with 128 cores, all processes share the same memory and interconnects. This can lead to contention and reduced efficiency.
+        Using two nodes spreads the workload across independent memory systems, reducing contention and improving overall performance.
+
+    Distributed Workload:
+        The workload is split more evenly across two nodes, allowing the solver to handle computations in parallel more effectively.
+        Communication overhead (for exchanging data between nodes) is relatively small compared to the gains from increased resources.
+
+3. Sudden Jumps in Computation Time (e.g., 100s):
+
+The sudden increase in computation time when using 2 or 3 nodes is likely due to network instability or congestion. Potential causes include:
+
+    Interconnect Performance Variability:
+        High-performance clusters often use specialized interconnects like InfiniBand. Any delay or packet loss in these networks can temporarily degrade performance.
+
+    Node Connection or Job Scheduling Delays:
+        Some nodes may have varying workloads or priorities, leading to delays in communication or computation.
+
+    Shared Resource Contention:
+        If other jobs are running on the cluster and using the same network or file system, they can cause spikes in latency or I/O wait times.

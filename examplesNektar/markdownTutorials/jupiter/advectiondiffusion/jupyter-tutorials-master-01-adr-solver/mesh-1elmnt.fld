@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <Metadata>
+        <Provenance>
+            <Hostname>carnotaurus</Hostname>
+            <NektarVersion>5.6.0</NektarVersion>
+            <Timestamp>21-Oct-2024 14:43:49</Timestamp>
+        </Provenance>
+        <ChkFileNum>0</ChkFileNum>
+        <SessionName0>mesh-1elmnt.xml</SessionName0>
+        <SessionName1>errorAnalysisSession.xml</SessionName1>
+    </Metadata>
+    <ELEMENTS FIELDS="u" SHAPE="Quadrilateral" BASIS="Modified_A,Modified_A" NUMMODESPERDIR="UNIORDER:5,5" ID="0" COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJxjYKAKaIAxlm3YttdD7OKeTytnvipMPbBnl4+3Xb/CI5u7zpfLHbbOtpldt0+08PMGG4GG7Y+/rfxgrwmh9/OfVOgUn/3H5p3J9QddjzkcphUtX/tP+JpN6Kx12UsmHt0zVSt6werVR/ac/my6KKj3hc03Xu6w+2/37IlqW3Y/698pGwBJWkTV</ELEMENTS>
+</NEKTAR>

@@ -1,0 +1,3 @@
+[submodule "examplesNektar/jupyter-tutorials"]
+	path = examplesNektar/jupyter-tutorials
+	url = git@gitlab.nektar.info:nektar/jupyter-tutorials.git

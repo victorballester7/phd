@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NEKTAR>  
+  <EXPANSIONS>    
+    <E COMPOSITE="C[100,101]" NUMMODES="7" FIELDS="u,v" TYPE="MODIFIED" />  
+    <E COMPOSITE="C[100,101]" NUMMODES="6" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
+    <E COMPOSITE="C[102]" NUMMODES="5" FIELDS="u,v" TYPE="MODIFIED" />
+    <E COMPOSITE="C[102]" NUMMODES="4" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
+  </EXPANSIONS>
+  
+  <CONDITIONS>    
+    <SOLVERINFO>
+      <I PROPERTY="SolverType"                           VALUE="VelocityCorrectionScheme"   />
+      <I PROPERTY="EqType"                               VALUE="UnsteadyNavierStokes"       />
+      <I PROPERTY="Projection"                           VALUE="Galerkin"                   /> 
+      <I PROPERTY="EvolutionOperator"                     VALUE="Nonlinear"                  />
+      <I PROPERTY="TimeIntegrationMethod"                 VALUE="IMEXOrder2"                 />
+      <I PROPERTY="SpectralVanishingViscosity"            VALUE="DGKernel"                        />
+      <!-- <I PROPERTY="SpectralVanishingViscosityHomo1D"      VALUE="ExpKernel"                       /> -->
+      <I PROPERTY="SPECTRALHPDEALIASING"          VALUE="True"           />
+      <I PROPERTY="DEALIASING"                           VALUE="True"                        />
+      <!-- <I PROPERTY="Homogeneous"                          VALUE="1D"                         /> -->
+      <!-- <I PROPERTY="UseFFT"                               VALUE="FFTW"                        /> -->
+      <I PROPERTY="GlobalSysSoln"                 VALUE="XxtMultiLevelStaticCond" />
+    </SOLVERINFO>    
+
+    <PARAMETERS>
+      <!--General parameters-->
+      <P> TimeStep        = 0.002      </P>
+      <P> NumSteps        = 2000e4     </P>
+      <P> IO_CheckSteps   = NumSteps/200         </P> 
+      <P> IO_InfoSteps    = NumSteps/4000        </P> 
+      <P> IO_CFLSteps     = IO_InfoSteps         </P>
+      <P> HistorySteps    = IO_InfoSteps * 2 </P>
+      <P> EnergySteps     = IO_InfoSteps * 10</P>
+      <P> IO_FiltersInfoSteps = EnergySteps </P>
+      <P> SVVDiffCoeff    = 0.1                    </P>
+      <P> SVVCutoffRatio  = 0.75                    </P>
+      <!-- <P> HomModesZ       = 2                       </P> -->
+      <!-- <P> LZ              = 2                     </P> -->
+
+     <!-- Parameters for the simulation -->
+      <P> deltaStar       = 1  </P> 
+      <P> delta           = deltaStar*2.85  </P> <!-- boudary layer thickness, fixed value (keeping in mind that we have enough resolution on the mesh) !-->
+      <P> eta_99          = 4.91 </P> <!-- 99% of the free stream velocity is reached at this eta value (taken from python script solve_bvp.py) !-->
+      <!-- create y2eta based on delta (from y) and eta_99 as a linear relation -->
+      <P> y2eta           = eta_99/delta           </P> <!-- y2eta = 1.72 !-->
+      <P> Re_deltaStar    = 1000       </P>
+      <p> Re_x            = (Re_deltaStar/y2eta)^2 </p>
+      <p> Uinf            = 1                   </p>
+      <p> Vinf            = 0.5*Uinf/sqrt(Re_x)*y2eta  </p>
+      <P> Kinvis          = Uinf*deltaStar/Re_deltaStar                 </P>
+
+      <!-- Parameters for the Inflow profile -->
+      <P> etaMax          = 9.0                      </P>
+      <P> yMax        = etaMax/y2eta             </P> <!--[m]-->
+      <p> c0_u = -4.107310885838114e-09 </p>
+      <p> c1_u = 2.489562664374297e-07 </p>
+      <p> c2_u = -6.481980421162051e-06 </p>
+      <p> c3_u = 9.413575116069837e-05 </p>
+      <p> c4_u = -0.0008261729928185383 </p>
+      <p> c5_u = 0.004418121093968073 </p>
+      <p> c6_u = -0.013757929802551108 </p>
+      <p> c7_u = 0.0232047404093342 </p>
+      <p> c8_u = -0.0267666829807756 </p>
+      <p> c9_u = 0.01400570939329333 </p>
+      <p> c10_u = 0.32942611767129676 </p>
+      <p> c0_v = 1.736023203941736e-08 </p>
+      <p> c1_v = -8.44623875317727e-07 </p>
+      <p> c2_v = 1.690531547715069e-05 </p>
+      <p> c3_v = -0.0001774186424588629 </p>
+      <p> c4_v = 0.0010300053735735639 </p>
+      <p> c5_v = -0.0033240630927141327 </p>
+      <p> c6_v = 0.00784448031926412 </p>
+      <p> c7_v = -0.027689333052696937 </p>
+      <p> c8_v = 0.053238131819450675 </p>
+      <p> c9_v = 0.11536571855802982 </p>
+      <p> c10_v = 0.01679045443366852 </p>
+    </PARAMETERS>
+    
+    <VARIABLES>
+      <V ID="0"> u </V>
+      <V ID="1"> v </V>  
+      <V ID="2"> p </V>
+    </VARIABLES>
+    
+    <BOUNDARYREGIONS>
+      <B ID="0"> C[1] </B>    <!-- inlet !-->  
+      <B ID="1"> C[2] </B>    <!-- outlet !-->
+      <B ID="2"> C[3] </B>    <!-- top !-->
+      <B ID="3"> C[4] </B>    <!-- bottom + left & right gap walls !-->
+    </BOUNDARYREGIONS>    
+
+    <BOUNDARYCONDITIONS>
+      <REGION REF="0">  <!-- inlet !-->                  
+        <D VAR="u" VALUE="Uinf*((c0_u*(y*y2eta)^11 + c1_u*(y*y2eta)^10 + c2_u*(y*y2eta)^9 + c3_u*(y*y2eta)^8 + c4_u*(y*y2eta)^7 + c5_u*(y*y2eta)^6 + c6_u*(y*y2eta)^5 + c7_u*(y*y2eta)^4 + c8_u*(y*y2eta)^3 + c9_u*(y*y2eta)^2 + c10_u*(y*y2eta))*(y<yMax) + (y>=yMax))" />
+        <D VAR="v" VALUE="Vinf*((c0_v*(y*y2eta)^11 + c1_v*(y*y2eta)^10 + c2_v*(y*y2eta)^9 + c3_v*(y*y2eta)^8 + c4_v*(y*y2eta)^7 + c5_v*(y*y2eta)^6 + c6_v*(y*y2eta)^5 + c7_v*(y*y2eta)^4 + c8_v*(y*y2eta)^3 + c9_v*(y*y2eta)^2 + c10_v*(y*y2eta))*(y<yMax) + (y>=yMax))" />
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" /> <!-- high-order boundary condition, VALUE is not used !-->
+      </REGION>
+
+      <REGION REF="1">   <!-- outlet !-->
+        <N VAR="u" USERDEFINEDTYPE="HOutflow" VALUE="0" />
+        <N VAR="v" USERDEFINEDTYPE="HOutflow" VALUE="0" />
+        <D VAR="p" USERDEFINEDTYPE="HOutflow" VALUE="0" />
+      </REGION>  
+            
+      <REGION REF="2">   <!-- top = far-field !-->
+        <D VAR="u" VALUE="Uinf" />
+        <D VAR="v" VALUE="Vinf" />        
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />      
+      </REGION>
+
+      <REGION REF="3">  <!-- bottom = wall no slip !-->  
+        <D VAR="u" VALUE="0" />
+        <D VAR="v" VALUE="0" />        
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />  
+      </REGION>    
+    </BOUNDARYCONDITIONS>
+    
+    <FUNCTION NAME="InitialConditions">
+      <F VAR="u,v,p" FILE="mesh_d4_w15_83.chk" />
+    </FUNCTION>
+
+    
+   <!--  <FUNCTION NAME="InitialConditions"> -->
+   <!--    <E VAR="u" VALUE="0" /> -->
+   <!--    <E VAR="v" VALUE="0" /> -->
+   <!--    <E VAR="p" VALUE="0" /> -->
+   <!-- </FUNCTION> -->
+  </CONDITIONS>
+  <FILTERS>
+
+    <FILTER TYPE="ModalEnergy">
+      <PARAM NAME="OutputFile">EnergyFile</PARAM>
+      <PARAM NAME="OutputFrequency">EnergySteps</PARAM>
+    </FILTER>
+
+    <FILTER TYPE="HistoryPoints">
+      <PARAM NAME="OutputFile">HistoryPoints</PARAM>
+      <PARAM NAME="OutputFrequency">HistorySteps</PARAM>
+      <PARAM NAME="Points">
+    3.75000000000000000000 2.00000000000000000000 0
+    3.75000000000000000000 -1.33333333333333333333 0
+    3.75000000000000000000 -2.66666666666666666666 0
+    7.50000000000000000000 2.00000000000000000000 0
+    7.50000000000000000000 -1.33333333333333333333 0
+    7.50000000000000000000 -2.66666666666666666666 0
+    11.25000000000000000000 2.00000000000000000000 0
+    11.25000000000000000000 -1.33333333333333333333 0
+    11.25000000000000000000 -2.66666666666666666666 0
+    15 2.00000000000000000000 0
+    22.50000000000000000000 2.00000000000000000000 0
+    30 2.00000000000000000000 0
+      </PARAM>
+    </FILTER>
+  </FILTERS>
+</NEKTAR>
+

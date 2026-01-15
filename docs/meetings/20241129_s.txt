@@ -1,0 +1,3 @@
+- delete hordeflow on the outdlow and set u,v,w to neuman and p to dirichlet
+- check bres & colonius thesis (ganlin's reference) about instabilities. 
+- absolute (localized) vs convective (move with fluid) instabilities (when we can distinguish them with periodic bc?)

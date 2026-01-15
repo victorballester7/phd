@@ -1,0 +1,5 @@
+- ask zecheng code compressible OS.
+- check numerics
+- try Ma = 0.05
+- compare with/without damping region
+- compare v fields inc and Ma=0.2 

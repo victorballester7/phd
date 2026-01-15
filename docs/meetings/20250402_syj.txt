@@ -1,0 +1,5 @@
+- outflow Re number must be around 2000 (1000 at the upstream edge)
+- do plot energy (exp(lambda * t)) with scaling the perturbation by epsilon = 0.1 or whatever to see if the bump goes away.
+- repeat or understand runs fro free-discontinuities surface
+- READ the paper of jeff
+- for 3d case the depth of the domain (in the spanwise dir) must be around 2w (w is the width of the gap)

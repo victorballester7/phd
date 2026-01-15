@@ -1,0 +1,5 @@
+- try to check if freqencies with jeff match with the nonlinear simulations.
+- do global stability with SFD in an absolutely unstable case, to propperly check the frequencies.
+- reread jeff paper
+- try white noise in blowing and suction
+- add boundary line from jeff in the stability plot.

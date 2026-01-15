@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{array}
+
+\title{Review of the Paper\\\textit{Data-driven perspectives on linear stability theory: dataset support and pattern-based N-factor evaluation}}
+\author{Víctor Ballester Ribó$^1$, Spencer Sherwin$^1$\\
+ \small $^1$Department of Aeronautics, Imperial College London, UK}
+\date{\today}
+
+% no indentation
+% \setlength{\parindent}{0pt}
+
+% Define centered p-type column
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\begin{document}
+
+\maketitle
+
+We found the idea of using CNNs to evaluate the N-factor highly interesting and promising, particularly in the context of supporting LST with data-driven approaches. 
+
+That said, we observed that the manuscript currently lacks strong motivation and quantitative evidence to justify the use of CNNs over classical approaches such as DNS or LST. In particular, a more thorough discussion on the advantages, limitations, and practical implications of adopting CNNs in this context would strengthen the contribution.
+
+On top of that, we list below several minor corrections and comments:
+
+\begin{itemize}
+  \item The acronym \textit{LST} is defined multiple times throughout the text. We suggest defining it only in the abstract and in the first line of the Introduction. In all other cases, we recommend writing either \textit{LST} or \textit{linear stability theory}, but not both.
+  
+  \item For coherence, we recommend rewriting the sentence:
+
+    \textit{\ldots breakthrough performance in the ILSVRC (ImageNet Large Scale Visual Recognition Challenge) [20]\ldots}  
+
+    as  
+    
+    \textit{\ldots breakthrough performance in the ImageNet Large Scale Visual Recognition Challenge [20]\ldots}  
+    
+    This avoids unnecessary acronyms that are used only once (see comment below).
+  
+  \item In Equation 2, the term \textit{complex conjugate} is used. It may be cleaner to write \textit{c.c.}, define it immediately after the equation, and then avoid redefining it again after Equation 4.
+  
+  \item We suggest rewriting Equation 5 for clarity as:
+    $$
+      N(\beta, x) = -\int_{x|_{\alpha_i=0}}^x \alpha_i(\beta, s)\,\mathrm{d}s
+    $$
+    This explicitly expresses the dependence on the streamwise coordinate and distinguishes between the integration variable and the variable in the integration limits.
+
+  \item In Table 1, consider including the units of $x$ in the caption, referring to its normalization with the boundary layer thickness at the inlet, $\delta_{99,\text{inlet}}$.
+
+  \item We typically write \textit{baseflow} as one word. Please consider adopting this form for consistency.
+
+  \item On page 7, the phrase \textcolor{red}{``ripples.''} should be corrected to \textcolor{red}{``ripples''.} (placing the point after the closing quotation mark).
+
+  \item In Figure 12b, it is not immediately clear that the dots represent LST results. Although this is mentioned in the main text, we recommend stating it explicitly in the figure legend or caption for clarity.
+
+  \item There are several acronyms defined in the text that are only used once (in their respective definitions), such as DeepONet, ILSVRC, NLP, ViT, TSP, PSP, PIV, or LIF. We suggest removing these acronyms.
+
+  \item In Figure 13, consider making the $x$-axis limits consistent across all subplots to facilitate comparison. The same could be considered for the $y$-axis.
+
+  \item In Table 11, we recommend including units in the header row and using consistent units and significant digits throughout. For example:
+  
+  \begin{table}[ht]
+    \centering
+    \begin{tabular}{C{4cm} C{2.4cm} C{1.7cm} C{2.75cm} C{2.75cm}}
+      \toprule
+      \textbf{Model} & 
+      \textbf{Parameters (millions)} & 
+      \textbf{GFLOPs} & 
+      \textbf{Mean absolute error} & 
+      \textbf{Median absolute error} \\
+      \midrule
+      custom CNN (Figure 3) & 34.79 & 0.16 & 0.105 & 0.098 \\
+      AlexNet               & 31.18 & 0.67 & 0.096 & 0.086 \\
+      ResNet                & 11.32 & 1.10 & 0.053 & 0.046 \\
+      ConvNeXt              & 28.04 & 2.90 & 0.031 & 0.028 \\
+      \bottomrule
+    \end{tabular}
+    \caption{Performance comparison of different CNN models.}
+  \end{table}
+
+\end{itemize}
+
+\end{document}
+

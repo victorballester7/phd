@@ -1,0 +1,4 @@
+- look for the test in IncNS/Test/Chain --> add Arnold smth????? in the Driver parameter field of the session file.
+- look the tutorials Global Flow Stability Computation
+- 2d flow is stable and adding a 3d destabilizes the flow or how does it work?
+- email ganilin

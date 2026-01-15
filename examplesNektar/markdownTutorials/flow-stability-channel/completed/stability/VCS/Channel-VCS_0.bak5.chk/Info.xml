@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <Metadata>
+        <Provenance>
+            <GitBranch>refs/heads/master</GitBranch>
+            <GitSHA1>d99d8b203c9cb93ef6c0caddf31f02ea6bf9a898</GitSHA1>
+            <Hostname>carnotaurus</Hostname>
+            <NektarVersion>5.7.0</NektarVersion>
+            <Timestamp>09-Jan-2025 17:46:54</Timestamp>
+        </Provenance>
+        <ChkFileNum>0</ChkFileNum>
+        <Kinvis>0.00013333333333333334</Kinvis>
+        <SessionName0>Channel-al.xml</SessionName0>
+        <SessionName1>Channel-VCS_xml/P0000000.xml</SessionName1>
+        <Time>294.99999999993605</Time>
+        <TimeStep>0.001</TimeStep>
+    </Metadata>
+    <Partition FileName="P0000000.fld">4-7,13-15,37-39,44-47,12,20-23,28-31,36</Partition>
+    <Partition FileName="P0000001.fld">0-3,8-10,32-34,40-43,11,16-19,24-27,35</Partition>
+</NEKTAR>

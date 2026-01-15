@@ -1,0 +1,2 @@
+- simulate linear stability for quasi 3d and see on which Lz values you get the most unstable modes. The real mode might be physical.
+- double check the sponge region for the comNS.

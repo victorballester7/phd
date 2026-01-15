@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <Metadata>
+        <Provenance>
+            <Hostname>carnotaurus</Hostname>
+            <NektarVersion>5.6.0</NektarVersion>
+            <Timestamp>21-Oct-2024 14:44:36</Timestamp>
+        </Provenance>
+        <ChkFileNum>0</ChkFileNum>
+        <SessionName0>mesh-25elmnt.opt</SessionName0>
+        <SessionName1>mesh-25elmnt.xml</SessionName1>
+        <SessionName2>errorAnalysisSession.xml</SessionName2>
+        <SessionName3>exp3.xml</SessionName3>
+    </Metadata>
+    <ELEMENTS FIELDS="u" SHAPE="Quadrilateral" BASIS="Modified_A,Modified_A" NUMMODESPERDIR="UNIORDER:3,3" ID="0-24" COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJx1lW1IU2EUx2dbQkYaWaI0K3oxzIqKKAlv99ZIqUjLYSopzgjTkBRN0xik60WE7EUybAkWc6wk0rApxOZzDZQyopdNHUXFMEgkTEpkYlo+z+H4qbMvF85+XP7395xzHo3m/7/9DQNbTi6xsU+l+RtqRobk4v7VjkrLlKz2VR8omH0gv55s3drvCMjdaYnTE6FRCsXrujKcvZ4n8lCWv7gpfZgVmV/+Mth0qvr1bs6gdIclB3v1byrH2Jpr3xypU6EqxcekZfE6Mx0SddlufMXrCs/qe14g8adutl3K12pa7EleieIrSkROOT5S5GS5GWt5TjZureN55OEzb3ke+V2kn+cheUKbpv3Zee6HHSl/yP2wkZ3Cj0rx6Gt0uW7V+ophZpkM7e0rGGPotyoxLt8X0KqNhbtnkixhKsWjL+OV7RcsVT9lg2PXMY81IKPfYrO62NMWkA3lsacTKrUKxaMvY6mos+PaeF5n6DdYvfEx7ZbdvXddXvpmq8tN8ehL+aLlOeXLneE857xf20Q3z8OWxYs8KsVT3tBvpmkT96MMZO3hfhSKR18qPMV7E0KeutFveDm8h9c3NHndFI++Yu/B934POjxtN9sl9LsxmonvmsPv15ldEsWjr8e18P/VFG9tTZ5t3q/59qW4ulSbO2gw4kShc9RF8ejrxVLIy3Nq9R1u9JucC7nmysr7ZifJU97Qb4wCnhbMvaex6APJo69eH5xnfQ2cI/rVm+HcdvyF86J49JXSAP1l2AZ9hX4HjdBHxk7oH4pHX5nJ0O/dDPoc/WoWtSQ8iuqQmgesR6OznW6KR1/7SmD+wsZg7tCvVwtzduoczBfFU97Qb89vmPvoMph3ikdf7WxI7KeQHNhL6PeH/rrYQz15sH8oHn316TLFviwphD2Jfk3GNrEXbSbYhxSPvqpXZIv9vbAe9jb6jYnQdPlX3nSHuTIu+mY8EsWjr/Eyn7hP0v1wj6BfxVAr7o2oVrgvKJ7yhn4/HywT99ifs3B//QNP/wS/</ELEMENTS>
+</NEKTAR>

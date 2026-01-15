@@ -1,0 +1,43 @@
+# --- Fonts & LaTeX ---
+font.size: 16
+text.usetex: True
+font.family: serif
+font.serif: Computer Modern Roman
+axes.unicode_minus: False
+text.latex.preamble: \usepackage{amsmath}
+
+# --- Figure layout ---
+figure.figsize: 8, 6
+figure.dpi: 300
+
+# --- Axes ---
+axes.labelsize: 16
+axes.titlesize: 16
+axes.linewidth: 1.0
+
+# --- Grid ---
+axes.grid: True
+grid.alpha: 0.6
+grid.linestyle: "-" 
+grid.linewidth: 0.5
+
+# --- Lines ---
+lines.linewidth: 2.0
+lines.markersize: 8
+lines.markeredgewidth: 0.4
+
+# --- Legend ---
+legend.framealpha: 0.9
+legend.fontsize: 14
+legend.loc: best
+
+# --- Ticks ---
+xtick.direction: in
+ytick.direction: in
+xtick.labelsize: 14
+ytick.labelsize: 14
+
+# --- Savefig ---
+savefig.bbox: tight
+savefig.dpi: 300
+

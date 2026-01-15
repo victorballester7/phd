@@ -1,0 +1,6 @@
+1- install nektar + tutorials
+2- first run simple cases (in my machine)
+3- then ganlin case, ask for settings to Ganlin
+
+
+use gmesh -> nekmesh

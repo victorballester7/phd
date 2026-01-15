@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=56
+#SBATCH --mem=50GB
+#SBATCH --time=2-23:59:59
+#SBATCH --job-name=d2.25_w10
+#SBATCH --partition=long
+#SBATCH --output=output.txt
+#SBATCH --error=log.txt
+
+source $HOME/Desktop/PhD/scripts/slurm.sh

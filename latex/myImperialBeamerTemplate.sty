@@ -1,0 +1,82 @@
+% myImperialTemplate.sty
+\ProvidesPackage{myImperialTemplate}
+
+% -----------------------------------------------------------------
+%   Required packages
+% -----------------------------------------------------------------
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+\RequirePackage{pgffor}
+\usetikzlibrary{positioning}
+
+% -----------------------------------------------------------------
+%   Beamer Color Configuration
+% -----------------------------------------------------------------
+\usecolortheme[named=customcolor]{structure}
+\setbeamercolor{frametitle}{fg=customcolor}
+\setbeamercolor{framesubtitle}{fg=customcolor!50}
+\setbeamercolor{page number in head/foot}{fg=customcolor}
+\setbeamercolor{title}{fg=customcolor}
+
+% -----------------------------------------------------------------
+%   Fonts and Formatting
+% -----------------------------------------------------------------
+\usefonttheme{professionalfonts}
+\setbeamerfont{title}{series=\bfseries}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamerfont{framesubtitle}{series=\mdseries}
+\setbeamerfont{author}{series=\bfseries}
+\setbeamerfont{institute}{series=\mdseries}
+
+% ------------------------------------------------------------------
+% Remove nav symbols and footline
+% ------------------------------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{}
+
+
+% ------------------------------------------------------------------
+%   Other formatting settings
+% ------------------------------------------------------------------
+\setbeamertemplate{itemize item}{\textbullet}
+% \setbeamertemplate{itemize left=0pt}
+\setbeamersize{text margin left=0.5cm, text margin right=0.5cm}
+
+
+% ------------------------------------------------------------------
+%   Title Page Redefinition
+% ------------------------------------------------------------------
+\setbeamertemplate{title page}{
+  \begin{centering}
+    \vspace*{2.0cm}
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\fontsize{18pt}{20pt}\selectfont\inserttitle\par}
+    \vskip1em
+    {\usebeamerfont{author}\insertauthor\par}
+    \vskip1em
+    {\usebeamerfont{institute}\insertinstitute\par}
+    \vskip1em
+    {\usebeamerfont{date}\insertdate\par}
+    \vfill
+
+    \begin{tikzpicture}[remember picture, overlay]
+      % Institution logos centered at the bottom
+      \node[anchor=south, yshift=0.25cm] at (current page.south) {
+        \begin{minipage}{\textwidth}
+          \centering
+          \hspace{\separation}
+          \foreach \x/\h/\r in \institutionlogos {
+            \raisebox{\r}{\includegraphics[height=\h]{Images/\x}} \hspace{\separation}
+          }
+        \end{minipage}
+      };
+      % Conference logo in top-right
+      \foreach \p/\h/\y in \logoconference {
+         \node[anchor=north,yshift=\y] at (current page.north) {
+           \includegraphics[height=\h]{Images/\p}
+         };
+      }
+    \end{tikzpicture}
+  \end{centering}
+}
+

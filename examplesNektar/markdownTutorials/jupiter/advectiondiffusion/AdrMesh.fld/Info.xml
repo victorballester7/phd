@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <Metadata>
+        <Provenance>
+            <Hostname>carnotaurus</Hostname>
+            <NektarVersion>5.6.0</NektarVersion>
+            <Timestamp>21-Oct-2024 13:39:21</Timestamp>
+        </Provenance>
+        <ChkFileNum>0</ChkFileNum>
+        <SessionName0>AdrMesh.opt</SessionName0>
+        <SessionName1>AdrMesh_xml/P0000000.xml</SessionName1>
+    </Metadata>
+    <Partition FileName="P0000000.fld">0-36,39-40,43-44,47-48,51-52,55-56</Partition>
+    <Partition FileName="P0000001.fld">59-93,37-38,41-42,45-46,49-50,53-54,57-58</Partition>
+</NEKTAR>

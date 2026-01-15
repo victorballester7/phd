@@ -1,0 +1,3 @@
+- there is a problem in v on the outflow. try setting normal (N and D) BC.
+- do some slides for updating jeff.
+- ask zilin for codes. it is for couette flow (i need to modify it). We want it for BL

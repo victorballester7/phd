@@ -1,0 +1,615 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{flightradar24}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=8d6376ce01a35ea73fdf698f6d57a255}{%
+           family={AB},
+           familyi={A\bibinitperiod},
+           given={FlightRadar24},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{8d6376ce01a35ea73fdf698f6d57a255}
+      \strng{fullhash}{8d6376ce01a35ea73fdf698f6d57a255}
+      \strng{fullhashraw}{8d6376ce01a35ea73fdf698f6d57a255}
+      \strng{bibnamehash}{8d6376ce01a35ea73fdf698f6d57a255}
+      \strng{authorbibnamehash}{8d6376ce01a35ea73fdf698f6d57a255}
+      \strng{authornamehash}{8d6376ce01a35ea73fdf698f6d57a255}
+      \strng{authorfullhash}{8d6376ce01a35ea73fdf698f6d57a255}
+      \strng{authorfullhashraw}{8d6376ce01a35ea73fdf698f6d57a255}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed 22/07/2025}
+      \field{title}{{FlightRadar24} Statistics}
+      \verb{urlraw}
+      \verb https://www.flightradar24.com/data/statistics
+      \endverb
+      \verb{url}
+      \verb https://www.flightradar24.com/data/statistics
+      \endverb
+    \endentry
+    \entry{airbusA320tech}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b110aa10dc3e3aa939ba099440938e65}{%
+           family={{Airbus}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{b110aa10dc3e3aa939ba099440938e65}
+      \strng{fullhash}{b110aa10dc3e3aa939ba099440938e65}
+      \strng{fullhashraw}{b110aa10dc3e3aa939ba099440938e65}
+      \strng{bibnamehash}{b110aa10dc3e3aa939ba099440938e65}
+      \strng{authorbibnamehash}{b110aa10dc3e3aa939ba099440938e65}
+      \strng{authornamehash}{b110aa10dc3e3aa939ba099440938e65}
+      \strng{authorfullhash}{b110aa10dc3e3aa939ba099440938e65}
+      \strng{authorfullhashraw}{b110aa10dc3e3aa939ba099440938e65}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 22/07/2025}
+      \field{title}{Technology and Innovation - {A320} Family}
+      \field{year}{2016}
+      \verb{urlraw}
+      \verb https://web.archive.org/web/20160403132507/http://www.airbus.com/aircraftfamilies/passengeraircraft/a320family/technology-and-innovation/
+      \endverb
+      \verb{url}
+      \verb https://web.archive.org/web/20160403132507/http://www.airbus.com/aircraftfamilies/passengeraircraft/a320family/technology-and-innovation/
+      \endverb
+    \endentry
+    \entry{blasius1908grenzschichten}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=a037133992cf27bf60eb23c206e260e0}{%
+           family={Blasius},
+           familyi={B\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a037133992cf27bf60eb23c206e260e0}
+      \strng{fullhash}{a037133992cf27bf60eb23c206e260e0}
+      \strng{fullhashraw}{a037133992cf27bf60eb23c206e260e0}
+      \strng{bibnamehash}{a037133992cf27bf60eb23c206e260e0}
+      \strng{authorbibnamehash}{a037133992cf27bf60eb23c206e260e0}
+      \strng{authornamehash}{a037133992cf27bf60eb23c206e260e0}
+      \strng{authorfullhash}{a037133992cf27bf60eb23c206e260e0}
+      \strng{authorfullhashraw}{a037133992cf27bf60eb23c206e260e0}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Zeitschrift für Angewandte Mathematik und Physik}
+      \field{title}{Grenzschichten in Flüssigkeiten mit kleiner Reibung}
+      \field{volume}{56}
+      \field{year}{1908}
+      \field{pages}{1\bibrangedash 37}
+      \range{pages}{37}
+    \endentry
+    \entry{scipy}{manual}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=1a2fc6398b13f86596a9d7d65932792b}{%
+           family={Community},
+           familyi={C\bibinitperiod},
+           given={SciPy},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {SciPy Project}%
+      }
+      \strng{namehash}{1a2fc6398b13f86596a9d7d65932792b}
+      \strng{fullhash}{1a2fc6398b13f86596a9d7d65932792b}
+      \strng{fullhashraw}{1a2fc6398b13f86596a9d7d65932792b}
+      \strng{bibnamehash}{1a2fc6398b13f86596a9d7d65932792b}
+      \strng{authorbibnamehash}{1a2fc6398b13f86596a9d7d65932792b}
+      \strng{authornamehash}{1a2fc6398b13f86596a9d7d65932792b}
+      \strng{authorfullhash}{1a2fc6398b13f86596a9d7d65932792b}
+      \strng{authorfullhashraw}{1a2fc6398b13f86596a9d7d65932792b}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 24/07/2025}
+      \field{title}{scipy.integrate.solve\_bvp}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_bvp.html
+      \endverb
+      \verb{url}
+      \verb https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_bvp.html
+      \endverb
+    \endentry
+    \entry{boeing737ng}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=91671fba8cd1f1e4724322580236f03e}{%
+           family={Company},
+           familyi={C\bibinitperiod},
+           given={The\bibnamedelima Boeing},
+           giveni={T\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Boeing Commercial Airplanes}%
+      }
+      \strng{namehash}{91671fba8cd1f1e4724322580236f03e}
+      \strng{fullhash}{91671fba8cd1f1e4724322580236f03e}
+      \strng{fullhashraw}{91671fba8cd1f1e4724322580236f03e}
+      \strng{bibnamehash}{91671fba8cd1f1e4724322580236f03e}
+      \strng{authorbibnamehash}{91671fba8cd1f1e4724322580236f03e}
+      \strng{authornamehash}{91671fba8cd1f1e4724322580236f03e}
+      \strng{authorfullhash}{91671fba8cd1f1e4724322580236f03e}
+      \strng{authorfullhashraw}{91671fba8cd1f1e4724322580236f03e}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 22/07/2025}
+      \field{number}{BCA737NG}
+      \field{title}{The Boeing Next-Generation 737 Family -- Productive, Progressive, Flexible, Familiar}
+      \field{type}{techreport}
+      \field{year}{2018}
+      \verb{urlraw}
+      \verb https://chinaerospace.oss-cn-beijing.aliyuncs.com/18.1%20%E6%9C%BA%E5%9E%8B%E8%B5%84%E6%96%99/Boeing/Bck%20-%20NG%20737%20Family_June%202014.pdf
+      \endverb
+      \verb{url}
+      \verb https://chinaerospace.oss-cn-beijing.aliyuncs.com/18.1%20%E6%9C%BA%E5%9E%8B%E8%B5%84%E6%96%99/Boeing/Bck%20-%20NG%20737%20Family_June%202014.pdf
+      \endverb
+    \endentry
+    \entry{nektardeveloperguide}{manual}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f886e4e3bd00d402e46c8799ee35d054}{%
+           family={Consortium},
+           familyi={C\bibinitperiod},
+           given={Nektar++},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {Nektar++ Consortium}%
+      }
+      \strng{namehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{fullhash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{fullhashraw}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{bibnamehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authorbibnamehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authornamehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authorfullhash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authorfullhashraw}{f886e4e3bd00d402e46c8799ee35d054}
+      \field{extraname}{1}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{30}
+      \field{month}{10}
+      \field{note}{Version 5.7.0}
+      \field{title}{Nektar++: Spectral/hp Element Framework, Version 5.7.0 Developer Guide}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.nektar.info
+      \endverb
+      \verb{url}
+      \verb https://www.nektar.info
+      \endverb
+    \endentry
+    \entry{nektaruserguide}{manual}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f886e4e3bd00d402e46c8799ee35d054}{%
+           family={Consortium},
+           familyi={C\bibinitperiod},
+           given={Nektar++},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {Nektar++ Consortium}%
+      }
+      \strng{namehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{fullhash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{fullhashraw}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{bibnamehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authorbibnamehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authornamehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authorfullhash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authorfullhashraw}{f886e4e3bd00d402e46c8799ee35d054}
+      \field{extraname}{2}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{30}
+      \field{month}{10}
+      \field{note}{Version 5.7.0}
+      \field{title}{Nektar++: Spectral/hp Element Framework, Version 5.7.0 User Guide}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.nektar.info
+      \endverb
+      \verb{url}
+      \verb https://www.nektar.info
+      \endverb
+    \endentry
+    \entry{nektar}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f886e4e3bd00d402e46c8799ee35d054}{%
+           family={Consortium},
+           familyi={C\bibinitperiod},
+           given={Nektar++},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{fullhash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{fullhashraw}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{bibnamehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authorbibnamehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authornamehash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authorfullhash}{f886e4e3bd00d402e46c8799ee35d054}
+      \strng{authorfullhashraw}{f886e4e3bd00d402e46c8799ee35d054}
+      \field{extraname}{3}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 22/07/2025}
+      \field{title}{Spectral/hp Element Framework}
+      \verb{urlraw}
+      \verb https://www.nektar.info/
+      \endverb
+      \verb{url}
+      \verb https://www.nektar.info/
+      \endverb
+    \endentry
+    \entry{jeffGaps}{article}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=d814ec777be9d8fc2efde98d6dd90de5}{%
+           family={Crouch},
+           familyi={C\bibinitperiod},
+           given={J.\bibnamedelimi D.},
+           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=410d1b228ba25a9ce6849030bff88334}{%
+           family={Kosorygin},
+           familyi={K\bibinitperiod},
+           given={V.\bibnamedelimi S.},
+           giveni={V\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bc2f8604e967f351d8bbe5cbeeefc3b1}{%
+           family={Sutanto},
+           familyi={S\bibinitperiod},
+           given={M.\bibnamedelimi I.},
+           giveni={M\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=24f1791419bd2a2ce5f69a2f2b5adf06}{%
+           family={Miller},
+           familyi={M\bibinitperiod},
+           given={G.\bibnamedelimi D.},
+           giveni={G\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d453607ee8fb160fa3f0d01b8a8b2def}
+      \strng{fullhash}{bfb86c536a2b718766eefed0063761bd}
+      \strng{fullhashraw}{bfb86c536a2b718766eefed0063761bd}
+      \strng{bibnamehash}{d453607ee8fb160fa3f0d01b8a8b2def}
+      \strng{authorbibnamehash}{d453607ee8fb160fa3f0d01b8a8b2def}
+      \strng{authornamehash}{d453607ee8fb160fa3f0d01b8a8b2def}
+      \strng{authorfullhash}{bfb86c536a2b718766eefed0063761bd}
+      \strng{authorfullhashraw}{bfb86c536a2b718766eefed0063761bd}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Flow}
+      \field{title}{Characterizing surface-gap effects on boundary-layer transition dominated by {Tollmien–Schlichting} instability}
+      \field{volume}{2}
+      \field{year}{2022}
+      \field{pages}{E8}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1017/flo.2022.1
+      \endverb
+    \endentry
+    \entry{outflowBoundaryCondition}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=05734afdb20180ed4dbeb4aa0ce2a338}{%
+           family={Dong},
+           familyi={D\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=1,uniquepart=given,hash=1c2f5930e36485e8d38a87746769fdcc}{%
+           family={Karniadakis},
+           familyi={K\bibinitperiod},
+           given={G.\bibnamedelimi E.},
+           giveni={G\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=bea1d807cbf9d395ece33c7731c3bf6c}{%
+           family={Chryssostomidis},
+           familyi={C\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4b354c8c055c17027b6c677b1d731c7a}
+      \strng{fullhash}{4b354c8c055c17027b6c677b1d731c7a}
+      \strng{fullhashraw}{4b354c8c055c17027b6c677b1d731c7a}
+      \strng{bibnamehash}{4b354c8c055c17027b6c677b1d731c7a}
+      \strng{authorbibnamehash}{4b354c8c055c17027b6c677b1d731c7a}
+      \strng{authornamehash}{4b354c8c055c17027b6c677b1d731c7a}
+      \strng{authorfullhash}{4b354c8c055c17027b6c677b1d731c7a}
+      \strng{authorfullhashraw}{4b354c8c055c17027b6c677b1d731c7a}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Computational Physics}
+      \field{title}{A robust and accurate outflow boundary condition for incompressible flow simulations on severely-truncated unbounded domains}
+      \field{volume}{261}
+      \field{year}{2014}
+      \field{pages}{83\bibrangedash 105}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 11.1016/j.jcp.2013.12.042
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0021999113008505
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0021999113008505
+      \endverb
+    \endentry
+    \entry{spectralhpSpencerBible}{book}{}{}
+      \name{author}{2}{}{%
+        {{un=1,uniquepart=given,hash=9d7b9ad9d48616fa321719bc306c883e}{%
+           family={Karniadakis},
+           familyi={K\bibinitperiod},
+           given={George},
+           giveni={G\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=4bef8179cbadd47ab8bb0ab9699b1f86}{%
+           family={Sherwin},
+           familyi={S\bibinitperiod},
+           given={Spencer},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Oxford University Press}%
+      }
+      \strng{namehash}{6cd4a8bde07a203b8358c378d6db26cf}
+      \strng{fullhash}{6cd4a8bde07a203b8358c378d6db26cf}
+      \strng{fullhashraw}{6cd4a8bde07a203b8358c378d6db26cf}
+      \strng{bibnamehash}{6cd4a8bde07a203b8358c378d6db26cf}
+      \strng{authorbibnamehash}{6cd4a8bde07a203b8358c378d6db26cf}
+      \strng{authornamehash}{6cd4a8bde07a203b8358c378d6db26cf}
+      \strng{authorfullhash}{6cd4a8bde07a203b8358c378d6db26cf}
+      \strng{authorfullhashraw}{6cd4a8bde07a203b8358c378d6db26cf}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-019-852-8-6-9-2}
+      \field{title}{Spectral/hp Element Methods for Computational Fluid Dynamics}
+      \field{year}{2005}
+      \verb{doi}
+      \verb 10.1093/acprof:oso/9780198528692.001.0001
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1093/acprof:oso/9780198528692.001.0001
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1093/acprof:oso/9780198528692.001.0001
+      \endverb
+    \endentry
+    \entry{velocitycorrectionscheme}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=1,uniquepart=given,hash=bfaf154b1f300f885a75adce4c6b773e}{%
+           family={Karniadakis},
+           familyi={K\bibinitperiod},
+           given={George\bibnamedelima Em},
+           giveni={G\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=798bbb588894c6e401a3afea0bf72cff}{%
+           family={Israeli},
+           familyi={I\bibinitperiod},
+           given={Moshe},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3629d7995f9a57455f99555954f0d084}{%
+           family={Orszag},
+           familyi={O\bibinitperiod},
+           given={Steven\bibnamedelima A},
+           giveni={S\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{afbfd1f3683c251d73b8f66d988098bc}
+      \strng{fullhash}{afbfd1f3683c251d73b8f66d988098bc}
+      \strng{fullhashraw}{afbfd1f3683c251d73b8f66d988098bc}
+      \strng{bibnamehash}{afbfd1f3683c251d73b8f66d988098bc}
+      \strng{authorbibnamehash}{afbfd1f3683c251d73b8f66d988098bc}
+      \strng{authornamehash}{afbfd1f3683c251d73b8f66d988098bc}
+      \strng{authorfullhash}{afbfd1f3683c251d73b8f66d988098bc}
+      \strng{authorfullhashraw}{afbfd1f3683c251d73b8f66d988098bc}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{2}
+      \field{journaltitle}{Journal of Computational Physics}
+      \field{title}{High-order splitting methods for the incompressible Navier-Stokes equations}
+      \field{volume}{97}
+      \field{year}{1991}
+      \field{pages}{414\bibrangedash 443}
+      \range{pages}{30}
+      \verb{doi}
+      \verb 10.1016/0021-9991(91)90007-8
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/0021999191900078
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/0021999191900078
+      \endverb
+    \endentry
+    \entry{ganlinThesis}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=4cbf01b2bdc96156e070cee12fdc6645}{%
+           family={Lyu},
+           familyi={L\bibinitperiod},
+           given={Ganlin},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4cbf01b2bdc96156e070cee12fdc6645}
+      \strng{fullhash}{4cbf01b2bdc96156e070cee12fdc6645}
+      \strng{fullhashraw}{4cbf01b2bdc96156e070cee12fdc6645}
+      \strng{bibnamehash}{4cbf01b2bdc96156e070cee12fdc6645}
+      \strng{authorbibnamehash}{4cbf01b2bdc96156e070cee12fdc6645}
+      \strng{authornamehash}{4cbf01b2bdc96156e070cee12fdc6645}
+      \strng{authorfullhash}{4cbf01b2bdc96156e070cee12fdc6645}
+      \strng{authorfullhashraw}{4cbf01b2bdc96156e070cee12fdc6645}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{title}{Transonic boundary layer transition prediction over wing sections with embedded {DG} spectral/hp discretisations}
+      \field{year}{2023}
+      \verb{doi}
+      \verb https://doi.org/10.25560/109239
+      \endverb
+      \verb{urlraw}
+      \verb http://hdl.handle.net/10044/1/109239
+      \endverb
+      \verb{url}
+      \verb http://hdl.handle.net/10044/1/109239
+      \endverb
+    \endentry
+    \entry{schmid2001stability}{book}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=04dc1a6588142d0cee4237fe24ed942f}{%
+           family={Schmid},
+           familyi={S\bibinitperiod},
+           given={Peter\bibnamedelima J.},
+           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4c09be4aba24ebf96f8bcd0f838c4983}{%
+           family={Henningson},
+           familyi={H\bibinitperiod},
+           given={Dan\bibnamedelima S.},
+           giveni={D\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{163a793bf02d8c09cf5b2a9c408ae671}
+      \strng{fullhash}{163a793bf02d8c09cf5b2a9c408ae671}
+      \strng{fullhashraw}{163a793bf02d8c09cf5b2a9c408ae671}
+      \strng{bibnamehash}{163a793bf02d8c09cf5b2a9c408ae671}
+      \strng{authorbibnamehash}{163a793bf02d8c09cf5b2a9c408ae671}
+      \strng{authornamehash}{163a793bf02d8c09cf5b2a9c408ae671}
+      \strng{authorfullhash}{163a793bf02d8c09cf5b2a9c408ae671}
+      \strng{authorfullhashraw}{163a793bf02d8c09cf5b2a9c408ae671}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Applied Mathematical Sciences}
+      \field{title}{Stability and Transition in Shear Flows}
+      \field{volume}{142}
+      \field{year}{2001}
+      \verb{doi}
+      \verb 10.1007/978-1-4613-0185-1
+      \endverb
+    \endentry
+    \entry{boeing787char}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=2d12c34e8a60372a53f3032e147ac0c5}{%
+           family={{The Boeing Company}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Boeing Commercial Airplanes}%
+      }
+      \strng{namehash}{2d12c34e8a60372a53f3032e147ac0c5}
+      \strng{fullhash}{2d12c34e8a60372a53f3032e147ac0c5}
+      \strng{fullhashraw}{2d12c34e8a60372a53f3032e147ac0c5}
+      \strng{bibnamehash}{2d12c34e8a60372a53f3032e147ac0c5}
+      \strng{authorbibnamehash}{2d12c34e8a60372a53f3032e147ac0c5}
+      \strng{authornamehash}{2d12c34e8a60372a53f3032e147ac0c5}
+      \strng{authorfullhash}{2d12c34e8a60372a53f3032e147ac0c5}
+      \strng{authorfullhashraw}{2d12c34e8a60372a53f3032e147ac0c5}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 22/07/2025}
+      \field{number}{D6-58328-7}
+      \field{title}{787 Airplane Characteristics for Airport Planning}
+      \field{type}{techreport}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.boeing.com/resources/boeingdotcom/commercial/airports/acaps/787.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.boeing.com/resources/boeingdotcom/commercial/airports/acaps/787.pdf
+      \endverb
+    \endentry
+    \entry{flyingA350}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=bc211244101e685fe3f7722a7ffef1e5}{%
+           family={Week},
+           familyi={W\bibinitperiod},
+           given={Aviation},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{bc211244101e685fe3f7722a7ffef1e5}
+      \strng{fullhash}{bc211244101e685fe3f7722a7ffef1e5}
+      \strng{fullhashraw}{bc211244101e685fe3f7722a7ffef1e5}
+      \strng{bibnamehash}{bc211244101e685fe3f7722a7ffef1e5}
+      \strng{authorbibnamehash}{bc211244101e685fe3f7722a7ffef1e5}
+      \strng{authornamehash}{bc211244101e685fe3f7722a7ffef1e5}
+      \strng{authorfullhash}{bc211244101e685fe3f7722a7ffef1e5}
+      \strng{authorfullhashraw}{bc211244101e685fe3f7722a7ffef1e5}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 22/07/2025}
+      \field{title}{Flying the {A350}: Airbus’s Most Technologically Advanced Airliner}
+      \field{year}{2015}
+      \verb{urlraw}
+      \verb https://web.archive.org/web/20150525145400/http://aviationweek.com/commercial-aviation/flying-a350-airbus-s-most-technologically-advanced-airliner
+      \endverb
+      \verb{url}
+      \verb https://web.archive.org/web/20150525145400/http://aviationweek.com/commercial-aviation/flying-a350-airbus-s-most-technologically-advanced-airliner
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

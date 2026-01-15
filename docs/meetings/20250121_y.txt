@@ -1,0 +1,9 @@
+- double check the relation deltastar and delta: should be  around delta* = delta/2.906
+- improve convegrnce in baseflows
+- set some points points in the gap (or energy) to understand the evolution
+- check inflow lenght with other papers (put it bigger, around 20deltastar)
+- study different domain resolutions and see how it varies to see if it is well resolved or not (due to numerical propagation of instabilities)
+
+
+QUESTIONS:
+- The instabilities are linear or nonlinear? If they are linear, then some eignvalues should be computed to see the growth rate of the instabilities (positive real part).

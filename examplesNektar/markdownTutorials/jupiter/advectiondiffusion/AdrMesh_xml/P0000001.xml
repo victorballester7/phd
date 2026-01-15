@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <GEOMETRY DIM="2" SPACE="2" PARTITION="1">
+        <VERTEX COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJyTYUAGH+zBlGHGXpiILJS+VxoKBE/B8gcUEuDycmj6K+b9B4L99jAReSh9H6r/9z5UeQVs9jNcgMsrYrEfWV4ZSldeB8lftWcEawqAu08FTb71Pqr9qmjy6OarI7muwbTDlgENaCCxE4DyLGDWAbh+Taz6EeZrQ2n9yyEg+/eDXDdfIQBujw6avKsAqvm6aPLo5utD6XMm4PADy69QSICbb4Am36aAar4hFv3I5hsjBwbDB4i8YQbcfBM0+dMGqOabYtOPZL4ZlHZLnDFz5syTUPkPcHlzKH3trP2DyWpNthyMIRaq/U/h8hZQ+u3FWSD99uj6LaG0T1rUi2L26/s9Esq+9DG9gMtbQemcDws64jle7A+Q+RSxqBYhbw2ltQwV7DujHuxfez/y6p26B3B5Gyi9rh0sb8+1D1UeFlBbmReCzLcv+PgRxXw7KO3nGQ1yn/0vb1T3wRjKYhcrjFTO7dd5oz/3R/B9uLwDlI4zvwySt99wBVXeEUpr8BgDwWOM8HWCuSMKLI8Rfs5Q+siZkt6U0hf7k9ov5rx7gzDfhQEZfNjfLwKin8DlXVHl7eeA8+djuLwblE7+Dzbffqk2qvnuaOaju88DzXx0eQAGsO6d</VERTEX>
+        <EDGE COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJxdlcdKBFEQRf0Qw4iKioqKcYxtFjGAGEAMIAYQx5xzzjnn7H+68J7Nnc3hdFdVv9dV/SaI+v9FizFipV2PFavM48Rqc+rUWHxIrDWPF+vMqddgdRPERotLFJvMiW+2+kliizl5rZafLLZZXIrYbk58h9VPFTvNyeuy/DSx2+LSxR5z4nutfobYZ05ev+VnigMWlyUOmhM/ZPWzxWFz8kYsP0cctbhcMWJO/JjVzxPHzcmbEPPFAnHSvFCcMidvWgyLReKMebE4a07enFgilorz5mXigjl5i7b+cnHJnLlYNidvxa4H4qo58Wtihci+18Ww3d8Q2RfnzqY5+9sS+X7Z77Y539mOyBzyvnfNmZc9kTnhvNs357w7MCfvUOT847w7Mg+Jx+bknYj0i32ciuwzEM9E9sN6z+25vL8Lkf7xni/Nmfcrkbmnn9fm1LsR6SN1bq0O83An8j/A/NxbHPcfROanXnw05/lPFs97fjYn70Wkv6zn1dbB/TeROQzEd5E+MncfIn1hXZ9Wh/tftg76+21O/R9bB/38FekX6/oDFUVLMAAA</EDGE>
+        <ELEMENT>
+            <T COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJxd08dWFUEUBVD/C8mSgyCSw5AhixxEokQBSSIShIfAfzJgn0n1ZK/uXl1Vfc+9VR/er2nOcJYfOcd5LrCai1ziMmu4wm9cZS2/c614X8f14hwbrC/23eQWG7jNH+xmI3e4y0l+4h73ecAmHvInj9jM/PcxJ9jCE6YOA2zlr+IcU2wr9j0t9m3nGc+ZnDt4wUumHzqL71LX3+xi8sg6V0yd/zA5XvMzN/mXN+wpnt/yjr28L/b5xy98YOqcPuhjcnlk+uErK0yfP7GfmYv/fOZAcZ8c02eDTG5ZN/06xBcmx8zJMJPbKzNvI8w8Zp3UY7T4LnOdOowxda8w/T7O/HdyyJy8AUcHQdkA</T>
+            <Q COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJxdy08LQwAAhnFfhtqKsrKyk/xbLaxklGxKQy3j+98cPKf3ufxOj2kchRhhjAFamGCKd/lO8meY4wPP8hf4lM+Wv8IXlujIX2Mjnyt/h29s8SL/B3v5PPm/OOKAV/knnOXz5V/wjz+8yb/iJt8OCOASkAAA</Q>
+        </ELEMENT>
+        <COMPOSITE>
+            <C ID="2"> Q[37-38,41-42,45-46,49-50,53-54,57-58] </C>
+            <C ID="3"> T[59-93] </C>
+            <C ID="200"> E[66,69,139,155] </C>
+            <C ID="300"> E[153,148,114,149,151] </C>
+            <C ID="400"> E[109,111,136,157] </C>
+        </COMPOSITE>
+        <DOMAIN>
+            <D ID="0"> C[2-3] </D>
+        </DOMAIN>
+    </GEOMETRY>
+    <CONDITIONS>
+        <SOLVERINFO>
+            <!-- Defines the equation type. -->
+            <I PROPERTY="EQTYPE" VALUE="Poisson" />
+            <!-- Add the projection method here. -->
+            <I PROPERTY="Projection" VALUE="Continuous" />
+        </SOLVERINFO>
+        <!-- setting the variable -->
+        <VARIABLES>
+            <V ID="0">u</V>
+        </VARIABLES>
+        <!-- Defining boundary regions -->
+        <BOUNDARYREGIONS>
+            <B ID="0">C[200]</B>
+            <B ID="1">C[400]</B>
+            <B ID="2">C[300]</B>
+        </BOUNDARYREGIONS>
+        <BOUNDARYCONDITIONS>
+            <!-- Right: Neumann condition -->
+            <REGION REF="0">
+                <N VAR="u" VALUE="2*PI*sin(2*PI*y)" />
+            </REGION>
+            <!-- Left: Neumann condition -->
+            <REGION REF="1">
+                <N VAR="u" VALUE="-2*PI*sin(2*PI*y)" />
+            </REGION>
+            <!-- Bottom and top: add a Dirichlet condition here! -->
+            <REGION REF="2">
+                <D VAR="u" VALUE="0" />
+            </REGION>
+        </BOUNDARYCONDITIONS>
+        <!-- Add the forcing function here. -->
+        <FUNCTION NAME="Forcing">
+            <E VAR="u" VALUE="-8*PI*PI*sin(2*PI*x)*sin(2*PI*y)" />
+        </FUNCTION>
+        <!-- Defines the exact solution. -->
+        <FUNCTION NAME="ExactSolution">
+            <E VAR="u" VALUE="sin(2*PI*x)*sin(2*PI*y)" />
+        </FUNCTION>
+    </CONDITIONS>
+    <COLLECTIONS>
+        <OPERATOR TYPE="BwdTrans">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="Helmholtz">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="LinearAdvectionDiffusionReaction">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="IProductWRTBase">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="SumFac" />
+        </OPERATOR>
+        <OPERATOR TYPE="IProductWRTDerivBase">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="SumFac" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="PhysDeriv">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="PhysInterp1DScaled">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="NoCollection" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="NoCollection" />
+        </OPERATOR>
+    </COLLECTIONS>
+    <EXPANSIONS>
+        <E COMPOSITE="C[1]" NUMMODES="5" TYPE="MODIFIED" FIELDS="u" />
+        <E COMPOSITE="C[2]" NUMMODES="5" TYPE="MODIFIED" FIELDS="u" />
+        <E COMPOSITE="C[3]" NUMMODES="5" TYPE="MODIFIED" FIELDS="u" />
+    </EXPANSIONS>
+</NEKTAR>

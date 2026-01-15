@@ -1,0 +1,13 @@
+- Expand with quads all the BL.
+- check length length of TS (in terms of delta*)
+- maybe a 2d stable case is 3d unstable
+
+conclusions:
+- probably the real mode that I got in a Numsteps10e3 case for w=16.25, d=10 it was because the bubble (circulation) in the downstram region was that big that it couldn't fit into it.
+
+next:
+- run at w=10 without gap in order to get the highest unstable TS, edit the domain to make the downstram region longer.
+- initially there's no need to perturb the flow with any frequency, we are trying to understand whether this is necessary or not. Just run nonlinear NS in an flat surface and then linearize NS.
+- have a look at the transient growth tutorial.
+- the typical lengthscales of the most energetic TS mode is about 10 delta* (or delta, check this). Checked (19/02/2025) by chatgpt though...
+- jeff is mostly interested in the stable modes.

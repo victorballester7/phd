@@ -1,0 +1,7 @@
+steps:
+ - run the baseflow with the compressible flow
+ - and then run the eigenvalue solver for the perturbation
+
+- generate image fig 6.1 (ganlin theis) in gmesh and then convert it to nekmesh format. Linear (no curvature) mesh it's fine. Solution is in figure 6.2.
+- Run the incompressible navierstokes solver and check with figure 6.4.
+- hundereds coores and took around 1 day.

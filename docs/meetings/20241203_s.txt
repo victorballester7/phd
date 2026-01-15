@@ -1,0 +1,2 @@
+- Change FinTime to FinalTime (or remove it, first try with FinalTime and then if doesn't work, remove it)
+- sumbit and issue to nektar about that

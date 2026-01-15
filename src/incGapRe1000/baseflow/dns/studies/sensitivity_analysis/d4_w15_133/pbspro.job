@@ -1,0 +1,52 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=128:mem=70gb
+#PBS -l walltime=07:59:00
+#PBS -N bf_d4_w15_133
+#PBS -j oe
+#PBS -o output.txt
+
+# Paths and solvers
+NEK_PATH=$HOME/nektar++
+INC_SOLVER=$NEK_PATH/build/dist/bin/IncNavierStokesSolver 
+COMP_SOLVER=$NEK_PATH/build/dist/bin/CompressibleFlowSolver 
+SCRIPTS_DIR=$HOME/Desktop/PhD/scripts
+
+#### DO NOT EDIT THIS PART ####
+
+# Find the number of CPUs
+NP=$(wc -l $PBS_NODEFILE | awk '{print $1}')
+
+# Read walltime from the third line of this script and convert it to seconds
+WALLTIME=$(awk '/#PBS -l walltime/ {print $3}' $0)
+IFS=: read -r HOURS MINUTES SECONDS <<< "$WALLTIME"
+TOTAL_SECONDS=$((HOURS * 3600 + MINUTES * 60 + SECONDS))
+SECONDS_TO_SUBTRACT=30
+
+# Subtract 30 seconds for safe termination
+SLEEP_TIME=$((TOTAL_SECONDS - SECONDS_TO_SUBTRACT))
+
+# echo "Running on $NP cores with a walltime of $WALLTIME ($TOTAL_SECONDS seconds)"
+
+###############################
+
+cd $PBS_O_WORKDIR
+
+# Load required modules
+module load tools/eb-dev cmake/3.18.2 HDF5/1.10.7-gompi-2021a SCOTCH/6.1.0-gompi-2021a Boost/1.76.0-GCC-10.3.0 OpenBLAS/0.3.15-GCC-10.3.0 FlexiBLAS/3.0.4-GCC-10.3.0 FFTW/3.3.9-gompi-2021a ScaLAPACK/2.1.0-gompi-2021a-fb
+
+# Run the job start script
+python3 $SCRIPTS_DIR/jobStart.py
+
+# Sleep for the calculated time, then kill mpirun if it's still running
+mpirun -np $NP $INC_SOLVER -v mesh_d4_w15.xml gap_incNS.xml > output.txt 2> log.txt
+# timeout $SLEEP_TIME $program &
+
+# # Check if mpirun was killed due to timeout
+# if ps -p $MPIRUN_PID > /dev/null 2>&1; then
+#     kill $MPIRUN_PID
+#     echo "Simulation was terminated due to timeout" >> log.txt
+# fi
+
+# Run the final Python script
+python3 $SCRIPTS_DIR/jobFinish.py .
+

@@ -1,0 +1,69 @@
+<!-- Taylor Green's problem - Quasi 2D -->
+<?xml version="1.0" encoding="utf-8"?>
+
+<NEKTAR>
+    <EXPANSIONS>
+        <E COMPOSITE="C[0]" NUMMODES="9" FIELDS="u,v,w,p" TYPE="MODIFIED" />
+    </EXPANSIONS>
+    <FILTERS>
+        ...
+
+    </FILTERS>
+    <CONDITIONS>
+        <SOLVERINFO>
+            <I PROPERTY="AdvectionForm"         VALUE="Convective"                 />
+            <I PROPERTY="Projection"            VALUE="Galerkin"                   />
+            ...
+        </SOLVERINFO>
+        <PARAMETERS>
+            <P> TimeStep       = 0.005    </P>
+            <P> IO_CheckSteps  = 100      </P>
+            <P> IO_InfoSteps   = 200      </P>
+            <P> IO_CFLSteps    = 50       </P>
+            ...
+        </PARAMETERS>
+
+        <VARIABLES>
+            <V ID="0"> u </V>
+            <V ID="1"> v </V>
+            <V ID="2"> w </V>
+            <V ID="3"> p </V>
+        </VARIABLES>
+        <BOUNDARYREGIONS>
+            <B ID="0"> C[1] </B>
+            <B ID="1"> C[2] </B>
+            <B ID="2"> C[3] </B>
+            <B ID="3"> C[4] </B>
+        </BOUNDARYREGIONS>
+        <BOUNDARYCONDITIONS>
+            <REGION REF="0">
+                <P VAR="u" VALUE="[2]" />
+                <P VAR="v" VALUE="[2]" />
+                <P VAR="w" VALUE="[2]" />
+                <P VAR="p" VALUE="[2]" />
+            </REGION>
+            <REGION REF="1">
+                <P VAR="u" VALUE="[3]" />
+                <P VAR="v" VALUE="[3]" />
+                <P VAR="w" VALUE="[3]" />
+                <P VAR="p" VALUE="[3]" />
+            </REGION>
+            <REGION REF="2">
+                <P VAR="u" VALUE="[0]" />
+                <P VAR="v" VALUE="[0]" />
+                <P VAR="w" VALUE="[0]" />
+                <P VAR="p" VALUE="[0]" />
+            </REGION>
+            <REGION REF="3">
+                <P VAR="u" VALUE="[1]" />
+                <P VAR="v" VALUE="[1]" />
+                <P VAR="w" VALUE="[1]" />
+                <P VAR="p" VALUE="[1]" />
+            </REGION>
+        </BOUNDARYCONDITIONS>
+
+        ...
+
+    </CONDITIONS>
+</NEKTAR>
+

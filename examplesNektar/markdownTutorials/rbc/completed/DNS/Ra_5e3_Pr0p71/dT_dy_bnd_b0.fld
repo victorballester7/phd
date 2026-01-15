@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <Metadata>
+        <Provenance>
+            <GitBranch>refs/heads/master</GitBranch>
+            <GitSHA1>220f97ce6197586794069fe23d71f845f20bc948</GitSHA1>
+            <Hostname>abhimbps-MBP.broadband</Hostname>
+            <NektarVersion>5.4.0</NektarVersion>
+            <Timestamp>03-Dec-2023 18:25:33</Timestamp>
+        </Provenance>
+        <ChkFileNum>1</ChkFileNum>
+        <Kinvis>0.70999999999999996</Kinvis>
+        <SessionName0>rbc-DNS.xml</SessionName0>
+        <Time>9.999999999999897</Time>
+        <TimeStep>0.001</TimeStep>
+    </Metadata>
+    <ELEMENTS FIELDS="T_y" SHAPE="Segment" BASIS="GLL_Lagrange" NUMMODESPERDIR="UNIORDER:10" ID="0,31,52,73,94,115,136,157,178,199" COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJwl030wkwEcwPHNHux5cpkiL1EU7tSdnXReJjdFzV1vQzqawnWVXqbUyFtccXp/46QWNb1RTlJivd3vd5Ra5yUlvUrMNlqbkUaTqbO/Pv9/776nfsYl6J8SaHeoVU7XEzisUm6aKTJHNn9Txyp3C8R0tVGgsUDb5oVLresscV1e+wptAhPr39YskPQzMSsr6OuVABLvytuCpwQkDoyajOv41GefQ2JeVWBN7wsS5f7zfMPcKJT5yI62ZFK4dUmq3WmksHK0gbD6QWF8V/ZepoHCDFlqs80EhQpI+d47TuHndyYPLMvpZP2m8OidKttCJYWG4z090U0UNm4syA3No/BRyq7IY54UxnZyPBKlJDYV8he9WkMiYxbHIdbARIlDRWz1OybWuZrM3CG80FnFxH3FDQz2OiY28gIvnXhmicsF0VFSM0scss7J9mRbYNP1opFbAnM8Vn7ezewGgVv6bv9JcyPQv9Y2o1jJwO0yk84rXULDqhjIeGPOO+POwCSh8AYr3gwhojSiIJmOWt5zL80eGhaWSXQVWiMMxIlct0dNgiL+o3m431+o1HLGUhom4LXR5F5pAK8+YAIGY8SOJc4GEIWrnVvzxyEjjVd7v1wPnP3Xsh5Wj4K47CaR0z8CxS5eqvqDwwCtrNKiAh3sG5rD7Z6nA5xlP+3OZFVL2IEhcB96P5iCGvC+zCox5qvhXPqYRMcdBP+TLnEZu1Vwll1d/nKtEjpoxpHQbwog19c8pn9QQHqoGCOUCtDzTfLFfr00uhJeO9GU6m1K0HQ2StNjVCD2SK7/ZDkIXxxD2nZtVQOX32TrPlsLV3suvihfrYMPQV5dBGcYnN4X9h+vGIbrL02Kr9yP1MwZAQ9vq2hf+19wt7tbuLR4FKa6n0vnCvVAT/J089k9DqktT0KsNxiAu235ypPaCZDHSOaXzZiEPfIK59MnJuEwVTmtg41Ilkb+7xxyRLDWcwp0Vx3ZZAINg38IF3+PoqOqtig+N9IMRfcyH1BcBua3fxwIoBHICm5vS8wjsCd18/QX/wBfaKlt</ELEMENTS>
+</NEKTAR>

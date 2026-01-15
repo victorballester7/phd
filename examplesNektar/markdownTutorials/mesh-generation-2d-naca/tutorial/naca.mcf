@@ -1,0 +1,44 @@
+<NEKTAR>
+    <MESHING>
+
+        <INFORMATION>
+            <I PROPERTY="CADFile" VALUE="6412"  />
+            <I PROPERTY="MeshType" VALUE="2DBndLayer" />
+        </INFORMATION>
+
+        <PARAMETERS>
+            <P PARAM="MinDelta" VALUE="0.04"    />
+            <P PARAM="MaxDelta" VALUE="3.0"     />
+            <P PARAM="EPS"      VALUE="0.1"     />
+            <P PARAM="Order"    VALUE="4"       />
+
+            <!-- Boundary layer !-->
+            <P PARAM="BndLayerSurfaces"  VALUE="5,6"     />
+            <P PARAM="BndLayerThickness"  VALUE="0.07"    />
+            <P PARAM="BndLayerLayers" VALUE="3"       />
+            <P PARAM="BndLayerProgression"   VALUE="2"     />
+
+            <!-- 2D Domain !-->
+            <P PARAM="Xmin"     VALUE="-1.0"    />
+            <P PARAM="Ymin"     VALUE="-1.0"    />
+            <P PARAM="Xmax"     VALUE="3.0"     />
+            <P PARAM="Ymax"     VALUE="1.0"     />
+            <P PARAM="AOA"      VALUE="15.0"    />
+        </PARAMETERS>
+
+        <REFINEMENT>
+            <LINE>
+                <X1> 0.0 </X1>
+                <Y1> 0.0 </Y1>
+                <Z1> 0.0 </Z1>
+                <X2> 3.0 </X2>
+                <Y2> 0.0 </Y2>
+                <Z2> 0.0 </Z2>
+                <R>  0.3 </R>
+                <D>  0.2 </D>
+            </LINE>
+
+        </REFINEMENT>
+
+    </MESHING>
+</NEKTAR>

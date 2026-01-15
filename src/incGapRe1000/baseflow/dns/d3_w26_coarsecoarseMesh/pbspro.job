@@ -1,0 +1,6 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=64:mem=32gb
+#PBS -l walltime=00:03:59
+#PBS -N d3_w26
+
+source $HOME/Desktop/PhD/scripts/pbspro.sh

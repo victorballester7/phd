@@ -1,0 +1,2 @@
+- read edge state calculation to find bifurcation branch: Skufca et al. 2006
+- continue bifurcation diagram.

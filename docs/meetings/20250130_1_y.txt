@@ -1,0 +1,5 @@
+- First modify blasius profile when modifying inflow distance
+- start simulating domain with only one step (should be stable because the depth is not too high)
+- then try to simulate with the gap large enough (maybe 100*delta^*?, at 30 it was still unstable)
+- once fixed a width such that the system is unstable, fix that domain outflow,infloW and hight-lengths and vary only the width of the gap (to remove dependencies in other parameters)
+- Then keep studying the zone of instability w in (15,17)?

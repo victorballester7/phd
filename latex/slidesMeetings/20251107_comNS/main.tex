@@ -1,0 +1,63 @@
+%!TEX program = xelatex
+% Note: this template must be compiled with XeLaTeX rather than PDFLaTeX
+% due to the custom fonts used. The line above should ensure this happens
+% automatically, but if it doesn't, your LaTeX editor should have a simple toggle
+% to switch to using XeLaTeX.
+
+\documentclass[
+  aspectratio=169, % Uncomment to use an aspect ratio of 16:9 (160 mm by 90 mm)
+  %aspectratio=43, % Uncomment to use an aspect ratio of 4:3 (128mm by 96mm)
+  t, % Top align all slide content by default
+  onlytextwidth, % Typeset content in columns at text width
+  10pt, % Default font size, use 10pt for the 16:9 aspect ratio and 8pt for the 4:3 aspect ratio
+]{beamer}
+
+\usepackage{../../ImperialTheme/beamer/beamerthemeImperial} % Use the Imperial theme
+
+\def\imagefolder{../../ImperialTheme/beamer/Images}
+\def\Rey{\text{Re}}
+\title{comNS update} % Presentation title to appear on the title slide and left footers
+
+\subtitle{} % Presentation subtitle to appear on the title slide
+
+\author{Víctor Ballester} % Author name(s) to appear on the title slide
+
+\date{\today} % Presentation date to appear on the title slide and right footers
+
+\begin{document}
+
+\begingroup
+\setbeamercolor{background canvas}{bg=ICLLightGrey} % Slide background color
+\setbeamercolor{title page title}{fg=ICLBlue} % Title text color
+\setbeamercolor{title page subtitle}{fg=ICLBlue} % Subtitle text color
+\setbeamercolor{author}{fg=ICLBlue} % Author(s) text color
+\setbeamercolor{date}{fg=ICLBlue} % Date text color
+\setbeamertemplate{title page}[logo]{\imagefolder/ICL_Logo_Blue.pdf} % Imperial logo color, use 'ICL_Logo_White.pdf' for white and 'ICL_Logo_Blue.pdf' for blue
+\frame[plain, s]{\titlepage} % Output the title page with no footer ('plain') and vertically distributed text ('s')
+\endgroup
+
+\begin{frame}
+  \frametitle{incNS 2d stability curve}
+	\centering
+
+	\includegraphics[width=0.5\linewidth]{../../Images/incNS2dStabilityCurve.pdf}
+\end{frame}
+\begin{frame}
+	\frametitle{Compressible at Ma=0.6}
+	\begin{itemize}
+	  \item countour of $\rho v$
+	  \item I tried sponge region, but it didn't worked well. Where whould I put it? Also in the outflow boundary? And in the inflow?
+	  \item PS: for Ma= 0.2 we have very similar results to the incompressible case
+	\end{itemize}
+	\includegraphics[width=\textwidth]{Images/d3w15Ma0.6.png}
+	  
+\end{frame}
+\begin{frame}
+      \frametitle{Quasi 3d stuff}
+    \begin{itemize}
+      \item The linear stability was giving problems. I was getting a real mode. Don't know why.
+      \item So right now I am running non linear simulations: several with only one mode (and different spanwise lengths, which are still very quick to run) and one with a combination of modes (8 complex modes with spanwise length $L_z = 3d$) (more expensive).
+    \end{itemize}
+
+\end{frame}
+\end{document}

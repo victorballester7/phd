@@ -1,0 +1,12 @@
+- What is destabilizing my system if every global mode is stable?
+- Why we want to use coupled approach (what is it)? And why transient growth inn this case?
+
+
+
+
+
+Thingd to check:
+ - To verify consistency between results, turn off SVV for the case 16.35.
+ - Run for higher width (unstable baseflow) and see if I get positive growth rates
+ - For the case 16.5, run the nonlinear code with initial condition the baseflow taken from SFD and see if it destabilize the system.
+ - Run transient growth for the case 16.5.

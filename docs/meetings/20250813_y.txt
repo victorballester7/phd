@@ -1,0 +1,3 @@
+- test changing localized forcing in the y-direction.
+- set A = 1 for the perturbation amplitude
+

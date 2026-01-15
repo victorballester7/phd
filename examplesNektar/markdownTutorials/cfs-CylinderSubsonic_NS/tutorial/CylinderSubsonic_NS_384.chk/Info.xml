@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <Metadata>
+        <Provenance>
+            <Hostname>carnotaurus</Hostname>
+            <NektarVersion>5.6.0</NektarVersion>
+            <Timestamp>15-Oct-2024 10:39:48</Timestamp>
+        </Provenance>
+        <ChkFileNum>384</ChkFileNum>
+        <SessionName0>CylinderSubsonic_NS.opt</SessionName0>
+        <SessionName1>CylinderSubsonic_NS_xml/P0000000.xml</SessionName1>
+        <Time>0.38400000000024326</Time>
+    </Metadata>
+    <Partition FileName="P0000000.fld">50-64,201-207,211-217,221-227,230-237,612-619</Partition>
+    <Partition FileName="P0000001.fld">75-92,99-101,108-110,117-119,126-128,323-334,384-386,393-395,402-404,411-413</Partition>
+    <Partition FileName="P0000002.fld">93-98,102-107,111-116,120-125,129-134,387-392,396-401,405-410,414-419</Partition>
+    <Partition FileName="P0000003.fld">200,210,220,285-289,295-299,305-309,315-322,335-349,510-512,515-516,520-521,620-624</Partition>
+    <Partition FileName="P0000004.fld">375-383,420-423,425-464</Partition>
+    <Partition FileName="P0000005.fld">424,465-509,513-514,517-519,522-524</Partition>
+    <Partition FileName="P0000006.fld">140-142,145-159,166-169,176-179,186-189,196-199,272-279,350,355,360,365,370,600-603,638-639</Partition>
+    <Partition FileName="P0000007.fld">0-39,65-67,70-72,135-139,143-144</Partition>
+    <Partition FileName="P0000008.fld">40-49,68-69,73-74,160-165,170-175,180-185,190-195,208-209,218-219,228-229,238-239,604-611</Partition>
+    <Partition FileName="P0000009.fld">351-354,356-359,361-364,366-369,371-374,551-554,556-559,575-599</Partition>
+    <Partition FileName="P0000010.fld">240-241,244-245,280-284,290-294,525-549,561-574</Partition>
+    <Partition FileName="P0000011.fld">242-243,246-271,300-304,310-314,550,555,560,625-637</Partition>
+</NEKTAR>

@@ -1,0 +1,74 @@
+%!TEX program = xelatex
+% Note: this template must be compiled with XeLaTeX rather than PDFLaTeX
+% due to the custom fonts used. The line above should ensure this happens
+% automatically, but if it doesn't, your LaTeX editor should have a simple toggle
+% to switch to using XeLaTeX.
+
+\documentclass[
+  aspectratio=169, % Uncomment to use an aspect ratio of 16:9 (160 mm by 90 mm)
+  %aspectratio=43, % Uncomment to use an aspect ratio of 4:3 (128mm by 96mm)
+  t, % Top align all slide content by default
+  onlytextwidth, % Typeset content in columns at text width
+  10pt, % Default font size, use 10pt for the 16:9 aspect ratio and 8pt for the 4:3 aspect ratio
+]{beamer}
+
+\usepackage{../../ImperialTheme/beamer/beamerthemeImperial} % Use the Imperial theme
+
+\def\imagefolder{../../ImperialTheme/beamer/Images}
+\def\Rey{\text{Re}}
+\title{Comparison between n-factor computations} % Presentation title to appear on the title slide and left footers
+
+\subtitle{} % Presentation subtitle to appear on the title slide
+
+\author{Víctor Ballester} % Author name(s) to appear on the title slide
+
+\date{\today} % Presentation date to appear on the title slide and right footers
+
+\begin{document}
+
+\begingroup
+\setbeamercolor{background canvas}{bg=ICLLightGrey} % Slide background color
+\setbeamercolor{title page title}{fg=ICLBlue} % Title text color
+\setbeamercolor{title page subtitle}{fg=ICLBlue} % Subtitle text color
+\setbeamercolor{author}{fg=ICLBlue} % Author(s) text color
+\setbeamercolor{date}{fg=ICLBlue} % Date text color
+\setbeamertemplate{title page}[logo]{\imagefolder/ICL_Logo_Blue.pdf} % Imperial logo color, use 'ICL_Logo_White.pdf' for white and 'ICL_Logo_Blue.pdf' for blue
+\frame[plain, s]{\titlepage} % Output the title page with no footer ('plain') and vertically distributed text ('s')
+\endgroup
+
+\begin{frame}
+
+	\begin{columns}[T] % [T] ensures correct vertical alignment
+		\begin{column}{0.55\linewidth} % Left column
+			\includegraphics[width=\linewidth]{Images/nfactor_curves.png}
+
+			Comparison of the n factor with different methods
+		\end{column}
+		\begin{column}{0.44\linewidth} % Left column
+			\includegraphics[width=\linewidth]{Images/curveJeff.png}
+			As we can see the $\Delta N$ factor that Jeff defined (as the difference between the n-factor with the gap and the n-factor without the gap) is more or less of the same order of magnitude as the experimental data.
+		\end{column}
+	\end{columns}
+
+\end{frame}
+\begin{frame}
+	\begin{columns}[T] % [T] ensures correct vertical alignment
+		\begin{column}{0.49\linewidth} % Left column
+			\includegraphics[width=\linewidth]{Images/nfactor_curves.png}
+		\end{column}
+		\begin{column}{0.49\linewidth} % Left column
+			\includegraphics[width=\linewidth]{Images/dataJeff.png}
+			We also observe the small peak that we get in the n-factor with blowing and suction in the experimental data.
+		\end{column}
+	\end{columns}
+\end{frame}
+\begin{frame}
+  \frametitle{Neutral curve blasius profile}
+  \begin{itemize}
+    \item I tried Blowing and Suction at $\omega=0.09$. 
+  \end{itemize}
+  \centering
+  \includegraphics[width=0.8\linewidth]{Images/neutralCurve_Blasius.png}
+\end{frame}
+
+\end{document}

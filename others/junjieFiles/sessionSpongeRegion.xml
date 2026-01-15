@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+	<EXPANSIONS>
+
+        <E COMPOSITE="[601]"
+        BASISTYPE="Modified_A,Modified_A,Modified_B"
+        NUMMODES="4,4,4"
+        POINTSTYPE="GaussLobattoLegendre,GaussLobattoLegendre,GaussRadauMAlpha1Beta0"
+        NUMPOINTS="6,6,5"
+        FIELDS="rho,rhou,rhov,rhow,E" />
+        <E COMPOSITE="[602]"
+        BASISTYPE="Modified_A,Modified_A,Modified_B"
+        NUMMODES="4,4,4"
+        POINTSTYPE="GaussLobattoLegendre,GaussLobattoLegendre,GaussRadauMAlpha1Beta0"
+        NUMPOINTS="6,6,5"
+        FIELDS="rho,rhou,rhov,rhow,E" />
+        <E COMPOSITE="[603]"
+        BASISTYPE="Modified_A,Modified_A,Modified_A"
+        NUMMODES="4,4,4"
+        POINTSTYPE="GaussLobattoLegendre,GaussLobattoLegendre,GaussLobattoLegendre"
+        NUMPOINTS="6,6,6"
+        FIELDS="rho,rhou,rhov,rhow,E" />
+        <E COMPOSITE="[604]"
+        BASISTYPE="Modified_A,Modified_A,Modified_A"
+        NUMMODES="4,4,4"
+        POINTSTYPE="GaussLobattoLegendre,GaussLobattoLegendre,GaussLobattoLegendre"
+        NUMPOINTS="6,6,6"
+        FIELDS="rho,rhou,rhov,rhow,E" />
+
+        <!-- <E COMPOSITE="C[601]" NUMMODES="2" TYPE="MODIFIED" FIELDS="rho,rhou,rhov,rhow,E" />
+        <E COMPOSITE="C[602]" NUMMODES="2" TYPE="MODIFIED" FIELDS="rho,rhou,rhov,rhow,E" />
+        <E COMPOSITE="C[603]" NUMMODES="2" TYPE="MODIFIED" FIELDS="rho,rhou,rhov,rhow,E" />
+        <E COMPOSITE="C[604]" NUMMODES="2" TYPE="MODIFIED" FIELDS="rho,rhou,rhov,rhow,E" />  -->
+
+	</EXPANSIONS>
+    <MOVEMENT>
+            <ZONES>
+                <!-- <FIXED ID="0" DOMAIN="D[0]" /> -->
+                <TRANSLATE ID="0" DOMAIN="D[0]" VELOCITY="0,-0.41,0" DISPLACEMENT="0,-0.41*t%0.799,0"/>
+                <FIXED ID="1" DOMAIN="D[1]" />
+                <TRANSLATE ID="2" DOMAIN="D[2]" VELOCITY="0,-0.41,0" DISPLACEMENT="0,-0.41*t%0.799,0"/>
+                <!-- <FIXED ID="2" DOMAIN="D[2]" /> -->
+                <FIXED ID="3" DOMAIN="D[3]" /> 
+            </ZONES>
+            <INTERFACES>
+                <INTERFACE NAME="Interface">
+                    <LEFT  ID="0" BOUNDARY="C[501]" />
+                    <RIGHT ID="1" BOUNDARY="C[502]" />
+                </INTERFACE>
+            </INTERFACES>
+     </MOVEMENT>
+    <CONDITIONS>
+
+        <SOLVERINFO>
+
+
+            <I PROPERTY="EQType"                VALUE="NavierStokesImplicitCFE"/>
+            <I PROPERTY="Projection"            VALUE="DisContinuous"          />
+            <I PROPERTY="AdvectionType"         VALUE="WeakDG"                 />
+            <I PROPERTY="DiffusionType"         VALUE="InteriorPenalty"     />
+            <I PROPERTY="AdvectionAdvancement"  VALUE="Implicit"            />
+            <I PROPERTY="DiffusionAdvancement"  VALUE="Implicit"            />
+            <I PROPERTY="UpwindType"            VALUE="Roe"                 />
+            <I PROPERTY="ProblemType"           VALUE="General"             />
+            <I PROPERTY="ViscosityType"         VALUE="Variable"            />
+            <I PROPERTY="EquationOfState"       VALUE="IdealGas"            />	
+
+        </SOLVERINFO>
+
+        <TIMEINTEGRATIONSCHEME>
+            <METHOD> DIRK </METHOD>
+            <ORDER> 2 </ORDER>
+        </TIMEINTEGRATIONSCHEME>
+
+        <PARAMETERS>    
+            <P> Gamma                 = 1.4                                     </P>
+            <P> Ma                    = 0.238                                     </P> <!-- (?) -->
+	        <P> ReRef                 = 37000                                   </P> <!-- (?) -->
+            <P> Pr                    = 0.72                                    </P>
+            <P> GasConstantDim        = 287.058                                 </P>
+
+            <P> rhoDim                = 1.225                                   </P> <!-- (?) -->
+	        <P> TDim                  = 288.15                                     </P> <!-- (?) -->
+            <P> Tref                  = TDim                                    </P>
+            <P> pDim                  = rhoDim*GasConstantDim*TDim              </P>
+
+	        <P> Alpha_deg             = 46.1                                    </P>
+            <P> Alpha_rad             = Alpha_deg*PI/180                        </P>
+
+            <P> soundSpdDim           = sqrt(Gamma*pDim/rhoDim)                 </P>
+            <P> L                     = 1.0                                     </P>
+
+            <P> velMagnDim            = Ma*soundSpdDim                          </P>
+            <P> uDim                  = velMagnDim*cos(Alpha_rad)               </P>
+            <P> vDim                  = velMagnDim*sin(Alpha_rad)               </P>
+            <P> wDim                  = 0               </P>
+	        <P> muDim                 = rhoDim*uDim*L/ReRef                     </P>
+
+	        <P> Re0                   = ReRef/L                                 </P>
+	        <P> rhoInf                = rhoDim/rhoDim                           </P>
+            <P> uInf                  = uDim/velMagnDim                         </P>
+            <P> vInf                  = vDim/velMagnDim                         </P>
+            <P> wInf                  = wDim/velMagnDim                         </P>
+            <P> pInf                  = pDim/(rhoDim*velMagnDim*velMagnDim)     </P>
+            <P> mu                    = 1/Re0                                   </P>
+            <P> GasConstant           = GasConstantDim*TDim/(velMagnDim*velMagnDim)</P>
+
+	        <P> TimeStep              = 5e-4                                    </P>
+            <P> T                     = 4                                     </P>
+            <P> NumSteps              = T/TimeStep                              </P>
+            <P> IO_CheckSteps         = 1/TimeStep                           </P>
+            <P> IO_InfoSteps          = IO_CheckSteps/100                        </P>
+	        <P> IO_CFLSteps           = IO_CheckSteps/100                         </P>
+
+            
+            <!-- Sponge -->
+            <P> uBulk                  = 1                                     </P>
+            <P> xin1                   = -1.5916                              </P>
+            <P> xin2                   = -1.0916                                 </P>
+            <P> xout1                  = 2.7368                                   </P>
+            <P> xout2                  = 3.2368                                   </P>               
+            <P> Amp                    = 10                                    </P>
+            <P> sigmaIn                = Amp*uBulk/(xin2-xin1)                 </P>
+            <P> sigmaOut               = Amp*uBulk/(xout2-xout1)               </P>
+
+            <!-- <P> NonlinIterTolRelativeL2   = 1.0E-10                   </P>
+            <P> NewtonRelativeIteTol      = 1.0E-10                   </P>
+            <P> LinSysRelativeTolInNonlin = 1.0E-10                   </P> -->
+            <P> NekNonlinSysMaxIterations = 30                       </P>
+            <P> NekLinSysMaxIterations    = 50                        </P>
+            <P> PreconMatFreezNumb        = 500                       </P>
+            <P> PreconItsStep             = 7                         </P>
+
+
+	</PARAMETERS>
+
+        <VARIABLES>
+            <V ID="0"> rho  </V>
+            <V ID="1"> rhou </V>
+            <V ID="2"> rhov </V>
+            <V ID="3"> rhow </V>
+            <V ID="4"> E </V>
+        </VARIABLES>
+        
+        <BOUNDARYREGIONS>
+            <B ID="0"> C[401]            </B>   <!-- Inflow   -->
+            <B ID="1"> C[402]            </B>   <!-- Outflow  -->
+            <B ID="2"> C[403]            </B>   <!-- Top      -->
+            <B ID="3"> C[404]            </B>   <!-- Bottom   --> 
+            <B ID="4"> C[405]            </B>   <!-- Front      -->
+            <B ID="5"> C[406]            </B>   <!-- Back   -->     
+            <B ID="6"> C[407]            </B>   <!-- Blade    -->
+            <B ID="7"> C[408]            </B>   <!-- Cylinder -->         
+        </BOUNDARYREGIONS>
+
+        <BOUNDARYCONDITIONS>
+
+            <REGION REF="0">
+                <!-- <D VAR="rho" VALUE="rhoInf"/>
+                <D VAR="rhou" VALUE="rhoInf * uInf"/>
+                <D VAR="rhov" VALUE="rhoInf * vInf"/>
+                <D VAR="E" VALUE="pInf / (Gamma - 1) + 0.5 * rhoInf * (uInf * uInf + vInf * vInf)"/> -->
+
+                <D VAR="rho"  USERDEFINEDTYPE="EnforceEntropyVelocity"  VALUE="rhoInf"/>
+                <D VAR="rhou" USERDEFINEDTYPE="EnforceEntropyVelocity"  VALUE="rhoInf * uInf"/>
+                <D VAR="rhov" USERDEFINEDTYPE="EnforceEntropyVelocity"  VALUE="rhoInf * vInf"/>
+                <D VAR="rhow" USERDEFINEDTYPE="EnforceEntropyVelocity"  VALUE="rhoInf * wInf"/>
+                <D VAR="E"    USERDEFINEDTYPE="EnforceEntropyVelocity"  VALUE="pInf / (Gamma - 1) + 0.5 * rhoInf * (uInf * uInf + vInf * vInf + wInf * wInf)"/>
+            </REGION>
+            <REGION REF="1">
+                <D VAR="rho"  USERDEFINEDTYPE="PressureOutflow" VALUE="0" />
+                <D VAR="rhou" USERDEFINEDTYPE="PressureOutflow" VALUE="0" />
+	            <D VAR="rhov" USERDEFINEDTYPE="PressureOutflow" VALUE="0" />
+                <D VAR="rhow" USERDEFINEDTYPE="PressureOutflow" VALUE="0" />
+	            <D VAR="E"    USERDEFINEDTYPE="PressureOutflow" VALUE="0.98*pInf" />
+
+            </REGION>
+            <REGION REF="2">
+                <P VAR="rho" VALUE="[3]" />
+                <P VAR="rhou" VALUE="[3]" />
+                <P VAR="rhov" VALUE="[3]" />
+                <P VAR="rhow" VALUE="[3]" />
+                <P VAR="E" VALUE="[3]" />
+            </REGION>
+            <REGION REF="3">
+                <P VAR="rho" VALUE="[2]" />
+                <P VAR="rhou" VALUE="[2]" />
+                <P VAR="rhov" VALUE="[2]" />
+                <P VAR="rhow" VALUE="[2]" />
+                <P VAR="E" VALUE="[2]" />
+            </REGION>    
+            <REGION REF="4">
+                <P VAR="rho" VALUE="[5]" />
+                <P VAR="rhou" VALUE="[5]" />
+                <P VAR="rhov" VALUE="[5]" />
+                <P VAR="rhow" VALUE="[5]" />
+                <P VAR="E" VALUE="[5]" />
+            </REGION>
+            <REGION REF="5">
+                <P VAR="rho" VALUE="[4]" />
+                <P VAR="rhou" VALUE="[4]" />
+                <P VAR="rhov" VALUE="[4]" />
+                <P VAR="rhow" VALUE="[4]" />
+                <P VAR="E" VALUE="[4]" />
+            </REGION>    
+
+            <REGION REF="6">                    
+                <D VAR="rho"  USERDEFINEDTYPE="WallAdiabatic"     VALUE="0"/>
+                <D VAR="rhou" USERDEFINEDTYPE="WallAdiabatic"     VALUE="0"/>
+                <D VAR="rhov" USERDEFINEDTYPE="WallAdiabatic"     VALUE="0"/>
+                <D VAR="rhow" USERDEFINEDTYPE="WallAdiabatic"     VALUE="0"/>
+                <D VAR="E"    USERDEFINEDTYPE="WallAdiabatic"     VALUE="0"/>
+            </REGION>  
+            <REGION REF="7">
+                <!-- <D VAR="rho"  USERDEFINEDTYPE="WallViscous" VALUE="0" />
+                <D VAR="rhou" USERDEFINEDTYPE="WallViscous" VALUE="0" />
+                <D VAR="rhov" USERDEFINEDTYPE="WallViscous" VALUE="0"/>
+                <D VAR="E"    USERDEFINEDTYPE="WallViscous" VALUE="0" /> -->
+                <D VAR="rho"  USERDEFINEDTYPE="WallAdiabatic"     VALUE="0"/>
+                <D VAR="rhou" USERDEFINEDTYPE="WallAdiabatic"     VALUE="0"/>
+                <D VAR="rhov" USERDEFINEDTYPE="WallAdiabatic"     VALUE="0"/>
+                <D VAR="rhow" USERDEFINEDTYPE="WallAdiabatic"     VALUE="0"/>
+                <D VAR="E"    USERDEFINEDTYPE="WallAdiabatic"     VALUE="0"/>
+            </REGION>         
+        </BOUNDARYCONDITIONS>
+
+        <FUNCTION NAME="InitialConditions">
+                <F VAR="rho,rhou,rhov,rhow,E" FILE="../t106a_cylinder_02_1inter_n_3D.fld" />
+        </FUNCTION>
+
+        <!-- Sponge Layer: -->
+        <FUNCTION NAME="RefSol">
+            <E VAR="rhow" VALUE="rhoInf * wInf"/>
+            <F VAR="rho,rhou,rhov,E" FILE="../../ave_inter.fld" />
+        </FUNCTION>
+
+        <!-- Sponge coeff: -->
+    <FUNCTION NAME="InOutCoeff">
+        <E VAR="rho"  VALUE="-sigmaIn*((x>xin1)*(x<xin2)*(6*((-x+xin2)/(xin2-xin1))^5 - 15*((-x+xin2)/(xin2-xin1))^4 + 10*((-x+xin2)/(xin2-xin1))^3) + (x<=xin1)) -sigmaOut*((x>xout1)*(x<xout2)*(6*((x-xout1)/(xout2-xout1))^5 - 15*((x-xout1)/(xout2-xout1))^4 + 10*((x-xout1)/(xout2-xout1))^3) + (x>=xout2))" />
+        <E VAR="rhou" VALUE="-sigmaIn*((x>xin1)*(x<xin2)*(6*((-x+xin2)/(xin2-xin1))^5 - 15*((-x+xin2)/(xin2-xin1))^4 + 10*((-x+xin2)/(xin2-xin1))^3) + (x<=xin1)) -sigmaOut*((x>xout1)*(x<xout2)*(6*((x-xout1)/(xout2-xout1))^5 - 15*((x-xout1)/(xout2-xout1))^4 + 10*((x-xout1)/(xout2-xout1))^3) + (x>=xout2))" />
+        <E VAR="rhov" VALUE="-sigmaIn*((x>xin1)*(x<xin2)*(6*((-x+xin2)/(xin2-xin1))^5 - 15*((-x+xin2)/(xin2-xin1))^4 + 10*((-x+xin2)/(xin2-xin1))^3) + (x<=xin1)) -sigmaOut*((x>xout1)*(x<xout2)*(6*((x-xout1)/(xout2-xout1))^5 - 15*((x-xout1)/(xout2-xout1))^4 + 10*((x-xout1)/(xout2-xout1))^3) + (x>=xout2))" />
+        <E VAR="rhow" VALUE="-sigmaIn*((x>xin1)*(x<xin2)*(6*((-x+xin2)/(xin2-xin1))^5 - 15*((-x+xin2)/(xin2-xin1))^4 + 10*((-x+xin2)/(xin2-xin1))^3) + (x<=xin1)) -sigmaOut*((x>xout1)*(x<xout2)*(6*((x-xout1)/(xout2-xout1))^5 - 15*((x-xout1)/(xout2-xout1))^4 + 10*((x-xout1)/(xout2-xout1))^3) + (x>=xout2))" />
+        <E VAR="E"    VALUE="-sigmaIn*((x>xin1)*(x<xin2)*(6*((-x+xin2)/(xin2-xin1))^5 - 15*((-x+xin2)/(xin2-xin1))^4 + 10*((-x+xin2)/(xin2-xin1))^3) + (x<=xin1)) -sigmaOut*((x>xout1)*(x<xout2)*(6*((x-xout1)/(xout2-xout1))^5 - 15*((x-xout1)/(xout2-xout1))^4 + 10*((x-xout1)/(xout2-xout1))^3) + (x>=xout2))" />
+    </FUNCTION>
+
+    </CONDITIONS>
+    <FILTERS>
+        <FILTER TYPE="AverageFields">
+            <PARAM NAME="OutputFile">MyAverageField</PARAM>
+            <PARAM NAME="OutputFrequency">2000</PARAM>
+            <PARAM NAME="SampleFrequency"> 1 </PARAM>
+        </FILTER>
+        	<FILTER TYPE="ModalEnergy">
+	        <PARAM NAME="OutputFile">EnergyFile</PARAM>
+	        <PARAM NAME="OutputFrequency">10</PARAM>
+	    </FILTER>
+
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">First</PARAM>
+            <PARAM NAME="OutputFrequency">1</PARAM>
+            <PARAM NAME="line">25,0.77,-0.27,0,0.77,-0.27,0.2</PARAM>
+        </FILTER>
+        
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">Second</PARAM>
+            <PARAM NAME="OutputFrequency">1</PARAM>
+            <PARAM NAME="line">25,0.8,-0.33,0,0.8,-0.33,0.2</PARAM>
+        </FILTER>
+
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">Third</PARAM>
+            <PARAM NAME="OutputFrequency">1</PARAM>
+            <PARAM NAME="line">25,0.835,-0.42,0,0.835,-0.42,0.2</PARAM>
+        </FILTER>
+
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">Fourth</PARAM>
+            <PARAM NAME="OutputFrequency">1</PARAM>
+            <PARAM NAME="line">25,0.85,-0.46,0,0.85,-0.46,0.2</PARAM>
+        </FILTER>
+
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">Fifth</PARAM>
+            <PARAM NAME="OutputFrequency">1</PARAM>
+            <PARAM NAME="line">25,0.86,-0.52,0,0.86,-0.52,0.2</PARAM>
+        </FILTER>
+
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">Sixth</PARAM>
+            <PARAM NAME="OutputFrequency">1</PARAM>
+            <PARAM NAME="line">25,0.88,-0.53,0,0.88,-0.53,0.2</PARAM>
+        </FILTER>
+
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">Seventh</PARAM>
+            <PARAM NAME="OutputFrequency">1</PARAM>
+            <PARAM NAME="line">25,0.88,-0.55,0,0.88,-0.55,0.2</PARAM>
+        </FILTER>
+
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">Eighth</PARAM>
+            <PARAM NAME="OutputFrequency">1</PARAM>
+            <PARAM NAME="line">25,0.92,-0.58,0,0.92,-0.58,0.2</PARAM>
+        </FILTER>
+
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">Ninth</PARAM>
+            <PARAM NAME="OutputFrequency">1</PARAM>
+            <PARAM NAME="line">25,0.92,-0.62,0,0.92,-0.62,0.2</PARAM>
+        </FILTER>
+
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">Tenth</PARAM>
+            <PARAM NAME="OutputFrequency">1</PARAM>
+            <PARAM NAME="line">25,0.95,-0.66,0,0.95,-0.66,0.2</PARAM>
+        </FILTER>
+
+    </FILTERS>
+
+    <FORCING>
+        <FORCE TYPE="Absorption">
+            <REFFLOW> RefSol </REFFLOW>
+            <COEFF> InOutCoeff </COEFF>
+        </FORCE>
+    </FORCING>
+    
+</NEKTAR>

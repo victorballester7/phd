@@ -1,0 +1,43 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\thispagestyle{empty}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\begin{center}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\textwidth]{Images/ICL_Logo_Blue.pdf}
+	\end{figure}
+	\vspace*{1cm}
+	\textsc{\Large Early Stage Assessment}\\[0.75cm]
+	\rule{150mm}{0.1mm}\\[0.4cm]
+	{\huge \bfseries \title\par}
+	\vspace{0.4cm} % Thesis title
+	\rule{150mm}{0.1mm} \\[1.5cm] % Horizontal line
+	\begin{minipage}[t]{0.4\textwidth}
+		\begin{flushleft} \large
+			\emph{Author:}\\[0.2cm]
+			\author\footnotemark[1]% Author name - remove the \href bracket to remove the link
+		\end{flushleft}
+	\end{minipage}
+	\begin{minipage}[t]{0.4\textwidth}
+		\begin{flushright} \large
+			\emph{Supervisors:} \\[0.2cm]
+			\supervisorA\footnotemark[1]\\ % Supervisor name - remove the \href bracket to remove the link  
+			\supervisorB\footnotemark[1]\\ % Supervisor name - remove the \href bracket to remove the link
+			\supervisorC\footnotemark[2]
+		\end{flushright}
+	\end{minipage}\\[2cm]
+	\subfile{01abstract}
+	\vfill
+	{\large
+		\department\\[0.2cm]
+		\faculty\\[0.5cm]
+	}
+	\rule{80mm}{0.1mm}\\[0.5cm]
+	{\large \date}\\[0.2cm]
+	\vfill
+\end{center}
+\footnotetext[1]{\textA}
+\footnotetext[2]{\textB}
+\end{document}

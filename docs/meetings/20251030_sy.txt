@@ -1,0 +1,2 @@
+- check riemann problem BCs for compressible case
+- add wgn to boundary layer in all three u components for linear stability analysis in quasi3d

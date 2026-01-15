@@ -1,0 +1,24 @@
+Gap bypass transition:
+    1. Try to reproduce the bypass boundary that was observed experimentally at low Mach numbers
+        a. Done
+    2. Characterize/assess the underlying bypass mechanism(s), including role of 2D-v-3D modes
+        a. Sharpen the incNS3d bifurcation line and all the limits (incNS3d) in shallow gaps. 
+        b. Run few cases of full nonlinear 3d simulations.
+    3. Use learnings/validation from low Mach investigation to create bypass boundaries at higher Mach number (M=0.6, 0.8)
+        a. Sharpen the incNS3d bifurcation line and all the limits (comNS2d, incNS3d) in shallow gaps. 
+        b. Run few cases of full nonlinear 3d simulations.
+        c. Understand the actual influence on the Ma. Maybe run some intermediate Ma (at 0.4)??
+        d. Why the Ma = 0.8 bifurcates considerably after Ma = 0.6 for some range of depths?
+    4. Assess robustness of higher Mach results (other experiments? Numerical studies?)
+
+ 
+
+Gap influenced TS-wave transition:
+    1. Try to reproduce experimental-based ΔN using Δn from simulation (where N is a threshold value and n is the calculated envelope)
+        a. Done
+    2. Validate/explain the deep/shallow limiting behavior from Flow paper
+        a. In incNS2d, run the BFS for shallow depths. Understand instabilities (if any) and do n-factor study as well.
+        b. In incNS2d, create a domain with a very deep gap (10 δ* maybe?) and vary w slowly in the critical regime. Analysis same as 1.
+    3. Characterize the effect of Mach number and Reynolds number (M=0.6, 0.8; Rd*=1000, 2000?)
+        a. In comNS2d, do a similar study as we did for incNS about the n-factor in the globally stable cases. (could be more limited)
+        b. In comNS2d, do some local comparisons to assess effect of Reynolds number

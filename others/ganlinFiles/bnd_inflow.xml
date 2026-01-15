@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <GEOMETRY DIM="1" SPACE="2">
+        <VERTEX COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJxd0UsowwEcB/AddsCSvFdWJqX5z0EoNa95ZMhFdvEocTCPoUx2HZP3WJKxpGGtbdkmhNjCSKGWJpalttF2GPJIWluZIr/s97386vup7+U3QiX9zyEJZRy5NcXQ9EKpK/orJpHfR7rMdEkn+BRyW6+u8O68H1yK/MIV0dVmEYHPID8eqF1trh4Bn0Xu9Mr3DhKmweeQez+M+q/cWfB55BqWQPx6tQAuR37J1taPcRTgi8hpVW5dR40SfAl5RjfXEENowBXIWTYp586vB19B3t6379j0b4ArkRPxnIxlYgdchZxPCia9ZRrB1chFkorkEtoRuBb554Qwm7d3Ar6G/ydscZ9Gn4Hrkcsqe575HAv4OvIJOc/pKbWCbyBnRnh8dPIN+BbypzCZoXXIDr6NPJBabqI/OsB3kWf/5AFczAh1oz3QwzS9g+elh3qO4KJgeNcHno888XNdbeKHs/+KQuSyhgBFoIgCvyZCvVqy4ogbfIR9O3IG18BL8wTBCWaom8tUU7ejsbDPRP57qOAFyMeyGkWqYjL4N+K2rmsA</VERTEX>
+        <ELEMENT>
+            <S COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJxVz80KAVEYxnEXYSFXwMzmWdj5uAYLmetQSimlFJGQkJCQkJCQlJuwsXExUs7zLp7Z/PqfmXPOOwWE/k8j4mzRIrTbtATtDi1Du0cr0O7TKrQHtAbtEa1De0yb0J7YvNCe0S605zYXtBd0CO2V3Q/tNZ1Ce2P3QHtHl9De23nQPtAttE+2D9pneoT2xd5D+0av0L6b0H6YWWct5kzGnU+up9gZ+srp/rfn/OZ0/4fribzT850+Hef1uzTXw4G23R8NdA47zwt0DvuPHzqsRo4A</S>
+        </ELEMENT>
+        <COMPOSITE>
+            <C ID="1"> S[12401,12404,12407,12410,12413,12416,12419,12422,12425,12428,12431,12434,12437,12440,12443,12446,12449,12452,12455,12458,12461,12464,12467,12470,21712,22314,20664,21758,22168,22292,20667,22298,22068] </C>
+        </COMPOSITE>
+        <DOMAIN> C[1] </DOMAIN>
+    </GEOMETRY>
+    <Metadata>
+        <Provenance>
+            <GitBranch>refs/heads/master</GitBranch>
+            <GitSHA1>e29c5b6f2f5e7ce6e75f364d485472399668baf7</GitSHA1>
+            <Hostname>LAPTOP-FIIC1OQ2</Hostname>
+            <NektarVersion>5.0.0</NektarVersion>
+            <Timestamp>22-Sep-2023 15:35:32</Timestamp>
+        </Provenance>
+        <NekMeshCommandLine>-m extract:surf=1 2M03_fine.xml bnd_inflow.xml </NekMeshCommandLine>
+    </Metadata>
+    <EXPANSIONS>
+        <E COMPOSITE="C[1]" NUMMODES="4" TYPE="MODIFIED" FIELDS="u" />
+    </EXPANSIONS>
+</NEKTAR>

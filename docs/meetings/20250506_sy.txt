@@ -1,0 +1,5 @@
+- chnage the perturbation fucntion on the BC with exponential  and width ~1 delta^*
+- try flat plate
+- by pass transition is NOT 2d. FORGET.
+
+- add images of dns in the stability plot for each case for sending to jeff

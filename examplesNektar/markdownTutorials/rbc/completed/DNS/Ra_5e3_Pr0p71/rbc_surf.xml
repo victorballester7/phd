@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <GEOMETRY DIM="1" SPACE="2">
+        <VERTEX COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJxjYMAPGKH0Fb2nF5Run7RHlxeD0n0qIPmbGPKKUPr3ldUyUSmPMeR1oPQvSZD+lxjy5lC6Tr//0FeNDxjyTlD672OQ+Z8x5H2h9O6ZJ8r2zf+GIR8Bpa/7gez/iSGfDKWnsjBpt4v9xZDPg9KaMSD3MTigywMAkA8t1QAA</VERTEX>
+        <ELEMENT>
+            <S COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJxjYEAFjFBaHo0vBqVN0PiKUNoTja8DpePQ+OZQuhiN7wSlO9D4vlB6Lho/AkpvQuMnQ+njaPw8KA0AtvYIRAAA</S>
+        </ELEMENT>
+        <COMPOSITE>
+            <C ID="1"> S[0,31,52,73,94,115,136,157,178,199] </C>
+        </COMPOSITE>
+        <DOMAIN>
+            <D ID="0"> C[1] </D>
+        </DOMAIN>
+    </GEOMETRY>
+    <Metadata>
+        <Provenance>
+            <GitBranch>refs/heads/master</GitBranch>
+            <GitSHA1>220f97ce6197586794069fe23d71f845f20bc948</GitSHA1>
+            <Hostname>abhimbps-MBP.broadband</Hostname>
+            <NektarVersion>5.4.0</NektarVersion>
+            <Timestamp>03-Dec-2023 18:25:16</Timestamp>
+        </Provenance>
+        <NekMeshCommandLine>-m extract:surf=1 rbc-DNS.xml rbc_surf.xml </NekMeshCommandLine>
+    </Metadata>
+    <EXPANSIONS>
+        <E COMPOSITE="C[1]" NUMMODES="10" TYPE="GLL_LAGRANGE_SEM" FIELDS="u" />
+    </EXPANSIONS>
+</NEKTAR>

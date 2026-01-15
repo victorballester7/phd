@@ -1,0 +1,5 @@
+/home/victor/Desktop/nektarTutorials/fundamentals-differentiation/completed/CMakeFiles/StdDifferentiation1D.dir
+/home/victor/Desktop/nektarTutorials/fundamentals-differentiation/completed/CMakeFiles/StdDifferentiation2D.dir
+/home/victor/Desktop/nektarTutorials/fundamentals-differentiation/completed/CMakeFiles/LocDifferentiation2D.dir
+/home/victor/Desktop/nektarTutorials/fundamentals-differentiation/completed/CMakeFiles/edit_cache.dir
+/home/victor/Desktop/nektarTutorials/fundamentals-differentiation/completed/CMakeFiles/rebuild_cache.dir

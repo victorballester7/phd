@@ -1,0 +1,2 @@
+- check stremwise contours of the modes in the y direction inside the gap.
+- do subcrticality analysis, starting from turbulent states backwards. and also from stady states to turbulent states.

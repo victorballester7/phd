@@ -1,0 +1,31 @@
+runs/
+tutorials/
+nektar*/
+**credentials*.py
+**__pycache__
+**/spod/**/*.dat
+**/spod/**/*.his
+
+# Tex files:
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.synctex(busy)
+*.nav
+*.snm
+*.toc
+*.script
+*.table
+
+# uv files
+*.venv**
+
+# do not sync .dat files
+data/*.dat
+

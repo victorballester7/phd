@@ -1,0 +1,24 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\section{Future work}\label{sec:future_work}
+
+Future research will proceed along two primary directions. The first is the extension of the current analysis to compressible flows. The second involves generalizing the geometry to three dimensions in order to investigate the effects of spanwise instabilities.
+
+Up to this point, this work has focused exclusively on incompressible flow, which is a valid approximation at low Mach numbers. However, many cruise conditions in aeronautical applications occur at moderate to high Mach numbers, where compressibility effects become significant. Extending the present framework to compressible flow will require substantial modifications. \texttt{Nektar++} provides a compressible Navier--Stokes solver that employs a discontinuous Galerkin method, the Flux Reconstruction approach, or the Interior Penalty method for spatial discretization. Time integration is performed using an implicit Runge--Kutta scheme, and the resulting nonlinear system is solved using a Newton iteration.
+
+The inflow boundary condition must also be revised. In the compressible regime, a modified Blasius-type boundary layer profile is needed to maintain self-similarity. The appropriate similarity variable in this case is given by~\cite{boundaryLayerTheory,juliacomNSBlasius}
+\begin{equation}
+	\eta = \sqrt{\frac{u_\infty \rho_\infty}{\mu_\infty x}} \int_0^y \frac{\rho}{\rho_\infty},
+	\label{eq:etacompressible}
+\end{equation}
+where $\rho_\infty$ and $\mu_\infty$ denote the free-stream density and dynamic viscosity, respectively. When $\rho = \rho_\infty = 1$, this expression reduces to the incompressible case~\cref{eq:blasius}. However, due to the loss of linearity between $\eta$ and $y$, interpolating the compressible Blasius profile for use as input to the solver becomes more challenging.
+
+With regard to linear stability analysis and the computation of $\Delta n$-factors, we note that \texttt{Nektar++} currently lacks a linearized solver for the compressible Navier--Stokes equations. As a result, either a dedicated linear solver must be implemented, or the full nonlinear solver must be employed to evaluate amplification. While the latter approach is computationally more expensive, it may also yield more accurate results.
+
+The second research direction concerns the inclusion of three-dimensional effects. This is motivated by the need to better understand the mechanisms that govern transition in swept-wing flows, where three-dimensional boundary layers play a critical role~\cite{3dBoundaryLayers}. In this context, an additional parameter $\phi$ will be introduced to represent the sweep angle of the wing. The computational domain will be extruded in the spanwise direction using a Fourier expansion, resulting in a quasi-3D configuration. The sweep angle $\phi$ will correspond to the angle between the streamwise ($u_\infty$) and spanwise ($w_\infty$) components of the free-stream velocity.
+
+Under this new setup, genuinely three-dimensional instabilities such as crossflow modes may arise. Additionally, gap-induced instabilities, such as the self-sustained absolute instability illustrated in~\cref{fig:absoluteInstability}, may exhibit different behavior in three dimensions, potentially transitioning from absolute to convective due to spanwise effects.
+
+
+\end{document}

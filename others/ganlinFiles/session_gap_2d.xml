@@ -1,0 +1,193 @@
+<!-- Flat plate without leading edge - 3D -->
+<?xml version="1.0" encoding="utf-8"?>
+<NEKTAR>  
+  <EXPANSIONS>    
+    	  
+    <E COMPOSITE="C[100,101,102]" NUMMODES="4" FIELDS="u,v,p" TYPE="MODIFIED"            />
+    <!--
+    <E COMPOSITE="C[100,101,102]" NUMMODES="6" FIELDS="u,v" TYPE="MODIFIED"              />
+    <E COMPOSITE="C[100,101,102]" NUMMODES="5" FIELDS="p"     TYPE="MODIFIEDQUADPLUS1"     />
+    --> 
+  </EXPANSIONS>  
+  <CONDITIONS>
+    <SOLVERINFO> 
+      <I PROPERTY="SolverType"                           VALUE="VelocityCorrectionScheme" />
+      <I PROPERTY="EQTYPE"                               VALUE="UnsteadyNavierStokes"     />
+      <I PROPERTY="AdvectionForm"                        VALUE="Convective"               />
+      <I PROPERTY="Projection"                           VALUE="Galerkin"                 />
+      <I PROPERTY="TimeIntegrationMethod"                VALUE="IMEXOrder2"               />
+      <I PROPERTY="SpectralhpDealiasing"                 VALUE="True"                     />
+      <!--<I PROPERTY="SpectralVanishingViscosity"  VALUE="True"                          />--> <!--True/DGKernel, includes SpectralHP and Homo1D-->
+      <I PROPERTY="SpectralVanishingViscositySpectralHP" VALUE="True"                     />  <!--x-y plane, replaced by GJPStabilisation-->
+      <!--<I PROPERTY="SpectralVanishingViscosityHomo1D"     VALUE="True"                     />->  <!--z-dir-->
+      <!--<I PROPERTY="GJPStabilisation"                 VALUE="SemiImplicit"             /> --> 
+      <!--<I PROPERTY="HOMOGENEOUS"                          VALUE="1D"                       />  
+      <I PROPERTY="UseFFT"                               VALUE="FFTW"                     />-->
+      <I PROPERTY="GlobalSysSoln"                        VALUE="XxtMultiLevelStaticCond"  /> <!-- XxtMultiLevelStaticCond for parallel, DirectMultiLevelStaticCond for serial-->
+      <!--
+      <I PROPERTY="EvolutionOperator"           VALUE="Direct"                   /> 
+      <I PROPERTY="Driver"                      VALUE="Standard"                 />
+      <I PROPERTY="ModeType"                    VALUE="SingleMode"               /> -->  <!--MultipleModes-->
+    </SOLVERINFO>
+    <PARAMETERS>
+      <P> TimeStep        = 0.5e-3                 </P> <!--P1,2e-4; P32,2e-4, P43,1.2e-4 P54 0.8e-4-->
+      <P> NumSteps        = 1000e3                 </P> <!--P5,2e6-->
+      <P> IO_CheckSteps   = 50e3                  </P> 
+      <P> IO_InfoSteps    = 100                    </P>
+      <P> IO_CFLSteps     = 100                    </P>
+            
+      <P> Re_D            = 1500                   </P> <!--Re base on the total velocity and depth of gap (scaled to be 1)-->  
+      <P> sweep           = 0                      </P> <!--atand(0.5), w/u=0.5-->
+      <P> Ut              = 1.0                    </P>
+      <P> Uinf            = Ut*cos(sweep*PI/180.0) </P>
+      <P> Vinf            = Ut*6.494114611452861e-4</P>
+      <P> Winf            = Ut*sin(sweep*PI/180.0) </P>
+      <P> L_ref           = 1.0                    </P>
+      <P> Kinvis          = 1.0/Re_D               </P>
+      <!--<P> LZ              = 1.0                    </P>--> <!--0.01/L_ref = 0.442728442728443-->
+      <!--<P> HomModesZ       = 24                     </P>-->
+      <!--
+      <P> SVVDIffCoeffHomo1D   = 0.1               </P>
+      <P> SVVCutoffRatioHomo1D = 0.7               </P>
+      -->
+      <!-- setting for Exp/DG Kernel SVV -->
+      <P> SVVDiffCoeff    = 0.1                    </P>
+      <P> SVVCutoffRatio  = 0.7                    </P>
+      
+      
+    </PARAMETERS>
+    
+    <VARIABLES>
+      <V ID="0"> u </V>
+      <V ID="1"> v </V> 
+      <V ID="2"> p </V>
+    </VARIABLES>
+    
+    <BOUNDARYREGIONS> 
+      <B ID="0"> C[4,5,6] </B>  <!-- wall -->
+      <B ID="1"> C[2] </B>      <!-- outflow -->
+      <B ID="2"> C[1] </B>      <!-- inflow -->
+      <B ID='3'> C[3] </B>      <!-- free stream -->
+    </BOUNDARYREGIONS>
+   
+    <BOUNDARYCONDITIONS>
+      <!-- wall -->
+      <REGION REF="0">
+        <D VAR="u" VALUE="0" />  
+        <D VAR="v" VALUE="0" />
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />
+      </REGION>
+      <!-- outflow -->      
+      <REGION REF="1">
+        <N VAR="u" USERDEFINEDTYPE="HOutflow" VALUE="0" />
+        <N VAR="v" USERDEFINEDTYPE="HOutflow" VALUE="0" />
+        <D VAR="p" USERDEFINEDTYPE="HOutflow" VALUE="0" />
+      </REGION>
+      <!-- inflow -->
+      <!-- u   = c0_u*(y*y2eta)^8   + c1_u*(y*y2eta)^7  + c2_u*(y*y2eta)^6   + c3_u*(y*y2eta)^5
+               + c4_u*(y*y2eta)^4   + c5_u*(y*y2eta)^3  + c6_u*(y*y2eta)^2   + c7_u*(y*y2eta)-->
+      <REGION REF="2">
+        <!--
+        <D VAR="u" VALUE="( c0_u*(y*y2eta)^8  +  c1_u*(y*y2eta)^7  +  c2_u*(y*y2eta)^6  +  c3_u*(y*y2eta)^5
+                          + c4_u*(y*y2eta)^4  +  c5_u*(y*y2eta)^3  +  c6_u*(y*y2eta)^2  +  c7_u*(y*y2eta) )*Uinf*(y<y_max) + Uinf*(y>=y_max)" />
+        <D VAR="v" VALUE="( c0_v*(y*y2eta)^8  +  c1_v*(y*y2eta)^7  +  c2_v*(y*y2eta)^6  +  c3_v*(y*y2eta)^5
+                          + c4_v*(y*y2eta)^4  +  c5_v*(y*y2eta)^3  +  c6_v*(y*y2eta)^2  +  c7_v*(y*y2eta) )/1.216780598496469*Vinf*(y<y_max) + Vinf*(y>=y_max)" />    
+        <D VAR="w" VALUE="( c0_w*(y*y2eta)^8  +  c1_w*(y*y2eta)^7  +  c2_w*(y*y2eta)^6  +  c3_w*(y*y2eta)^5
+                          + c4_w*(y*y2eta)^4  +  c5_w*(y*y2eta)^3  +  c6_w*(y*y2eta)^2  +  c7_w*(y*y2eta) )*Winf*(y<y_max) + Winf*(y>=y_max)" />
+        -->
+        <D VAR="u" FILE="bnd_inflow.bc" />
+        <D VAR="v" VALUE="0" />
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />
+      </REGION>
+      <!-- free stream -->      
+      <REGION REF="3">
+        <D VAR="u" VALUE="Uinf" />        
+        <N VAR="v" VALUE="0" />
+        <D VAR="p" VALUE="0" />      
+      </REGION>
+    </BOUNDARYCONDITIONS>    
+    <FUNCTION NAME="InitialConditions">
+      <!--<E VAR="w" VALUE="Winf+0.1*awgn(1.0)" />-->
+      <F VAR="u,v,w,p" FILE="2d_P3_t650.fld" />
+      <!-- 
+      <E VAR="u" VALUE="Uinf" />
+      <E VAR="v" VALUE="Vinf" />
+      <E VAR="p" VALUE="0"    />
+      --> 
+    </FUNCTION>  
+  </CONDITIONS>
+  
+  <FILTERS>
+    <!--
+    <FILTER TYPE="ModalEnergy">
+      <PARAM NAME="OutputFile">EnergyFile</PARAM>
+      <PARAM NAME="OutputFrequency">200</PARAM>
+      <PARAM NAME="SampleFrequency">200</PARAM>
+    </FILTER>
+    --> 
+    <!--
+    <FILTER TYPE="AverageFields">
+      <PARAM NAME="OutputFile">AverageField</PARAM>
+      <PARAM NAME="RestartFile">LZ04_P54_t161p6.fld</PARAM>
+      <PARAM NAME="OutputFrequency">40000</PARAM>
+      <PARAM NAME="SampleFrequency"> 1 </PARAM>
+    </FILTER>
+    -->
+   <!-- 
+    <FILTER TYPE="HistoryPoints">
+      <PARAM NAME="OutputFile">TimeValues_inGap</PARAM>
+      <PARAM NAME="OutputFrequency">200</PARAM>
+      <PARAM NAME="Points">
+             0.25  -0.8  0
+             0.25  -0.5  0
+             0.25  -0.2  0
+             0.25   0    0
+             0.5   -0.8  0
+             0.5   -0.5  0
+             0.5   -0.2  0
+             0.5    0    0
+             0.75  -0.8  0
+             0.75  -0.5  0
+             0.75  -0.2  0
+             0.75   0    0
+             1.0   -0.8  0
+             1.0   -0.5  0
+             1.0   -0.2  0
+             1.0    0    0
+             1.25  -0.8  0
+             1.25  -0.5  0
+             1.25  -0.2  0
+             1.25   0    0
+             1.5   -0.8  0
+             1.5   -0.5  0
+             1.5   -0.2  0
+             1.5    0    0
+             1.75  -0.8  0
+             1.75  -0.5  0
+             1.75  -0.2  0
+             1.75   0    0
+      </PARAM>
+    </FILTER>
+    
+    <FILTER TYPE="HistoryPoints">
+      <PARAM NAME="OutputFile">TimeValues_outGap</PARAM>
+      <PARAM NAME="OutputFrequency">100</PARAM>
+      <PARAM NAME="Points">
+             0.45  0.01   0
+             0.45  0.03   0
+             0.5   0.01   0
+             0.5   0.03   0
+             0.6   0.01   0
+             0.6   0.03   0
+             0.7   0.01   0
+             0.7   0.03   0
+             0.8   0.01   0
+             0.8   0.03   0
+             0.9   0.01   0
+             0.9   0.03   0
+      </PARAM>
+    </FILTER>
+    -->
+  </FILTERS>
+  
+</NEKTAR>

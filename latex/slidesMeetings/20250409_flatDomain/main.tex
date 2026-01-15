@@ -1,0 +1,69 @@
+%!TEX program = xelatex
+% Note: this template must be compiled with XeLaTeX rather than PDFLaTeX
+% due to the custom fonts used. The line above should ensure this happens
+% automatically, but if it doesn't, your LaTeX editor should have a simple toggle
+% to switch to using XeLaTeX.
+
+\documentclass[
+  aspectratio=169, % Uncomment to use an aspect ratio of 16:9 (160 mm by 90 mm)
+  %aspectratio=43, % Uncomment to use an aspect ratio of 4:3 (128mm by 96mm)
+  t, % Top align all slide content by default
+  onlytextwidth, % Typeset content in columns at text width
+  10pt, % Default font size, use 10pt for the 16:9 aspect ratio and 8pt for the 4:3 aspect ratio
+]{beamer}
+
+\usepackage{../../ImperialTheme/beamer/beamerthemeImperial} % Use the Imperial theme
+
+\def\imagefolder{../../ImperialTheme/beamer/Images}
+\def\Rey{\text{Re}}
+\title{Flat domain} % Presentation title to appear on the title slide and left footers
+
+\subtitle{} % Presentation subtitle to appear on the title slide
+
+\author{Víctor Ballester} % Author name(s) to appear on the title slide
+
+\date{\today} % Presentation date to appear on the title slide and right footers
+
+\begin{document}
+
+\begingroup
+\setbeamercolor{background canvas}{bg=ICLBlue} % Slide background color
+\setbeamercolor{title page title}{fg=white} % Title text color
+\setbeamercolor{title page subtitle}{fg=white} % Subtitle text color
+\setbeamercolor{author}{fg=white} % Author(s) text color
+\setbeamercolor{date}{fg=white} % Date text color
+\setbeamertemplate{title page}[logo]{\imagefolder/ICL_Logo_White.pdf} % Imperial logo color, use 'ICL_Logo_White.pdf' for white and 'ICL_Logo_Blue.pdf' for blue
+\frame[plain, s]{\titlepage} % Output the title page with no footer ('plain') and vertically distributed text ('s')
+\endgroup
+
+\begin{frame}
+	\frametitle{Domain}
+	\begin{itemize}
+		\item I am getting a real mode, even enlarging the domain.
+	\end{itemize}
+	{
+	\centering
+	\includegraphics[width=1\textwidth]{Images/emode.png}
+	}
+\end{frame}
+\begin{frame}
+	\frametitle{Inconsistency between numerical reynolds number and theoretical one}
+	\begin{itemize}
+		\item Since $\nu$ and $U_\text{inf}$ are fixed, the only way to change the Reynolds number is by changing $\delta^*$. So we look for a formula to calculate $\delta^*(x_1)$ based on $\delta^*(x_0)$.
+	\end{itemize}
+	We have $\delta^*(x)=C\frac{x}{\sqrt{\Rey_x}}=C\frac{\sqrt{x}}{\sqrt{U/\nu}}$, $C\simeq 1.72$. Thus, $\frac{\delta^*(x_1)}{\delta^*(x_0)}=\frac{\sqrt{x_1}}{\sqrt{x_0}}$.
+	Now, we have:
+	% $$
+	% 	\Rey_{\delta^*(x)} = \frac{\delta^*(x)}{x}\Rey_{x} = \frac{C}\sqrt{\Rey_x}
+	% $$
+
+	If $x_1 = x_0 + \ell \delta^*(x_0)$, we have:
+	% $$
+	% \frac{x_1}{x_0} = 1 + \ell \frac{\delta^*(x_0)}{x_0} = ...
+	% $$
+
+	$$
+	  \delta^*(x_1) = \delta^*(x_0) \sqrt{1-\ell C^2/\Rey_{\delta^*(x_0)}}
+	$$
+\end{frame}
+\end{document}

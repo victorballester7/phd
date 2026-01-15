@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NEKTAR>  
+  <EXPANSIONS>    
+    <E COMPOSITE="C[100,101,102]" NUMMODES="7" FIELDS="u,v" TYPE="MODIFIED" />  
+    <E COMPOSITE="C[100,101,102]" NUMMODES="6" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
+  </EXPANSIONS>
+  
+  <CONDITIONS>    
+    <SOLVERINFO>
+      <I PROPERTY="SolverType"                            VALUE="VelocityCorrectionScheme"   />
+      <I PROPERTY="EqType"                                VALUE="UnsteadyNavierStokes"       />
+      <I PROPERTY="Projection"                            VALUE="Galerkin"                   /> 
+      <I PROPERTY="EvolutionOperator"                     VALUE="Nonlinear"                  />
+      <I PROPERTY="TimeIntegrationMethod"                 VALUE="IMEXOrder2"                 />
+      <I PROPERTY="SpectralVanishingViscosity"            VALUE="DGKernel"                        />
+      <I PROPERTY="SPECTRALHPDEALIASING"                  VALUE="True"           />
+      <I PROPERTY="GlobalSysSoln"                         VALUE="XxtMultiLevelStaticCond" />
+    </SOLVERINFO>    
+
+    <PARAMETERS>
+     <!--General parameters-->
+      <P> TimeStep        = 0.004      </P>
+      <P> NumSteps        = 1000e4     </P>
+      <P> IO_CheckSteps   = NumSteps/100         </P> 
+      <P> IO_InfoSteps    = NumSteps/8000       </P> 
+      <P> IO_CFLSteps     = IO_InfoSteps         </P>
+      <P> HistorySteps    = NumSteps/15000 </P>
+      <P> EnergySteps     = IO_InfoSteps * 10</P>
+      <P> IO_FiltersInfoSteps = EnergySteps </P>
+      <P> D0              = 1                   </P> <!-- the value to 1/D0 is the velocity convection scale on the outflow !-->
+      <P> SVVDiffCoeff    = 1.0                    </P>
+      <P> SVVCutoffRatio  = 0.5                    </P>
+
+
+      <!-- Parameters for the simulation -->
+      <!-- To understand the formulas in the parameters, please refer to the file docs/20250414_Blasius_formulas.md -->
+      <!-- CHANGE THIS BEFORE RUNNING THE SIMULATION -->
+      <!-- it has to match the definition of x0 (negated) in the .geo file -->
+      <!-- ........................................... -->
+      <!-- ........................................... -->
+      <!-- ........................................... -->
+      <p> lengthBeforeGap       = -100 </p> <!-- in terms of deltaStar_leadingEdge !-->
+      <!-- ........................................... -->
+      <!-- ........................................... -->
+      <!-- ........................................... -->
+      <p> C                     = 1.7207876575205 </p> <!-- number from wiki !-->
+      <p> Uinf                  = 1                   </p>
+      <p> deltaStar_le          = 1  </p> 
+      <P> Re_deltaStar_le       = 1000       </P> <!-- Reynolds number based on deltaStar_leadingEdge !-->
+      <P> deltaStar_BC          = sqrt(1+lengthBeforeGap*C^2/Re_deltaStar_le) </P> 
+      <P> Kinvis                = Uinf*deltaStar_le/Re_deltaStar_le                 </P>
+      <p> Vinf                  = 0.5*Uinf*C/(Re_deltaStar_le * deltaStar_BC) </p> 
+      <P> etaMax                = 9.84                      </P>  <!-- based on python plotting script. It fits better than etaMax=10, the endpoint of the simulation, both for u and v !-->
+      <P> y2eta                 = C/deltaStar_BC   </P> 
+      <P> yMax        = etaMax/y2eta             </P> <!--[m]-->  
+      <p> a1_u = 0.33263899291846005 </p>
+      <p> a2_u = 8830.512069032215 </p>
+      <p> a3_u = 58.97366593890366 </p>
+      <p> a4_u = 615.0518197268191 </p>
+      <p> a5_u = 32.12385528953152 </p>
+      <p> a6_u = -17.16678907227338 </p>
+      <p> a7_u = 11.02175978217767 </p>
+      <p> a8_u = -1.9645118354438575 </p>
+      <p> a9_u = 0.5010442307141161 </p>
+      <p> a10_u = -0.0645796009748346 </p>
+      <p> a11_u = 0.006179765415827125 </p>
+      <p> b1_u = 26593.41072503167 </p>
+      <p> b2_u = 176.8055649980844 </p>
+      <p> b3_u = 1855.7665505833227 </p>
+      <p> b4_u = 272.5391794254054 </p>
+      <p> b5_u = -39.221863541559394 </p>
+      <p> b6_u = 36.24230326537252 </p>
+      <p> b7_u = -0.07795052580215707 </p>
+      <p> b8_u = -0.8421866779902756 </p>
+      <p> b9_u = 0.44410766209840075 </p>
+      <p> b10_u = -0.06341415789453857 </p>
+      <p> b11_u = 0.006179765415827125 </p>
+      <p> a1_v = -1.9959025216159896e-05 </p>
+      <p> a2_v = 0.16695529626584846 </p>
+      <p> a3_v = -0.575204509312059 </p>
+      <p> a4_v = -0.4341004660550698 </p>
+      <p> a5_v = 299.3706050451578 </p>
+      <p> a6_v = -93.83786038348894 </p>
+      <p> a7_v = 16.266365937513303 </p>
+      <p> a8_v = -1.8990540751356129 </p>
+      <p> a9_v = 0.33729889822536685 </p>
+      <p> a10_v = -0.04383523593037588 </p>
+      <p> a11_v = 0.0034080097149121807 </p>
+      <p> b1_v = -3.380409827085182 </p>
+      <p> b2_v = -3.1753939961101696 </p>
+      <p> b3_v = 1805.0761851180248 </p>
+      <p> b4_v = -569.1055835320207 </p>
+      <p> b5_v = 102.77873382853763 </p>
+      <p> b6_v = 4.5614994586104824 </p>
+      <p> b7_v = -2.027219234693251 </p>
+      <p> b8_v = -0.01875987489840645 </p>
+      <p> b9_v = 0.1441683101478324 </p>
+      <p> b10_v = -0.024466672927746642 </p>
+      <p> b11_v = 0.0019804940487676533 </p>
+    </PARAMETERS>
+    
+    <VARIABLES>
+      <V ID="0"> u </V>
+      <V ID="1"> v </V>  
+      <V ID="2"> p </V>
+    </VARIABLES>
+    
+    <BOUNDARYREGIONS>
+      <B ID="0"> C[1] </B>    <!-- inlet !-->  
+      <B ID="1"> C[2] </B>    <!-- outlet !-->
+      <B ID="2"> C[3] </B>    <!-- top !-->
+      <B ID="3"> C[4] </B>    <!-- bottom + left & right gap walls !-->
+    </BOUNDARYREGIONS>    
+
+             <BOUNDARYCONDITIONS>
+      <REGION REF="0">  <!-- inlet !-->                  
+        <!-- I do it like that (when y>=yMax) in order to avoid discontinuities in the velocity field at the inflow (I had discontinuities, which affect the presure field and therefore the whole domain), the error is of the order of 10^-7 for u and 10^-10 for v ! -->
+        <D VAR="u" VALUE="Uinf*(
+                   (
+                     (a1_u*(y*y2eta)^1 + a2_u*(y*y2eta)^2 + a3_u*(y*y2eta)^3 + a4_u*(y*y2eta)^4 + a5_u*(y*y2eta)^5 + a6_u*(y*y2eta)^6 + a7_u*(y*y2eta)^7 + a8_u*(y*y2eta)^8 + a9_u*(y*y2eta)^9 + a10_u*(y*y2eta)^10 + a11_u*(y*y2eta)^11) / 
+                     (1 + b1_u*(y*y2eta)^1 + b2_u*(y*y2eta)^2 + b3_u*(y*y2eta)^3 + b4_u*(y*y2eta)^4 + b5_u*(y*y2eta)^5 + b6_u*(y*y2eta)^6 + b7_u*(y*y2eta)^7 + b8_u*(y*y2eta)^8 + b9_u*(y*y2eta)^9 + b10_u*(y*y2eta)^10 + b11_u*(y*y2eta)^11)
+                   ) * (y<yMax) + 
+                   (
+                     (a1_u*(etaMax)^1 + a2_u*(etaMax)^2 + a3_u*(etaMax)^3 + a4_u*(etaMax)^4 + a5_u*(etaMax)^5 + a6_u*(etaMax)^6 + a7_u*(etaMax)^7 + a8_u*(etaMax)^8 + a9_u*(etaMax)^9 + a10_u*(etaMax)^10 + a11_u*(etaMax)^11) /
+                     (1 + b1_u*(etaMax)^1 + b2_u*(etaMax)^2 + b3_u*(etaMax)^3 + b4_u*(etaMax)^4 + b5_u*(etaMax)^5 + b6_u*(etaMax)^6 + b7_u*(etaMax)^7 + b8_u*(etaMax)^8 + b9_u*(etaMax)^9 + b10_u*(etaMax)^10 + b11_u*(etaMax)^11)
+                   ) * (y>=yMax))" />
+       <D VAR="v" VALUE="Vinf*(
+                   (
+                     (a1_v*(y*y2eta)^1 + a2_v*(y*y2eta)^2 + a3_v*(y*y2eta)^3 + a4_v*(y*y2eta)^4 + a5_v*(y*y2eta)^5 + a6_v*(y*y2eta)^6 + a7_v*(y*y2eta)^7 + a8_v*(y*y2eta)^8 + a9_v*(y*y2eta)^9 + a10_v*(y*y2eta)^10 + a11_v*(y*y2eta)^11) / 
+                     (1 + b1_v*(y*y2eta)^1 + b2_v*(y*y2eta)^2 + b3_v*(y*y2eta)^3 + b4_v*(y*y2eta)^4 + b5_v*(y*y2eta)^5 + b6_v*(y*y2eta)^6 + b7_v*(y*y2eta)^7 + b8_v*(y*y2eta)^8 + b9_v*(y*y2eta)^9 + b10_v*(y*y2eta)^10 + b11_v*(y*y2eta)^11)
+                   ) * (y<yMax) + 
+                   (
+                     (a1_v*(etaMax)^1 + a2_v*(etaMax)^2 + a3_v*(etaMax)^3 + a4_v*(etaMax)^4 + a5_v*(etaMax)^5 + a6_v*(etaMax)^6 + a7_v*(etaMax)^7 + a8_v*(etaMax)^8 + a9_v*(etaMax)^9 + a10_v*(etaMax)^10 + a11_v*(etaMax)^11) /
+                     (1 + b1_v*(etaMax)^1 + b2_v*(etaMax)^2 + b3_v*(etaMax)^3 + b4_v*(etaMax)^4 + b5_v*(etaMax)^5 + b6_v*(etaMax)^6 + b7_v*(etaMax)^7 + b8_v*(etaMax)^8 + b9_v*(etaMax)^9 + b10_v*(etaMax)^10 + b11_v*(etaMax)^11)
+                   ) * (y>=yMax))" />
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" /> <!-- high-order boundary condition, VALUE is not used !-->
+      </REGION>
+
+      <REGION REF="1">   <!-- outlet !-->
+        <!-- <R VAR="u" USERDEFINEDTYPE="HOutflow" VALUE="0" PRIMCOEFF="D0/TimeStep"/> -->
+        <!-- <R VAR="v" USERDEFINEDTYPE="HOutflow" VALUE="0" PRIMCOEFF="D0/TimeStep"/> -->
+        <!-- <R VAR="p" USERDEFINEDTYPE="HOutflow" VALUE="0" PRIMCOEFF="1.0/(D0*Kinvis)"/> -->
+        <N VAR="u" USERDEFINEDTYPE="HOutflow" VALUE="0" />
+        <N VAR="v" USERDEFINEDTYPE="HOutflow" VALUE="0" />
+        <D VAR="p" USERDEFINEDTYPE="HOutflow" VALUE="0" />
+        <!-- <N VAR="u" VALUE="0" /> -->
+        <!-- <N VAR="v" VALUE="0" /> -->
+        <!-- <D VAR="p" VALUE="0" /> -->
+      </REGION>  
+            
+      <REGION REF="2">   <!-- top = far-field !-->
+        <!-- I do it like that in order to avoid discontinuities in the velocity field at the top boundary, the error is of the order of 10^-7 for u and 10^-10 for v ! -->
+        <D VAR="u" VALUE="Uinf" />
+        <D VAR="v" VALUE="0.5*Uinf*C^2/(Re_deltaStar_le * sqrt(1+x*C^2/Re_deltaStar_le))" />
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />      
+      </REGION>
+
+      <REGION REF="3">  <!-- bottom = wall no slip !-->  
+        <D VAR="u" VALUE="0" />
+        <D VAR="v" VALUE="0" />        
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />  
+      </REGION>    
+    </BOUNDARYCONDITIONS>
+    
+    <!-- <FUNCTION NAME="InitialConditions"> -->
+    <!--   <F VAR="u,v,p" FILE="initialCond.fld" /> -->
+    <!-- </FUNCTION> -->
+
+    <FUNCTION NAME="InitialConditions">
+       <E VAR="u" VALUE="Uinf * (y>0) * (
+                    (
+                      (a1_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + a2_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + a3_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + a4_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + a5_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + a6_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + a7_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + a8_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + a9_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + a10_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + a11_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11) / 
+                      (1 + b1_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + b2_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + b3_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + b4_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + b5_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + b6_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + b7_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + b8_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + b9_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + b10_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + b11_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11)
+                                                     ) * (y< etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C) +
+                    (
+                      (
+                         a1_u*(etaMax)^1 +
+                         a2_u*(etaMax)^2 + 
+                         a3_u*(etaMax)^3 + 
+                         a4_u*(etaMax)^4 + 
+                         a5_u*(etaMax)^5 +
+                         a6_u*(etaMax)^6 + 
+                         a7_u*(etaMax)^7 + 
+                         a8_u*(etaMax)^8 +
+                         a9_u*(etaMax)^9 + 
+                         a10_u*(etaMax)^10 +
+                         a11_u*(etaMax)^11) /
+                      (1 +
+                         b1_u*(etaMax)^1 + 
+                         b2_u*(etaMax)^2 + 
+                         b3_u*(etaMax)^3 +
+                         b4_u*(etaMax)^4 +
+                         b5_u*(etaMax)^5 + 
+                         b6_u*(etaMax)^6 + 
+                         b7_u*(etaMax)^7 +
+                         b8_u*(etaMax)^8 +
+                         b9_u*(etaMax)^9 +
+                         b10_u*(etaMax)^10 +
+                         b11_u*(etaMax)^11)
+                    ) * (y>=etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C))" />
+                                        <E VAR="v" VALUE="0.5*Uinf*C/(Re_deltaStar_le * sqrt(1+x*C^2/Re_deltaStar_le))* (y>0) * (
+                    (
+                      (a1_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + a2_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + a3_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + a4_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + a5_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + a6_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + a7_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + a8_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + a9_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + a10_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + a11_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11) / 
+                      (1 + b1_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + b2_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + b3_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + b4_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + b5_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + b6_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + b7_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + b8_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + b9_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + b10_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + b11_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11)
+                    ) * (y< etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C) + 
+                    (
+                      (a1_v*(etaMax)^1 + a2_v*(etaMax)^2 + a3_v*(etaMax)^3 + a4_v*(etaMax)^4 + a5_v*(etaMax)^5 + a6_v*(etaMax)^6 + a7_v*(etaMax)^7 + a8_v*(etaMax)^8 + a9_v*(etaMax)^9 + a10_v*(etaMax)^10 + a11_v*(etaMax)^11) /
+                      (1 + b1_v*(etaMax)^1 + b2_v*(etaMax)^2 + b3_v*(etaMax)^3 + b4_v*(etaMax)^4 + b5_v*(etaMax)^5 + b6_v*(etaMax)^6 + b7_v*(etaMax)^7 + b8_v*(etaMax)^8 + b9_v*(etaMax)^9 + b10_v*(etaMax)^10 + b11_v*(etaMax)^11)
+                    ) * (y>=etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C))" />
+       <E VAR="p" VALUE="0" />
+    </FUNCTION>
+  </CONDITIONS>
+  <FILTERS>
+
+    <FILTER TYPE="ModalEnergy">
+      <PARAM NAME="OutputFile">EnergyFile</PARAM>
+      <PARAM NAME="OutputFrequency">EnergySteps</PARAM>
+    </FILTER>
+
+    <FILTER TYPE="HistoryPoints">
+      <PARAM NAME="OutputFile">HistoryPoints</PARAM>
+      <PARAM NAME="OutputFrequency">HistorySteps</PARAM>
+      <PARAM NAME="Points">
+    -100 1 0
+    -75 1 0
+    -50 1 0
+    -35 1 0
+    -25 1 0
+    -15 1 0
+    -10 1 0
+    -5 1 0
+    0 1 0
+    5 1 0
+    5 -.12500000000000000000 0
+    10 1 0
+    10 -.12500000000000000000 0
+    15 1 0
+    15 -.12500000000000000000 0
+    20 1 0
+    20 -.12500000000000000000 0
+    25 1 0
+    25 -.12500000000000000000 0
+    30 1 0
+    30 -.12500000000000000000 0
+    35 1 0
+    35 -.12500000000000000000 0
+    40 1 0
+    40 -.12500000000000000000 0
+    45 1 0
+    45 -.12500000000000000000 0
+    50 1 0
+    50 -.12500000000000000000 0
+    55 1 0
+    55 -.12500000000000000000 0
+    60 1 0
+    60 -.12500000000000000000 0
+    65 1 0
+    65 -.12500000000000000000 0
+    70 1 0
+    75 1 0
+    80 1 0
+    85 1 0
+    95 1 0
+    105 1 0
+    120 1 0
+    145 1 0
+    170 1 0
+    195 1 0
+    220 1 0
+    245 1 0
+    270 1 0
+    295 1 0
+    320 1 0
+    345 1 0
+    370 1 0
+    395 1 0
+    420 1 0
+    445 1 0
+    470 1 0
+    495 1 0
+    520 1 0
+    545 1 0
+    570 1 0
+    595 1 0
+    620 1 0
+    645 1 0
+    670 1 0
+    695 1 0
+    720 1 0
+    745 1 0
+    770 1 0
+    795 1 0
+    820 1 0
+    845 1 0
+    870 1 0
+    895 1 0
+    920 1 0
+    945 1 0
+    970 1 0
+    995 1 0
+    1020 1 0
+    1045 1 0
+    1070 1 0
+      </PARAM>
+    </FILTER>
+  </FILTERS>
+</NEKTAR>
+

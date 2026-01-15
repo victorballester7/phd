@@ -1,0 +1,10 @@
+Questions:
+  1. Can you repeat me why all the people put an inflow of balsuius profile, instead of just using u=1 or whatever more simple?
+  2. Why ModalEnergy is not outputing files?
+  3. cannot make nektar compile in hpc.
+
+
+
+- Have a look at nohup after the '&' in commands to run in the background.
+- add a blasius profile on the boundary layer domain.
+mail ganlin for reynolds and other things (differnce between codes and paper)

@@ -1,0 +1,14 @@
+- do jeffrey slides for next week
+- put nonlinear results (all range of width)
+
+
+
+RUNS for next week:
+- play with the parameters of SFD, to see whether we reduce the error between the baseflow created and the nonlinear results (after adding the mode to the baseflow)
+- try to match the decrease in u (by amplifying the mode a little bit above the stable convergeed baseflow (plot of u))
+- try robin BC from Dong paper
+
+
+
+Theoretical notes:
+- First part that the solver does is solve poisson eq for preassure, so when I add the perturbated mode (which doesn't have preassure) to the baseflow I can set the preassure to zero to that file.

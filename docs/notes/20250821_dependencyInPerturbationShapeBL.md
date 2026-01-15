@@ -1,0 +1,2 @@
+- BL forcing produces error, the perturbation field doesn't tend to zero as y goes to infinity. So we use forcing inside the domain.
+- There is a dependency in the amplitude relation A_u/A_v that we put in the perturbation field. I did some checks in blowingSunction/d4_w15 (A_u/A_b = 0, A_u/A_v = 2000 and A_u/A_v = 1). The first and third look similar, the second is off by maybe 0.1 (absolute error, near Nx=2).

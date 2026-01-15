@@ -1,0 +1,4 @@
+- try to run the coupled solver which solves for the eignvalues closest to the origin.
+- try as well transient growth for w=16.5
+
+- whenever using SFD pass the solution to Nonlinear solver, let it run for a while using the Nonlinear solver and then use the EV solver to get the eigenvalues.

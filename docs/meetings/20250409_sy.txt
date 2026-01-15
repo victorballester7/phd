@@ -1,0 +1,5 @@
+- try the coupled approach. 
+- try then the bump thing with the frequency from blasius profile (0rr sommerfeld) and see the difference in error.
+- they say that for DNS I need to change the amplitude of the bump region but not for the linearized solver.
+- sample reynolds number in different regions of the domain in order to propperly compare it with the analytical result.
+

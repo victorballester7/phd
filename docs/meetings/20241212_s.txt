@@ -1,0 +1,1 @@
+- change DGKernel parameter in the linerized solver

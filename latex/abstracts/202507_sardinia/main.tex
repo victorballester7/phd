@@ -1,0 +1,42 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{sig33,graphicx}
+
+\begin{document}
+%
+% Please underline the presenting author and give
+% at least the email address of that author.
+%
+\title{Flow transition over gaps}
+%
+\author{\underline{Víctor Ballester Ribó}$^1$, Jeffrey Crouch$^2$, Yongyun Hwang$^1$, Spencer Sherwin$^1$}
+\affiliation{$^1$Department of Aeronautics, Imperial College London, UK \\ $^2$The Boeing Company, USA}
+\maketitle
+
+%
+% Provide a short summary of the paper
+%
+
+Aircraft wings are not perfectly smooth; they often feature spanwise gaps due to manufacturing tolerances, structural components, or control surface discontinuities. These geometric discontinuities can significantly influence boundary layer transition, potentially affecting aerodynamic performance and efficiency. In this study, we investigate the interaction between such gaps and the transition process, with a particular emphasis on the enhanced amplification of Tollmien-Schlichting (TS) waves and by-pass mechanisms. Specifically, we examine the role of gap-induced modes in triggering or enhancing natural boundary layer instabilities~\cite{schmid_henningson_2001}. The analysis is conducted at low Mach number under incompressible flow conditions at a Reynolds number of $\mathrm{Re}_{\delta^*}=1000$, where $\delta^*$ denotes the displacement thickness measured at the upstream edge of the gap on a smooth surface that is free of discontinuities. The depth of the gap considered is $d/\delta^*=4$, while the width is varied within the range $w/\delta^*\in\{10,\ldots,30\}$ to assess the onset of global instability. High-fidelity numerical simulations are performed using the spectral/hp element method implemented in the open-source framework Nektar++~\cite{nektar}. The results provide new insights into the transition mechanisms induced by geometric discontinuities, contributing to the design of more aerodynamically efficient wings. Future work will extend the study to compressible flow regimes and three-dimensional configurations to account for sweeping effects.
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.6\textwidth]{ercoftac.jpg}
+%   \caption{$u$ component of a TS wave within the globally stable domain with $d/\delta^*=4$ and $w/\delta^*=16.35$.}\label{fig:ts_wave}
+% \end{figure}
+\newline
+
+
+
+\begin{thebibliography}{1}
+\bibitem{schmid_henningson_2001}
+P.~J. Schmid, and D.~S. Henningson.
+\newblock {\em Stability and Transition in Shear Flows}.
+\newblock Springer, Berlin, 2001.
+
+\bibitem{nektar}
+Nektar++.
+\newblock https://www.nektar.info/.
+\newblock Accessed: 24/02/2025.
+\end{thebibliography}
+\end{document}
+

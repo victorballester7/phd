@@ -1,0 +1,11 @@
+- How do they compute the eigenvalues alpha_r, alpha_i fixing the frequency omega? Looks like there is another equation (constructed in the same way, mut compuitatinally more expensive, becasue in OrrSommerfeld alpha appears to power 4 whereas omega only to first power)
+
+
+
+- check couple NS nektar (check test directory IncNS), shift EV...
+- Try also TransientGrowth solver
+- finish Orr Sommerfeld first to reproduce BL from Shmidt.
+
+
+- Maybe the problem of not observing TS modes with a good mesh and observing them with the sheared quads mesh is because the noise they are generating pops them, as opposed to with the good mesh. This is because with linear NS we are getting the most unstable global mode, which is not convective (TS modes). So the eigenvalues corresponding to TS modes may be localized somewhere else in the complex plane. Probably, being near the transition point, we would be more likely to observe them. Because of that, we can try to run baseflow of w=16.5 (which is unstable), get baseflow using SFD and see if we can observe the TS waves.
+

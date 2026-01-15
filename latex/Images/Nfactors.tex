@@ -1,0 +1,210 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[dvipsnames]{xcolor}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.0, every node/.style={scale=1.2}]
+		\begin{axis}[
+			xlabel={$x/\delta^*$},
+			ylabel={$n(x)$},
+			ylabel style={rotate=-90, at={(-0.05,0.5)}},
+			% unbounded coords=jump,  % This hides values > 5000
+			grid=both,
+			restrict x to domain*=-50:800,
+			% restrict y to domain*=0.5:4,
+			% point meta min=0.5,
+			% point meta max=7,
+			legend style={
+					legend cell align=left,
+					at={(1.05,0.5)}, % position to the right of axis
+					anchor=west,
+				},
+			scale only axis,
+			axis on top,
+			enlargelimits=false,
+		]
+
+		\def\xmax{\pgfkeysvalueof{/pgfplots/xmax}}
+		\def\xmin{\pgfkeysvalueof{/pgfplots/xmin}}
+
+		\def\thickness{thick}
+		% standar layers in order are:
+		% 	axis background,axis grid,axis ticks,axis lines,axis tick labels, pre main,main,axis descriptions,axis foreground
+	\addplot+[
+			no marks,
+			Cerulean,
+			smooth,
+			solid,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+				] {../../scripts/data/n_x_d1.0_w60.0.dat};
+	\addplot+[
+			no marks,
+			Maroon,
+			smooth,
+			solid,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+				] {../../scripts/data/n_x_d1.0_w50.0.dat};
+
+	\addplot+[
+			no marks,
+			Fuchsia,
+			smooth,
+			solid,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+				] {../../scripts/data/n_x_d1.0_w45.0.dat};
+
+
+		\addplot+[
+			no marks,
+			LimeGreen,
+			smooth,
+			solid,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+			] {../../scripts/data/n_x_d1.0_w38.0.dat};
+
+		\addplot+[
+			no marks,
+			YellowOrange,
+			smooth,
+			solid,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+			] {../../scripts/data/n_x_d1.0_w34.0.dat};
+
+		\addplot+[
+			no marks,
+			BlueViolet,
+			smooth,
+			solid,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+			] {../../scripts/data/n_x_d1.0_w30.0.dat};
+		\addplot+[
+			no marks,
+			WildStrawberry,
+			smooth,
+			solid,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+			] {../../scripts/data/n_x_d1.0_w25.0.dat};
+		\addplot+[
+			no marks,
+			CadetBlue,
+			smooth,
+			solid,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+			] {../../scripts/data/n_x_d1.0_w20.0.dat};
+		\addplot+[
+			no marks,
+			PineGreen,
+			smooth,
+			solid,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+			] {../../scripts/data/n_x_d1.0_w15.0.dat};
+		\addplot+[
+			no marks,
+			RawSienna,
+			smooth,
+			solid,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+			] {../../scripts/data/n_x_d1.0_w10.0.dat};
+
+		\addplot+[
+			no marks,
+			black,
+			dashed,
+			smooth,
+			thick, % or your own \thickness defined earlier
+			error bars/.cd,
+			x dir=both,
+			x explicit,
+		] table [
+				x index=0,
+				y index=1,
+				header=false,
+			] {../../scripts/data/n_x_d0.0_w0.0.dat};
+		\legend{
+			$d=1\delta^*\ w=60\delta^*$,
+			$d=1\delta^*\ w=50\delta^*$,
+			$d=1\delta^*\ w=45\delta^*$,
+				$d=1\delta^*\ w=38\delta^*$,
+			$d=1\delta^*\ w=34\delta^*$,
+			$d=1\delta^*\ w=30\delta^*$,
+			$d=1\delta^*\ w=25\delta^*$,
+			$d=1\delta^*\ w=20\delta^*$,
+			$d=1\delta^*\ w=15\delta^*$,
+			$d=1\delta^*\ w=10\delta^*$,
+			No gap,
+		}
+
+	\end{axis}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,9 @@
+Krylov spectrum at iteration: 5
+EV  Magnitude   Angle       Growth      Frequency   Residual
+EV:  0     3.23586           0     1.17429           0
+EV:  1     2.38779           0    0.870368           0
+EV:  2    0.896308           0   -0.109471           0
+EV:  3    0.163579           0    -1.81046           0
+Converged Eigenvalues: 1
+         Magnitude   Angle       Growth      Frequency
+EV:  0     3.23586           0     1.17429           0

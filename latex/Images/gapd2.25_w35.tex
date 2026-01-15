@@ -1,0 +1,99 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,decorations.markings,backgrounds}
+\usetikzlibrary{arrows.meta}
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{compat=1.18}
+
+\def\image{d2.25_w35white.png}
+\def\secondimage{d2.25_w35whiteunscaled.png}
+
+\def\xfirstedge{-5.6}
+\def\yfirstedge{-1.42}
+\def\xsecondedge{-1.57}
+\def\ysecondedge{-2.5}
+\def\xmin{-6.075}
+\def\xmax{6.075}
+\def\ymax{4.6}
+\def\ymin{-4.88}
+
+\def\scale{1.5}
+\pgfplotsset{colormap/RdBu}
+\pgfplotsset{colormap/winter}
+
+% (xmin,y1st edge)------(x1st edge, y1st edge)                         ---------------(xmax, y1st edge)
+% 	                   |					     |
+% 	                   |                                         |	 			     
+% 			   |					     |
+% 	                   |					     |
+% 	                   ----------------------------------(x2nd edge, y2nd edge)
+
+\def\ysmallgap{3.37}
+\def\xsmallgap{-3.59}
+\def\depth{0.21}
+\def\width{3.18}
+
+
+\begin{document}
+\begin{tikzpicture}
+	\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+
+	% import .png figure
+	\node[inner sep=0pt] (gap) at (0,0)
+	{\includegraphics[width=\textwidth]{\image}};
+	\draw[ultra thick] (\xmin,\yfirstedge) -- (\xfirstedge,\yfirstedge) -- (\xfirstedge,\ysecondedge) -- (\xsecondedge,\ysecondedge) -- (\xsecondedge,\yfirstedge) -- (\xmax,\yfirstedge);
+
+	\node[inner sep=0pt,yshift=1.0cm] (gap2) at (gap.north)
+	% trim = left bottom right top
+	{\includegraphics[trim=0cm 31cm 0cm 20cm, clip, width=0.6\textwidth]{\secondimage}};
+	\draw[thin] (\xsmallgap-0.3,\ysmallgap) -- (\xsmallgap,\ysmallgap) -- (\xsmallgap,\ysmallgap-\depth) -- (\xsmallgap+\width,\ysmallgap-\depth) -- (\xsmallgap+\width, \ysmallgap) -- (\xsmallgap+\width+4.05,\ysmallgap);
+
+	\def\lengthWall{0.4}
+	\foreach \x in {-5.7,-1.1,-0.6,...,6.5} {
+			\draw[thick] (\x,\yfirstedge) -- ++(225:\lengthWall); % Wall hatching
+		}
+	\foreach \x in {-5.6,-5.2,...,-1.47} {
+			\draw[thick] (\x,\ysecondedge) -- ++(225:\lengthWall); % Wall hatching
+		}
+	\draw[thick] (\xfirstedge,-1.7) -- ++(225:\lengthWall); % Wall hatching
+	\draw[thick] (\xfirstedge,-2.1) -- ++(225:\lengthWall); % Wall hatching
+	
+
+	\def\secondlengthWall{0.06}
+	\foreach \x in {-3.85,-3.77,...,-3.59,-0.3,-0.22,...,3.7} {
+			\draw[very thin] (\x,\ysmallgap) -- ++(225:\secondlengthWall); % Wall hatching
+		}
+		\foreach \x in {-3.57,-3.49,...,-0.4} {
+			\draw[very thin] (\x,\ysmallgap-\depth) -- ++(225:\secondlengthWall); % Wall hatching
+		}
+		\draw[very thin] (\xsmallgap,\ysmallgap-\depth/4) -- ++(225:\secondlengthWall); % Wall hatching
+		\draw[very thin] (\xsmallgap,\ysmallgap-\depth*0.65) -- ++(225:\secondlengthWall); % Wall hatching
+
+	\pgfplotscolorbardrawstandalone[
+		colormap={example}{
+				indices of colormap=(10, 9,8 ,7,6,5,4,3,2,1,0 of RdBu), % inversion of RdBu -> BuRd
+			},
+		point meta min=-0.08,
+		point meta max=0.08,
+		colorbar horizontal,
+		samples=5,
+		scaled x ticks=false,
+		colorbar style={
+			xtick={-0.08,-0.04,...,0.08},
+				xticklabel style={
+						/pgf/number format/fixed,
+						/pgf/number format/precision=3,
+						scale=\scale,
+					},
+				xlabel={$v$},
+				xlabel style={at={(0.5,-1.8em)}, 	scale=\scale,anchor=north},
+				at={(gap.south)},
+				yshift=-0.4cm,
+				anchor=center,
+				width=7cm,
+			},
+	]
+\end{tikzpicture}
+\end{document}

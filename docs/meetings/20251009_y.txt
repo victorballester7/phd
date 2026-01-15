@@ -1,0 +1,5 @@
+- Do return map to identify the equilibria, p.o. and types of chaos. What we could do as return map is an avergane of all the points in the boundary layer (all the control points, for example).
+- Do analysis of hopf bifurcation and its amplitude evolution.
+- understand adjoint mode theory
+- do edge state analysis
+- do continuation of the chaotic attractor to lower widhts were we have global stability

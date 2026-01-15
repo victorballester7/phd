@@ -1,0 +1,77 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,decorations.markings,backgrounds}
+\usetikzlibrary{arrows.meta}
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{compat=1.18}
+
+\def\image{d4_w15.png}
+
+\def\xfirstedge{-5.3}
+\def\yfirstedge{1.22}
+\def\xsecondedge{5.0}
+\def\ysecondedge{-1.52}
+\def\xmin{-6.075}
+\def\xmax{6.075}
+\def\ymax{2.1}
+\def\ymin{-4.1}
+
+\def\scale{1.5}
+
+\pgfplotsset{colormap/RdBu}
+\pgfplotsset{colormap/winter}
+
+% (xmin,y1st edge)------(x1st edge, y1st edge)                         ---------------(xmax, y1st edge)
+% 	                   |					     |
+% 	                   |                                         |	 			     
+% 			   |					     |
+% 	                   |					     |
+% 	                   ----------------------------------(x2nd edge, y2nd edge)
+
+
+\begin{document}
+\begin{tikzpicture}
+	\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+
+	% import .png figure
+	\node[inner sep=0pt] (gap) at (0,0)
+	{\includegraphics[width=\textwidth]{\image}};
+	\draw[ultra thick] (\xmin,\yfirstedge) -- (\xfirstedge,\yfirstedge) -- (\xfirstedge,\ysecondedge) -- (\xsecondedge,\ysecondedge) -- (\xsecondedge,\yfirstedge) -- (\xmax,\yfirstedge);
+
+	\def\lengthWall{0.6}
+	\foreach \x in {-6,-5.5,...,-5.53,5.72,6.22} {
+			\draw[thick] (\x,\yfirstedge) -- ++(225:\lengthWall); % Wall hatching
+		}
+	\foreach \x in {-5.15,-4.65,...,5.15} {
+			\draw[thick] (\x,\ysecondedge) -- ++(225:\lengthWall); % Wall hatching
+		}
+	\foreach \y in {0.82,0.32,...,-1.5} {
+			\draw[thick] (\xfirstedge,\y) -- ++(225:\lengthWall); % Wall hatching
+		}
+	\pgfplotscolorbardrawstandalone[
+		colormap={example}{
+				indices of colormap=(10, 9,8 ,7,6,5,4,3,2,1,0 of RdBu), % inversion of RdBu -> BuRd
+			},
+		point meta min=-0.1,
+		point meta max=0.1,
+		colorbar horizontal,
+		samples=5,
+		scaled x ticks=false,
+		colorbar style={
+				xticklabel style={
+						/pgf/number format/fixed,
+						/pgf/number format/precision=2,
+						scale=\scale,
+					},
+				xlabel={$v$},
+				xlabel style={at={(0.5,-1.8em)}, anchor=north,scale=\scale},
+				at={(gap.south)},
+				yshift=0.4cm,
+				anchor=center,
+				width=7cm,
+			},
+	]
+\end{tikzpicture}
+\end{document}

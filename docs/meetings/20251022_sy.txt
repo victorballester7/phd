@@ -1,0 +1,2 @@
+- do global linear analysis with 3d fourier modes and 2d baseflow.
+- try compressible solve with lower re and lower dt.

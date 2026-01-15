@@ -1,0 +1,3 @@
+- check first with sinusoidal forcing
+- check outflow BC
+- take Loo norm for n factor

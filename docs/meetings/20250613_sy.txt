@@ -1,0 +1,2 @@
+- name points in terms of limit cicle (one point in time by fixing for example the maximum of the waves in the abs mode case) or torus (continuous line in time)
+- run flatplate and other cases with random noise

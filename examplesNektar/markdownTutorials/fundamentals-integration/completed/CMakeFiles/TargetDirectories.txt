@@ -1,0 +1,5 @@
+/home/victor/Desktop/nektarTutorials/fundamentals-integration/completed/CMakeFiles/StdIntegration1D.dir
+/home/victor/Desktop/nektarTutorials/fundamentals-integration/completed/CMakeFiles/StdIntegration2D.dir
+/home/victor/Desktop/nektarTutorials/fundamentals-integration/completed/CMakeFiles/LocIntegration2D.dir
+/home/victor/Desktop/nektarTutorials/fundamentals-integration/completed/CMakeFiles/edit_cache.dir
+/home/victor/Desktop/nektarTutorials/fundamentals-integration/completed/CMakeFiles/rebuild_cache.dir

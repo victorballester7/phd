@@ -1,0 +1,1 @@
+- To understand the monotonicity of the Ma stability curves, try Ma=0.2 or 0.3 and see if we recover the inc stability curve.

@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=2
+#SBATCH --mem=8GB
+#SBATCH --time=0-00:01:59
+#SBATCH --job-name=wgn
+#SBATCH --partition=test
+#SBATCH --output=output.txt
+#SBATCH --error=log.txt
+
+source $HOME/Desktop/PhD/scripts/slurm.sh

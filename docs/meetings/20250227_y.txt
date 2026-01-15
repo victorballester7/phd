@@ -1,0 +1,3 @@
+- check Gaster transformation, check Schmid & Henningson (yellow book)
+- probably jeff want to characterize the growth of TS in a 'square' region between the gap and the outflow boundary.
+- global instability!!!!!!! not absolute!!!! (I already changed on the slides)

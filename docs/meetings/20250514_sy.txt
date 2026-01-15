@@ -1,0 +1,4 @@
+- check if the abs mode is steady or not.: NO, it is not
+- compare the flat plate n factor with the orr sommerfeld one (using gaster transf).
+- send spencer channel xml that is supposed to fail.
+- add streamlines to figures in stability plot.

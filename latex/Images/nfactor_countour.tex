@@ -1,0 +1,377 @@
+% !TEX program = lualatex
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{patchplots,fillbetween}
+\pgfplotsset{compat=1.18}
+\usepackage[dvipsnames]{xcolor}
+\usepgfplotslibrary{colormaps}
+\newif\ifexperimental
+\newif\iferror
+
+\experimentaltrue % Set to true to include experimental curves
+\errorfalse % Set to true to include error bars
+
+\pgfplotsset{
+/pgfplots/colormap={blues}{rgb255=(66,106,188) rgb255=(255,255,255)}
+}
+
+\pgfplotsset{
+    contour/every contour label/.style={
+        sloped,
+        transform shape,
+        inner sep=2pt,
+        every node/.style={black,fill=none},
+        /pgf/number format/relative={\pgfplotspointmetarangeexponent},
+    },
+} 
+
+% \def\plotcountourline#1#2{
+% 	\addplot3[
+% 		point meta=explicit,
+% 		contour lua={levels={#1},
+% 				labels=true,
+% 				draw color=\colorE,
+% 				labels over line,
+% 				label distance=#2, % change this to ajust numbers
+% 				every contour label/.append style={
+% 						every node/.append style={\colorE},
+% 					},				},
+% 		thick,
+% 		restrict x to domain=0:70,
+% 		restrict y to domain=0:4,
+% 	]
+% 	table [ header=false,   x index=0,
+% 			y index=1,
+% 			meta index=2] {data/DeltaN.dat};
+% }
+
+\def\plotcontourline#1#2#3{%
+    % #1 = contour level
+    % #2 = x-range for placing label (min:max)
+    % #3 = y-range for placing label (min:max)
+    %
+    % First: draw full contour line (no labels)
+
+    % Second: overlay same contour but restricted in x/y to force label at desired place
+    \addplot3[
+        contour lua={levels={#1},
+            labels over line,
+            label distance=50pt,
+            every contour label/.append style={every node/.append style={\colorE}},
+        },
+        restrict x to domain=#2,
+	restrict y to domain=#3,
+    ]
+    table [header=false, x index=0, y index=1, meta index=2] {data/DeltaN.dat};
+    \addplot3[
+    contour lua={levels={#1}, labels=false, draw color=\colorE},
+    thick,
+    restrict x to domain=0:70,
+    restrict y to domain=0:4,
+    ]
+    table [header=false, x index=0, y index=1, meta index=2] {data/DeltaN.dat};
+}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.0, every node/.style={scale=1.2}]
+	\begin{axis}[
+			xlabel={$w/\delta^*$},
+			ylabel={$d/\delta^*$},
+			% small,
+			% view={0}{90},
+			colorbar,
+			colorbar style={
+					title={$\Delta n$},     % <-- Your label here
+					title style={at={(1.8,0.5)},anchor=west}, % Shift label down if needed
+				},
+			colormap name=blues,
+			ytick distance=0.5,
+			ylabel style={rotate=-90, at={(-0.08,0.5)}},
+			% unbounded coords=jump,  % This hides values > 5000
+			grid=both,
+			restrict x to domain*=0:70,
+			restrict y to domain*=0:4,
+			% point meta min=0.5,
+			point meta max=6,
+			legend style={
+					legend cell align=left,
+				},
+			scale only axis,
+			axis on top,
+			set layers,
+			enlargelimits=false,
+			view={0}{90},
+		]
+
+		\def\xmax{\pgfkeysvalueof{/pgfplots/xmax}}
+		\def\xmin{\pgfkeysvalueof{/pgfplots/xmin}}
+		\def\colorA{Cyan}
+		\def\colorB{YellowOrange}
+		\def\colorC{gray!80!black}
+		\def\colorD{Magenta}
+		\def\colorE{Blue}
+		\def\size{2pt}
+		\def\thickness{very thin}
+		\def\thicknessline{very thick}
+		\def\linestyle{densely dashed}
+		\def\heightRef{0}
+		\def\mark{*}
+		% standar layers in order are:
+		% 	axis background,axis grid,axis ticks,axis lines,axis tick labels, pre main,main,axis descriptions,axis foreground
+
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% Filled contour plot
+		\pgfonlayer{axis background}
+		\addplot[point meta=explicit,
+			surf,
+			shader=flat,
+			draw=none,
+			% contour filled={
+			% 		% numbers=14,
+			% 		levels={0.5,1,...,6},
+			% 	},
+			contour/labels=true, % enable label drawing
+		]
+		table [ header=false,   x index=0,
+				y index=1,
+				meta index=2] {data/DeltaN.dat};
+		% \addplot3[
+		% 	point meta=explicit,
+		% 	contour lua={levels={1,2,3,4},
+		% 			labels=true,
+		% 			draw color=\colorE,
+		% 			labels over line,
+		% 			label distance=300pt, % change this to ajust numbers
+		% 			every contour label/.append style={
+		% 					every node/.append style={\colorE},
+		% 				},				},
+		% 	thick,
+		% 	restrict x to domain=0:70,
+		% 	restrict y to domain=0:4,
+		% ]
+		% table [ header=false,   x index=0,
+		% 		y index=1,
+		% 		meta index=2] {data/DeltaN.dat};
+		% \addplot3[
+		% 	point meta=explicit,
+		% 	contour lua={levels={5},
+		% 			labels=true,
+		% 			draw color=\colorE,
+		% 			labels over line,
+		% 			label distance=48pt, % change this to ajust numbers
+		% 			every contour label/.append style={
+		% 					every node/.append style={\colorE},
+		% 				},				},
+		% 	thick,
+		% 	restrict x to domain=0:70,
+		% 	restrict y to domain=0:4,
+		% ]
+		% table [ header=false,   x index=0,
+		% 		y index=1,
+		% 		meta index=2] {data/DeltaN.dat};
+		% \plotcountourline{1}{250pt};
+		% \plotcountourline{2}{200pt};
+		% \plotcountourline{3}{150pt};
+		% \plotcountourline{4}{150pt};
+		% \plotcountourline{5}{10pt};
+		\plotcontourline{1}{10:20}{0.5:1};	
+		\plotcontourline{2}{24:26}{0.5:1};
+		\plotcontourline{3}{35:45}{0.75:1.25};
+		\plotcontourline{4}{53:55}{0.75:1.5};
+		\plotcontourline{5}{68:70}{1:1.5};
+		
+		\endpgfonlayer
+		\addplot[
+			smooth,
+			draw=none,
+			name path global=bifurcation,
+		] coordinates {
+				(16.25, 4.0)
+				(15.75, 3.75)
+				(15.25, 3.5)
+				(15.25, 3.25)
+				(15.25, 3.0)
+				(15.25, 2.75)
+				(20.5, 2.5)
+				(31.5, 2.25)
+				(39.0, 2.0)
+				(46.0, 1.75)
+				(56.5, 1.5)
+				(65.0, 1.375)
+				(70.0, 1.375)
+				(75.0, 1.375)
+				(80.0, 1.375)
+				(100.0, 1.375)
+				(120.0, 1.375)
+				(130.0, 1.375)
+			};
+		% 2. Define a horizontal path at ymax
+		\addplot[
+			name path=top,
+			draw=none
+		] coordinates {
+				(16.25, 4)
+				(15.75, 4)
+				(15.25, 4)
+				(15.25, 4)
+				(15.25, 4)
+				(15.25, 4)
+				(20.5, 4)
+				(31.5, 4)
+				(39.0, 4)
+				(46.0, 4)
+				(56.5, 4)
+				(65.0, 4)
+				(70.0, 4)
+				(75.0, 4)
+				(80.0, 4)
+				(100.0, 4)
+				(120.0, 4)
+				(130.0, 4)
+			};
+
+		\addplot[
+			white,
+		] fill between[
+				of=top and bifurcation,
+			];
+
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% Bifurcation path 
+		\addplot[
+			smooth,
+			no marks,
+			draw=\colorC!70!black,
+			\thicknessline,
+			\linestyle,
+		] coordinates {
+				(16.25, 4.0)
+				(15.75, 3.75)
+				(15.25, 3.5)
+				(15.25, 3.25)
+				(15.25, 3.0)
+				(15.25, 2.75)
+				(20.5, 2.5)
+				(31.5, 2.25)
+				(39.0, 2.0)
+				(46.0, 1.75)
+				(56.5, 1.5)
+				(59.0, 1.46)
+				(65.0, 1.375)
+				(70.0, 1.375)
+				(75.0, 1.375)
+				(80.0, 1.375)
+				(100.0, 1.375)
+				(120.0, 1.375)
+				(130.0, 1.375)
+			};
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		% level sets experimental curves
+		% I fitted the curves by nake eye using geogebra
+		\ifexperimental
+			\pgfonlayer{axis background}
+			\addplot3 [
+				contour prepared={labels=true,
+						draw color=\colorD,
+						labels over line,
+						label distance=250pt, % change this to ajust numbers
+						every contour label/.append style={
+								every node/.append style={\colorD},
+							},				},
+				thick,
+				restrict x to domain=0:70,
+				restrict y to domain=0:4,
+				legend image post style={draw=red, thick},
+			] table [header=false,   x index=0,
+					y index=1,
+					meta index=2]{data/expData.csv};
+			\endpgfonlayer
+
+			\iferror
+				\addplot[no marks,
+					draw=\colorD!81!black,
+					\thicknessline,
+					error bars/.cd,
+					x dir=both, x explicit,
+					error bar style={\colorD!81!black, thick},
+				] table [
+						x index=0,
+						y index=1,
+						x error minus index=2,
+						x error plus index=3,
+						header=false,
+					] {data/expDataErr_1.csv};
+
+				\addplot[no marks,
+					draw=\colorD!81!black,
+					\thicknessline,
+					error bars/.cd,
+					x dir=both, x explicit,
+					error bar style={\colorD!81!black, thick},
+				] table [
+						x index=0,
+						y index=1,
+						x error minus index=2,
+						x error plus index=3,
+						header=false,
+					] {data/expDataErr_2.csv};
+				\addplot[no marks,
+					draw=\colorD!81!black,
+					\thicknessline,
+					error bars/.cd,
+					x dir=both, x explicit,
+					error bar style={\colorD!81!black, thick},
+				] table [
+						x index=0,
+						y index=1,
+						x error minus index=2,
+						x error plus index=3,
+						header=false,
+					] {data/expDataErr_3.csv};
+				\addplot[no marks,
+					draw=\colorD!81!black,
+					\thicknessline,
+					error bars/.cd,
+					x dir=both, x explicit,
+					error bar style={\colorD!81!black, thick},
+				] table [
+						x index=0,
+						y index=1,
+						x error minus index=2,
+						x error plus index=3,
+						header=false,
+					] {data/expDataErr_4.csv};
+			\fi
+
+			% \addplot[no marks,
+			% smooth,
+			% draw=\colorD!80!black,
+			% \thicknessline,
+			% \linestyle,
+			% ] table [
+			% x index=0,
+			% y index=1,
+			% header=false,
+			% ] {data/expData_5.csv} node[pos=0.5,anchor=west,\colorD!80!black]{$5$};
+			% \addplot[no marks,
+			% smooth,
+			% draw=\colorD!80!black,
+			% \thicknessline,
+			% \linestyle,
+			% ] table [
+			% x index=0,
+			% y index=1,
+			% header=false,
+			% ] {data/expData_6.csv} node[pos=0.5,anchor=west,\colorD!80!black]{$6$};
+		\fi
+
+		\legend{,,,,,,,,,,,,,,
+			{Transition boundary},{Crouch et al. (2022)},
+		}
+
+	\end{axis}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,3 @@
+- ask (email) jeffrey where is measured the delta^* in the upstream of the domain
+- there are ts waves that are always there becasue of the noise (remeber the pertubration freuqency in one of the tutorials used to generate them), but then the mode of the gap may energize them. And here the n factor of spencer whiteboard comes to play.
+- look the p in the baseflows of the domains with the gap, to see if it is well resolved. 

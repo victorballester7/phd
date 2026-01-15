@@ -1,0 +1,7 @@
+- undestand physics in the limiting behaviour at small width and deep width. The other limiting behaviour corresponds to BFS physics. We should understand well the BFS limit as well.
+- for the weird non monotomic behaviour of some Delta N curves, plot them against w and d to check if there is some correlation.
+
+- do 3d simulation around the boundary at d=3
+
+- do narrow-band analysis for the frequencies in the chaotic regime
+

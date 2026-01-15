@@ -1,0 +1,2 @@
+If you have Filters enabled in the .xml session file for nektar it will give you an error. Comment them out and it should work like a charm.
+Same when you use the Steady State Solver, which uses Modified Arnoldi Method.
