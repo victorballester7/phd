@@ -29,3 +29,6 @@ nektar*/
 # do not sync .dat files
 data/*.dat
 
+# do not sync field files
+*.vtu
+
