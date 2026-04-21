@@ -2,23 +2,28 @@
 deltaStar = 1;
 D = 4 * deltaStar; // depth of the gap 
 W = 18 * deltaStar; // width of the gap
-r = W/2; // length of non-constant quads upstream and downstream of the gap
+r = 8; // length of non-constant quads upstream and downstream of the gap
+s = 8; // length of non-constant quads left and right inside the gap
 BL = 0.25 * deltaStar; // height of the second layer of quad elements
 BL_upper = 3.5 * deltaStar; // height of the third layer of quad elements
-x0 = 50 * deltaStar; // x distance from inflow to gap
+x0 = 100 * deltaStar; // x distance from inflow to gap
 lengthOutflow = 1000 * deltaStar; // length after the gap
 x3 = W + lengthOutflow; // last point of the domain
-height = 75 * deltaStar; // height of the triangular region
+height = 150 * deltaStar; // height of the triangular region
 triagHeightRegion_inflow = height - BL - BL_upper; // height of the triangular region
-
 
 // Micro parameters
 dx = 0.05; // dx of square elements near the leading and trailing edge of the gap (most resolution-demanding points in the domain)
-size_triag_v_top = 16; // size of the elements in the upper triangular region
+size_triag_v_top = 32; // size of the elements in the upper triangular region
 
 // All the value below are between 0 and 1. =1  means the elements are all equal in size. Avoid using values very close to 1, because we dividing by log(p) in the formula.
-p_in_v_right = 0.87; // densitiy concentration of elements inside the gap, vertically, near the right wall.
-p_in_v_left = 0.8; // densitiy concentration of elements inside the gap, vertically, near the left wall.
+dy_in_v_right = 1.5; // heighest quad in the upper layer of quads, in the right part of the gap
+dy_in_v_left = 1.75; // heighest quad in the upper layer of quads, in the left part of the gap
+//p_in_v_right = (W / 2 - dy_in_v_right) / (W / 2 - dx); // densitiy concentration of elements inside the gap, vertically, near the right wall.
+//p_in_v_left = (W / 2 - dy_in_v_left) / (W / 2 - dx); // densitiy concentration of elements inside the gap, vertically, near the left wall.
+// fit (check the file scripts/fit_gmsh.py for more details)
+p_in_v_left = 1.04645449 - 0.72589797/(W - 5.47760158)^0.49073995; // densitiy concentration of elements inside the gap, vertically, near the left wall.
+p_in_v_right = 1.01007546 - 1.01562315/(W - 1.82092136)^0.74948754; // densitiy concentration of elements inside the gap, vertically, near the right wall.
 p_in_h = 0.9; // densitiy concentration of elements inside the gap, horizontally. 
 
 p_out_h = 0.5; // densitiy concentration of elements outside the gap, horizontally.
@@ -157,7 +162,9 @@ Transfinite Surface {5} = {7, 25, 24, 21};
 
 Transfinite Curve {18, 16, 19} = N_in_v_right Using Progression p_in_v_right;
 Transfinite Curve {-14, -3, -12} = N_in_v_left Using Progression p_in_v_left;
+
 Transfinite Curve {-2, 15, 17, -4} = N_in_h Using Progression p_in_h;
+
 
 Transfinite Curve {11, -6} = N_out_h Using Progression p_out_h;
 Transfinite Curve {24, 28, 29, -7} = N_out_h_upper Using Progression p_out_h_upper;

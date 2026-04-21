@@ -97,9 +97,9 @@ source $SCRIPTS_DIR/bashFunctions/createBaseflowFile.sh
 source $SCRIPTS_DIR/bashFunctions/updateTimeStepLS.sh
 
 readInput "$@"
-createBaseflowFile
-updateTimeStepLS
-createGapFolder.sh $depth $width 
+# createBaseflowFile
+# updateTimeStepLS
+# createGapFolder.sh $depth $width 
 
 if [ $? -ne 0 ]; then
   echo -e "${RED}Error creating base gap folder.${RESET}"

@@ -3,6 +3,9 @@
 \usepackage{pgfplots}
 \usetikzlibrary{patterns,decorations.markings,backgrounds}
 \usetikzlibrary{arrows.meta}
+
+% change font for specific paper
+\usepackage{newtxtext,newtxmath}
 \usepgfplotslibrary{colorbrewer,colormaps}
 
 \pgfplotsset{compat=1.18}
@@ -19,7 +22,7 @@
 \def\ymax{4.0}
 \def\ymin{-4.5}
 
-\def\scale{1.5}
+\def\tikzfontscale{12.15/7.85} % This will be computed by tikz-fontscale.sty
 \pgfplotsset{colormap/RdBu}
 \pgfplotsset{colormap/winter}
 
@@ -83,15 +86,21 @@
 				xticklabel style={
 						/pgf/number format/fixed,
 						/pgf/number format/precision=2,
-						scale=\scale
+						font=\small,
+						scale=\tikzfontscale,
 					},
 				xlabel={$v$},
 				xtick={-0.08,-0.04,...,0.08},
-				xlabel style={at={(0.5,-1.8em)}, anchor=north,scale=\scale},
+				xlabel style={at={(0.5,-1.8em)}, anchor=north, font=\small, scale=\tikzfontscale},
 				at={(gap.south)},
 				yshift=0.0cm,
 				anchor=center,
 				width=7cm,
+				height=0.45cm,
+				xtick pos=lower,
+				xtick style={black, line width=0.8pt},
+				tickwidth=3pt,
+				axis line style={line width=0.8pt}
 			},
 	]
 \end{tikzpicture}

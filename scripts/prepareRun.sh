@@ -17,6 +17,9 @@ RESET="\e[0m"
 function hisPoints {
     # Execute the historyPoints.sh script
     echo -e "${CYAN}Executing historyPoints.sh...${RESET}"
+    echo -e "${CYAN}session file: $1${RESET}"
+    echo -e "${CYAN}depth: $2${RESET}"
+    echo -e "${CYAN}width: $3${RESET}"
     historyPoints $1 $2 $3
     if [ $? -ne 0 ]; then
         echo -e "${RED}Error executing historyPoints.sh${RESET}"

@@ -1,0 +1,69 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,decorations.markings,backgrounds}
+\usetikzlibrary{arrows.meta}
+
+% change font for specific paper
+\usepackage{newtxtext,newtxmath}
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{compat=1.18}
+
+\def\image{../pngs/d4w19_3d_L2crit_14_big.png}
+
+\def\tikzfontscale{12.08/7.85} % This will be computed by tikz-fontscale.sty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Camara settings for paraview plot
+
+% Center of Rotation
+% 148.276 6.96777 8
+
+% Rotation factor
+% 1
+
+% Camera parameters
+% Position: -17.6587 33.4199 51.6573
+% Focal Point: 87.3645 -35.166 -33.2886
+% View up: 0.271873 0.884855 -0.378307
+% View angle: 30 
+% Eye angle: 2
+% Focal disk: 1
+% Focal distance: 0
+
+% Manipulate camera:
+% Roll: 5
+% Elevation: 5
+% Azimuth: 5
+% Zoom: 2x
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\begin{tikzpicture}
+	% \clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+	\def\xmin{-6.04}
+	\def\xmax{6.04}
+
+	% import .png figure
+	\draw[ultra thick] (-6.04, -3.21288) -- (-4, -2.3) -- (-3.98, -2.87) -- (-0.97, -1.35) -- (-0.95, -0.85) -- (6.04, 2.6);
+	\draw[ultra thick] (-4.37, -2.45) -- (-3.98, -2.89);
+	\draw[ultra thick] (-6.04, -0.8) -- (-5.52,-0.64);
+	\draw[ultra thick] (-5.1,-1.13) --(-2.8,-0.25) --(-2.8,0.4) -- (4.8,2.95);
+
+	\draw[ultra thick] (-4, -2.24) -- (-5.55,-0.65);
+
+	% add label with time
+	\node[anchor=north west, font=\small,
+		scale=\tikzfontscale,] at (-5.8, 1.25) {$t=2797$};
+	\begin{scope}
+		\clip (-6.04,-4) rectangle (6.06,4.5); % adjust y-limits as needed
+
+		\node[inner sep=0pt,rotate=0,
+			xshift=2.02cm,yshift=1.52cm] (gap) at (0,0)
+		{\includegraphics[width=1.5\textwidth]{\image}};
+	\end{scope}
+
+\end{tikzpicture}
+\end{document}

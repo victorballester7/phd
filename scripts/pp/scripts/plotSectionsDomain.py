@@ -64,23 +64,22 @@ def main():
 
     basePath = (
         # "../../../src/incNSboeingGapRe1000/directLinearSolver/blowingSuction/"
-        "../../../src/flatSurfaceRe1000Ma0.6ComNS/dns/"
+        "../../../src/incGapRe1000/directLinearSolver/omegaBlowSuct/"
     )
     basePath = os.path.join(pathCurrentScript, basePath)
 
     code_names2 = [
-        "",
+        "d2_w24/omega0.08",
         # "d3.75_w10",
     ]
-    n = 800
-    chkfile = "13"
-    # chkfile = "avg"
+    n = 600
+    chkfile = "avg"
 
-    fig, ax = plt.subplots(figsize=(8, 6))
+    _, ax = plt.subplots(figsize=(8, 6))
 
 
     for dw in code_names2:
-        dataFile_dw = os.path.join(basePath, dw, "data", f"points{chkfile}_all_n{n}.dat")
+        dataFile_dw = os.path.join(basePath, dw, "data", f"points{chkfile}_n{n}.dat")
         addDataToPlot(dataFile_dw, ax)
 
     # Set labels and title

@@ -1,0 +1,2 @@
+- check where we see streks before ts mode appearance in d4_w18
+- study the more in depth the analysis of 3d at d=4

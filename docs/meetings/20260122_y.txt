@@ -1,0 +1,2 @@
+- run more cases of Ma=0.05, at d=3.5, 3, 2.5 
+- for the burst model, verify whether the acoustic waves interact with the most unstable mode.

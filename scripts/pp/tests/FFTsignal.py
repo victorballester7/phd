@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.fft import rfft, irfft, rfftfreq
+from scipy.fft import fft, ifft, fftfreq
+from scipy.signal import hilbert
 
 
 def getTimeFrequency(
@@ -8,9 +10,9 @@ def getTimeFrequency(
     signal: np.ndarray,
 ) -> None:
     # use fft to get the frequency
-    fft_data = rfft(signal)
+    fft_data = fft(signal)
 
-    freq = rfftfreq(len(signal), d=(time[1] - time[0]))
+    freq = fftfreq(len(signal), d=(time[1] - time[0]))
     omega = 2 * np.pi * freq
 
     eps = 0.4
@@ -28,11 +30,11 @@ def getTimeFrequency(
             )
 
     # reconstruct the signal from the highest frequencies
-    signal_reconstructed = irfft(fft_data, n=len(signal))
+    signal_reconstructed = ifft(fft_data, n=len(signal))
     # rescale the reconstructed signal
 
-    plt.plot(time, signal, label="original signal")
-    plt.plot(time, signal_reconstructed, label="ifft signal", linestyle="--")
+    plt.plot(time, np.log(signal), label="original signal")
+    # plt.plot(time, signal_reconstructed, label="ifft signal", linestyle="--")
     plt.grid()
     plt.legend()
     plt.xlabel("Time")
@@ -43,10 +45,20 @@ def getTimeFrequency(
 def main():
     # create a time vector
     time = np.linspace(0, 1000, 1000)
-    w = 0.05
-    sigma = 100
+    w = 0.23
+    sigma = 0.004
 
-    x = np.sin(w * time) * np.exp(-(time**2) / sigma**2)
+    x = np.sin(w * time + 2) * np.exp(sigma * time)
+
+    analytic = hilbert(x)
+    envelope = np.abs(analytic)
+    
+
+
+    plt.plot(time, np.log(envelope), label="log of envelope")
+    sigma, _ = np.polyfit(time, np.log(envelope), 1)
+
+    print(f"Estimated growth rate: {sigma:.6f}")
 
     getTimeFrequency(time, x)
 

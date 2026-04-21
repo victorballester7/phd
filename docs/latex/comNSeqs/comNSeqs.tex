@@ -1,0 +1,350 @@
+\documentclass{article}
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=3cm]{geometry}
+\usepackage{lmodern}
+\pagestyle{empty}
+\usepackage{../../../latex/preamble_math}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+\usepackage{bm}
+\usepackage{parskip} % exchanges indentation for spacing between paragraphs.
+
+% change link colour
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=blue,
+	citecolor=blue,
+}
+
+\title{\textbf{Compressible Navier Stokes Equations}}
+\date{}
+\author{Víctor Ballester Ribó
+\vspace{0.5cm}\\\textsc{Department of Aeronautics}\\\textsc{Imperial College London}}
+
+% remove page numbers
+\pagenumbering{gobble}
+
+
+% remove indentation
+\setlength{\parindent}{0pt}
+
+\defbibheading{subbibcustom}{\paragraph*{References}}
+
+\begin{document}
+
+% \section{Introduction}
+% To understand about fluids, we first need to define some definitions.
+% We will assume all the time that we are working in a domain $\Omega \subset \mathbb{R}^d$ (open and connected), with $d=2,3$ that will represent the space where the fluid flows and a time interval $I:=(0,T)$, with $T>0$. The space-time domain will be denoted by $Q:=I \times \Omega$ and all the functions will be defined in this domain unless otherwise stated.
+
+% \subsection{Abstract definitions}
+
+% \subsubsection{Mass}
+% We can think of the mass as an abstract Radon measure defined in the Borel $\sigma$-algebra of $\Omega$:
+% \[
+%   m: \mathcal{B}(\Omega) \to [0, \infty),
+% \]
+% such that for any two disjoint sets $A, B \in \mathcal{B}(\Omega)$, we have
+% \[m(A \cup B) = m(A) + m(B).\]
+% Since we are dealing with a continuum (continuum hypothesis), it is reasonable to assume that the mass is absolutely continuous with respect to the Lebesgue measure $\mathcal{L}^d$, i.e., there exists a density function $\rho: \Omega \to [0, \infty)$ such that for any $A \in \mathcal{B}(\Omega)$,
+% \[m(A) = \int_A \rho(\bm{x}) \, d\bm{x}.\]
+
+% \subsubsection{Kinematics}
+% For each point $\bm{x} \in \Omega$, we define the motion map $\bm{\chi}: I \times \Omega \to \Omega$ such that $\bm{\chi}(t, \bm{X})$ gives the position at time $t$ of the particle that was at position $\bm{X}$ at time $0$. The velocity field $\bm{u}: I \times \Omega \to \mathbb{R}^d$ is defined as the time derivative of the motion map:
+% \[\bm{u}(t, \bm{x}) = \partial_t \bm{\chi}(t, \bm{X}) \big|_{\bm{X} = \bm{\chi}^{-1}(t, \bm{x})}.\]
+% Here $\bm{\chi}^{-1}$ is the inverse of the motion map, which gives the initial position of the particle that is at position $\bm{x}$ at time $t$.
+
+% The deformation gradient tensor is defined as
+% \[\bm{F}(t, \bm{X}) := \nabla_{\bm{X}} \bm{\chi}(t, \bm{X}) \in \mathbb{R}^{d \times d},\]
+% which measures the local deformation of the material. The velocity gradient is then
+% \[\nabla \bm{u}(t, \bm{x}) = \partial_t \bm{F}(t, \bm{X}) \cdot \bm{F}^{-1}(t, \bm{X}) \big|_{\bm{X} = \bm{\chi}^{-1}(t, \bm{x})}.\]
+
+% \subsubsection{Energy}
+% The total energy of the fluid in a subset $A \subset \Omega$ consists of kinetic and internal energy.
+
+% \paragraph{Kinetic energy.} The kinetic energy is defined as
+% \[E_{\text{kin}}(A) := \int_A \frac{1}{2} \rho(\bm{x}) |\bm{u}(t, \bm{x})|^2 \, d\bm{x},\]
+% where $|\bm{u}|^2 = \bm{u} \cdot \bm{u} = \sum_{i=1}^d u_i^2$ denotes the squared Euclidean norm of the velocity field.
+
+% \paragraph{Internal energy.} The internal energy represents the microscopic kinetic and potential energy of the molecules. We assume the existence of a specific internal energy density $e: Q \to \mathbb{R}$ (energy per unit mass), so that the total internal energy in $A$ is
+% \[E_{\text{int}}(A) := \int_A \rho(\bm{x}) e(t, \bm{x}) \, d\bm{x}.\]
+
+% The total energy is then $E(A) = E_{\text{kin}}(A) + E_{\text{int}}(A)$.
+
+% \subsubsection{Temperature}
+% Temperature $\theta: Q \to (0, \infty)$ is a scalar field that measures the average kinetic energy of molecular motion. For ideal gases and many fluids, the internal energy is related to temperature through a caloric equation of state.
+
+% \subsubsection{Pressure}
+% Pressure $p: Q \to \mathbb{R}$ is a scalar field representing the normal force per unit area exerted by the fluid. For compressible fluids, pressure depends on density and temperature through an equation of state. A common example is the ideal gas law:
+% \[p = \rho R \theta,\]
+% where $R$ is the specific gas constant. For incompressible fluids, pressure acts as a Lagrange multiplier enforcing the incompressibility constraint.
+
+% \subsubsection{Heat capacity}
+% The specific heat capacity at constant volume $c_v > 0$ relates changes in internal energy to changes in temperature:
+% \[de = c_v \, d\theta,\]
+% assuming constant volume conditions. Similarly, the specific heat capacity at constant pressure is denoted $c_p > 0$.
+
+% \subsubsection{Forces and stresses}
+% Forces acting on the fluid are represented through the Cauchy stress tensor $\bm{\sigma}: Q \to \mathbb{R}^{d \times d}$, which encodes both pressure and viscous stresses. The stress tensor is decomposed as
+% \[\bm{\sigma} = -p \bm{I} + \bm{\tau},\]
+% where $\bm{I}$ is the identity tensor and $\bm{\tau}$ is the viscous stress tensor.
+
+% For a Newtonian fluid, the viscous stress is linearly related to the rate of strain tensor
+% \[\bm{D}(\bm{u}) := \frac{1}{2}(\nabla \bm{u} + \nabla \bm{u}^T),\]
+% through
+% \[\bm{\tau} = 2\mu \bm{D}(\bm{u}) + \lambda (\nabla \cdot \bm{u}) \bm{I},\]
+% where $\mu > 0$ is the dynamic viscosity and $\lambda$ is the second viscosity coefficient. For incompressible flows where $\nabla \cdot \bm{u} = 0$, the second term vanishes.
+
+% Body forces (e.g., gravity) are represented by a force density $\bm{f}: Q \to \mathbb{R}^d$.
+
+% \subsubsection{Heat flux}
+% The heat flux vector $\bm{q}: Q \to \mathbb{R}^d$ represents the flow of thermal energy per unit area per unit time. Fourier's law states that heat flows from hot to cold regions:
+% \[\bm{q} = -\kappa \nabla \theta,\]
+% where $\kappa > 0$ is the thermal conductivity.
+
+% \subsection{The Navier-Stokes equations}
+
+% With these definitions in place, we can now state the Navier-Stokes equations for a compressible, viscous, heat-conducting fluid.
+
+% \subsubsection{Conservation of mass}
+% The continuity equation expresses conservation of mass:
+% \[\partial_t \rho + \nabla \cdot (\rho \bm{u}) = 0 \quad \text{in } Q.\]
+
+% \subsubsection{Conservation of momentum}
+% Newton's second law for a continuum gives the momentum equation:
+% \[\partial_t (\rho \bm{u}) + \nabla \cdot (\rho \bm{u} \otimes \bm{u}) = \nabla \cdot \bm{\sigma} + \rho \bm{f} \quad \text{in } Q,\]
+% where $\bm{u} \otimes \bm{u}$ denotes the tensor product with components $u_i u_j$. Substituting the stress decomposition:
+% \[\partial_t (\rho \bm{u}) + \nabla \cdot (\rho \bm{u} \otimes \bm{u}) = -\nabla p + \nabla \cdot \bm{\tau} + \rho \bm{f}.\]
+
+% For a Newtonian fluid:
+% \[\partial_t (\rho \bm{u}) + \nabla \cdot (\rho \bm{u} \otimes \bm{u}) = -\nabla p + \mu \Delta \bm{u} + (\mu + \lambda) \nabla(\nabla \cdot \bm{u}) + \rho \bm{f}.\]
+
+% \subsubsection{Conservation of energy}
+% The total energy balance is:
+% \[\partial_t \left(\rho \left(e + \frac{|\bm{u}|^2}{2}\right)\right) + \nabla \cdot \left(\rho \bm{u} \left(e + \frac{|\bm{u}|^2}{2}\right)\right) = \nabla \cdot (\bm{\sigma} \cdot \bm{u}) - \nabla \cdot \bm{q} + \rho \bm{f} \cdot \bm{u}.\]
+
+% Using Fourier's law and the relations between internal energy and temperature, this becomes the heat equation coupled to the flow.
+
+% \subsubsection{Incompressible Navier-Stokes equations}
+% For incompressible flow with constant density $\rho = \rho_0$, the equations simplify to:
+% \begin{align}
+% \nabla \cdot \bm{u} &= 0 \quad \text{in } Q, \\
+% \rho_0(\partial_t \bm{u} + (\bm{u} \cdot \nabla) \bm{u}) &= -\nabla p + \mu \Delta \bm{u} + \rho_0 \bm{f} \quad \text{in } Q,
+% \end{align}
+% supplemented with appropriate boundary and initial conditions.
+
+\section{Introduction}
+To understand about fluids, we first need to define some definitions.
+
+We will assume all the time that we are working in a domain $\Omega \subset \mathbb{R}^d$ (open and connected), with $d=2,3$ that will represent the space where the fluid flows and a time interval $I:=(0,T)$, with $T>0$. The space-time domain will be denoted by $Q:=I \times \Omega$ and all the functions will be defined in this domain unless otherwise stated.
+
+\subsection{Abstract definitions}
+
+\subsubsection{Mass}
+We can think of the mass as an abstract Radon measure defined in the borel $\sigma$-algebra of $\Omega$:
+\[
+	m: \mathcal{B}(\Omega) \to [0, \infty),
+\]
+such that for any two disjoint sets $A, B \in \mathcal{B}(\Omega)$, we have
+\[m(A \cup B) = m(A) + m(B).\]
+Since we are dealing with a continuum (continuum hypothesis), it is reasonable to assume that the mass is absolutely continuous with respect to the Lebesgue measure $\mathcal{L}^d$, i.e., there exists a density function $\rho: \Omega \to [0, \infty)$ such that for any $A \in \mathcal{B}(\Omega)$,
+\[m(A) = \int_A \rho(\bm{x}) \, d\bm{x}.\]
+
+\subsubsection{Kinematics}
+For each point $\bm{x} \in \Omega$, we define the motion map $\bm{\chi}: I \times \Omega \to \Omega$ such that $\bm{\chi}(t, \bm{X})$ gives the position at time $t$ of the particle that was at position $\bm{X}$ at time $0$. The velocity field $\bm{u}: I \times \Omega \to \mathbb{R}^d$ is defined as the time derivative of the motion map:
+\[\bm{u}(t, \bm{x}) = \partial_t \bm{\chi}(t, \bm{X}) \big|_{\bm{X} = \bm{\chi}^{-1}(t, \bm{x})}.\]
+
+Here $\bm\chi^{-1}$ is the inverse of the motion map, which gives the initial position of the particle that is at position $\bm{x}$ at time $t$.
+
+\subsubsection{Energy}
+%   We define the kinetic energy as:
+%   \[K: \mathcal{B}(\Omega) \to [0, \infty),\]
+%   such that for any $A \in \mathcal{B}(\Omega)$,
+%   \[K(A) = \int_A \frac{1}{2} \rho(\bm{x}) \|\bm{u}(\bm{x})\|^2 \,
+%   d\bm{x}.\]
+% We define the total energy as a Radon measure $E: \mathcal{B}(\Omega) \to [0, \infty)$, which is also absolutely continuous with respect to the Lebesgue measure. Thus, there exists an energy density function $e: \Omega \to [0, \infty)$ such that for any $A \in \mathcal{B}(\Omega)$,
+% \[E(A) = \int_A e(\bm{x}) \, d\bm{x}.\]
+
+TO BE FINISHED
+
+% define here: mas, force, energy, tmeperature, heat cpacity, etc...
+
+Assume we have a compressible fluid defined by its density $\rho$, velocity $\bf{u}$, pressure $p$, temperature $T$, total energy per unit volume $E$.
+
+We start with the dimensional form of the compressible Navier Stokes equations in conservation form:
+\begin{align*}
+	\partial_t \rho + \divp (\rho \bm{u})                         & = 0,                                             \\
+	\rho\left(\partial_t \bm{u} + \bm{u}\cdot \grad \bm{u}\right) & = - \grad p + \divp \bm{\tau},                   \\
+	\partial_t E + \divp \left( (E + p) \bm{u} \right)            & = \divp (\bm{\tau} \cdot \bm{u}) - \divp \bm{q},
+\end{align*}
+
+Here $\bm{\tau}$ is the viscous stress tensor defined as
+\[\bm{\tau} = \mu \left[ \grad \bm{u} + (\grad \bm{u})^T\right] + (\lambda \divp \bm{u}) \bm{I}_d,\]
+where $\mu$ is the dynamic viscosity and $\lambda$ is the second coefficient of viscosity. Here $\bm{I}_d$ is the $d$-dimensional identity matrix. The heat flux $\bm{q}$ is given by Fourier's law:
+\[\bm{q} = - k \grad T,\]
+where $k$ is the thermal conductivity of the fluid. The energy $E$ is defined as
+\[E := \rho e + \frac{1}{2} \rho \|\bm{u}\|^2,\]
+where $e$ is the internal energy per unit mass. For an ideal gas, we have the equation of state
+\[p = \rho R T,\]
+where $R$ is the specific gas constant. The internal energy for an ideal gas is given by
+\[e = c_v T,\]
+where $c_v$ is the specific heat at constant volume. We can also define the specific heat at constant pressure $c_p$ and the relation
+\[c_p - c_v = R.\]
+Finally, $\gamma = \frac{c_p}{c_v}$ is the ratio of specific heats.
+
+Note that the energy equation can also be written in terms of temperature instead of total energy as:
+\[\rho c_v \left(\partial_t T + \bm{u} \cdot \grad T\right)= - p \divp \bm{u} + \bm{\tau} : \grad \bm{u} + \divp (k \grad T),\]
+where $\bm{\tau} : \grad \bm{u}$ denotes the double contraction of the tensors, defined as
+\[\bm{\tau} : \grad \bm{u} = \sum_{i,j} \tau_{ij} \partial_i u_j.\]
+
+Important assumptions:
+\begin{itemize}
+	\item $c_v$, $c_p$, $\gamma$, $R$ are constants.
+	\item $\mu$, $\lambda$, $k$ can be functions of temperature.
+\end{itemize}
+
+\subsection{Nondimensional form}
+To nondimensionalize the equations, we introduce characteristic scales for length $\ell$, velocity $u_\infty$, density $\rho_\infty$, temperature $T_\infty$, and ..
+
+Using these scales, we define the nondimensional variables:
+\begin{align*}
+	\tilde{\bm{x}} & := \frac{\bm{x}}{\ell},              & \
+	\tilde{t}      & := \frac{t}{\ell/ u_\infty},         & \
+	\tilde{\rho}   & := \frac{\rho}{\rho_\infty},         & \
+	\tilde{\bm{u}} & := \frac{\bm{u}}{u_\infty},          & \
+	\tilde{T}      & = \frac{T}{T_\infty},                & \
+	\tilde{p}      & := \frac{p}{\rho_\infty u_\infty^2}, & \
+	\tilde{E}      & := \frac{E}{\rho_\infty u_\infty^2}.
+\end{align*}
+
+With these definitions, the nondimensional continuity equation becomes
+\begin{align*}
+	\partial_{\tilde{t}} \tilde{\rho} + \bm{\tilde{\nabla}}\cdot (\tilde{\rho} \tilde{\bm{u}}) & = 0.
+\end{align*}
+
+The nondimensional momentum equation is
+\begin{align*}
+	\tilde{\rho}\left(\partial_{\tilde{t}} \tilde{\bm{u}} + \tilde{\bm{u}}\cdot \bm{\tilde{\nabla}} \tilde{\bm{u}}\right) & = - \bm{\tilde{\nabla}} \tilde{p} + \frac{1}{\Rey} \bm{\tilde{\nabla}} \cdot \tilde{\bm{\tau}},
+\end{align*}
+where $\Rey := \frac{\rho_\infty u_\infty \ell}{\mu_\infty}$ is the Reynolds number, and the nondimensional viscous stress tensor is
+\[\tilde{\bm{\tau}} = \tilde{\mu} \left[ \bm{\tilde{\nabla}} \tilde{\bm{u}} + (\bm{\tilde{\nabla}} \tilde{\bm{u}})^T\right] + \tilde{\lambda} (\bm{\tilde{\nabla}} \cdot \tilde{\bm{u}} )\bm{I}_d.\]
+
+where $\tilde{\mu} = \frac{\mu}{\mu_\infty}$ and $\tilde{\lambda} = \frac{\lambda}{\mu_\infty}$.
+
+Finally, the nondimensional temperature equation is
+\begin{align*}
+	\tilde{\rho} \tilde{c}_v \left(\partial_{\tilde{t}} \tilde{T} + \tilde{\bm{u}} \cdot \bm{\tilde{\nabla}} \tilde{T}\right) & = \gamma
+	\Ma^2 \left(- \tilde{p} \bm{\tilde{\nabla}} \cdot \tilde{\bm{u}} + \frac{1}{\Rey} \tilde{\bm{\tau}} : \bm{\tilde{\nabla}} \tilde{\bm{u}}\right) + \frac{\gamma}{\Rey \Pr} \bm{\tilde{\nabla}} \cdot (\tilde{k} \bm{\tilde{\nabla}} \tilde{T}),
+\end{align*}
+where $\Ma := \frac{u_\infty}{\sqrt{\gamma R T_\infty}}$ is the Mach number, $\Pr := \frac{(c_p)_\infty \mu_\infty}{k_\infty}$ is the Prandtl number, and $\tilde{c}_v = \frac{c_v}{R}$, $\tilde{k} = \frac{k}{k_\infty}$, $\tilde{c}_p = \frac{c_p}{R\gamma}$.
+
+Summarizing, the nondimensional compressible Navier Stokes equations in terms of density, velocity and temperature are (dropping the tildes for clarity):
+\begin{align*}
+	\partial_{t} \rho + \bm{\nabla}\cdot (\rho \bm{u})                    & = 0,                                                                                                                                                                   \\
+	\rho\left(\partial_{t} \bm{u} + \bm{u}\cdot \bm{\nabla} \bm{u}\right) & = - \bm{\nabla} p + \frac{1}{\Rey} \bm{\nabla} \cdot \bm{\tau},                                                                                                        \\
+	\rho c_v \left(\partial_{t} T + \bm{u} \cdot \bm{\nabla} T\right)     & = \gamma\Ma^2 \left(- p \bm{\nabla} \cdot \bm{u} + \frac{1}{\Rey} \bm{\tau} : \bm{\nabla} \bm{u}\right) + \frac{\gamma}{\Rey \Pr} \bm{\nabla} \cdot (k \bm{\nabla} T),
+\end{align*}
+with
+\[\bm{\tau} = \mu \left[ \bm{\nabla} \bm{u} + (\bm{\nabla} \bm{u})^T\right] + \lambda (\bm{\nabla} \cdot \bm{u}) \bm{I}_d,\]
+and the equation of state
+\[p = \frac{1}{\gamma \Ma^2}\rho T.\]
+
+\subsection{Linearization around a steady state}
+Assume we have a steady state solution $(\overline{\rho}, \overline{\bm{u}}, \overline{T})$ that satisfies the compressible Navier Stokes equations. We introduce small perturbations around this steady state:
+\begin{align*}
+	\rho = \overline{\rho} + \rho',       \\
+	\bm{u} = \overline{\bm{u}} + \bm{u}', \\
+	T = \overline{T} + T',                \\
+	p = \overline{p} + p'.
+\end{align*}
+Since $\mu$ and $\lambda$ depend only on temperature, we can linearize them as
+\begin{align*}
+	\mu     & = \overline{\mu} + \mu' = \overline{\mu} + \partial_T \mu (\overline{T}) T',                 \\
+	\lambda & = \overline{\lambda} + \lambda' = \overline{\lambda} + \partial_T \lambda (\overline{T}) T'.
+\end{align*}
+Adding these expressions into the compressible Navier Stokes equations and neglecting higher order terms in the perturbations, we obtain the linearized compressible Navier Stokes equations:
+\begin{align*}
+	\partial_{t} \rho' + \divp (\overline{\rho} \bm{u}' + \rho' \overline{\bm{u}})                                                                                                          & = 0,                                            \\
+	\overline{\rho}\left(\partial_{t} \bm{u}' + \overline{\bm{u}}\cdot \grad \bm{u}' + \bm{u}' \cdot \grad \overline{\bm{u}}\right) + \rho' \overline{\bm{u}} \cdot \grad \overline{\bm{u}} & = - \grad p' + \frac{1}{\Rey} \divp \bm{\tau}', \\
+	\begin{split}
+		\overline{\rho} c_v \left(\partial_{t} T' + \overline{\bm{u}} \cdot \grad T' + \bm{u}' \cdot \grad \overline{T}\right) + \rho' c_v \overline{\bm{u}} \cdot \grad \overline{T}
+		 & = \\&\hspace{-5cm}=\gamma\Ma^2 \left(- p' \divp \overline{\bm{u}} - \overline{p} \divp \bm{u}' +\frac{1}{\Rey} \bm{\tau}' : \grad \overline{\bm{u}} + \frac{1}{\Rey} \overline{\bm{\tau}} : \grad \bm{u}'\right) + \frac{\gamma}{\Rey \Pr} \divp (k \grad T'),
+	\end{split}
+\end{align*}
+% \begin{align*}
+% 	\partial_{t} \rho' + \divp (\overline{\rho} \bm{u}' + \rho' \overline{\bm{u}})                                                                                                                                             & = 0,                                            \\
+% 	\overline{\rho}\left(\partial_{t} \bm{u}' + \overline{\bm{u}}\cdot \grad \bm{u}' + \bm{u}' \cdot \grad \overline{\bm{u}}\right) + \rho' (\partial_{t} \overline{\bm{u}} + \overline{\bm{u}} \cdot \grad \overline{\bm{u}}) & = - \grad p' + \frac{1}{\Rey} \divp \bm{\tau}', 
+% \end{align*}
+% \begin{multline* }
+%   	\overline{\rho} c_v \left(\partial_{t} T' + \overline{\bm{u}} \cdot \grad T' + \bm{u}' \cdot \grad \overline{T}\right) + \rho' c_v (\partial_{t} \overline{T} + \overline{\bm{u}} \cdot \grad \overline{T})                =\\ = \gamma
+% 	\Ma^2 \left(- p' \divp \overline{\bm{u}} - \overline{p} \divp \bm{u}' + \frac{1}{\Rey} \bm{\tau}' : \grad \overline{\bm{u}} + \frac{1}{\Rey} \overline{\bm{\tau}} : \grad \bm{u}'\right) + \frac{\gamma}{\Rey \Pr} \divp (k \grad T'),
+% \end{multline*}
+where the perturbation viscous stress tensor $\bm{\tau}'$ is given by:
+\begin{equation*}
+	\bm{\tau}' = \overline{\mu} \left[ \grad \bm{u}' + (\grad \bm{u}')^T\right] + \overline\lambda (\divp \bm{u}') \bm{I}_d + \partial_T \mu (\overline{T}) T' \left[ \grad \overline{\bm{u}} + (\grad \overline{\bm{u}})^T\right] + \partial_T \lambda (\overline{T}) T' (\divp \overline{\bm{u}}) \bm{I}_d.
+\end{equation*}
+The comonents of $\bm{\tau}'$ are:
+\begin{align*}
+  \tau_{xx} & = 2 \overline{\mu} \partial_x u' + \overline{\lambda} \divp \bm{u}' + 2 \partial_T \mu (\overline{T}) T' \partial_x \overline{u} + \partial_T \lambda (\overline{T}) T' \divp \overline{\bm{u}}, \\
+  \tau_{xy}=\tau_{yx} & = \overline{\mu} (\partial_y u' + \partial_x v') + \partial_T \mu (\overline{T}) T' (\partial_y \overline{u} + \partial_x \overline{v}),                                               \\
+  \tau_{xz} =\tau_{zx}& = \overline{\mu} (\partial_z u' + \partial_x w') + \partial_T \mu (\overline{T}) T' (\partial_z \overline{u} + \partial_x \overline{w}),                                               \\
+  \tau_{yy} & = 2 \overline{\mu} \partial_y v' + \overline{\lambda} \divp \bm{u}' + 2 \partial_T \mu (\overline{T}) T' \partial_y \overline{v} + \partial_T \lambda (\overline{T}) T' \divp \overline{\bm{u}}, \\
+  \tau_{yz} =\tau_{zy}& = \overline{\mu} (\partial_z v' + \partial_y w') + \partial_T \mu (\overline{T}) T' (\partial_z \overline{v} + \partial_y \overline{w}),                                               \\
+  \tau_{zz} & = 2 \overline{\mu} \partial_z w' + \overline{\lambda} \divp \bm{u}' + 2 \partial_T \mu (\overline{T}) T' \partial_z \overline{w} + \partial_T \lambda (\overline{T}) T' \divp \overline{\bm{u}}.
+\end{align*}
+
+Now if we assume that $\overline{u}=(U,0,0)$ is a uniform flow in the $x$-direction (parallel flow). Also we assume that all the steady state quantities only depend on the transverse coordinate $y$.
+% \begin{align*}
+% 	(\partial_{t} + U \partial_{x}) \rho' + \overline{\rho} \divp \bm{u}' + v' \partial_{y} \overline{\rho}                                                          & = 0,                                                                                                                         \\
+% 	\overline{\rho}\left(\partial_{t} + U \partial_{x}\right) u' + \overline{\rho} v' \partial_{y} U                                                                 & = - \partial_{x} p' + \frac{1}{\Rey} \left((2\overline{\mu} + \overline{\lambda})\partial_{xx}u' + \overline{\lambda} \partial_{xy} v' + \overline{\lambda} \partial_{x z} w' + \overline{\mu} \partial_{yy} u' + \overline{\mu}\partial_{xy}v'+ \partial_y(\alpha T'\partial_yU)+ \overline{\mu} \partial_{zz} u' + \overline{\mu} \partial_{xz} w'\right), \\
+% 	\overline{\rho}\left(\partial_{t} + U \partial_{x}\right) v'                                                                                                     & = - \partial_{y} p' + \frac{1}{\Rey} \left(\overline{\mu} \partial_{xx} v' + \overline{\mu} \partial_{xy} u' + \alpha\partial_x T' \partial_y U 
+% 	\overline{\rho}\left(\partial_{t} + U \partial_{x}\right) w'                                                                                                     & = - \partial_{z} p' + \frac{1}{\Rey} \left(\partial_x \tau'_{zx} + \partial_{y} \tau'_{zy} + \partial_{z} \tau'_{zz}\right), \\
+% 	\overline{\rho} c_v \left(\partial_{t} + U \partial_{x}\right) T' + \rho' c_v U \partial_{x} \overline{T} + \overline{\rho} c_v \bm{u}' \cdot \grad \overline{T} & = \gamma
+% 	\Ma^2 \left(- p' \divp \overline{\bm{u}} - \overline{p} \divp \bm{u}' + \frac{1}{\Rey} \bm{\tau}' : \grad \overline{\bm{u}} + \frac{1}{\Rey} \overline{\bm{\tau}} : \grad \bm{u}'\right) + \frac{\gamma}{\Rey \Pr} \divp (k \grad T'),
+% \end{align*}
+
+\subsection{Speed of sound}
+
+Consider the simple case of 1D Euler equations:
+\begin{align*}
+	\partial_t \rho + \partial_x (\rho u) & = 0,                           \\
+	\rho\left(\partial_t u + u \partial_x u\right) + \partial_x p & = 0,                           \\
+	\partial_t E + \partial_x (u(E + p)) & = 0,
+\end{align*}
+with $E = \rho e + \frac{1}{2} \rho u^2$ and $p = f(\rho)$ (for ideal gases we have $p = \rho^\gamma$). If we linearize around a constant state $(\overline{\rho}, \overline{u}, \overline{p})$ (e.g. with $\partial_i \overline{\rho} = \partial_i \overline{u} = \partial_i \overline{p} = 0$ with $i\in\{x,t\})$ and consider small perturbations $(\rho', u', p')$, we obtain the linearized equations:
+\begin{align*}
+	\partial_t \rho' + \overline{u} \partial_x \rho' + \overline{\rho} \partial_x u' & = 0,                           \\
+	\overline{\rho}\left(\partial_t u' + \overline{u} \partial_x u'\right) + \partial_x p' & = 0.                          
+\end{align*}
+Using Taylor, note that $\partial_x p'$ can be expressed as $\partial_x p' = \partial_\rho p (\overline{\rho}) \partial_x \rho'$. Thus, writing the system in matrix form, we have
+$$
+	\partial_t \begin{pmatrix}
+		\rho' \\
+		u'
+	\end{pmatrix} + \begin{pmatrix}
+		\overline{u} & \overline{\rho} \\
+		\frac{1}{\overline{\rho}} \partial_\rho p & \overline{u}
+	\end{pmatrix} \partial_x \begin{pmatrix}
+		\rho' \\
+		u'
+	\end{pmatrix} = 0.
+$$
+This system is in the form of a transport equation (transport of the vector $(\rho', u') $) with transport speed given by the eigenvalues of the matrix:
+$$\lambda_{1,2} = \overline{u} \pm \sqrt{\partial_\rho p}.$$
+The quantity $c := \sqrt{\partial_\rho p}$ is defined as the speed of sound in the fluid. If the fluid is at rest ($\overline{u} = 0$), the perturbations of density (pressure waves) and velocity propagate at speed $\pm c$. 
+
+The information in the fluid propagates at most at the speed of sound. When the flow velocity exceeds the speed of sound, characteristics collide and shock waves can form.
+
+\subsection{Incompressible Navier Stokes equations}
+Incompressible flows are defined by the condition of constant density throughout the flow field, i.e.
+\[\partial_t \rho + \bm{u} \cdot \bm{\nabla} \rho = 0.\]
+This implies that the continuity equation reduces to the divergence-free condition:
+\[\divp \bm{u} = 0.\]
+And so with only the momentum equation, we have the incompressible Navier Stokes equations (assuming $\partial_t \rho = 0$):
+\begin{align*}
+	\divp \bm{u}                                                          & = 0,                                              \\
+	\rho\left(\partial_{t} \bm{u} + \bm{u}\cdot \bm{\nabla} \bm{u}\right) & = - \bm{\nabla} p + \frac{1}{\Rey} \Delta \bm{u}.
+\end{align*}
+
+\end{document}

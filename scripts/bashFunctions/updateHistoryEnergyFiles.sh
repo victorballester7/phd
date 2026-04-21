@@ -1,7 +1,7 @@
 function checkOldFileExists {
     local filename="$1"
     if [[ -f "${filename}.old" ]]; then
-        grep -qv '^#' "$filename" >> "${filename}.old"
+        grep -v '^#' "$filename" >> "${filename}.old"
         rm -f "$filename"
     else
         mv "$filename" "${filename}.old"

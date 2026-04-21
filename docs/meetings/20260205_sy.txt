@@ -1,0 +1,4 @@
+- check if there are parts in the comNS eqs that are stabilizing as Ma->oo
+- run few 3d incNS nonlinear simulations 
+- run explicit comNS to check the divergence near the steady state
+- try SFD for compressible

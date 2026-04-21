@@ -1,0 +1,64 @@
+% tikz-fontscale.sty - Automatic font scaling for standalone TikZ figures
+% Usage: \usepackage[targetwidth=7.85cm, targetfontsize=9pt]{tikz-fontscale}
+%
+% This package computes the scale factor needed so that when the standalone
+% PDF is included at `targetwidth`, the fonts appear at `targetfontsize`.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tikz-fontscale}[2024/01/01 TikZ font scaling for standalone figures]
+
+\RequirePackage{kvoptions}
+\RequirePackage{tikz}
+\RequirePackage{environ}
+
+% Define key-value options
+\SetupKeyvalOptions{
+  family=tikzfs,
+  prefix=tikzfs@
+}
+
+\DeclareStringOption[7.85cm]{targetwidth}
+\DeclareStringOption[9pt]{targetfontsize}
+\ProcessKeyvalOptions*
+
+% Convert dimensions to pts for calculation
+\newlength{\tikzfs@targetwidthlen}
+\newlength{\tikzfs@targetfontsizelen}
+\setlength{\tikzfs@targetwidthlen}{\tikzfs@targetwidth}
+\setlength{\tikzfs@targetfontsizelen}{\tikzfs@targetfontsize}
+
+% Box to measure the figure
+\newsavebox{\tikzfs@figurebox}
+
+% The scale factor (will be computed)
+\newcommand{\tikzfontscale}{1}
+
+% Environment that measures and applies correct font scaling
+% Usage: \begin{scaledtikzpicture}[tikz options] ... \end{scaledtikzpicture}
+\NewEnviron{scaledtikzpicture}[1][]{%
+  % First pass: measure natural size
+  \savebox{\tikzfs@figurebox}{%
+    \begin{tikzpicture}[#1]%
+      \BODY%
+    \end{tikzpicture}%
+  }%
+  % Calculate scale factor: natural_width / target_width
+  % Font in TikZ needs to be scaled by this factor to appear correct after PDF scaling
+  \pgfmathsetmacro{\tikzfontscale}{\wd\tikzfs@figurebox / \tikzfs@targetwidthlen}%
+  % Output the measured figure
+  \usebox{\tikzfs@figurebox}%
+}
+
+% Simpler approach: define scale directly if you know the figure width
+% Usage: \setfigurescale{12cm} where 12cm is the natural width of your figure
+\newcommand{\setfigurescale}[1]{%
+  \newlength{\tikzfs@naturalwidth}%
+  \setlength{\tikzfs@naturalwidth}{#1}%
+  \pgfmathsetmacro{\tikzfontscale}{\tikzfs@naturalwidth / \tikzfs@targetwidthlen}%
+}
+
+% Helper: scaled font command for use in nodes
+% Usage: \node[font=\scaledtikzfont] {text};
+\newcommand{\scaledtikzfont}{\fontsize{\tikzfontscale\tikzfs@targetfontsizelen}{\tikzfontscale\tikzfs@targetfontsizelen}\selectfont}
+
+\endinput

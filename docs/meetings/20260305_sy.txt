@@ -1,0 +1,2 @@
+- check 3d instabilities in the growing states of the BF+noise, by sybstracting the baseflow and the 2d mode.
+

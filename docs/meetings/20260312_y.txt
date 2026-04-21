@@ -1,0 +1,4 @@
+- do same analyis at d= 4 in d=2 or d=2.5 to verify we have the same transition process.
+- check what happens with 3d simulation, just before hopf transition in 2d. Turbulence? yes or no?
+- start to understand TS mode generation downstream due to 2d global mode.
+- do curve omega/sigma vs Lz for two different d (d = 4 and another one) and two different w (before and after 2d hopf bifurcation).

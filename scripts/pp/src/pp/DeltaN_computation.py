@@ -12,11 +12,12 @@ from pp.filterData import getRMS
 from pp.colors import colors
 from typing import Tuple
 from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C
+from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C, WhiteKernel
+from sklearn.gaussian_process.kernels import Matern
+from sklearn.preprocessing import StandardScaler
 
 
-
-def computeNx(dataFile: str, doLoo: bool) -> Tuple[float, float, np.ndarray, np.ndarray]:
+def computeAmplitude(dataFile: str, doLoo: bool) -> Tuple[np.ndarray, np.ndarray]:
     d, w = extract_width_depth(dataFile)
     print(colors.OKBLUE + f"Processing d = {d:.2f}, w = {w:.2f}" + colors.ENDC)
     x, y, data = readFieldsBySection(dataFile)
@@ -25,7 +26,7 @@ def computeNx(dataFile: str, doLoo: bool) -> Tuple[float, float, np.ndarray, np.
 
     if doLoo:
         Loo = np.max(np.abs(rms), axis=1)
-        A = Loo
+        return x, Loo
     else:
         # integrate from 0 to ymax
         ymax = 150
@@ -33,16 +34,22 @@ def computeNx(dataFile: str, doLoo: bool) -> Tuple[float, float, np.ndarray, np.
 
         L2 = np.sqrt(np.trapezoid(rms[:, :yindx] ** 2, y[:yindx]))
 
-        A = L2
+        return x, L2
 
-    A0_arg = np.argmin(A)
+def computeNx(dataFile: str, doLoo: bool) -> Tuple[np.ndarray, np.ndarray]:
+    x, A = computeAmplitude(dataFile, doLoo)
+
+    # filter indices of x such that x <=0
+    idx = np.where(x <= 0)[0]
+
+    A0_arg = np.argmin(A[idx])
     A0 = A[A0_arg]
     A = A[A0_arg:]
     x = x[A0_arg:]
 
     Nx = np.log(A / A0)
 
-    return d, w, x, Nx 
+    return x, Nx 
 
 def computeDeltaN(
     w: float, x: np.ndarray, Nx: np.ndarray, x_flat: np.ndarray, Nx_flat: np.ndarray
@@ -73,108 +80,193 @@ def computeDeltaN(
     return deltaNx_avg.astype(float)
 
 
-def interpolate_extrapolate(
-    depths: np.ndarray, widths: np.ndarray, deltaNx: np.ndarray, filename: str
-) -> None:
-    """
-    Interpolates and extrapolates the deltaN values over a grid defined by the maximum and minimum values of d and w.
-    """
+class GPRResult:
+    """Container for GPR interpolation results."""
+    def __init__(
+        self,
+        X_grid: np.ndarray,
+        Y_grid: np.ndarray,
+        Z_grid: np.ndarray,
+        sigma_grid: np.ndarray,
+        widths: np.ndarray,
+        depths: np.ndarray,
+        deltaNx: np.ndarray,
+        gp: GaussianProcessRegressor,
+        scaler: StandardScaler = None,
+    ):
+        self.X_grid = X_grid
+        self.Y_grid = Y_grid
+        self.Z_grid = Z_grid
+        self.sigma_grid = sigma_grid
+        self.widths = widths
+        self.depths = depths
+        self.deltaNx = deltaNx
+        self.gp = gp
+        self.scaler = scaler
 
-    # add 0 values of depth and width
-    for d in np.unique(depths):
+
+def gpr_interpolate(
+    depths: np.ndarray,
+    widths: np.ndarray,
+    deltaNx: np.ndarray,
+    w_max: float = 90.0,
+    grid_size: int = 200,
+) -> GPRResult:
+    """
+    Fits a GPR model and interpolates/extrapolates deltaN values over a grid.
+    
+    Returns a GPRResult containing grids and the fitted model.
+    """
+    # Make copies to avoid modifying input arrays
+    depths = depths.copy()
+    widths = widths.copy()
+    deltaNx = deltaNx.copy()
+
+    # Remove NaN/invalid values
+    valid_mask = ~np.isnan(deltaNx) & ~np.isinf(deltaNx)
+    depths = depths[valid_mask]
+    widths = widths[valid_mask]
+    deltaNx = deltaNx[valid_mask]
+
+    # Store original data points for plotting
+    orig_widths = widths.copy()
+    orig_depths = depths.copy()
+    orig_deltaNx = deltaNx.copy()
+
+    # Add denser boundary conditions (zero values at edges)
+    n_boundary = 15
+    max_depth = np.max(depths)
+    max_width = w_max
+
+    # Along w=0 boundary
+    for d in np.linspace(0, max_depth, n_boundary):
         depths = np.append(depths, d)
         widths = np.append(widths, 0)
         deltaNx = np.append(deltaNx, 0)
-    for w in np.unique(widths):
+
+    # Along d=0 boundary
+    for w in np.linspace(0, max_width, n_boundary):
         depths = np.append(depths, 0)
         widths = np.append(widths, w)
         deltaNx = np.append(deltaNx, 0)
+
+    # Corner point (0,0)
     depths = np.append(depths, 0)
     widths = np.append(widths, 0)
     deltaNx = np.append(deltaNx, 0)
 
+    # Add soft prior points from empirical model in sparse regions
+    # deltaN_approx = 0.1 * w * tanh(44 * d / w) with added noise
+    prior_w = np.array([60, 70, 80, 50, 60, 70, 80])
+    prior_d = np.array([2.0, 2.0, 2.0, 2.5, 2.5, 2.5, 2.5])
+    prior_deltaN = 0.1 * prior_w * np.tanh(44 * prior_d / prior_w)
+    
+    # Add these soft priors
+    for w, d, dN in zip(prior_w, prior_d, prior_deltaN):
+        widths = np.append(widths, w)
+        depths = np.append(depths, d)
+        deltaNx = np.append(deltaNx, dN)
 
-    # training data
+    # Training data
     X_train = np.column_stack((widths, depths))
     y_train = deltaNx
 
-    # kernel: constant * RBF
-    kernel = RBF([1, 10], [(1e-2, 1e2),(1e-1,1e3)])  # anisotropic lengthscales
-    # kernel = C(1.0, (1e-3, 1e3)) * RBF([10, 10], (1e-2, 1e2))  # anisotropic lengthscales
-    gp = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=10, alpha=1e-6, normalize_y=True)
+    # Feature scaling for better GPR performance
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
 
-    gp.fit(X_train, y_train)
+    # Kernel: Matérn kernel (better for physical processes) with anisotropic lengthscales
+    kernel = (
+        Matern(
+            length_scale=[1.0, 1.0],  # After scaling, start with unit lengthscales
+            length_scale_bounds=[(1e-2, 1e2), (1e-2, 1e2)],
+            nu=2.5
+        ) +
+        WhiteKernel(noise_level=1e-2, noise_level_bounds=(1e-10, 1e-1))
+    )
 
-    # prediction grid
-    sizeGrid = 100
-    X = np.linspace(np.min(widths), 70, sizeGrid)
-    Y = np.linspace(np.min(depths), np.max(depths), sizeGrid)
+    gp = GaussianProcessRegressor(
+        kernel=kernel,
+        n_restarts_optimizer=20,
+        normalize_y=True,
+        random_state=42
+    )
+
+    gp.fit(X_train_scaled, y_train)
+
+    print(colors.OKBLUE + f"Learned kernel: {gp.kernel_}" + colors.ENDC)
+    print(colors.OKBLUE + f"Log-marginal-likelihood: {gp.log_marginal_likelihood_value_:.3f}" + colors.ENDC)
+
+    # Prediction grid
+    X = np.linspace(0, w_max, grid_size)
+    Y = np.linspace(0, np.max(orig_depths), grid_size)
     X_grid, Y_grid = np.meshgrid(X, Y)
     XY = np.column_stack((X_grid.ravel(), Y_grid.ravel()))
 
-    Z_pred, sigma = gp.predict(XY, return_std=True)
+    # Scale prediction points using the same scaler
+    XY_scaled = scaler.transform(XY)
+
+    Z_pred, sigma = gp.predict(XY_scaled, return_std=True)
     Z_grid = Z_pred.reshape(X_grid.shape)
+    sigma_grid = sigma.reshape(X_grid.shape)
 
-    # sizeGrid = 100
-    # X = np.linspace(np.min(widths), 70, sizeGrid)
-    # # X = np.linspace(np.min(widths), np.max(widths), sizeGrid)
-    # Y = np.linspace(np.min(depths), np.max(depths), sizeGrid)
-    # X_grid, Y_grid = np.meshgrid(X, Y)
+    # Clip negative predictions (deltaN should be non-negative)
+    Z_grid = np.clip(Z_grid, 0, None)
 
-    # # Interpolate/extrapolate over the grid
-    # points = np.column_stack((widths, depths))
+    return GPRResult(
+        X_grid, Y_grid, Z_grid, sigma_grid,
+        orig_widths, orig_depths, orig_deltaNx,
+        gp, scaler
+    )
 
-    # Z_grid = griddata(
-    #     points, deltaNx, (X_grid, Y_grid), method="linear", fill_value=np.nan
-    # )
 
-    # # Step 2: Fill NaNs using nearest neighbor extrapolation
-    # nearest = NearestNDInterpolator(points, deltaNx)
-    # Z_grid = np.where(np.isnan(Z_grid), nearest(X_grid, Y_grid), Z_grid)
+def write_deltaN_file(result: GPRResult, filename: str) -> None:
+    """Writes the interpolated deltaN grid to a .dat file."""
+    X = result.X_grid[0, :]
+    Y = result.Y_grid[:, 0]
+    Z_grid = result.Z_grid
 
-    # Z_grid = gaussian_filter(Z_grid, sigma=2)
-
-    # Write to .dat file
     with open(filename, "w") as f:
         for i in range(len(Y)):
             if i == 0:
-                # Write the border points
                 f.write(f"{0:.6f} {0:.6f} {0:.6f}\n")
                 for j in range(len(X)):
                     f.write(f"{X[j]:.6f} {0:.6f} {0:.6f}\n")
-                f.write("\n")  # Newline to separate rows
+                f.write("\n")
 
             for j in range(len(X)):
                 if j == 0:
-                    # Write the border points
                     f.write(f"{0:.6f} {Y[i]:.6f} {0:.6f}\n")
-                x = X[j]
-                y = Y[i]
-                z = Z_grid[i, j]
-                # if np.isnan(z):
-                #     continue  # Skip undefined regions
-                f.write(f"{x:.6f} {y:.6f} {z:.6f}\n")
-            f.write("\n")  # Newline to separate rows
+                f.write(f"{X[j]:.6f} {Y[i]:.6f} {Z_grid[i, j]:.6f}\n")
+            f.write("\n")
 
-    print(
-        colors.OKGREEN
-        + f"Interpolated and extrapolated data written to {filename}"
-        + colors.ENDC
-    )
+    print(colors.OKGREEN + f"Interpolated data written to {filename}" + colors.ENDC)
 
-    fig, ax = plt.subplots(figsize=(8, 6))
-    c = ax.pcolormesh(X_grid, Y_grid, Z_grid, shading="auto", cmap="viridis")
-    # plot a ball with the value as label text above the vall of deltaN at each (w,d) point
-    sc = ax.scatter(widths, depths, c=deltaNx, edgecolors="k", cmap="viridis", s=100)
-    for (i, j, val) in zip(widths, depths, deltaNx):
-        ax.text(i, j - 0.05, f"{val:.2f}", color="white", ha="center", va="bottom", fontsize=8)
 
-    # add contour lines for Delta N = 1, 2, 3, 4, 5
+def plot_deltaN_grid(result: GPRResult, ax: plt.Axes = None) -> plt.Figure:
+    """Plots the interpolated deltaN grid with scatter points and contours."""
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(8, 6))
+    else:
+        fig = ax.get_figure()
+
+    c = ax.pcolormesh(result.X_grid, result.Y_grid, result.Z_grid, shading="auto", cmap="viridis")
+    ax.scatter(result.widths, result.depths, c=result.deltaNx, edgecolors="k", cmap="viridis", s=100)
+    
+    for w, d, val in zip(result.widths, result.depths, result.deltaNx):
+        ax.text(w, d - 0.05, f"{val:.2f}", color="white", ha="center", va="bottom", fontsize=8)
+
     contour_levels = [1, 2, 3, 4, 5]
-    CS = ax.contour(X_grid, Y_grid, Z_grid, levels=contour_levels, colors="white", linewidths=1.2)
-    ax.clabel(CS, inline=True, fontsize=8, fmt="%d")  # label contours
+    CS = ax.contour(result.X_grid, result.Y_grid, result.Z_grid, levels=contour_levels, colors="white", linewidths=1.2)
+    ax.clabel(CS, inline=True, fontsize=8, fmt="%d")
 
     fig.colorbar(c, ax=ax, label="Delta N")
     ax.set_xlabel("Width (w)")
     ax.set_ylabel("Depth (d)")
     ax.set_title("Interpolated and Extrapolated Delta N")
+
+    return fig
+
+
+
+

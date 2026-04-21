@@ -4,38 +4,35 @@ from pp.colors import mix_with_black, colors
 from pp.analyzeData import shared_depth_curve, build_bifurcation_pairs
 import pandas as pd
 from pp.smoothing import smooth_curve
-
-plt.style.use('plots/style/customvictor.mplstyle')
-
-# Data and plot configuration
-DATA_FILES = [
-    "01_equilibrium.dat",
-    "02_po.dat",
-    "03_pocascade.dat",
-    "04_chaos.dat",
-]
+import matplotlib as mpl
+from pp.fontSizeLaTex import compute_mpl_fontsize, compute_figure_size
 
 
-MARKERS = ["o", "^", "d", "s"]
+plt.style.use('plots/style/tsfp.mplstyle')
+# plt.style.use('plots/style/customvictor.mplstyle')
+
+
+
+MARKERS = ["o", "^", "d"]
+MARKERSIZE = 10
 MARKER_COLORS = plt.rcParams["axes.prop_cycle"].by_key()["color"][:4]
 
-LABELS = [
-    "Equilibrium",
-    "P.O. of fundamental period",
-    "Period-doubling cascade",
-    "Chaos",
-]
+# labels as dictionary
+LABELS = {
+        "equilibrium": "Equilibrium",
+        "limitcycle": "Limit cycle",
+        "chaoticattractor": "Chaotic attractor",
+}
 
 BIFURCATION_LABELS = [
     "Hopf bifurcation",
-    "Period-doubling bifurcation",
     "Chaos onset",
 ]
 
 LINE_STYLES = [":", "-.", "--"]
 
 
-def plot_stability_diagram(data_frames, save_path):
+def plot_stability_diagram(df, save_path):
     """
     Create and save the stability bifurcation diagram.
 
@@ -46,48 +43,60 @@ def plot_stability_diagram(data_frames, save_path):
     save_path : str
         Path to save the output PDF
     """
-    fig, ax = plt.subplots(figsize=(8, 6))
-    inc2dData = [
-        df.loc[df["run"] == "inc2d", ["w", "d"]].to_numpy() for df in data_frames
-    ]
+    # LaTeX document settings: 10pt font, figure width 6cm
+    latex_width_cm = 7.85 # linewidth of tsfp template
+    latex_font_pt = 9 # 9pt small font size in tsfp template (figures captions)
     
-    # Plot stability regions with markers
-    for dataset, marker, color, label in zip(inc2dData, MARKERS, MARKER_COLORS, LABELS):
-        edge_color = mix_with_black(color, alpha=0.3)
+    fig_width_in, fig_height_in = compute_figure_size(latex_width_cm, aspect_ratio=0.75)
+
+    # we make the figure as if there were only one column
+    fig_width_in *= 2
+    fig_height_in *= 2
+    print(f"Figure size (inches): {fig_width_in:.2f} x {fig_height_in:.2f}")
+    compute_mpl_fontsize(fig_width_in=fig_width_in, latex_width_cm=latex_width_cm, latex_font_pt=latex_font_pt)
+    fig, ax = plt.subplots(figsize=(fig_width_in, fig_height_in), constrained_layout=True)
+
+    
+    inc2dData = df.loc[df["run"] == "inc2dRe1000"].to_numpy()
+
+    for m, c, lab in zip(MARKERS, MARKER_COLORS, LABELS.keys()):
+        subset = inc2dData[inc2dData[:, 4] == lab]
+        edge_color = mix_with_black(c, alpha=0.3)
         ax.plot(
-            dataset[:, 0],
-            dataset[:, 1],
-            marker=marker,
-            markerfacecolor=color,
-            markeredgecolor=edge_color,
-            linestyle="none",
-            label=label,
-            zorder=3,
+                subset[:, 0],
+                subset[:, 1],
+                marker=m,
+                markersize=MARKERSIZE,
+                markerfacecolor=c,
+                markeredgecolor=edge_color,
+                linestyle="none",
+                label=LABELS[lab],
+                zorder=3,
         )
 
     # Plot bifurcation curves
-    bifurcation_pairs = build_bifurcation_pairs(inc2dData)
+    # bifurcation_pairs = build_bifurcation_pairs(inc2dData)
 
-    for pair, line_style, label in zip(
-        bifurcation_pairs, LINE_STYLES, BIFURCATION_LABELS
-    ):
-        w_curve, d_curve = shared_depth_curve(pair[0], pair[1])
-        if len(w_curve) > 4:
-            w_curve, d_curve = smooth_curve(w_curve, d_curve)
-        # Smooth the curve using spline interpolation
-        # if len(w_curve) >= 4:  # Require at least 4 points for spline
-        #     spline = UnivariateSpline(d_curve, w_curve, s=1.0)
-        #     d_smooth = np.linspace(np.min(d_curve), np.max(d_curve), 300)
-        #     w_smooth = spline(d_smooth)
-        #     w_curve, d_curve = w_smooth, d_smooth
+    # for pair, line_style, label in zip(
+    #     bifurcation_pairs, LINE_STYLES, BIFURCATION_LABELS
+    # ):
+    #     w_curve, d_curve = shared_depth_curve(pair[0], pair[1])
+    #     if len(w_curve) > 4:
+    #         w_curve, d_curve = smooth_curve(w_curve, d_curve)
+    #     # Smooth the curve using spline interpolation
+    #     # if len(w_curve) >= 4:  # Require at least 4 points for spline
+    #     #     spline = UnivariateSpline(d_curve, w_curve, s=1.0)
+    #     #     d_smooth = np.linspace(np.min(d_curve), np.max(d_curve), 300)
+    #     #     w_smooth = spline(d_smooth)
+    #     #     w_curve, d_curve = w_smooth, d_smooth
 
-        ax.plot(
-            w_curve,
-            d_curve,
-            linestyle=line_style,
-            label=label,
-            zorder=2,
-        )
+    #     ax.plot(
+    #         w_curve,
+    #         d_curve,
+    #         linestyle=line_style,
+    #         label=label,
+    #         zorder=2,
+    #     )
 
 
 
@@ -99,23 +108,19 @@ def plot_stability_diagram(data_frames, save_path):
     # Grid and legend
     ax.legend()
 
-    # Tight layout and save
-    plt.savefig(save_path)
+    # Tight layout
+    plt.savefig(save_path, format="pdf")
     print(colors.OKGREEN + f"✓ Plot saved to: {save_path}" + colors.ENDC)
 
 def main():
     """Main execution function."""
     # Set up paths
     script_path = os.path.dirname(os.path.abspath(__file__))
-    data_dir = os.path.join(script_path, "../../../data/stability/")
+    data_dir = os.path.join(script_path, "../../../data/stability/stability.dat")
     output_path = os.path.join(script_path, "../../../images/inc2dStabilityCurve.pdf")
 
     # Load data
-    file_paths = [os.path.join(data_dir, f) for f in DATA_FILES]
-    data_frames = [
-        pd.read_csv(f, sep=" ", comment="#", names=["w", "d", "sigma", "omega", "run"])
-        for f in file_paths
-    ]
+    data_frames = pd.read_csv(data_dir, sep=" ", comment="#", names=["w", "d", "sigma", "omega", "type", "run"])
 
     # Create plot
     plot_stability_diagram(data_frames, output_path)

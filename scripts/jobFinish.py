@@ -42,7 +42,7 @@ def check_and_notify(job_id):
         log_lines = get_last_lines(log_file)
         output_lines = get_last_lines(output_file)
         timeout = any(("timeout" in line.lower()) for line in log_lines)
-        finished = any("Elapsed time Avg" in line for line in output_lines)
+        finished = any("Elapsed time Avg" in line for line in output_lines) or any("Total Computation Time" in line for line in output_lines)
         print(f"Timeout: {timeout}, Finished: {finished}")
         if timeout:
             message = (

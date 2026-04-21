@@ -106,6 +106,9 @@ Point(22) = {-x0,BL+BL_upper,0};
 Point(23) = {-r,BL+BL_upper,0};
 Point(24) = {W + r,BL+BL_upper,0};
 Point(25) = {x3,BL+BL_upper,0};
+Point(26) = {0,BL+BL_upper,0};
+Point(27) = {W/2,BL+BL_upper,0};
+Point(28) = {W,BL+BL_upper,0};
 
 Line(1) = {1,18};
 Line(2) = {2,15};
@@ -134,8 +137,10 @@ Line(24) = {22,10};
 Line(25) = {25,8};
 Line(26) = {25,24};
 Line(27) = {22,23};
-Line(28) = {23,19};
-Line(29) = {24,21};
+Line(30) = {23,26};
+Line(31) = {26,27};
+Line(32) = {27,28};
+Line(33) = {28,24};
 
 // outer quads
 Curve Loop(1) = {5, 21, 6, -22, -13, -19, -12, -23, -10, 11, 1, 20, 14, 18};
@@ -146,25 +151,22 @@ Curve Loop(2) = {2, 15, 3, 16, 4, 17, -18, -14};
 Plane Surface(2) = {2};
 
 // triangular region
-Curve Loop(3) = {23, 12, 19, 13, -29, -26, 25, 8, 9, 27, 28};
+Curve Loop(3) = {-26, 25, 8, 9, 27, 30, 31,32,33};
 Plane Surface(3) = {3};
 
 // 3rd layer of quads
-Curve Loop(4) = {-24, 27, 28,-10};
-Curve Loop(5) = {-29, -26, -7, -22};
+Curve Loop(4) = {-24, 27, 30, 31,32,33, -26,-7,-22,-13,-19,-12,-23,-10};
 
 Plane Surface(4) = {4};
-Plane Surface(5) = {5};
 
 
 // This defines the surfaces that will be meshed with quad elements
 Transfinite Surface {1} = {1, 6, 7, 10};
 Transfinite Surface {2} = {3, 4, 5, 2}; // number '2' must match the number '2' of plane surface
-Transfinite Surface {4} = {19, 23, 22, 10};
-Transfinite Surface {5} = {7, 25, 24, 21};
+Transfinite Surface {4} = {7, 25, 22, 10};
 
-Transfinite Curve {18, 16, 19} = N_in_v_right Using Progression p_in_v_right;
-Transfinite Curve {-14, -3, -12} = N_in_v_left Using Progression p_in_v_left;
+Transfinite Curve {18, 16, 19,32} = N_in_v_right Using Progression p_in_v_right;
+Transfinite Curve {-14, -3, -12, -31} = N_in_v_left Using Progression p_in_v_left;
 
 Transfinite Curve {15, -4} = N_in_h_bottom Using Progression p_in_h_bottom;
 Transfinite Curve {-2, 17} = N_in_h_top Using Progression p_in_h_top;
@@ -173,11 +175,11 @@ Transfinite Curve {-2, 17} = N_in_h_top Using Progression p_in_h_top;
 Transfinite Curve {11, -6} = N_out_h Using Progression p_out_h;
 Transfinite Curve {24, 28, 29, -7} = N_out_h_upper Using Progression p_out_h_upper;
 Transfinite Curve {10, 1, 27} = N_out_v_inflow_sparse Using Progression p_out_v_inflow_sparse;
-Transfinite Curve {20, 23} = N_out_v_inflow_dense Using Progression p_out_v_inflow_dense;
+Transfinite Curve {20, 23, 30} = N_out_v_inflow_dense Using Progression p_out_v_inflow_dense;
 Transfinite Curve {-21, -22, 26} = N_out_v_outflow_sparse Using Progression p_out_v_outflow_sparse;
-Transfinite Curve {-5, -13} = N_out_v_outflow_dense Using Progression p_out_v_outflow_dense;
+Transfinite Curve {-5, -13,-33} = N_out_v_outflow_dense Using Progression p_out_v_outflow_dense;
 
-Recombine Surface {1, 2, 4, 5};
+Recombine Surface {1, 2, 4};
 
 // for triangluar region
 Transfinite Curve {8} = N_triag_v_top Using Progression 1;
@@ -193,5 +195,5 @@ Physical Curve(4) = {1, 20, 2, 15, 3, 16, 4, 17, 5, 21}; // wall
 
 
 Physical Surface(100) = {1};
-Physical Surface(101) = {2, 4, 5};
+Physical Surface(101) = {2, 4};
 Physical Surface(102) = {3};

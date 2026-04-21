@@ -32,13 +32,15 @@
 
     <PARAMETERS>
       <!--General parameters-->
-      <P> CFL             = 0.01 </P>
-      <P> CFLGrowth       = 1.1 </P>
-      <P> CFLEnd          = 0.8 </P>
+        <P> TimeStep       = 0.006     </P>
+        <!-- <P> CFL             = 0.01 </P> -->
+        <!-- <P> CFLGrowth       = 1.1 </P> -->
+        <!-- <P> CFLEnd          = 0.8 </P> -->
       <P> NumSteps        = 4000e3     </P>
       <P> IO_InfoSteps    = NumSteps/2000       </P> 
+      <P> IO_CheckSteps   = NumSteps/100         </P>
       <P> IO_CFLSteps     = IO_InfoSteps         </P>
-      <P> HistorySteps    = NumSteps/16000 </P>
+      <P> HistorySteps    = 0.5/TimeStep </P>
 
       <P> widthGap        = 34 </P> <!-- in terms of deltaStar_leadingEdge !-->
 
@@ -345,14 +347,13 @@
                    ) * (y>=yMax))" />
     </FUNCTION>   
 
-    <FUNCTION NAME="ExactSolution">
-        <F VAR="rho,rhou,rhov,E" FILE="../../timeAverageSSSolver/d3_w10/mesh_d3_w10_14_avg.fld" />
-      </FUNCTION>
+    <!-- <FUNCTION NAME="ExactSolution"> -->
+    <!--     <F VAR="rho,rhou,rhov,E" FILE="../../timeAverageSSSolver/d3_w10/mesh_d3_w10_14_avg.fld" /> -->
+    <!--   </FUNCTION> -->
 
-    <!-- Sponge Layer: -->
-      <FUNCTION NAME="RefSol">
-          <F VAR="rho,rhou,rhov,E" FILE="../../timeAverageSSSolver/d3_w10/mesh_d3_w10_14_avg.fld" />
-      </FUNCTION>
+    <!--   <FUNCTION NAME="RefSol"> -->
+    <!--       <F VAR="rho,rhou,rhov,E" FILE="../../timeAverageSSSolver/d3_w10/mesh_d3_w10_14_avg.fld" /> -->
+    <!--   </FUNCTION> -->
 
     <!-- Sponge coeff: -->
     <FUNCTION NAME="InOutCoeff">
@@ -370,10 +371,10 @@
   <!--       </FORCE> -->
   <!--   </FORCING> -->
   <FILTERS>
-<FILTER TYPE="Checkpoint">
-      <PARAM NAME="OutputFrequency">NumSteps/100</PARAM>
-      <PARAM NAME="OutputStartTime">50.0</PARAM>
-    </FILTER>
+<!-- <FILTER TYPE="Checkpoint"> -->
+<!--       <PARAM NAME="OutputFrequency">NumSteps/100</PARAM> -->
+<!--       <PARAM NAME="OutputStartTime">50.0</PARAM> -->
+<!--     </FILTER> -->
 
     <FILTER TYPE="Error">
       <PARAM NAME="OutputFile">EnergyError</PARAM>
@@ -430,6 +431,26 @@
     484 0.5 0
     509 0.5 0
     534 0.5 0
+    559 0.5 0
+    584 0.5 0
+    609 0.5 0
+    634 0.5 0
+    659 0.5 0
+    684 0.5 0
+    709 0.5 0
+    734 0.5 0
+    759 0.5 0
+    784 0.5 0
+    809 0.5 0
+    834 0.5 0
+    859 0.5 0
+    884 0.5 0
+    909 0.5 0
+    934 0.5 0
+    959 0.5 0
+    984 0.5 0
+    1009 0.5 0
+    1034 0.5 0
       </PARAM>
     </FILTER>
   </FILTERS>

@@ -15,9 +15,10 @@ def read_vtu(file_path: str) -> Tuple[vtkUnstructuredGrid, float, float]:
     reader.Update()
 
     # exctract the number X and Y of the file which ends with path/to/file/mesh_d4_w16.35_83.vtu
-    file_path = file_path.split("/")[-1]
-    d = float(file_path.split("_")[1][1:])
-    w = float(file_path.split("_")[2][1:])
+    file_path = file_path.split("/")[-2]
+    print(colors.OKBLUE + f"Extracting parameters from file name: {file_path}" + colors.ENDC)
+    d = float(file_path.split("_")[0][1:])
+    w = float(file_path.split("_")[1][1:])
 
     return reader.GetOutput(), d, w
 

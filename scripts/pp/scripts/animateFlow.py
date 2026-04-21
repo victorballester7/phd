@@ -163,10 +163,10 @@ def create_gif_with_timing(clipped_meshes, times, output_path, clim=(-0.035, 0.0
 
 
 def main():
-    d = 2.5
-    w = 23
+    d = 4
+    w = 15
     codename = f"d{d}_w{w}"
-    typeOfRun = "comGapRe1000Ma0.2"
+    typeOfRun = "comGapRe1000Ma0.05"
     script_path = os.path.dirname(os.path.abspath(__file__))
     directory = os.path.expanduser(
         f"~/hosts/hpc/PhD/runs/{typeOfRun}/baseflow/dns/{codename}/"
@@ -176,7 +176,7 @@ def main():
     meshes, times = load_data(directory)
     
     # Clip meshes
-    bound = Bounds(0, w + 150, -d, 20, -1e-6, 1e-6)
+    bound = Bounds(-w, w + 150, -d, 20, -1e-6, 1e-6)
     clipped_meshes = clip_mesh(meshes, bound)
 
     # Create GIF with timing proportional to simulation time

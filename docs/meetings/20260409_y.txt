@@ -1,0 +1,2 @@
+- check difference between deltaN_jeff and ours
+- check BFS for longer domain, and consistency in results

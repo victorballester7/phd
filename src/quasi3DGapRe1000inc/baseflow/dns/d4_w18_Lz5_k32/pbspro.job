@@ -1,0 +1,11 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=128:mpiprocs=128:mem=64gb
+#PBS -l walltime=23:59:59
+#PBS -N d4w18M0
+#PBS -e log.job
+#PBS -o output.job
+
+# the elements are divided into 128 / nfourier cpus and on each of these groups, the fourier expansion is computed in parallel (using nfourier cpus)
+nfourier=4
+
+source $HOME/Desktop/PhD/scripts/pbspro.sh

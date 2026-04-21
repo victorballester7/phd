@@ -3,7 +3,7 @@
 #SBATCH --ntasks=56
 #SBATCH --mem=50GB
 #SBATCH --time=2-23:59:59
-#SBATCH --job-name=d2_w70
+#SBATCH --job-name=d2w70M0
 #SBATCH --partition=long
 #SBATCH --output=output.txt
 #SBATCH --error=log.txt

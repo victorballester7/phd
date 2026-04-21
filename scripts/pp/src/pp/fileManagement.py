@@ -22,11 +22,16 @@ def extract_width_depth(filenameFolder: str) -> Tuple[float, float]:
         depth = float(match.group(1))
         width = float(match.group(2))
     if not match:
-        print(
-            colors.WARNING
-            + f"Could not extract width from filename: {filenameFolder}. Returning default values : depth = {depth}, width = {width}"
-            + colors.ENDC
-        )
+        match = re.search(r"d(\d+(?:\.\d+)?)", filenameFolder)
+        if match:
+            depth = float(match.group(1))
+            width = 0
+        else:
+            print(
+                colors.WARNING
+                + f"Could not extract width from filename: {filenameFolder}. Returning default values : depth = {depth}, width = {width}"
+                + colors.ENDC
+            )
     return float(depth), float(width)
 
 
@@ -347,7 +352,7 @@ def readFieldsBySection(dataFile: str) -> Tuple[np.ndarray, np.ndarray, np.ndarr
     return xvals, yvals, data
 
 
-def extractValueXML(filename: str, param: str) -> float:
+def extractValueXML(filename: str, param: str) -> str:
     """
     Extracts the numerical value of a parameter from an XML file, specifically
     for parameters like <P> or <p> where the parameter is defined as:
@@ -371,6 +376,7 @@ def extractValueXML(filename: str, param: str) -> float:
                 param_name, value = m.groups()
                 if param_name == param:
                     # Return the value as float (it should be convertible to float)
+                    return value.strip()
                     try:
                         return float(value.strip())
                     except ValueError:

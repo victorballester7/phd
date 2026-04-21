@@ -5,7 +5,8 @@ import pandas as pd
 
 MARKERS = ["o", "s", "^", "P", "*", "X", "h", "8"]
 
-runs = ["inc2d", "Ma0.2_2d", "Ma0.4_2d", "Ma0.6_2d", "Ma0.8_2d"]
+runs = ["inc2dRe1000"]
+# runs = ["inc2dRe1000", "inc2dRe2000", "Ma0.4Re1000_2d", "Ma0.6Re1000_2d", "Ma0.8Re1000_2d"]
 
 depth_same_color = True
 

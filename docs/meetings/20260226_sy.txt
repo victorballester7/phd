@@ -1,0 +1,2 @@
+- add some noise to baseflow very small and see which mode is growing the firsts (2d or 3d).
+- compare Arnoldi with incNS to verify EVs. Add small noise in all the domain and see what is nektar doing at the end of the arnoldi iteration.

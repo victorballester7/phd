@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <GEOMETRY DIM="2" SPACE="2" PARTITION="2">
+        <VERTEX COMPRESSED="B64Z-LittleEndian" BITSIZE="64">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</VERTEX>
+        <EDGE COMPRESSED="B64Z-LittleEndian" BITSIZE="64">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</EDGE>
+        <ELEMENT>
+            <T COMPRESSED="B64Z-LittleEndian" BITSIZE="64">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</T>
+            <Q COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJxdlld3VVUURh0++bD31qFGEXvv9cGhovTee+8lnfTegCS0UMSGRhEUsSKKgiIlvZICCSQByz9w+B98uHM9fDsvc3zzrnXOODfnfuc03JL4e+PWBN+Eb8HXYSNzY8hvw3eivSbmxpLHwfHRXjNzE8gT4aRor4W5yeQpcGq018rcNPJ0OCPaa2NuJnkWnB3ttTM3hzwXzov2OpibT14AF0Z7ncwtIi+GS6K9LuaWkpfB5dFeN3MryCvhqmjvMnOryWvg2mivh7l15PVwQ7TXy9xG8ia4OdrrY24LORmmRHv9zKWS02B6tHeFuQxyJtwa7V1lLoucDXOivQHmcsl5MD/aG2SugFwIi6K9a8wVk0tgabR3nbkycjmsiPaGmKskV8Ft0d4wc9vJO2B1tDfCXA25Fu6M9m4wt4u8G+6J9m4yt5dcB/dFe38yt598AB6M9v5i7l3yIfhetPc3c++TP4AfRnv/MPcR+TD8ONq7y/F5Ep/DT5J0/m6nvh5+mqTnT3LqP4NHkvR67nHqP4dHoX0/9zr1x+AX0L7vUU79l/A4tP/ffU79V/AEtPthtFP/NfwG2v11v1P/LfwO2v36gFP/PfwB2v3/oFN/Ev4I7ff0kFN/Cv4E7ff5sFP/MzwN7ff+iFP/C/wVWn886tSfgWeh9dFjTv1v8Hdo/fa4U38O/gGtL59w6s/DC9D690mn/iK8BK3Pn3LqG2AjtOfD0059E2yG9rx5xqlvga3Qnl/POvVtsB3a8/A5p74DdkJ7vj7v1HfBbmjP6xec+suwB9rz/0Wnvhf2QXufeMmp74dXoL2fvOzUX4UD0N53XnHqB+E1aO9Przr11+EQtPex15z6YTgC7f0u2bM3KsGxcBy0Pkzx6sfDCdD6MNWrnwgnQevDNK9+MpwCrQ/TvfqpcBq0Pszw6qfDGdD6MNOrnwlnQevDrV79bDgHWh9mefVz4TxofZjt1c+HC6D1YY5XvxAugtaHuV79YrgEWh/mefVL4TJofZjv1S+HK6D1YYFXvxKugtaHhV79argGWh8WefVr4TpofVjs1a+HG6D1YYlXvxFugtaHpV79ZrgFWh+WefXJMAVaH5Z79akwDVofVnj16TADWh9WevWZcCu0Pqzy6rNgNrQ+3ObV58BcaH243avPg/nQ+nCHV18AC6H1YbVXXwSLofVhjVdfAkuh9WGtV18Gy6H14U6vvgJWQuvD8yHBrNEJHrojwWyy9eGFoD6FuRyy9eHFoL7+9gRzydaHl4L6Ixwvj2x92BDU1zGXT7Y+bAzqT3LeArL1YVNQf4bjFZKtD5uD+nrmisjWhy1B/VnOW0y2PmwN6k9zvBKy9WFbUH+YuVKy9WF7UH+euTKy9WFHUH+MuXKy9WFnUH+O66ggWx92BfWXOF4l2fqwO6g/xVwV2frwclDfxXm3ka0Pe4L6Vo63nWx92BvUH2duB9n6sC+o7+G81WTrw/6gfpjj1ZCtD68E9R3M1ZKtD68G9SOcdyfZ+nAgqO/meLvI1oeDQf0J5naTrQ+vBfX5tyW4h2x9eD2oP3pngnvJ1odDQf0A560jWx8OB/X/cb37yNaHI0H9vxxvP9n68EZQ38/cAbL14c2gfgzXcZBsffg/LFVp5QAA</Q>
+        </ELEMENT>
+        <COMPOSITE>
+            <C ID="4"> E[568,571,574,577,580,583,586,589,592,595,598,601,604,607,610,613,616,619,622,625,628,631,634,637,640,643,646,649,652,655,658,661] </C>
+            <C ID="100"> Q[189-220] </C>
+            <C ID="101"> Q[3091-3122,3430-3461,3769-3800] </C>
+            <C ID="102"> T[610,619,636,656,659-660,662,703,716,752,768,786,791,810,813,821,826,849,868,872,877,900,902,922,925,930,941,949,967,1006,1034,1049,1063,1072,1076,1078,1087,1093,1096,1102,1127,1138,1149,1163,1170,1173,1176,1185,1200,1202,1227,1229,1238,1266,1275,1288,1298,1306,1344,1350,1368,1370,1377,1384,1390,1416,1427,1435,1451,1472,1483,1491,1513,1517,1529,1531,1579-1580,1590-1591,1595,1608,1627,1642,1651,1676,1679,1684,1732,1745,1752,1756,1824,1830,1833-1834,1840-1841,1845,1854,1894,1900,1912,1914,1916-1921,1925-1927,1929-1930,1932-1934,1936-1937,1939,1947,2028,2039,2045,2104,2124,2127,2131,2154-2155,2157,2176-2177,2193,2219,2221,2261,2285,2304,2331,2338,2346,2348,2362,2366,2374,2390,2397-2398,2416,2418,2507,2515,2517,2521,2523-2524,2528,2530-2531,2536-2538,2542,2544-2548,2550-2551,2553,2555-2558,2560,2572,2580,2667,2672,2674,2687,2690,2695,2722,2726-2727,2758,2761,2764,2773,2779,2788,2793,2814,2816,2836,2839,2883,2915,2933,2962] </C>
+        </COMPOSITE>
+        <DOMAIN>
+            <D ID="0"> C[100] </D>
+            <D ID="1"> C[101] </D>
+            <D ID="2"> C[102] </D>
+        </DOMAIN>
+    </GEOMETRY>
+    <CONDITIONS>
+        <SOLVERINFO>
+            <I PROPERTY="SolverType" VALUE="VelocityCorrectionScheme" />
+            <I PROPERTY="EqType" VALUE="UnsteadyNavierStokes" />
+            <I PROPERTY="Projection" VALUE="Galerkin" />
+            <I PROPERTY="EvolutionOperator" VALUE="Nonlinear" />
+            <I PROPERTY="SpectralVanishingViscosity" VALUE="DGKernel" />
+            <I PROPERTY="SPECTRALHPDEALIASING" VALUE="True" />
+            <I PROPERTY="GlobalSysSoln" VALUE="XxtMultiLevelStaticCond" />
+        </SOLVERINFO>
+        <TIMEINTEGRATIONSCHEME>
+            <METHOD>IMEX</METHOD>
+            <ORDER>2</ORDER>
+        </TIMEINTEGRATIONSCHEME>
+        <PARAMETERS>
+            <!--General parameters-->
+            <P>TimeStep = 0.007</P>
+            <P>NumSteps = 5e3</P>
+            <P>IO_InfoSteps = NumSteps/100</P>
+            <P>IO_CFLSteps = IO_InfoSteps</P>
+            <P>HistorySteps = 0.5/TimeStep</P>
+            <P>D0 = 1</P>
+            <!-- the value to 1/D0 is the velocity convection scale on the outflow !-->
+            <P>SVVDiffCoeff = 1.0</P>
+            <P>SVVCutoffRatio = 0.75</P>
+            <!-- Parameters for the simulation -->
+            <!-- To understand the formulas in the parameters, please refer to the file docs/20250414_Blasius_formulas.md -->
+            <!-- CHANGE THIS BEFORE RUNNING THE SIMULATION -->
+            <!-- it has to match the definition of x0 (negated) in the .geo file -->
+            <!-- ........................................... -->
+            <!-- ........................................... -->
+            <!-- ........................................... -->
+            <p>lengthBeforeGap = -100</p>
+            <!-- in terms of deltaStar_leadingEdge !-->
+            <!-- ........................................... -->
+            <!-- ........................................... -->
+            <!-- ........................................... -->
+            <p>C = 1.7207876575205</p>
+            <!-- number from wiki !-->
+            <p>Uinf = 1</p>
+            <p>deltaStar_le = 1</p>
+            <P>Re_deltaStar_le = 1000</P>
+            <!-- Reynolds number based on deltaStar_leadingEdge !-->
+            <P>deltaStar_BC = sqrt(1+lengthBeforeGap*C^2/Re_deltaStar_le)</P>
+            <P>Kinvis = Uinf*deltaStar_le/Re_deltaStar_le</P>
+            <p>Vinf = 0.5*Uinf*C/(Re_deltaStar_le * deltaStar_BC)</p>
+            <P>etaMax = 9.84</P>
+            <!-- based on python plotting script. It fits better than etaMax=10, the endpoint of the simulation, both for u and v !-->
+            <P>y2eta = C/deltaStar_BC</P>
+            <P>yMax = etaMax/y2eta</P>
+            <!--[m]-->
+            <p>a1_u = 0.33263899291846005</p>
+            <p>a2_u = 8830.512069032215</p>
+            <p>a3_u = 58.97366593890366</p>
+            <p>a4_u = 615.0518197268191</p>
+            <p>a5_u = 32.12385528953152</p>
+            <p>a6_u = -17.16678907227338</p>
+            <p>a7_u = 11.02175978217767</p>
+            <p>a8_u = -1.9645118354438575</p>
+            <p>a9_u = 0.5010442307141161</p>
+            <p>a10_u = -0.0645796009748346</p>
+            <p>a11_u = 0.006179765415827125</p>
+            <p>b1_u = 26593.41072503167</p>
+            <p>b2_u = 176.8055649980844</p>
+            <p>b3_u = 1855.7665505833227</p>
+            <p>b4_u = 272.5391794254054</p>
+            <p>b5_u = -39.221863541559394</p>
+            <p>b6_u = 36.24230326537252</p>
+            <p>b7_u = -0.07795052580215707</p>
+            <p>b8_u = -0.8421866779902756</p>
+            <p>b9_u = 0.44410766209840075</p>
+            <p>b10_u = -0.06341415789453857</p>
+            <p>b11_u = 0.006179765415827125</p>
+            <p>a1_v = -1.9959025216159896e-05</p>
+            <p>a2_v = 0.16695529626584846</p>
+            <p>a3_v = -0.575204509312059</p>
+            <p>a4_v = -0.4341004660550698</p>
+            <p>a5_v = 299.3706050451578</p>
+            <p>a6_v = -93.83786038348894</p>
+            <p>a7_v = 16.266365937513303</p>
+            <p>a8_v = -1.8990540751356129</p>
+            <p>a9_v = 0.33729889822536685</p>
+            <p>a10_v = -0.04383523593037588</p>
+            <p>a11_v = 0.0034080097149121807</p>
+            <p>b1_v = -3.380409827085182</p>
+            <p>b2_v = -3.1753939961101696</p>
+            <p>b3_v = 1805.0761851180248</p>
+            <p>b4_v = -569.1055835320207</p>
+            <p>b5_v = 102.77873382853763</p>
+            <p>b6_v = 4.5614994586104824</p>
+            <p>b7_v = -2.027219234693251</p>
+            <p>b8_v = -0.01875987489840645</p>
+            <p>b9_v = 0.1441683101478324</p>
+            <p>b10_v = -0.024466672927746642</p>
+            <p>b11_v = 0.0019804940487676533</p>
+        </PARAMETERS>
+        <VARIABLES>
+            <V ID="0">u</V>
+            <V ID="1">v</V>
+            <V ID="2">p</V>
+        </VARIABLES>
+        <BOUNDARYREGIONS>
+            <B ID="3">C[4]</B>
+        </BOUNDARYREGIONS>
+        <BOUNDARYCONDITIONS>
+            <REGION REF="3">
+                <!-- bottom = wall no slip !-->
+                <D VAR="u" VALUE="0" />
+                <D VAR="v" VALUE="0" />
+                <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />
+            </REGION>
+        </BOUNDARYCONDITIONS>
+        <FUNCTION NAME="InitialConditions">
+            <F VAR="u,v,p" FILE="baseflow.fld" />
+        </FUNCTION>
+    </CONDITIONS>
+    <COLLECTIONS>
+        <OPERATOR TYPE="BwdTrans">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="Helmholtz">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="LinearAdvectionDiffusionReaction">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="IProductWRTBase">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="IProductWRTDerivBase">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="SumFac" />
+        </OPERATOR>
+        <OPERATOR TYPE="PhysDeriv">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+        <OPERATOR TYPE="PhysInterp1DScaled">
+            <ELEMENT TYPE="T" ORDER="*" IMPTYPE="MatrixFree" />
+            <ELEMENT TYPE="Q" ORDER="*" IMPTYPE="MatrixFree" />
+        </OPERATOR>
+    </COLLECTIONS>
+    <Metadata>
+        <Provenance>
+            <GitBranch>refs/heads/ModifiedArnoldi/NonLinearOperator</GitBranch>
+            <GitSHA1>ce46ed6285bae0486c566f1682e88b94d3f1078d</GitSHA1>
+            <Hostname>carnotaurus</Hostname>
+            <NektarVersion>5.9.0</NektarVersion>
+            <Timestamp>06-Mar-2026 11:29:18</Timestamp>
+        </Provenance>
+        <NekMeshCommandLine>/home/victor/Desktop/PhD/src/incGapRe1000/baseflow/ssSolver/d4_w15/mesh.msh mesh.xml</NekMeshCommandLine>
+    </Metadata>
+    <EXPANSIONS>
+        <E COMPOSITE="C[100,101,102]" NUMMODES="6" FIELDS="u,v" TYPE="MODIFIED" />
+        <E COMPOSITE="C[100,101,102]" NUMMODES="5" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
+    </EXPANSIONS>
+    <FILTERS>
+        <FILTER TYPE="Error">
+            <PARAM NAME="OutputFile">EnergyError</PARAM>
+            <PARAM NAME="OutputFrequency">HistorySteps</PARAM>
+            <PARAM NAME="ConsoleOutput">0</PARAM>
+        </FILTER>
+        <FILTER TYPE="HistoryPoints">
+            <PARAM NAME="OutputFile">HistoryPoints</PARAM>
+            <PARAM NAME="OutputFrequency">HistorySteps</PARAM>
+            <PARAM NAME="Points">-100 0.5 0 -75 0.5 0 -50 0.5 0 -35 0.5 0 -25 0.5 0 -15 0.5 0 -10 0.5 0 -5 0.5 0 0 0.5 0 5 0.5 0 5 -2.00000000000000000000 0 10 0.5 0 10 -2.00000000000000000000 0 15 0.5 0 19 0.5 0 24 0.5 0 29 0.5 0 34 0.5 0 44 0.5 0 54 0.5 0 69 0.5 0 94 0.5 0 119 0.5 0 144 0.5 0 169 0.5 0 194 0.5 0 219 0.5 0 244 0.5 0 269 0.5 0 294 0.5 0 319 0.5 0 344 0.5 0 369 0.5 0 394 0.5 0 419 0.5 0 444 0.5 0 469 0.5 0 494 0.5 0 519 0.5 0 544 0.5 0 569 0.5 0 594 0.5 0 619 0.5 0 644 0.5 0 669 0.5 0 694 0.5 0 719 0.5 0 744 0.5 0 769 0.5 0 794 0.5 0 819 0.5 0 844 0.5 0 869 0.5 0 894 0.5 0 919 0.5 0 944 0.5 0 969 0.5 0 994 0.5 0</PARAM>
+        </FILTER>
+    </FILTERS>
+</NEKTAR>

@@ -16,7 +16,7 @@ def main():
         uinf=1.0,
         rhoinf=1.0,
         re_deltaStar=1000,
-        mainf=0.4,
+        mainf=0.05,
         pr=0.72,
         tinf=1.0,
         tref_inf=225.0,  # Tref in Kelvin for the Sutherland law

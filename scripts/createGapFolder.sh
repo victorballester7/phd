@@ -45,6 +45,25 @@ function readInput {
 
   # Default folder name if user didn’t provide one
   codename="d${depth}_w${width}"
+
+  # Check if parent directory name contains "3D"
+  parent_dir="$PWD"
+
+  if [[ "$parent_dir" == *3D* ]] && ! grep -q "SingleMode" session.xml; then
+      # Extract LZ and HomModesZ from session file
+      LZ=$(grep '<P>' $session_file | grep 'LZ' | cut -d '=' -f2 | cut -d '<' -f1 | tr -d ' ')
+      HomModesZ=$(grep '<P>' $session_file | grep 'HomModesZ' | cut -d '=' -f2 | cut -d '<' -f1 | tr -d ' ')
+
+      # if Lz is of the form x*depthGap, extract x and multiply by depth
+      if [[ "$LZ" == *"*"* ]]; then
+        multiplier=$(echo "$LZ" | cut -d '*' -f1)
+        LZ=$(echo "$multiplier * $depth" | bc -l)
+      fi
+
+      # Append to codename
+      codename="${codename}_Lz${LZ}_k${HomModesZ}"
+  fi
+    
   if [ -z "$folder_name" ]; then
     folder_name="$codename"
   fi

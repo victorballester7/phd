@@ -1,0 +1,2 @@
+- check 3d growth rate by adding 3d eigenmode a small noise into the baseflow.
+- on the case d1.5_w70, start with either one of the modes and see how the system evolves to the limit cycle.

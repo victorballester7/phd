@@ -1,0 +1,89 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,decorations.markings,backgrounds}
+\usetikzlibrary{arrows.meta}
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{compat=1.18}
+
+\def\image{tstransition_d1.5w80_nomesh.png}
+% \def\image{tstransition_d1.5w80_mesh.png}
+
+\def\scale{0.8}
+\pgfplotsset{colormap/RdBu}
+
+\begin{document}
+\begin{tikzpicture}
+	\begin{scope}[xshift=0cm, yshift=0.275cm]
+		\draw[black, line width=0.2pt]
+			(-6.05,-0.68) -- (-5.09,-0.6) -- (-5.09,-0.73) -- (0.215,-0.22) -- (0.215,-0.13) -- (6.05,0.39);
+
+			% add these coordinates + shift  (xshift=-0.12cm, yshift=0.085cm]
+)
+			% (-5.92,-0.67) -- (-5.09,-0.6) -- (-5.09,-0.73) -- (0.13,-0.25) -- (0.13,-0.18) -- (6.15,0.35);
+		\draw[black, line width=0.2pt]
+			(-6.04, -0.585) -- (-5.21,-0.515) -- (-5.21,-0.645) -- (0.01,-0.17) -- (0.01,-0.08) -- (6.04,0.43);
+		\draw[black, line width=0.2pt]
+			(-5.09,-0.73) -- (-5.21,-0.645);
+		\draw[black, line width=0.2pt]
+			(0.01,-0.17) -- (0.215,-0.22);
+	\end{scope}
+
+	% \begin{scope}[xshift=-0.12cm, yshift=0.085cm]
+	% 	\draw[black, line width=0.2pt]
+	% 		(-5.92,-0.67) -- (-5.09,-0.6) -- (-5.09,-0.73) -- (0.13,-0.25) -- (0.13,-0.18) -- (6.15,0.35);
+	% \end{scope}
+
+	% import .png figure
+	\node[inner sep=0pt] (gap) at (0,0)
+    {\includegraphics[width=\textwidth, trim=0 0 0 20cm, clip]{\image}};
+
+	% -----------------------------
+	% Manual orientation axes (upper-left corner)
+	% -----------------------------
+	\begin{scope}[xshift=-5.5cm, yshift=-2.3cm, scale=\scale]
+		% Projected 2D directions (calculated from ParaView camera)
+		% These are normalized and scaled for visualization
+
+    % X-axis: red
+    \draw[-{Stealth[length=2mm]}, red!80, line width=1.5pt]
+        (0,0) -- (0.762, 0.033) node[right] {$x$};
+    
+    % Y-axis: green
+    \draw[-{Stealth[length=2mm]}, green!60!black, line width=1.5pt]
+        (0,0) -- (0.040, 0.994) node[above left] {$y$};
+    
+    % Z-axis: blue
+    \draw[-{Stealth[length=2mm]}, blue!80, line width=1.5pt]
+        (0,0) -- (0.647, -0.100) node[below right] {$z$};
+	\end{scope}
+
+
+
+	\begin{scope}[xshift=0cm, yshift=-1.5cm, scale=\scale]
+		\pgfplotscolorbardrawstandalone[
+			colormap={example}{
+					indices of colormap=(10, 9,8 ,7,6,5,4,3,2,1,0 of RdBu), % inversion of RdBu -> BuRd
+				},
+			point meta min=-0.11,
+			point meta max=0.11,
+			colorbar horizontal,
+			samples=5,
+			scaled x ticks=false,
+			colorbar style={
+					xtick={-0.11,-0.055,...,0.11},
+					xticklabel style={
+							/pgf/number format/fixed,
+							/pgf/number format/precision=3,
+						},
+					xlabel={$v$},
+					xlabel style={at={(0.5,-1.8em)}, 	anchor=north},
+					anchor=center,
+					width=5cm,
+					height=0.4cm,
+				},
+		]
+	\end{scope}
+\end{tikzpicture}
+\end{document}

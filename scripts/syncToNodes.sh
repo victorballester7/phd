@@ -53,3 +53,5 @@ for HOST in "${HOSTS[@]}"; do
     fi
 done
 
+CFDcourseDIR="$HOME/Desktop/CFDcourse26/src"
+rsync -avz --progress "${EXCLUSIONS[@]}" "$CFDcourseDIR/" "$REMOTE_USER@hpc:~/Desktop/CFDcourse26/runs"

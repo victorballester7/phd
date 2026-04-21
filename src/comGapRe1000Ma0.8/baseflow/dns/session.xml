@@ -32,15 +32,15 @@
         </TIMEINTEGRATIONSCHEME>
 
     <PARAMETERS>
-      <!--General parameters-->
-      <P> CFL             = 0.01 </P>
-      <P> CFLGrowth       = 1.1 </P>
-      <P> CFLEnd          = 0.8 </P>
+        <P> TimeStep       = 0.006     </P>
+        <!-- <P> CFL             = 0.01 </P> -->
+        <!-- <P> CFLGrowth       = 1.1 </P> -->
+        <!-- <P> CFLEnd          = 0.8 </P> -->
       <P> NumSteps        = 4000e3     </P>
       <P> IO_InfoSteps    = NumSteps/2000       </P> 
       <P> IO_CheckSteps   = NumSteps/100         </P>
       <P> IO_CFLSteps     = IO_InfoSteps         </P>
-      <P> HistorySteps    = NumSteps/16000 </P>
+      <P> HistorySteps    = 0.5/TimeStep </P>
 
       <P> widthGap        = 10 </P> <!-- in terms of deltaStar_leadingEdge !-->
 

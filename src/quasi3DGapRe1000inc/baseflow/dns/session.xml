@@ -40,7 +40,7 @@
 
       <!-- Parameters for the quasi-3d simulation -->
       <P> depthGap       = 4                  </P> 
-      <P> LZ             = 5                   </P> 
+      <P> LZ             = 4*depthGap                   </P> 
       <P> HomModesZ      = 32                 </P>
 
       <!-- Parameters for the simulation -->

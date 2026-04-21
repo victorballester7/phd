@@ -1,0 +1,105 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{patterns,decorations.markings,backgrounds}
+\usetikzlibrary{arrows.meta}
+
+% change font for specific paper
+\usepackage{newtxtext,newtxmath}
+
+\def\a{-20}
+\def\d{4}
+\def\w{15}
+\def\b{55}
+\def\scale{0.2}
+\def\eps{0.5}
+\def\wall{0.5}
+\def\h{20}
+
+\def\aa{\a*\scale}
+\def\dd{\d*\scale}
+\def\ww{\w*\scale}
+\def\bb{\b*\scale}
+\def\hh{\h*\scale}
+
+% first value (numerator) is the size of the pdf figure in cm, you can get it by execting
+% pdfinfo main.pdf | awk '/Page size/{printf "%.2f cm\n", $3/72*2.54}'
+
+% second value (denominator) is the size of the figure in cm when included in the paper, i.e. thje width in \indcludegraphics[width=XXXXX]{...}
+
+\def\tikzfontscale{20.53/7.85} 
+
+\begin{document}
+\begin{tikzpicture}
+
+% Wall
+\draw[ultra thick] (\aa,0) -- (0,0) -- (0,-\dd) -- (\ww,-\dd) -- (\ww,0) -- (\bb,0);
+
+\def\lengthWall{0.5}
+\foreach \x in {-3.5,-3,...,0,3.5,4,...,11} {
+    \draw[thick] (\x,0) -- ++(225:\lengthWall); % Wall hatching
+}
+\foreach \x in {0,0.5,...,3} {
+    \draw[thick] (\x,-\dd) -- ++(225:\lengthWall); % Wall hatching
+}
+\draw[thick] (0,-\dd/2) -- ++(225:\lengthWall); % Wall hatching
+
+% BL Profile (velocity profile)
+\def\BLxshift{-2cm}
+\draw [black, very thick, xshift=\BLxshift] plot [smooth, tension=0.5] coordinates { (-2,0) (-1.8,0.075) (-1.6,0.15) (-1.4, 0.225) (-1.2, 0.3) (-1.07,0.37) (-1,0.5) (-1, 1) (-1,1.25) (-1,1.5)};
+\draw [black, very thick, xshift=\BLxshift] (-2,0) -- (-2,1.5); % Left vertical line of BL profile
+\draw [-Latex, very thick, xshift=\BLxshift] (-2,1.5) -- (-1,1.5); % Arrow at the top of BL profile
+\draw [-Latex, very thick, xshift=\BLxshift] (-2,1.1125) -- (-1,1.125); % Arrow at the middle of BL profile
+\draw [-Latex, very thick, xshift=\BLxshift] (-2,0.75) -- (-1,0.75); % Arrow at the bottom of BL profile
+\draw [-Latex, very thick, xshift=\BLxshift] (-2,0.375) -- (-1.09,0.375); % Arrow at the bottom of BL profile
+
+
+% axis orientation
+\def\lengthAxis{0.5}
+\def\xLocAxis{0}
+\def\yLocAxis{0.5}
+\draw[-Stealth, very thick,scale=\tikzfontscale,font=\small] (\xLocAxis, \yLocAxis) -- ++(0, \lengthAxis) node[above, anchor=east,scale=\tikzfontscale,font=\small] {$y$}; % y-axis
+\draw[-Stealth, very thick,scale=\tikzfontscale,font=\small] (\xLocAxis, \yLocAxis) -- ++(\lengthAxis, 0) node[below, anchor=north,scale=\tikzfontscale,font=\small] {$x$}; % x-axis
+
+% width and depth of the domain
+\node[scale=\tikzfontscale,font=\small] (width) at (\ww/2,-\dd/2) {$w$};
+% \draw[-Stealth,very thick] (\aa,\hh) -- (\bb,\hh); % Top boundary line
+\draw[Stealth-, thick] (0.1,-\dd/2) -- (width.west);
+\draw[-Stealth, thick] (width.east) -- (\ww-0.1,-\dd/2); % Width arrow
+
+\node[scale=\tikzfontscale,font=\small] (depth) at (\ww+1, -\dd) {$d$};
+\draw[-Stealth,thick] (\ww+0.5,\dd) -- (\ww+0.5,0.1); % Depth arrow
+\draw[Stealth-, thick] (\ww+0.5,-\dd) -- (\ww+0.5,-\dd-0.5); % Depth arrow
+
+
+\def\deps{1}
+% height of the domain
+\node[scale=\tikzfontscale,font=\small] (height) at (\bb+0.75,\hh/2) {$h$};
+\draw[-Stealth,thick] (height.south) -- (\bb+0.75,0);
+\draw[Stealth-, thick] (\bb+0.75,\hh) -- (height.north); 
+
+% ell_i
+\node[scale=\tikzfontscale,font=\small] (ell1) at (\aa/2,-\dd-\deps) {$\ell_\text{i}$};
+\draw[-Stealth,thick] (ell1.east) -- (0,-\dd-\deps); % Left boundary line
+\draw[Stealth-, thick] (\aa,-\dd-\deps) -- (ell1.west); % Left boundary line
+
+% ell_o
+\node[scale=\tikzfontscale,font=\small] (ell2) at (\ww/2 + \bb/2,-\dd-\deps) {$\ell_\text{o}$};
+\draw[-Stealth,thick] (ell2.east) -- (\bb,-\dd-\deps); % Right boundary line
+\draw[Stealth-,thick] (\ww,-\dd-\deps) -- (ell2.west); % Right boundary line
+
+% Upper region
+\draw[dotted,very thick] (\aa,\hh) -- (\bb,\hh); % Top boundary line
+\draw[dotted,very thick] (\aa,0) -- (\aa,\hh); % Left boundary line
+\draw[dotted,very thick] (\bb,0) -- (\bb,\hh); % Right boundary line
+
+% Labels
+\node[scale=\tikzfontscale,font=\small] (W) at (7,-0.8) {Wall};
+\node[scale=\tikzfontscale,font=\small, anchor=east] (BL) at (\aa,\hh/2) {BL profile};
+\node[scale=\tikzfontscale,font=\small,anchor=north] at (BL.south) {$\mathbf{u}=\mathbf{u}_\text{BL}(y)$};
+\node[scale=\tikzfontscale,font=\small,anchor=west] at (W.east) {$\mathbf{u}=\mathbf{0}$};
+\node[scale=\tikzfontscale,font=\small,anchor=north] at ({(\bb+\aa)/2},\hh) {$\mathbf{u}=\mathbf{u}_\infty(x)$};
+\node[scale=\tikzfontscale,font=\small,anchor=east] at (\bb,\hh/2)  {$\partial_\mathbf{n}\mathbf{u}=\mathbf{h}(\mathbf{u}_\text{out})$};
+
+\end{tikzpicture}
+\end{document}

@@ -51,7 +51,18 @@ def parseArgs() -> argparse.Namespace:
         action="store_true",
         help="Use logarithmic plotting (default: False).",
     )
+
+    parser.add_argument(
+        "--growthrate",
+        action="store_true",
+        help="Compute the growth rate and frequency from the data (default: False).",
+    )
     
+    parser.add_argument(
+        "--meanmode",
+        action="store_true",
+        help="Include the mean mode (k=0) in the comparison (default: False).",
+    )
 
     # fft and dynamicalSystem are incompatible together
     group = parser.add_mutually_exclusive_group()

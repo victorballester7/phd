@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <Metadata>
+        <Provenance>
+            <GitBranch>refs/heads/ModifiedArnoldi/NonLinearOperator</GitBranch>
+            <GitSHA1>ce46ed6285bae0486c566f1682e88b94d3f1078d</GitSHA1>
+            <Hostname>carnotaurus</Hostname>
+            <NektarVersion>5.9.0</NektarVersion>
+            <Timestamp>11-Mar-2026 19:04:10</Timestamp>
+        </Provenance>
+        <ChkFileNum>0</ChkFileNum>
+        <Kinvis>0.01</Kinvis>
+        <SessionName0>Channel.xml</SessionName0>
+        <Time>0</Time>
+        <TimeStep>0.0040000000000000001</TimeStep>
+    </Metadata>
+    <ELEMENTS FIELDS="u,v,p" SHAPE="Quadrilateral" BASIS="Modified_A,Modified_A" NUMMODESPERDIR="UNIORDER:9,9" ID="0-10,13-15,32-34,37-47,11-12,16-31,35-36" COMPRESSED="B64Z-LittleEndian" BITSIZE="64">eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4MmyPAAEA</ELEMENTS>
+</NEKTAR>

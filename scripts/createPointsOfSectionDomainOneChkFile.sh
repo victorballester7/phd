@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Description
 # 1. generate a .pts file with N points in a line for multiple x values
 # 2. This file is then sent to the nodes, which uses fieldconvert of a .fld file to interpolate the field to the points in the .pts file.
@@ -13,42 +12,100 @@ YELLOW="\e[33m"
 CYAN="\e[36m"
 RESET="\e[0m"
 
-constVar="x" #constVar="x"
-# constValue=(-5.2 -4.333333333333334 -3.4666666666666677 -2.6000000000000014 -1.7333333333333352 -0.8666666666666689 -2.6645352591003757e-15 0.8666666666666636 1.7333333333333298 2.599999999999996 3.4666666666666623 4.333333333333328 5.199999999999995 6.066666666666662 6.933333333333327 7.799999999999993 8.66666666666666 9.533333333333328 10.399999999999991 11.266666666666659 12.133333333333326 12.999999999999993 13.866666666666656 14.733333333333324 15.59999999999999 16.466666666666658 17.333333333333325 18.19999999999999 19.066666666666656 19.933333333333323 20.799999999999986 21.666666666666654 22.53333333333332 23.399999999999988 24.266666666666655 25.13333333333332 25.999999999999986 26.86666666666665 27.733333333333317 28.599999999999984 29.46666666666665 30.333333333333318 31.199999999999985) #constValue=(-100 -75)
-constValue=(200)
-varValueMIN=0 #varValueMIN=0
-varValueMAX=150 #varValueMAX=30
-N=100 #N=800
+# Get user input
+# X=(15 20 50 100 150 200 250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000)
+# X=(-70 -50 -25 0 20 50 100 150 200 250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000)
 
+constVar="x"
+# constValue=(-70 -50 -25 0 20 50 100 150 200 250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000)
+# constValue=(-71 -69 -61 -59 -51 -49 -41 -39 -31 -29 -21 -19 -11 -9 -1 1 9 11 19 21 29 31 39 41 49 51 59 61 69 71 79 81 89 91 99 101 149 151 199 201 249 251 299 301 349 351 399 401 449 451 499 501 549 551 599 601 649 651 699 701 749 751 799 801 849 851 899 901 949 951 999 1001)
+constValue=(-71 -70 -61 -60 -51 -50 -41 -40 -31 -30 -21 -20 -11 -10 -1 0 9 10 19 20 29 30 39 40 49 50 59 60 69 70 79 80 89 90 99 100 149 150 199 200 249 250 299 300 349 350 399 400 449 450 499 500 549 550 599 600 649 650 699 700 749 750 799 800 849 850 899 900 949 950 999 1000)
+constValue=seq()
+varValueMIN=0
+varValueMAX=150
+
+N=600
 datadir="data"
+
+# For remote access
+# HOST="typhoon"
 HOST="hpc"
-# CASE="d3_w26" #CASE="d1.5_w50" 
-CASE="flat"
-# DIR="incNSboeingGapRe1000/directLinearSolver/blowingSuction/${CASE}"
-# DIR="incNSboeingGapRe1000/baseflow/dns/d3_w26_stableIC" #DIR="flatSurfaceRe1000Ma0.6ComNS/dns"
-# DIR="flatSurfaceRe1000Ma0.6ComNS/dns_shortDomain"
-DIR="incGapRe1000/baseflow/dns/d3_w26_coarsecoarsecoarseMesh"
+
+# DIR="incNSboeingGapRe1000/directLinearSolver/blowingSuction/d1.5_w45/wgn"
+# MESH_REMOTE="mesh.xml"
+# FLD_REMOTE="baseflow.fld"
+
+CASE="d2_w24/omega0.08"
+# CASE="flat"
+# DIR="bfsRe1000inc/directLinearSolver/blowingSuction/${CASE}/"
+# DIR="deepGapRe1000inc/directLinearSolver/blowingSuction/${CASE}/"
+DIR="incGapRe1000/directLinearSolver/omegaBlowSuct/${CASE}/"
+# DIR="incGapRe1000/directLinearSolver/blowingSuction/${CASE}/"
+# DIR="flatSurfaceRe1000IncNS/directLinearSolver/blowingSuction/wgn"
 MESH_REMOTE="mesh.xml"
-FLD_REMOTE="mesh_99.chk" #FLD_REMOTE="mesh_${CASE}_13.chk"
-FLD_REMOTE_NOEXTENSION="${FLD_REMOTE%.*}"
+CHKFILE="avg"
+FLD_REMOTE="mesh_${CHKFILE}.fld"
 
-# automatic variables
+
+# do not edit
 USER="vb824"
-DIR_REMOTE_PRE="/rds/general/user/${USER}/home"
-DIR_REMOTE="${DIR_REMOTE_PRE}/Desktop/PhD/runs/${DIR}"
+if [ "$HOST" = "typhoon" ]; then
+    DIR_REMOTE_PRE="/home/${USER}"
+else
+    DIR_REMOTE_PRE="/rds/general/user/${USER}/home"
+fi
+DIR_REMOTE="Desktop/PhD/runs/${DIR}"
+DIR_REMOTE="${DIR_REMOTE_PRE}/${DIR_REMOTE}"
 DIR_LOCAL="${HOME}/Desktop/PhD/src/${DIR}"
-mkdir -p "${DIR_LOCAL}/${datadir}"
+overwrite_all=false
+skip_all=false
 
-generate_pts_file_for_chkfile() {
-    local output_file="${datadir}/points${FLD_REMOTE_NOEXTENSION}_n${N}"
-    local file_path="${DIR_LOCAL}/${output_file}.pts"
+function genPointsFile {
+    # Check if .dat file already exists
+    if [ -f "${DIR_LOCAL}/${output_file}.dat" ]; then
+        if [ "$skip_all" = true ]; then
+            return 1
+        fi
+        if [ "$overwrite_all" = false ]; then
+            while true; do
+                echo -e "${YELLOW}File '${output_file}.dat' already exists. Would you like to overwrite it? (y/n/Y (yes all)/N (no all)) (default = N)${RESET}"
+                read -n 1 -r choice
+                echo ""
+                choice=${choice:-N} # Default to 'A' if no input is given
 
+                case $choice in
+                    y)
+                        break
+                        ;;
+                    n) 
+                        return 1
+                        ;;
+                    Y)
+                        overwrite_all=true;
+                        break
+                        ;;
+                    N)
+                        skip_all=true;
+                        return 1
+                        ;;
+                    *)
+                    echo -e "${RED}Invalid option. Introduce 'y' (yes), 'n' (no), 'Y' (yes all) or 'N' (no all).${RESET}"
+                    ;;
+                esac
+            done
+        fi
+    fi
+
+    mkdir -p "${DIR_LOCAL}/${datadir}"
+    
+    # Create and write to the .pts file
     {
         echo '<?xml version="1.0" encoding="utf-8" ?>'
         echo '<NEKTAR>'
         echo '<POINTS DIM="2" FIELDS="">'
-
         for varA in "${constValue[@]}"; do
+            # print to stderr to distinguish from the points data in stdout    
+            echo -e "${YELLOW}Generating .pts file for ${constVar} = $varA...${RESET}" >&2
             for ((i = 0; i < N; i++)); do
                 step=$(echo "scale=6; $i / ($N - 1)" | bc)
                 varB=$(echo "scale=6; $varValueMIN + ($varValueMAX - $varValueMIN) * $step * $step" | bc)
@@ -61,53 +118,46 @@ generate_pts_file_for_chkfile() {
                 fi
                 printf "%.6f %.6f\n" "$x" "$y"
             done
-            echo -e "${CYAN}Generated points for constValue=${varA}${RESET}" >&2
         done
-
         echo '</POINTS>'
         echo '</NEKTAR>'
-    } > "$file_path"
+    } > "${DIR_LOCAL}/${output_file}.pts"
+    
+    echo -e "${GREEN}File '${output_file}'.pts generated successfully!${RESET}"
 
-    echo -e "${GREEN}Generated combined .pts file: ${output_file}.pts${RESET}"
+    return 0
 }
 
-# Create .pts file for first CHKFILE and then cp all the others to the rest CHKFILES
-generate_pts_file_for_chkfile
-
-echo -e "${GREEN}All .pts files generated for case ${CASE}!${RESET}"
-
-
-# Transfer all .pts files
-rsync -avz --progress "${DIR_LOCAL}/" "${USER}@${HOST}:${DIR_REMOTE}/"
-
-# Create array string for remote use
-constValue_str=$(printf "%s " "${constValue[@]}")
-
-# Do all interpolations remotely in one SSH session
-ssh "${USER}@${HOST}" /bin/bash << EOF
-    source /etc/profile
-    source ~/.bashrc  # Ensure modules are available
+function interpolateData {
+    echo -e "${CYAN}Interpolating field data to points...${RESET}"
     
-    # Try to load nektar++ module, continue if it fails
-    module load nektar++ || echo "Warning: Could not load nektar++ module, continuing anyway..."
-    
-    cd "${DIR_REMOTE}"
-    
-    # Convert string back to array
-    constValue_array=(${constValue_str})
-    
-    FLD="${FLD_REMOTE}"
-    output_file="${datadir}/points${FLD_REMOTE_NOEXTENSION}_n${N}"
-    echo "\${FLD}"
-    echo "\${output_file}.pts"
-    echo "Processing file ${FLD_REMOTE}..."
-    rm -f \${output_file}.dat
-    FieldConvert -m interppoints:fromxml=${MESH_REMOTE}:fromfld=\${FLD}:topts=\${output_file}.pts \${output_file}.dat
-    echo "Completed CHKFILE ${FLD_REMOTE} (case: ${CASE})"
+    ssh "${USER}@${HOST}" /bin/bash << EOF
+        cd "${DIR_REMOTE}"
+        mkdir -p "${datadir}"
 EOF
+    
+    scp -r "${DIR_LOCAL}/${output_file}.pts" "${USER}@${HOST}:${DIR_REMOTE}/$datadir"
+    
+    ssh "${USER}@${HOST}" /bin/bash << EOF
+        source /etc/profile
+        source ~/.bashrc  # Ensure modules are available
+        module load nektar++ # will prompt an error when we are in HPC, but doesn't matter
+        cd "${DIR_REMOTE}"
+        rm -rf ${datadir}/*.dat # remove old data to prevent not overwriting
+        FieldConvert -m interppoints:fromxml="${MESH_REMOTE}":fromfld="${FLD_REMOTE}":topts="${output_file}".pts ${output_file}.dat
+EOF
+    
+    scp "${USER}@${HOST}:${DIR_REMOTE}/${output_file}.dat" "${DIR_LOCAL}/$datadir"
+    echo -e "${GREEN}Field data interpolated to points successfully!${RESET}"
+}
 
-# Retrieve all .dat files
-rsync -avz --progress "${USER}@${HOST}:${DIR_REMOTE}/${datadir}/" "${DIR_LOCAL}/${datadir}/"
+# Create a directory to store all the data
+mkdir -p "${DIR_LOCAL}/${datadir}"
 
-echo -e "${GREEN}All interpolations completed and files retrieved for case ${CASE}!${RESET}"
+output_file="${datadir}/points${CHKFILE}_n${N}"
 
+genPointsFile 
+interpolateData
+echo -e "${GREEN}Completed interpolation for all x values!${RESET}"
+
+echo -e "${GREEN}All x values have been processed successfully!${RESET}"

@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -l select=1:ncpus=32:mpiprocs=32:mem=50gb
 #PBS -l walltime=23:59:59
-#PBS -N d3_w10
+#PBS -N d3w10M.8
 #PBS -e log.job
 #PBS -o output.job
 

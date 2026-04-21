@@ -33,7 +33,9 @@ function readInput {
   folder=$1
   
   localDIR_LS=$(pwd)
-  localDIR_baseflow="/home/victor/Desktop/PhD/src/incNSboeingGapRe1000/baseflow/dns/${folder}"
+  # localDIR_baseflow="/home/victor/Desktop/PhD/src/bfsRe1000inc/baseflow/dns/${folder}"
+  # localDIR_baseflow="/home/victor/Desktop/PhD/src/deepGapRe1000inc/baseflow/dns/${folder}"
+  localDIR_baseflow="/home/victor/Desktop/PhD/src/incGapRe1000/baseflow/dns/${folder}"
   
   localDIRtmp="${localDIR_LS##*/Desktop/}"
   localDIRtmp="Desktop/${localDIRtmp/src/runs}"
@@ -47,7 +49,7 @@ function readInput {
   cd "$localDIR_baseflow" || exit 1
 
   echo -e "${CYAN}Session file: $session_file${RESET}"
-  echo -e "${CYAN}Geo file: $geo_file${RESET}"
+  echo -e "${CYAN}Mesh file: $mesh_file${RESET}"
   echo -e "${CYAN}Folder: $folder${RESET}"
   echo -e "${CYAN}Local LS directory: $localDIR_LS${RESET}"
   echo -e "${CYAN}Local baseflow directory: $localDIR_baseflow${RESET}"
@@ -70,10 +72,11 @@ function modifyFile {
   cd "$folder" || exit 1
   cp "../$session_file" .
   cp "$localDIR_baseflow/$geo_file" .
+  cp "$localDIR_baseflow/$mesh_file" .
   cp "$localDIR_baseflow/pbspro.job" .
   cp "$localDIR_baseflow/slurm.job" .
 
-  updateTimeStepLS.sh
+  updateTimeStepLS
 
   ma=0
 
@@ -89,7 +92,7 @@ function modifyFile {
 
 }
 
-echo -e "${YELLOW} THIS SCRIPT SHOULD BE RUN FROM INSIDE THE LINEARSOLVER DIRECTORY (WHICH HAS TO CONTAIN A REFERENCE SESSION FILE. THE .GEO AND PBS FILES ARE TAKEN FROM THE BASEFLOW/DNS DIRERCTORY)\n ${RESET}"
+echo -e "${YELLOW} THIS SCRIPT SHOULD BE RUN FROM INSIDE THE LINEARSOLVER DIRECTORY (WHICH HAS TO CONTAIN A REFERENCE SESSION FILE. THE .GEO, .XML AND PBS FILES ARE TAKEN FROM THE BASEFLOW/DNS DIRERCTORY)\n ${RESET}"
 
 source $SCRIPTS_DIR/bashFunctions/getMeshSessionFiles.sh
 source $SCRIPTS_DIR/bashFunctions/createBaseflowFile.sh

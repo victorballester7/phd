@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NEKTAR>  
+  <EXPANSIONS>    
+    <E COMPOSITE="C[100,101,102]" NUMMODES="4" FIELDS="rho,rhou,rhov,E" TYPE="MODIFIED" />  
+  </EXPANSIONS>
+  
+  <CONDITIONS>    
+    <SOLVERINFO>
+      <I PROPERTY="EQType"                VALUE="NavierStokesImplicitCFE"/>  
+      <I PROPERTY="Projection"            VALUE="DisContinuous"          />
+      <I PROPERTY="AdvectionType"         VALUE="WeakDG"                 />
+      <I PROPERTY="DiffusionType"         VALUE="InteriorPenalty"        />
+      <I PROPERTY="UpwindType"            VALUE="Roe"                    />
+      <I PROPERTY="ViscosityType"         VALUE="Variable"               />
+      <I PROPERTY="EquationOfState"       VALUE="IdealGas"              />
+      <I PROPERTY="Driver"                VALUE="Standard"               />
+      <I PROPERTY="AdvectionAdvancement"  VALUE="Implicit"               />
+      <I PROPERTY="DiffusionAdvancement"  VALUE="Implicit"               />
+      <I PROPERTY="ProblemType"           VALUE="General"                />
+      <!--
+      <I PROPERTY="ShockCaptureType"      VALUE="Physical"               />
+      <I PROPERTY="Smoothing"             VALUE="C0"                     />
+      -->
+      <!--To avoid additional field output for now-->
+        <I PROPERTY="OutputExtraFields"     VALUE="False"               />
+      </SOLVERINFO>    
+
+          <TIMEINTEGRATIONSCHEME>
+              <METHOD> DIRK </METHOD>
+              <ORDER> 2 </ORDER>
+          </TIMEINTEGRATIONSCHEME>
+
+      <PARAMETERS>
+        <!--General parameters-->
+        <P> CFL             = 0.01 </P>
+        <P> CFLGrowth       = 1.1 </P>
+        <P> CFLEnd          = 3 </P>
+        <!-- <P> TimeStep       = 0.005    </P> -->
+        <P> NumSteps        = 4000e3     </P>
+        <P> IO_InfoSteps    = NumSteps/2000       </P> 
+        <P> IO_CheckSteps   = NumSteps/100         </P>
+        <P> IO_CFLSteps     = IO_InfoSteps         </P>
+        <P> HistorySteps    = NumSteps/32000 </P>
+
+        <P> widthGap        = 15 </P> <!-- in terms of deltaStar_leadingEdge !-->
+
+        <!-- Iteration parameters-->
+        <P> PreconMatFreezNumb        = 100               </P>
+        <P> NonlinIterTolRelativeL2   = 1.0e-2            </P>
+        <P> LinSysRelativeTolInNonlin = 1.0e-2            </P>  
+        <P> NewtonRelativeIteTol      = 1.0e-10           </P>    
+        <P> PreconItsStep             = 7                 </P>
+        <P> NekLinSysMaxIterations    = 100                </P>
+
+      <!-- Sponge -->
+        <P> uBulk                         = 1                                     </P>
+        <P> sponge_xmin                   = -100                              </P>
+        <P> sponge_xmax                   = widthGap + 200                                 </P>
+        <P> sponge_ymin                   = 50                                   </P>
+        <P> sponge_ymax                   = 75                                   </P>
+        <P> Amp                           = 50                                    </P>
+        <P> sigma                         = Amp*uBulk/(sponge_ymax - sponge_ymin)                 </P>
+
+        <!-- Parameters for the simulation -->
+        <!-- To understand the formulas in the parameters, please refer to the file docs/20250414_Blasius_formulas.md -->
+        <!-- CHANGE THIS BEFORE RUNNING THE SIMULATION -->
+        <!-- it has to match the definition of x0 (negated) in the .geo file -->
+        <!-- ........................................... -->
+        <!-- ........................................... -->
+        <!-- ........................................... -->
+        <p> lengthBeforeGap       = -100 </p> <!-- in terms of deltaStar_leadingEdge !-->
+        <!-- ........................................... -->
+        <!-- ........................................... -->
+        <!-- ........................................... -->
+      
+        <p> C               = 1.7210672912939096 </p> 
+        <p> Ma              = 0.05 </p> <!-- REMEBER CHANGING BLASIUS PROFILE IF CHANGING THIS !-->
+        <p> Pr              = 0.72 </p> <!-- around 0.71 and 0.72 for air !-->
+        <p> Gamma           = 1.4 </p>
+        <p> Tref            = 225.0 </p> <!-- [K], reference temperature for Sutherland's law !-->
+        <p> etaMax          = 10.98925 </p>
+        <p> yMax            = 5.356781138357935 </p>
+
+        <p> uInf                  = 1                   </p>
+        <p> deltaStar_le          = 1  </p> 
+        <P> Re_deltaStar_le       = 1000       </P> <!-- Reynolds number based on deltaStar_leadingEdge !-->
+        <P> deltaStar_BC          = sqrt(1+lengthBeforeGap*C^2/Re_deltaStar_le) </P> 
+        <p> vInf                  = 0.5*uInf*C/(Re_deltaStar_le * deltaStar_BC) </p> 
+        <!-- Flow parameters -->  
+        <P> rhoInf                = 1.0                       </P>
+        <P> TInf                  = 1.0                       </P> 
+        <P> cInf                  = uInf/Ma                   </P>
+        <P> GasConstant           = cInf^2/(Gamma * TInf)     </P>
+        <P> pInf                  = rhoInf*GasConstant*TInf   </P>
+        <P> mu                    = rhoInf*uInf*deltaStar_le/Re_deltaStar_le </P>
+        <P> Twall                 = TInf                      </P>
+
+        <P> rhouInf              = rhoInf*uInf                </P>
+        <P> rhovInf              = rhoInf*vInf                </P>
+        <P> E0Inf                = pInf/(Gamma-1) </P>
+        <P> E1Inf                = 0.5 * rhoInf*uInf^2                      </P>
+        <P> E2Inf                = 0.5 * rhoInf*vInf^2                      </P>
+
+      <p> a0_y2eta = 2.051518607128204 </p>
+      <p> a1_y2eta = 5.0875365447284145e-05 </p>
+      <p> b1_y2eta = 0.3576291457279117 </p>
+      <p> a2_y2eta = -0.000334989526961346 </p>
+      <p> b2_y2eta = 0.8933595974050312 </p>
+      <p> a1_rho = 5.267902593857544 </p>
+      <p> a2_rho = 4.297621555757295 </p>
+      <p> a3_rho = 38.1839482115489 </p>
+      <p> a4_rho = 29.374448020841772 </p>
+      <p> a5_rho = 16.140862896471337 </p>
+      <p> a6_rho = 0.028435499533869053 </p>
+      <p> a7_rho = 0.07189188646872299 </p>
+      <p> a8_rho = 0.5513188873892325 </p>
+      <p> a9_rho = -0.05920935481669614 </p>
+      <p> a10_rho = 0.003409284297810702 </p>
+      <p> a11_rho = 0.0019012343320502646 </p>
+      <p> b1_rho = 5.268028248495031 </p>
+      <p> b2_rho = 4.298233949738067 </p>
+      <p> b3_rho = 38.1843365241791 </p>
+      <p> b4_rho = 29.378872358080127 </p>
+      <p> b5_rho = 16.143312527654153 </p>
+      <p> b6_rho = 0.029117795962097563 </p>
+      <p> b7_rho = 0.07118398038039574 </p>
+      <p> b8_rho = 0.5514608454356676 </p>
+      <p> b9_rho = -0.05922073087520615 </p>
+      <p> b10_rho = 0.0034096129664063514 </p>
+      <p> b11_rho = 0.0019012343320502646 </p>
+      <p> a1_rhou = 0.33653659199057484 </p>
+      <p> a2_rhou = 33769.75157839032 </p>
+      <p> a3_rhou = 93.8224797150257 </p>
+      <p> a4_rhou = 57.72668309992857 </p>
+      <p> a5_rhou = 187.0018760904086 </p>
+      <p> a6_rhou = 0.3864815445543221 </p>
+      <p> a7_rhou = 9.676705136304445 </p>
+      <p> a8_rhou = -2.5416926755037377 </p>
+      <p> a9_rhou = 0.8969292445089548 </p>
+      <p> a10_rhou = -0.12982081022613937 </p>
+      <p> a11_rhou = 0.01179365940688251 </p>
+      <p> b1_rhou = 101699.66300300237 </p>
+      <p> b2_rhou = 290.45504584293315 </p>
+      <p> b3_rhou = 184.5691902031356 </p>
+      <p> b4_rhou = 1236.5186247960946 </p>
+      <p> b5_rhou = 40.966653149935276 </p>
+      <p> b6_rhou = 0.2827179887878773 </p>
+      <p> b7_rhou = 10.62990143970927 </p>
+      <p> b8_rhou = -2.577030416141902 </p>
+      <p> b9_rhou = 0.8951017756801114 </p>
+      <p> b10_rhou = -0.12972192645275274 </p>
+      <p> b11_rhou = 0.01179365940688251 </p>
+      <p> a2_rhov = 0.16455548735238598 </p>
+      <p> a3_rhov = -22.834873169710182 </p>
+      <p> a4_rhov = -4.469453006672431 </p>
+      <p> a5_rhov = 5.524702233961156 </p>
+      <p> a6_rhov = 97.36116817758167 </p>
+      <p> a7_rhov = -35.87413708466972 </p>
+      <p> a8_rhov = 8.553204308585874 </p>
+      <p> a9_rhov = -1.5666539585803163 </p>
+      <p> a10_rhov = 0.27516838674412186 </p>
+      <p> a11_rhov = -0.031247953701622533 </p>
+      <p> a12_rhov = 0.0019690670878020067 </p>
+      <p> b1_rhov = -137.70595900014968 </p>
+      <p> b2_rhov = -25.75442856827148 </p>
+      <p> b3_rhov = 29.042186921614597 </p>
+      <p> b4_rhov = 594.0154018821939 </p>
+      <p> b5_rhov = -228.902779539411 </p>
+      <p> b6_rhov = 63.545468815366306 </p>
+      <p> b7_rhov = -10.462077225285283 </p>
+      <p> b8_rhov = 2.6531299646978628 </p>
+      <p> b9_rhov = -0.6861364305484078 </p>
+      <p> b10_rhov = 0.14925561612940794 </p>
+      <p> b11_rhov = -0.017954219038291534 </p>
+      <p> b12_rhov = 0.0011440965136939238 </p>
+      <p> a1_E1 = -0.01320759523895991 </p>
+      <p> a2_E1 = 0.508616469745154 </p>
+      <p> a3_E1 = 8410.533515563577 </p>
+      <p> a4_E1 = 188.205958923628 </p>
+      <p> a5_E1 = 32.1646240172704 </p>
+      <p> a6_E1 = -141.7638634725604 </p>
+      <p> a7_E1 = 80.4882855722629 </p>
+      <p> a8_E1 = -19.38635926561991 </p>
+      <p> a9_E1 = 3.4116227948884648 </p>
+      <p> a10_E1 = -0.3643580941886628 </p>
+      <p> a11_E1 = 0.022197980553959485 </p>
+      <p> b1_E1 = 76310.2913229588 </p>
+      <p> b2_E1 = 1588.354672839259 </p>
+      <p> b3_E1 = 571.0247838782703 </p>
+      <p> b4_E1 = -618.6776005359881 </p>
+      <p> b5_E1 = 1105.7619673149898 </p>
+      <p> b6_E1 = -389.6721637622613 </p>
+      <p> b7_E1 = 108.56702044148295 </p>
+      <p> b8_E1 = -21.134016054678003 </p>
+      <p> b9_E1 = 3.4687784484637403 </p>
+      <p> b10_E1 = -0.3651223237966001 </p>
+      <p> b11_E1 = 0.022197980553959485 </p>
+      <p> a2_E2 = 0.0052609151953187565 </p>
+      <p> a3_E2 = -0.1892709299038851 </p>
+      <p> a4_E2 = 2.395016419379069 </p>
+      <p> a5_E2 = -13.64187623404348 </p>
+      <p> a6_E2 = 29.766393352137133 </p>
+      <p> a7_E2 = 2.188548881577553 </p>
+      <p> a8_E2 = 137.28514568356957 </p>
+      <p> a9_E2 = -73.40564214840711 </p>
+      <p> a10_E2 = 18.28072907053737 </p>
+      <p> a11_E2 = -2.279961702989211 </p>
+      <p> a12_E2 = 0.12869617994769778 </p>
+      <p> b1_E2 = -3.358313478691709 </p>
+      <p> b2_E2 = -375.4595963204411 </p>
+      <p> b3_E2 = 2502.943536468629 </p>
+      <p> b4_E2 = 2624.070791492041 </p>
+      <p> b5_E2 = -1384.7636005627492 </p>
+      <p> b6_E2 = 441.8717271553476 </p>
+      <p> b7_E2 = -127.27452724358858 </p>
+      <p> b8_E2 = 71.6345107467773 </p>
+      <p> b9_E2 = -27.555091156421632 </p>
+      <p> b10_E2 = 6.326252168786686 </p>
+      <p> b11_E2 = -0.7731616498196279 </p>
+      <p> b12_E2 = 0.04344801644235914 </p>
+    </PARAMETERS>
+
+    <VARIABLES>
+      <V ID="0"> rho  </V>
+      <V ID="1"> rhou </V>
+      <V ID="2"> rhov </V>
+      <V ID="3"> E    </V>
+    </VARIABLES>
+     
+    <BOUNDARYREGIONS>
+      <B ID="0"> C[1] </B>    <!-- inlet !-->  
+      <B ID="1"> C[2] </B>    <!-- outlet !-->
+      <B ID="2"> C[3] </B>    <!-- top !-->
+      <B ID="3"> C[4] </B>    <!-- bottom + left & right gap walls !-->
+    </BOUNDARYREGIONS>    
+
+    <BOUNDARYCONDITIONS>
+      <REGION REF="0">  <!-- inlet !-->
+        <D VAR="rho" VALUE="rhoInf * ( 
+                   (
+                     (1 + a1_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + a2_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + a3_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + a4_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + a5_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + a6_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + a7_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + a8_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + a9_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + a10_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + a11_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11) / 
+                     (1 + b1_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + b2_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + b3_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + b4_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + b5_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + b6_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + b7_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + b8_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + b9_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + b10_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + b11_rho*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11)
+                   ) * (y<yMax) + 
+                   (
+                     (1 + a1_rho*etaMax^1 + a2_rho*etaMax^2 + a3_rho*etaMax^3 + a4_rho*etaMax^4 + a5_rho*etaMax^5 + a6_rho*etaMax^6 + a7_rho*etaMax^7 + a8_rho*etaMax^8 + a9_rho*etaMax^9 + a10_rho*etaMax^10 + a11_rho*etaMax^11) / 
+                     (1 + b1_rho*etaMax^1 + b2_rho*etaMax^2 + b3_rho*etaMax^3 + b4_rho*etaMax^4 + b5_rho*etaMax^5 + b6_rho*etaMax^6 + b7_rho*etaMax^7 + b8_rho*etaMax^8 + b9_rho*etaMax^9 + b10_rho*etaMax^10 + b11_rho*etaMax^11)
+                   ) * (y>=yMax))" />
+        <D VAR="rhou" VALUE="rhouInf * ( 
+                   (
+                     (a1_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + a2_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + a3_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + a4_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + a5_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + a6_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + a7_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + a8_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + a9_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + a10_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + a11_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11) / 
+                     (1 + b1_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + b2_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + b3_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + b4_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + b5_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + b6_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + b7_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + b8_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + b9_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + b10_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + b11_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11)
+                   ) * (y<yMax) + 
+                   (
+                     (a1_rhou*etaMax^1 + a2_rhou*etaMax^2 + a3_rhou*etaMax^3 + a4_rhou*etaMax^4 + a5_rhou*etaMax^5 + a6_rhou*etaMax^6 + a7_rhou*etaMax^7 + a8_rhou*etaMax^8 + a9_rhou*etaMax^9 + a10_rhou*etaMax^10 + a11_rhou*etaMax^11) / 
+                     (1 + b1_rhou*etaMax^1 + b2_rhou*etaMax^2 + b3_rhou*etaMax^3 + b4_rhou*etaMax^4 + b5_rhou*etaMax^5 + b6_rhou*etaMax^6 + b7_rhou*etaMax^7 + b8_rhou*etaMax^8 + b9_rhou*etaMax^9 + b10_rhou*etaMax^10 + b11_rhou*etaMax^11)
+                   ) * (y>=yMax))" />
+        <D VAR="rhov" VALUE="rhovInf * ( 
+                   (
+                     (a2_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + a3_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + a4_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + a5_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + a6_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + a7_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + a8_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + a9_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + a10_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + a11_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11 + a12_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^12) / 
+                     (1 + b1_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + b2_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + b3_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + b4_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + b5_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + b6_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + b7_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + b8_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + b9_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + b10_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + b11_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11 + b12_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^12)
+                   ) * (y<yMax) + 
+                   (
+                     (a2_rhov*etaMax^2 + a3_rhov*etaMax^3 + a4_rhov*etaMax^4 + a5_rhov*etaMax^5 + a6_rhov*etaMax^6 + a7_rhov*etaMax^7 + a8_rhov*etaMax^8 + a9_rhov*etaMax^9 + a10_rhov*etaMax^10 + a11_rhov*etaMax^11 + a12_rhov*etaMax^12) / 
+                     (1 + b1_rhov*etaMax^1 + b2_rhov*etaMax^2 + b3_rhov*etaMax^3 + b4_rhov*etaMax^4 + b5_rhov*etaMax^5 + b6_rhov*etaMax^6 + b7_rhov*etaMax^7 + b8_rhov*etaMax^8 + b9_rhov*etaMax^9 + b10_rhov*etaMax^10 + b11_rhov*etaMax^11 + b12_rhov*etaMax^12)
+                   ) * (y>=yMax))" />
+        <D VAR="E" VALUE="E0Inf + E1Inf * (
+                   (
+                     (a1_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + a2_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + a3_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + a4_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + a5_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + a6_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + a7_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + a8_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + a9_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + a10_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + a11_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11) / 
+                     (1 + b1_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + b2_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + b3_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + b4_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + b5_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + b6_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + b7_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + b8_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + b9_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + b10_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + b11_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11)
+                   ) * (y<yMax) + 
+                   (
+                     (a1_E1*etaMax^1 + a2_E1*etaMax^2 + a3_E1*etaMax^3 + a4_E1*etaMax^4 + a5_E1*etaMax^5 + a6_E1*etaMax^6 + a7_E1*etaMax^7 + a8_E1*etaMax^8 + a9_E1*etaMax^9 + a10_E1*etaMax^10 + a11_E1*etaMax^11) / 
+                     (1 + b1_E1*etaMax^1 + b2_E1*etaMax^2 + b3_E1*etaMax^3 + b4_E1*etaMax^4 + b5_E1*etaMax^5 + b6_E1*etaMax^6 + b7_E1*etaMax^7 + b8_E1*etaMax^8 + b9_E1*etaMax^9 + b10_E1*etaMax^10 + b11_E1*etaMax^11)
+                   ) * (y>=yMax)) + E2Inf * (
+                   (
+                     (a2_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + a3_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + a4_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + a5_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + a6_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + a7_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + a8_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + a9_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + a10_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + a11_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11 + a12_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^12) / 
+                     (1 + b1_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + b2_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + b3_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + b4_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + b5_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + b6_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + b7_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + b8_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + b9_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + b10_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + b11_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11 + b12_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^12)
+                   ) * (y<yMax) + 
+                   (
+                     (a2_E2*etaMax^2 + a3_E2*etaMax^3 + a4_E2*etaMax^4 + a5_E2*etaMax^5 + a6_E2*etaMax^6 + a7_E2*etaMax^7 + a8_E2*etaMax^8 + a9_E2*etaMax^9 + a10_E2*etaMax^10 + a11_E2*etaMax^11 + a12_E2*etaMax^12) / 
+                     (1 + b1_E2*etaMax^1 + b2_E2*etaMax^2 + b3_E2*etaMax^3 + b4_E2*etaMax^4 + b5_E2*etaMax^5 + b6_E2*etaMax^6 + b7_E2*etaMax^7 + b8_E2*etaMax^8 + b9_E2*etaMax^9 + b10_E2*etaMax^10 + b11_E2*etaMax^11 + b12_E2*etaMax^12)
+                   ) * (y>=yMax))" />
+      </REGION>
+
+      <REGION REF="1">  <!-- outlet !-->            
+        <D VAR="rho"  USERDEFINEDTYPE="PressureOutflow" VALUE="0" />
+        <D VAR="rhou" USERDEFINEDTYPE="PressureOutflow" VALUE="0" />
+        <D VAR="rhov" USERDEFINEDTYPE="PressureOutflow" VALUE="0" />
+        <D VAR="E"    USERDEFINEDTYPE="PressureOutflow" VALUE="pInf" />
+      </REGION>
+            
+      <REGION REF="2">   <!-- top = far-field !-->
+        <!-- I do it like that in order to avoid discontinuities in the velocity field at the top boundary, the error is of the order of 10^-7 for u and 10^-10 for v ! -->
+        <D VAR="rho" VALUE="rhoInf" />
+        <D VAR="rhou" VALUE="rhoInf*uInf" />
+        <D VAR="rhov" VALUE="rhoInf*0.5*uInf*C^2/(Re_deltaStar_le * sqrt(1+x*C^2/Re_deltaStar_le))" />
+        <D VAR="E" VALUE="pInf/(Gamma-1) + 0.5*rhoInf*uInf^2*(1 + 0.25*C^4/(Re_deltaStar_le^2 * (1+x*C^2/Re_deltaStar_le)))" />
+      </REGION>
+
+      <REGION REF="3">  <!-- bottom = wall no slip !-->  
+        <D VAR="rho"  USERDEFINEDTYPE="WallViscous" VALUE="0" />
+        <D VAR="rhou" USERDEFINEDTYPE="WallViscous" VALUE="0" />
+        <D VAR="rhov" USERDEFINEDTYPE="WallViscous" VALUE="0" />        
+        <D VAR="E"    USERDEFINEDTYPE="WallViscous" VALUE="0" />
+      </REGION>    
+    </BOUNDARYCONDITIONS>
+
+<!-- <FUNCTION NAME="InitialConditions"> -->
+<!--       <F VAR="rho, rhou, rhov, E" FILE="mesh_d3_w21_10.chk" /> -->
+<!--     </FUNCTION> -->
+               
+               <FUNCTION NAME="InitialConditions">
+    <E VAR="rho" VALUE="rhoInf" />
+    <E VAR="rhou" VALUE="rhouInf * (y>0) *  ( 
+                   (
+                     (a1_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + a2_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + a3_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + a4_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + a5_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + a6_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + a7_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + a8_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + a9_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + a10_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + a11_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11) / 
+                     (1 + b1_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + b2_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + b3_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + b4_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + b5_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + b6_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + b7_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + b8_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + b9_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + b10_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + b11_rhou*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11)
+                   ) * (y<yMax) + 
+                   (
+                     (a1_rhou*etaMax^1 + a2_rhou*etaMax^2 + a3_rhou*etaMax^3 + a4_rhou*etaMax^4 + a5_rhou*etaMax^5 + a6_rhou*etaMax^6 + a7_rhou*etaMax^7 + a8_rhou*etaMax^8 + a9_rhou*etaMax^9 + a10_rhou*etaMax^10 + a11_rhou*etaMax^11) / 
+                     (1 + b1_rhou*etaMax^1 + b2_rhou*etaMax^2 + b3_rhou*etaMax^3 + b4_rhou*etaMax^4 + b5_rhou*etaMax^5 + b6_rhou*etaMax^6 + b7_rhou*etaMax^7 + b8_rhou*etaMax^8 + b9_rhou*etaMax^9 + b10_rhou*etaMax^10 + b11_rhou*etaMax^11)
+                   ) * (y>=yMax))" />
+      <E VAR="rhov" VALUE="rhouInf * 0.5 * C / (Re_deltaStar_le * sqrt(1+x*C^2/Re_deltaStar_le)) * (y>0)* (
+                   (
+                     (a2_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + a3_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + a4_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + a5_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + a6_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + a7_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + a8_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + a9_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + a10_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + a11_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11 + a12_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^12) / 
+                     (1 + b1_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + b2_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + b3_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + b4_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + b5_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + b6_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + b7_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + b8_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + b9_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + b10_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + b11_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11 + b12_rhov*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^12)
+                   ) * (y<yMax) + 
+                   (
+                     (a2_rhov*etaMax^2 + a3_rhov*etaMax^3 + a4_rhov*etaMax^4 + a5_rhov*etaMax^5 + a6_rhov*etaMax^6 + a7_rhov*etaMax^7 + a8_rhov*etaMax^8 + a9_rhov*etaMax^9 + a10_rhov*etaMax^10 + a11_rhov*etaMax^11 + a12_rhov*etaMax^12) / 
+                     (1 + b1_rhov*etaMax^1 + b2_rhov*etaMax^2 + b3_rhov*etaMax^3 + b4_rhov*etaMax^4 + b5_rhov*etaMax^5 + b6_rhov*etaMax^6 + b7_rhov*etaMax^7 + b8_rhov*etaMax^8 + b9_rhov*etaMax^9 + b10_rhov*etaMax^10 + b11_rhov*etaMax^11 + b12_rhov*etaMax^12)
+                   ) * (y>=yMax))" />
+      <E VAR="E" VALUE="E0Inf + E1Inf *(y>0) * (
+                   (
+                     (a1_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + a2_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + a3_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + a4_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + a5_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + a6_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + a7_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + a8_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + a9_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + a10_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + a11_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11) / 
+                     (1 + b1_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + b2_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + b3_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + b4_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + b5_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + b6_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + b7_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + b8_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + b9_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + b10_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + b11_E1*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11)
+                   ) * (y<yMax) + 
+                   (
+                     (a1_E1*etaMax^1 + a2_E1*etaMax^2 + a3_E1*etaMax^3 + a4_E1*etaMax^4 + a5_E1*etaMax^5 + a6_E1*etaMax^6 + a7_E1*etaMax^7 + a8_E1*etaMax^8 + a9_E1*etaMax^9 + a10_E1*etaMax^10 + a11_E1*etaMax^11) / 
+                     (1 + b1_E1*etaMax^1 + b2_E1*etaMax^2 + b3_E1*etaMax^3 + b4_E1*etaMax^4 + b5_E1*etaMax^5 + b6_E1*etaMax^6 + b7_E1*etaMax^7 + b8_E1*etaMax^8 + b9_E1*etaMax^9 + b10_E1*etaMax^10 + b11_E1*etaMax^11)
+                   ) * (y>=yMax)) + 0.125 * rhoInf * uInf^2 * C^2 / (Re_deltaStar_le^2 *(1+x*C^2/Re_deltaStar_le)) * (y>0) * (
+                   (
+                     (a2_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + a3_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + a4_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + a5_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + a6_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + a7_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + a8_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + a9_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + a10_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + a11_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11 + a12_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^12) / 
+                     (1 + b1_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^1 + b2_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^2 + b3_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^3 + b4_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^4 + b5_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^5 + b6_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^6 + b7_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^7 + b8_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^8 + b9_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^9 + b10_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^10 + b11_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^11 + b12_E2*(a0_y2eta * y + a1_y2eta * tanh(b1_y2eta * y) + a2_y2eta * tanh(b2_y2eta * y)^2)^12)
+                   ) * (y<yMax) + 
+                   (
+                     (a2_E2*etaMax^2 + a3_E2*etaMax^3 + a4_E2*etaMax^4 + a5_E2*etaMax^5 + a6_E2*etaMax^6 + a7_E2*etaMax^7 + a8_E2*etaMax^8 + a9_E2*etaMax^9 + a10_E2*etaMax^10 + a11_E2*etaMax^11 + a12_E2*etaMax^12) / 
+                     (1 + b1_E2*etaMax^1 + b2_E2*etaMax^2 + b3_E2*etaMax^3 + b4_E2*etaMax^4 + b5_E2*etaMax^5 + b6_E2*etaMax^6 + b7_E2*etaMax^7 + b8_E2*etaMax^8 + b9_E2*etaMax^9 + b10_E2*etaMax^10 + b11_E2*etaMax^11 + b12_E2*etaMax^12)
+                   ) * (y>=yMax))" />
+    </FUNCTION>   
+
+    <!-- <FUNCTION NAME="ExactSolution"> -->
+    <!--     <F VAR="rho,rhou,rhov,E" FILE="../../timeAverageSSSolver/d3_w10/mesh_d3_w10_14_avg.fld" /> -->
+    <!--   </FUNCTION> -->
+
+    <!--   <FUNCTION NAME="RefSol"> -->
+    <!--       <F VAR="rho,rhou,rhov,E" FILE="../../timeAverageSSSolver/d3_w10/mesh_d3_w10_14_avg.fld" /> -->
+    <!--   </FUNCTION> -->
+
+    <!-- Sponge coeff: -->
+    <FUNCTION NAME="InOutCoeff">
+         <E VAR="rho"  VALUE="-sigma*(x>sponge_xmin)*(x<sponge_xmax)*((y>sponge_ymin)*(y<sponge_ymax)*(6*((y-sponge_ymin)/(sponge_ymax-sponge_ymin))^5 - 15*((y-sponge_ymin)/(sponge_ymin-sponge_ymax))^4 + 10*((y-sponge_ymin)/(sponge_ymax-sponge_ymin))^3) + (y>sponge_ymax))" />
+         <E VAR="rhou"  VALUE="-sigma*(x>sponge_xmin)*(x<sponge_xmax)*((y>sponge_ymin)*(y<sponge_ymax)*(6*((y-sponge_ymin)/(sponge_ymax-sponge_ymin))^5 - 15*((y-sponge_ymin)/(sponge_ymin-sponge_ymax))^4 + 10*((y-sponge_ymin)/(sponge_ymax-sponge_ymin))^3) + (y>sponge_ymax))" />
+         <E VAR="rhov"  VALUE="-sigma*(x>sponge_xmin)*(x<sponge_xmax)*((y>sponge_ymin)*(y<sponge_ymax)*(6*((y-sponge_ymin)/(sponge_ymax-sponge_ymin))^5 - 15*((y-sponge_ymin)/(sponge_ymin-sponge_ymax))^4 + 10*((y-sponge_ymin)/(sponge_ymax-sponge_ymin))^3) + (y>sponge_ymax))" />
+         <E VAR="E"  VALUE="-sigma*(x>sponge_xmin)*(x<sponge_xmax)*((y>sponge_ymin)*(y<sponge_ymax)*(6*((y-sponge_ymin)/(sponge_ymax-sponge_ymin))^5 - 15*((y-sponge_ymin)/(sponge_ymin-sponge_ymax))^4 + 10*((y-sponge_ymin)/(sponge_ymax-sponge_ymin))^3) + (y>sponge_ymax))" />
+    </FUNCTION>
+
+ </CONDITIONS>
+  <!-- <FORCING> -->
+  <!--       <FORCE TYPE="Absorption"> -->
+  <!--           <REFFLOW> RefSol </REFFLOW> -->
+  <!--           <COEFF> InOutCoeff </COEFF> -->
+  <!--       </FORCE> -->
+  <!--   </FORCING> -->
+  <FILTERS>
+<!-- <FILTER TYPE="Checkpoint"> -->
+<!--       <PARAM NAME="OutputFrequency">NumSteps/100</PARAM> -->
+<!--       <PARAM NAME="OutputStartTime">50.0</PARAM> -->
+<!--     </FILTER> -->
+
+    <FILTER TYPE="Error">
+      <PARAM NAME="OutputFile">EnergyError</PARAM>
+      <PARAM NAME="OutputFrequency">HistorySteps</PARAM>
+      <PARAM NAME="ConsoleOutput">0</PARAM>
+    </FILTER>
+    <FILTER TYPE="HistoryPoints">
+      <PARAM NAME="OutputFile">HistoryPoints</PARAM>
+      <PARAM NAME="OutputFrequency">HistorySteps</PARAM>
+      <PARAM NAME="Points">
+    -100 0.5 0
+    -75 0.5 0
+    -50 0.5 0
+    -35 0.5 0
+    -25 0.5 0
+    -15 0.5 0
+    -10 0.5 0
+    -5 0.5 0
+    0 0.5 0
+    3.75000000000000000000 0.5 0
+    3.75000000000000000000 -2.00000000000000000000 0
+    7.50000000000000000000 0.5 0
+    7.50000000000000000000 -2.00000000000000000000 0
+    11.25000000000000000000 0.5 0
+    11.25000000000000000000 -2.00000000000000000000 0
+    15 0.5 0
+    20 0.5 0
+    25 0.5 0
+    30 0.5 0
+    40 0.5 0
+    50 0.5 0
+    65 0.5 0
+    90 0.5 0
+    115 0.5 0
+    140 0.5 0
+    165 0.5 0
+    190 0.5 0
+    215 0.5 0
+    240 0.5 0
+    265 0.5 0
+    290 0.5 0
+    315 0.5 0
+    340 0.5 0
+    365 0.5 0
+    390 0.5 0
+    415 0.5 0
+    440 0.5 0
+    465 0.5 0
+    490 0.5 0
+    515 0.5 0
+    540 0.5 0
+    565 0.5 0
+    590 0.5 0
+    615 0.5 0
+    640 0.5 0
+    665 0.5 0
+    690 0.5 0
+    715 0.5 0
+    740 0.5 0
+    765 0.5 0
+    790 0.5 0
+    815 0.5 0
+    840 0.5 0
+    865 0.5 0
+    890 0.5 0
+    915 0.5 0
+    940 0.5 0
+    965 0.5 0
+    990 0.5 0
+    1015 0.5 0
+      </PARAM>
+    </FILTER>
+  </FILTERS>
+
+</NEKTAR>
+

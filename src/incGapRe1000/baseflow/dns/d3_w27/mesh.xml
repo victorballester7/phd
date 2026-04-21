@@ -28,9 +28,9 @@
             <GitSHA1>3cd3e06fdb2608368c3a2895bbc425c4aac0077e</GitSHA1>
             <Hostname>carnotaurus</Hostname>
             <NektarVersion>5.7.0</NektarVersion>
-            <Timestamp>30-Sep-2025 11:43:18</Timestamp>
+            <Timestamp>29-Sep-2025 10:08:55</Timestamp>
         </Provenance>
-        <NekMeshCommandLine>/home/victor/Desktop/PhD/src/incNSboeingGapRe1000/baseflow/dns/d3_w27/mesh_d3_w27.msh mesh_d3_w27.xml </NekMeshCommandLine>
+        <NekMeshCommandLine>/home/victor/Desktop/PhD/src/incNSboeingGapRe1000/baseflow/ssSolver/d3_w27/mesh_d3_w27.msh mesh_d3_w27.xml </NekMeshCommandLine>
     </Metadata>
     <EXPANSIONS>
         <E COMPOSITE="C[100]" NUMMODES="4" TYPE="MODIFIED" FIELDS="u" />

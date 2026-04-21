@@ -11,6 +11,9 @@
 \experimentaltrue % Set to true to include experimental curves
 \errorfalse % Set to true to include error bars
 
+% change font for specific paper
+\usepackage{newtxtext,newtxmath}
+
 \pgfplotsset{
 /pgfplots/colormap={blues}{rgb255=(66,106,188) rgb255=(255,255,255)}
 }
@@ -20,7 +23,7 @@
         sloped,
         transform shape,
         inner sep=2pt,
-        every node/.style={black,fill=none},
+        every node/.style={black,fill=none, scale =1.4},
         /pgf/number format/relative={\pgfplotspointmetarangeexponent},
     },
 } 
@@ -65,7 +68,8 @@
     table [header=false, x index=0, y index=1, meta index=2] {data/DeltaN.dat};
     \addplot3[
     contour lua={levels={#1}, labels=false, draw color=\colorE},
-    thick,
+    very thick,
+    dashed,
     restrict x to domain=0:70,
     restrict y to domain=0:4,
     ]
@@ -73,7 +77,7 @@
 }
 
 \begin{document}
-\begin{tikzpicture}[scale=1.0, every node/.style={scale=1.2}]
+\begin{tikzpicture}[scale=1.0, every node/.style={scale=1.4}]
 	\begin{axis}[
 			xlabel={$w/\delta^*$},
 			ylabel={$d/\delta^*$},
@@ -178,7 +182,7 @@
 		\plotcontourline{2}{24:26}{0.5:1};
 		\plotcontourline{3}{35:45}{0.75:1.25};
 		\plotcontourline{4}{53:55}{0.75:1.5};
-		\plotcontourline{5}{68:70}{1:1.5};
+		\plotcontourline{5}{68:69}{1:1.5};
 		
 		\endpgfonlayer
 		\addplot[
@@ -245,7 +249,7 @@
 			no marks,
 			draw=\colorC!70!black,
 			\thicknessline,
-			\linestyle,
+			densely dotted,
 		] coordinates {
 				(16.25, 4.0)
 				(15.75, 3.75)
@@ -281,7 +285,7 @@
 						every contour label/.append style={
 								every node/.append style={\colorD},
 							},				},
-				thick,
+				very thick,
 				restrict x to domain=0:70,
 				restrict y to domain=0:4,
 				legend image post style={draw=red, thick},
@@ -369,7 +373,7 @@
 		\fi
 
 		\legend{,,,,,,,,,,,,,,
-			{Transition boundary},{Crouch et al. (2022)},
+				{Transition boundary},{Crouch \textit{et al}. (2022)},
 		}
 
 	\end{axis}

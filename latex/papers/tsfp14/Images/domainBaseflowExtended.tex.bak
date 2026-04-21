@@ -1,0 +1,136 @@
+\documentclass[9pt]{standalone}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{patterns,decorations.markings,backgrounds}
+\usetikzlibrary{arrows.meta}
+
+% change font for specific paper
+\usepackage{newtxtext,newtxmath}
+
+%=== FIGURE SIZE CONFIGURATION ===
+% Set target width to match LaTeX column width
+\newlength{\figwidth}
+\setlength{\figwidth}{7.85cm}
+
+%=== DOMAIN PARAMETERS ===
+\def\a{-20}
+\def\d{4}
+\def\w{15}
+\def\b{55}
+\def\h{20}
+\def\eps{0.5}
+\def\wall{0.5}
+
+% Compute x-range of the figure (in original units)
+\pgfmathsetmacro{\xmin}{\a}
+\pgfmathsetmacro{\xmax}{\b}
+\pgfmathsetmacro{\xrange}{\xmax - \xmin}
+
+% Scale factor: converts original units to final figure width
+\pgfmathsetmacro{\scalefactor}{\figwidth / \xrange}
+
+% Scaled coordinates
+\pgfmathsetmacro{\aa}{\a * \scalefactor}
+\pgfmathsetmacro{\dd}{\d * \scalefactor}
+\pgfmathsetmacro{\ww}{\w * \scalefactor}
+\pgfmathsetmacro{\bb}{\b * \scalefactor}
+\pgfmathsetmacro{\hh}{\h * \scalefactor}
+
+\begin{document}
+\begin{tikzpicture}
+
+% Wall
+\draw[ultra thick] (\aa pt,0) -- (0,0) -- (0,-\dd pt) -- (\ww pt,-\dd pt) -- (\ww pt,0) -- (\bb pt,0);
+
+\pgfmathsetmacro{\lengthWall}{0.5*\scalefactor}
+\pgfmathsetmacro{\hatchStart}{\a*\scalefactor}
+\pgfmathsetmacro{\hatchMid}{\w*\scalefactor}
+\pgfmathsetmacro{\hatchEnd}{\b*\scalefactor}
+\foreach \x in {\hatchStart,\hatchStart+0.5*\scalefactor,...,0} {
+    \draw[thick] (\x pt,0) -- ++(225:\lengthWall pt);
+}
+\foreach \x in {\hatchMid,\hatchMid+0.5*\scalefactor,...,\hatchEnd} {
+    \draw[thick] (\x pt,0) -- ++(225:\lengthWall pt);
+}
+\foreach \x in {0,0.5*\scalefactor,...,\ww} {
+    \draw[thick] (\x pt,-\dd pt) -- ++(225:\lengthWall pt);
+}
+\draw[thick] (0,-\dd/2 pt) -- ++(225:\lengthWall pt);
+
+% BL Profile (velocity profile)
+\pgfmathsetmacro{\BLxshift}{-2*\scalefactor}
+\begin{scope}[xshift=\BLxshift pt]
+    \pgfmathsetmacro{\blA}{-2*\scalefactor}
+    \pgfmathsetmacro{\blB}{-1*\scalefactor}
+    \pgfmathsetmacro{\blH}{1.5*\scalefactor}
+    \draw [black, very thick] plot [smooth, tension=0.5] coordinates { 
+        (\blA pt,0) 
+        ({-1.8*\scalefactor} pt,{0.075*\scalefactor} pt) 
+        ({-1.6*\scalefactor} pt,{0.15*\scalefactor} pt) 
+        ({-1.4*\scalefactor} pt,{0.225*\scalefactor} pt) 
+        ({-1.2*\scalefactor} pt,{0.3*\scalefactor} pt) 
+        ({-1.07*\scalefactor} pt,{0.37*\scalefactor} pt) 
+        (\blB pt,{0.5*\scalefactor} pt) 
+        (\blB pt,{1*\scalefactor} pt) 
+        (\blB pt,{1.25*\scalefactor} pt) 
+        (\blB pt,\blH pt)
+    };
+    \draw [black, very thick] (\blA pt,0) -- (\blA pt,\blH pt);
+    \draw [-Latex, very thick] (\blA pt,\blH pt) -- (\blB pt,\blH pt);
+    \draw [-Latex, very thick] (\blA pt,{1.1125*\scalefactor} pt) -- (\blB pt,{1.125*\scalefactor} pt);
+    \draw [-Latex, very thick] (\blA pt,{0.75*\scalefactor} pt) -- (\blB pt,{0.75*\scalefactor} pt);
+    \draw [-Latex, very thick] (\blA pt,{0.375*\scalefactor} pt) -- ({-1.09*\scalefactor} pt,{0.375*\scalefactor} pt);
+\end{scope}
+
+% axis orientation
+\pgfmathsetmacro{\lengthAxis}{0.5*\scalefactor}
+\draw[-Stealth, very thick] (0, {0.5*\scalefactor} pt) -- ++(0, \lengthAxis pt) node[above, anchor=east] {$y$};
+\draw[-Stealth, very thick] (0, {0.5*\scalefactor} pt) -- ++(\lengthAxis pt, 0) node[below, anchor=north] {$x$};
+
+% width and depth of the domain
+\node (width) at (\ww/2 pt,-\dd/2 pt) {$w$};
+\draw[Stealth-, thick] ({0.1*\scalefactor} pt,-\dd/2 pt) -- (width.west);
+\draw[-Stealth, thick] (width.east) -- ({\ww-0.1*\scalefactor} pt,-\dd/2 pt);
+
+\pgfmathsetmacro{\depthX}{\ww+1*\scalefactor}
+\pgfmathsetmacro{\depthXarrow}{\ww+0.5*\scalefactor}
+\node (depth) at (\depthX pt, -\dd pt) {$d$};
+\draw[-Stealth,thick] (\depthXarrow pt,\dd pt) -- (\depthXarrow pt,{0.1*\scalefactor} pt);
+\draw[Stealth-, thick] (\depthXarrow pt,-\dd pt) -- (\depthXarrow pt,{-\dd-0.5*\scalefactor} pt);
+
+\pgfmathsetmacro{\deps}{1*\scalefactor}
+% height of the domain
+\pgfmathsetmacro{\heightX}{\bb+0.75*\scalefactor}
+\node (height) at (\heightX pt,\hh/2 pt) {$h$};
+\draw[-Stealth,thick] (height.south) -- (\heightX pt,0);
+\draw[Stealth-, thick] (\heightX pt,\hh pt) -- (height.north); 
+
+% ell_i
+\node (ell1) at (\aa/2 pt,{-\dd-\deps} pt) {$\ell_\text{i}$};
+\draw[-Stealth,thick] (ell1.east) -- (0,{-\dd-\deps} pt);
+\draw[Stealth-, thick] (\aa pt,{-\dd-\deps} pt) -- (ell1.west);
+
+% ell_o
+\pgfmathsetmacro{\elloX}{(\ww + \bb)/2}
+\node (ell2) at (\elloX pt,{-\dd-\deps} pt) {$\ell_\text{o}$};
+\draw[-Stealth,thick] (ell2.east) -- (\bb pt,{-\dd-\deps} pt);
+\draw[Stealth-,thick] (\ww pt,{-\dd-\deps} pt) -- (ell2.west);
+
+% Upper region
+\draw[dotted,very thick] (\aa pt,\hh pt) -- (\bb pt,\hh pt);
+\draw[dotted,very thick] (\aa pt,0) -- (\aa pt,\hh pt);
+\draw[dotted,very thick] (\bb pt,0) -- (\bb pt,\hh pt);
+
+% Labels
+\pgfmathsetmacro{\wallX}{7*\scalefactor}
+\node (W) at (\wallX pt,{-0.8*\scalefactor} pt) {Wall};
+\begin{scope}[xshift=\BLxshift pt]
+    \node[anchor=east] at (\blA pt,{1.75*\scalefactor} pt) {BL profile};
+    \node[anchor=east,text width=1.64cm] at (\blA pt,{0.75*\scalefactor} pt) {$\mathbf{u}=\mathbf{u}_\text{BL}(y)$};
+\end{scope}
+\node[anchor=west] at (W.east) {$\mathbf{u}=\mathbf{0}$};
+\node[anchor=north] at ({2*\scalefactor} pt,\hh pt) {$\mathbf{u}=\mathbf{u}_\infty(x)$};
+\node[text width=2.0cm] at ({8.7*\scalefactor} pt,{2*\scalefactor} pt) {$\partial_\mathbf{n}\mathbf{u}=\mathbf{h}(\mathbf{u}_\text{out})$};
+
+\end{tikzpicture}
+\end{document}

@@ -15,12 +15,15 @@ CYAN="\e[36m"
 RESET="\e[0m"
 
 HOST="hpc"
-CASE="d1.5_w50" #CASE="d1.25_w70"
+CASE="d2_w24/omega0.16" #CASE="d1.25_w70"
 # CASE="flat"
-DIR="incNSboeingGapRe1000/directLinearSolver/blowingSuction/${CASE}"
+# DIR="bfsRe1000inc/directLinearSolver/blowingSuction/${CASE}"
+# DIR="deepGapRe1000inc/directLinearSolver/blowingSuction/${CASE}/"
+DIR="incGapRe1000/directLinearSolver/omegaBlowSuct/${CASE}"
 MESH_REMOTE="mesh.xml"
 CHKFILE="_stress.fld"
-COMBINEAVG="false" # whether to do combineAvg operation
+COMBINEAVG="true" # whether to do combineAvg operation
+MINTIME=5000 # minimum FinalTime to consider for combineAvg
 
 # automatic variables
 USER="vb824"
@@ -32,15 +35,13 @@ mkdir -p "${DIR_LOCAL}"
 
 echo -e "${CYAN}Connecting to ${HOST} to process stress averages...${RESET}"
 
+
 # Do all interpolations remotely in one SSH session
 ssh "${USER}@${HOST}" /bin/bash << EOF
     # set -e
     
     source /etc/profile
     source ~/.bashrc  # Ensure modules are available
-
-    # Try to load nektar++ module, continue if it fails
-    module load nektar++ || echo "Warning: Could not load nektar++ module, continuing anyway..."
 
     cd "${DIR_REMOTE}"
 
@@ -52,7 +53,8 @@ ssh "${USER}@${HOST}" /bin/bash << EOF
     # stressFolders=(\$(ls -d *${CHKFILE} 2>/dev/null | sed -E 's/.*_([0-9]+)_stress\.fld/\1 \0/'  | sort -n -k1,1  | cut -d' ' -f2-))
 
     # sort by time creation
-    stressFolders=(\$(ls -dtr *${CHKFILE} 2>/dev/null))
+    # stressFolders=(\$(ls -dtr *${CHKFILE} 2>/dev/null)) # this sorts by modification time, and just looking at the file with vim (without modification) changes the modification time, which is not ideal.
+    stressFolders=(\$(for d in *${CHKFILE}; do printf "%s %s\n" "\$(stat -c %Y "\$d/P0000000.fld" 2>/dev/null)" "\$d"; done | sort -n | awk '{print \$2}'))
 
 
     if [ \${#stressFolders[@]} -eq 0 ]; then
@@ -64,8 +66,10 @@ ssh "${USER}@${HOST}" /bin/bash << EOF
     echo -e "${GREEN} Final stress folder: \${stressFINAL} ${RESET}"
 
     rm -rf mesh_avg.fld
+
+    echo -e "${CYAN} CombineAvg is set to: ${COMBINEAVG} ${RESET}"
     
-    if [ "\$COMBINEAVG" = "true" ]; then
+    if [ "${COMBINEAVG}" = "true" ]; then
         echo -e "${CYAN} Proceeding with combineAvg operation... ${RESET}"
         stressBEG=""
         for folder in "\${stressFolders[@]}"; do
@@ -74,7 +78,7 @@ ssh "${USER}@${HOST}" /bin/bash << EOF
                 continue
             fi
             finalTime=\$(grep -oPm1 '(?<=<FinalTime>)[^<]+' "\$xmlfile" || echo 0)
-            cmp=\$(awk -v t="\$finalTime" 'BEGIN{if (t >= 2999) print 1; else print 0}')
+            cmp=\$(awk -v t="\$finalTime" 'BEGIN{if (t >= ${MINTIME}) print 1; else print 0}')
             if [ "\$cmp" -eq 1 ]; then
                 stressBEG="\$folder"
                 break
@@ -82,7 +86,7 @@ ssh "${USER}@${HOST}" /bin/bash << EOF
         done
 
         if [ -z "\$stressBEG" ]; then
-            echo -e "${RED} Could not find any folder with FinalTime >= 3000! ${RESET}"
+            echo -e "${RED} Could not find any folder with FinalTime >= ${MINTIME}! ${RESET}"
             exit 1
         fi
 
@@ -108,4 +112,3 @@ ssh "${USER}@${HOST}" /bin/bash << EOF
     fi
 
 EOF
-
