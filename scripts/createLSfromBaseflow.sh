@@ -33,6 +33,7 @@ function readInput {
   folder=$1
   
   localDIR_LS=$(pwd)
+  # localDIR_baseflow="/home/victor/Desktop/PhD/src/ffsRe1000inc/baseflow/dns/${folder}"
   # localDIR_baseflow="/home/victor/Desktop/PhD/src/bfsRe1000inc/baseflow/dns/${folder}"
   # localDIR_baseflow="/home/victor/Desktop/PhD/src/deepGapRe1000inc/baseflow/dns/${folder}"
   localDIR_baseflow="/home/victor/Desktop/PhD/src/incGapRe1000/baseflow/dns/${folder}"

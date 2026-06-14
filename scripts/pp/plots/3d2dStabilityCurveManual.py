@@ -9,7 +9,8 @@ from scipy.interpolate import interp1d
 from pp.fontSizeLaTex import compute_mpl_fontsize, compute_figure_size
 
 
-plt.style.use("plots/style/tsfp.mplstyle")
+# plt.style.use("plots/style/tsfp.mplstyle")
+plt.style.use('plots/style/customvictor.mplstyle')
 
 
 def smooth_curve(x, y, num_points=200):
@@ -135,6 +136,8 @@ def main():
         label="3D instability boundary",
         zorder=2,
     )
+
+    # ax.plot([19], [4], "* ", color="tab:purple", markersize=15)
 
     # smooth_inst_x, smooth_inst_y = smooth_curve(inst3d[:, 1], inst3d[:, 0])
     # ax.plot(smooth_inst_x, smooth_inst_y, linestyle='-', label='3D Instability', zorder=3)

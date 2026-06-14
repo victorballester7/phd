@@ -1,4 +1,25 @@
 # w d σ ω type run
+70.0 1.5 nan 0.155340 equilibrium inc2dRe800 # to modes decaying together, with similar growth rates
+60.0 1.75 nan 0.147475 limitcycle inc2dRe800
+41.0 2.0 nan 0.173001 equilibrium inc2dRe800
+44.0 2.0 nan 0.215485 limitcycle inc2dRe800
+47.0 2.0 nan 0.201141 limitcycle inc2dRe800
+53.0 2.0 nan 0.176264 limitcycle inc2dRe800
+31.0 2.5 nan 0.231857 equilibrium inc2dRe800
+33.0 2.5 nan 0.220236 limitcycle inc2dRe800
+37.0 2.5 nan 0.199784 limitcycle inc2dRe800
+26.0 3.0 nan 0.263839 equilibrium inc2dRe800
+28.0 3.0 nan 0.252653 limitcycle inc2dRe800
+30.0 3.0 nan 0.240387 limitcycle inc2dRe800
+35.0 3.0 nan 0.107247 limitcycle inc2dRe800
+21.0 3.5 nan 0.232548 equilibrium inc2dRe800
+23.0 3.5 nan 0.221173 limitcycle inc2dRe800
+25.0 3.5 nan 0.208575 limitcycle inc2dRe800
+30.0 3.5 nan 0.242790 limitcycle inc2dRe800
+18.0 4.0 nan 0.252324 equilibrium inc2dRe800
+20.0 4.0 nan 0.239610 limitcycle inc2dRe800
+25.0 4.0 nan 0.210061 limitcycle inc2dRe800
+
 10.0 0.25 nan nan equilibrium inc2dRe1000
 10.0 0.5 nan nan equilibrium inc2dRe1000
 20.0 0.5 nan nan equilibrium inc2dRe1000
@@ -207,22 +228,62 @@
 32.0 4.0 nan 0.237650 chaoticattractor inc2dRe1000
 35.0 4.0 nan 0.225631 chaoticattractor inc2dRe1000
 
+40.0 1.5 nan nan equilibrium inc2dRe1400
+45.0 1.5 nan 0.196868 equilibrium inc2dRe1400
+50.0 1.5 nan 0.174768 limitcycle inc2dRe1400
+27.0 2.0 nan nan equilibrium inc2dRe1400
+31.0 2.0 nan 0.223084 equilibrium inc2dRe1400
+34.0 2.0 nan 0.206530 limitcycle inc2dRe1400
+22.0 2.5 nan nan equilibrium inc2dRe1400
+24.0 2.5 nan 0.269581 equilibrium inc2dRe1400
+26.0 2.5 nan 0.257651 limitcycle inc2dRe1400
+19.0 3.0 nan 0.243251 limitcycle inc2dRe1400
+22.0 3.0 nan 0.224610 limitcycle inc2dRe1400
+16.0 3.5 nan nan equilibrium inc2dRe1400
+17.0 3.5 nan 0.256816 limitcycle inc2dRe1400
+19.0 3.5 nan 0.247184 limitcycle inc2dRe1400
+16.0 4.0 nan 0.264344 equilibrium inc2dRe1400
+18.0 4.0 nan 0.257184 limitcycle inc2dRe1400
+
 30.0 1.5 nan 0.212181 equilibrium inc2dRe2000
+37.0 1.5 nan nan equilibrium inc2dRe2000 # two modes decaying together
 40.0 1.5 nan 0.217838 limitcycle inc2dRe2000
-50.0 1.5 nan 0.175817 cascade inc2dRe2000
+50.0 1.5 nan 0.175817 chaoticattractor inc2dRe2000
 24.0 2.0 nan 0.261938 equilibrium inc2dRe2000
 27.0 2.0 nan 0.244688 limitcycle inc2dRe2000
 32.0 2.0 nan 0.217623 limitcycle inc2dRe2000
 20.0 2.5 nan 0.232411 equilibrium inc2dRe2000
+22.0 2.5 nan 0.278468 equilibrium inc2dRe2000 # two modes decaying together
 24.0 2.5 nan 0.266731 limitcycle inc2dRe2000
 16.0 3.0 nan 0.261482 equilibrium inc2dRe2000
+18.0 3.0 nan 0.250925 limitcycle inc2dRe2000
 20.0 3.0 nan 0.237801 limitcycle inc2dRe2000
 26.0 3.0 nan 0.261835 limitcycle inc2dRe2000
 15.0 3.5 nan 0.271397 equilibrium inc2dRe2000
+18.0 3.5 nan 0.253031 limitcycle inc2dRe2000
 21.0 3.5 nan 0.235917 limitcycle inc2dRe2000
 13.0 4.0 nan nan equilibrium inc2dRe2000
+15.0 4.0 nan 0.268546 equilibrium inc2dRe2000
 17.0 4.0 nan 0.264708 limitcycle inc2dRe2000
 22.0 4.0 nan 0.233722 limitcycle inc2dRe2000
+
+28.0 1.5 nan nan equilibrium inc2dRe3000
+33.0 1.5 nan nan equilibrium inc2dRe3000
+36.0 1.5 nan 0.234049 limitcycle inc2dRe3000
+18.0 2.0 nan nan equilibrium inc2dRe3000
+22.0 2.0 nan 0.271046 equilibrium inc2dRe3000
+25.0 2.0 nan 0.255052 limitcycle inc2dRe3000 
+17.0 2.5 nan 0.253731 equilibrium inc2dRe3000
+20.0 2.5 nan 0.233593 limitcycle inc2dRe3000
+14.0 3.0 nan nan equilibrium inc2dRe3000
+16.0 3.0 nan 0.263391 limitcycle inc2dRe3000
+19.0 3.0 nan 0.246190 limitcycle inc2dRe3000
+13.0 3.5 nan nan equilibrium inc2dRe3000
+15.0 3.5 nan 0.272058 limitcycle inc2dRe3000
+18.0 3.5 nan 0.256915 chaoticattractor inc2dRe3000
+12.0 4.0 nan nan equilibrium inc2dRe3000
+14.0 4.0 nan 0.271806 limitcycle inc2dRe3000
+16.0 4.0 nan 0.269774 limitcycle inc2dRe3000
 
 55.0 1.5 nan 0.160938 equilibrium Ma0.05Re1000_2d
 60.0 1.5 nan 0.143874 limitcycle Ma0.05Re1000_2d

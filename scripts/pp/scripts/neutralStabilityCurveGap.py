@@ -29,17 +29,21 @@ def main():
     pathCurrentScript = os.path.dirname(os.path.abspath(__file__))
 
     basePath = (
-        # "../../../src/incNSboeingGapRe1000/directLinearSolver/blowingSuction/"
-        "../../../src/incGapRe1000/directLinearSolver/omegaBlowSuct/"
+        # "../../../src/incGapRe1000/directLinearSolver/omegaBlowSuct/"
+        "../../../src/flatPlateRe1000inc/directLinearSolver/omegaBlowSuct/"
     )
     basePath = os.path.join(pathCurrentScript, basePath)
 
     code_names2 = [
-        "d2_w24/omega0.04",
-        "d2_w24/omega0.08",
-        "d2_w24/omega0.12",
-        "d2_w24/omega0.16",
-        # "d3.75_w10",
+        # "d2_w24/omega0.04",
+        # "d2_w24/omega0.08",
+        # "d2_w24/omega0.12",
+        # "d2_w24/omega0.16",
+        "omega0.02",
+        "omega0.04",
+        "omega0.1",
+        "omega0.14",
+        "omega0.19",
     ]
     n = 600
     chkfile = "avg"
@@ -53,6 +57,17 @@ def main():
         x, alpha = getGrowthRate(x, A)
         ax.plot(x, alpha, "-", label=f"{dw}")
 
+
+    dataFile_dw = os.path.join(basePath, "omega0.04", "data", f"points{chkfile}_n{n}old.dat")
+    x, A = computeAmplitude(dataFile_dw, doLoo=False)
+    x, alpha = getGrowthRate(x, A)
+    ax.plot(x, alpha, "-", label="omega=0.04 old")
+
+    # dataFile = os.path.join(basePath, f"d2_w24/omega0.08/data/pointsavg_n{n}_y-2.dat")
+    # x, A = computeAmplitude(dataFile, doLoo=False)
+    # x, alpha = getGrowthRate(x, A)
+    # ax.plot(x, alpha, "-", label="omega=0.08 ymin-2")
+  
 
     # Set labels and title
     ax.set_xlabel("x")

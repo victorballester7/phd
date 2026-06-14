@@ -1,0 +1,6 @@
+- focus the boeing figure in the gap.
+- add how Re is computed
+- put more jeff motivation
+- add the Delta N comparison with Jeff
+- put dns image of case between 3d and 2d instability
+- why 2d mode becomes primary instability in full 3d case before transition? compare energies with 2d mode and 3d instabilities. Try floquet analysis to see if there are 2nd instabilities.

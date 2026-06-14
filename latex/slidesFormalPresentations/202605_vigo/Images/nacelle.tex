@@ -1,0 +1,16 @@
+\documentclass{standalone}
+\usepackage{tikz}
+
+% beamer font
+\usepackage{sansmath}
+\renewcommand*\familydefault{\sfdefault}
+
+\begin{document}
+\begin{tikzpicture}
+	\node (img) at (0,0) {\includegraphics[width=\textwidth,trim=1cm 4cm 15cm 6cm,clip]{ryanair_engine.png}};
+	\node (txt) at (img.north) [anchor=south, xshift=1cm, yshift=0.5cm] {\LARGE Gaps};
+
+	\draw[ultra thick, red, <-] (txt.south west) -- (-3,1);
+	\draw[ultra thick, red, <-] (txt.south) -- (1,2);
+\end{tikzpicture}
+\end{document}

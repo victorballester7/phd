@@ -1,0 +1,22 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,decorations.markings,backgrounds}
+\usetikzlibrary{arrows.meta}
+
+\pgfplotsset{compat=1.18}
+
+
+\begin{document}
+\begin{tikzpicture}
+	\clip (-7,-9.7) rectangle (21,3.5);
+	\node (A) at (0,0) {
+		\includegraphics[width=\textwidth]{../pdfs/d4w19_3d_L2crit_10.pdf}	}
+	\node (B) at (A.east) [xshift=8cm] {
+		\includegraphics[width=\textwidth]{../pdfs/d4w19_3d_L2crit_12.pdf}	}
+	\node (C) at (A.south) [yshift=-3cm] {
+		\includegraphics[width=\textwidth]{../pdfs/d4w19_3d_L2crit_14_big.pdf}	}
+		\node (D) at (C.east) [xshift=8cm] {
+			\includegraphics[width=\textwidth]{../pdfs/d4w19_3d_L2crit_17_big.pdf}	}
+\end{tikzpicture}
+\end{document}

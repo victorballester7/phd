@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NEKTAR>  
+  <EXPANSIONS>    
+    <E COMPOSITE="C[100,101,102]" NUMMODES="6" FIELDS="u,v" TYPE="MODIFIED" />  
+    <E COMPOSITE="C[100,101,102]" NUMMODES="5" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
+  </EXPANSIONS>
+  
+  <CONDITIONS>    
+    <SOLVERINFO>
+      <I PROPERTY="SolverType"                           VALUE="VelocityCorrectionScheme"   />
+      <I PROPERTY="EqType"                               VALUE="UnsteadyNavierStokes"       />
+      <I PROPERTY="Projection"                           VALUE="Galerkin"                   /> 
+      <I PROPERTY="EvolutionOperator"                     VALUE="Direct"                  />
+      <I PROPERTY="SpectralVanishingViscosity"            VALUE="DGKernel"                        />
+      <I PROPERTY="SPECTRALHPDEALIASING"          VALUE="True"           />
+      <I PROPERTY="GlobalSysSoln"                 VALUE="XxtMultiLevelStaticCond" />
+      <I PROPERTY="Driver"                               VALUE="Standard"            />
+    </SOLVERINFO>    
+
+    <TIMEINTEGRATIONSCHEME>
+      <METHOD> IMEX </METHOD>
+      <ORDER> 2 </ORDER>
+    </TIMEINTEGRATIONSCHEME>
+
+    <PARAMETERS>
+    <!--General parameters-->
+      <P> TimeStep = 0.006 </P>
+      <P> NumSteps        = 4000e3     </P>
+      <P> IO_CheckSteps   = NumSteps/25     </P> 
+      <P> IO_InfoSteps    = NumSteps/8000        </P> 
+      <P> IO_CFLSteps     = IO_InfoSteps         </P>
+      <P> HistorySteps    = IO_InfoSteps </P>
+      <P> AverageSteps    = NumSteps/100 </P>
+      <P> SVVDiffCoeff    = 0.1                    </P>
+      <P> SVVCutoffRatio  = 0.75                    </P>
+      <!-- <P> HomModesZ       = 2                       </P> -->
+      <!-- <P> LZ              = 2                     </P> -->
+      
+      
+    <!--Disturbance strip parameters-->
+      <P> x0        = -95                     </P>
+      <P> y0        = 0.5                  </P> 
+      <P> weight          = 100                  </P> <!-- weight of the Gaussian function !-->
+      <P> Amplitude       = 0.5/weight                   </P> 
+
+      <!-- Parameters for the simulation -->
+      <!-- To understand the formulas in the parameters, please refer to the file docs/20250414_Blasius_formulas.md -->
+      <!-- CHANGE THIS BEFORE RUNNING THE SIMULATION -->
+      <!-- it has to match the definition of x0 (negated) in the .geo file -->
+      <!-- ........................................... -->
+      <!-- ........................................... -->
+      <!-- ........................................... -->
+      <p> lengthBeforeGap       = -100 </p> <!-- in terms of deltaStar_leadingEdge !-->
+      <!-- ........................................... -->
+      <!-- ........................................... -->
+      <!-- ........................................... -->
+      <p> C                     = 1.7207876575205 </p> <!-- number from wiki !-->
+      <p> Uinf                  = 1                   </p>
+      <p> deltaStar_le          = 1  </p> 
+      <P> Re_deltaStar_le       = 1000       </P> <!-- Reynolds number based on deltaStar_leadingEdge !-->
+      <P> deltaStar_BC          = sqrt(1+lengthBeforeGap*C^2/Re_deltaStar_le) </P> 
+      <P> Kinvis                = Uinf*deltaStar_le/Re_deltaStar_le                 </P>
+      <p> Vinf                  = 0.5*Uinf*C/(Re_deltaStar_le * deltaStar_BC) </p> 
+      <P> etaMax                = 9.84                      </P>  <!-- based on python plotting script. It fits better than etaMax=10, the endpoint of the simulation, both for u and v !-->
+      <P> y2eta                 = C/deltaStar_BC   </P> 
+      <P> yMax        = etaMax/y2eta             </P> <!--[m]-->  
+      <p> a1_u = 0.33263899291846005 </p>
+      <p> a2_u = 8830.512069032215 </p>
+      <p> a3_u = 58.97366593890366 </p>
+      <p> a4_u = 615.0518197268191 </p>
+      <p> a5_u = 32.12385528953152 </p>
+      <p> a6_u = -17.16678907227338 </p>
+      <p> a7_u = 11.02175978217767 </p>
+      <p> a8_u = -1.9645118354438575 </p>
+      <p> a9_u = 0.5010442307141161 </p>
+      <p> a10_u = -0.0645796009748346 </p>
+      <p> a11_u = 0.006179765415827125 </p>
+      <p> b1_u = 26593.41072503167 </p>
+      <p> b2_u = 176.8055649980844 </p>
+      <p> b3_u = 1855.7665505833227 </p>
+      <p> b4_u = 272.5391794254054 </p>
+      <p> b5_u = -39.221863541559394 </p>
+      <p> b6_u = 36.24230326537252 </p>
+      <p> b7_u = -0.07795052580215707 </p>
+      <p> b8_u = -0.8421866779902756 </p>
+      <p> b9_u = 0.44410766209840075 </p>
+      <p> b10_u = -0.06341415789453857 </p>
+      <p> b11_u = 0.006179765415827125 </p>
+      <p> a1_v = -1.9959025216159896e-05 </p>
+      <p> a2_v = 0.16695529626584846 </p>
+      <p> a3_v = -0.575204509312059 </p>
+      <p> a4_v = -0.4341004660550698 </p>
+      <p> a5_v = 299.3706050451578 </p>
+      <p> a6_v = -93.83786038348894 </p>
+      <p> a7_v = 16.266365937513303 </p>
+      <p> a8_v = -1.8990540751356129 </p>
+      <p> a9_v = 0.33729889822536685 </p>
+      <p> a10_v = -0.04383523593037588 </p>
+      <p> a11_v = 0.0034080097149121807 </p>
+      <p> b1_v = -3.380409827085182 </p>
+      <p> b2_v = -3.1753939961101696 </p>
+      <p> b3_v = 1805.0761851180248 </p>
+      <p> b4_v = -569.1055835320207 </p>
+      <p> b5_v = 102.77873382853763 </p>
+      <p> b6_v = 4.5614994586104824 </p>
+      <p> b7_v = -2.027219234693251 </p>
+      <p> b8_v = -0.01875987489840645 </p>
+      <p> b9_v = 0.1441683101478324 </p>
+      <p> b10_v = -0.024466672927746642 </p>
+      <p> b11_v = 0.0019804940487676533 </p>
+
+    </PARAMETERS>
+    
+    <VARIABLES>
+      <V ID="0"> u </V>
+      <V ID="1"> v </V>  
+      <V ID="2"> p </V>
+    </VARIABLES>
+    
+    <BOUNDARYREGIONS>
+      <B ID="0"> C[1] </B>    <!-- inlet !-->  
+      <B ID="1"> C[2] </B>    <!-- outlet !-->
+      <B ID="2"> C[3] </B>    <!-- top !-->
+      <B ID="3"> C[4] </B>    <!-- bottom + left & right gap walls !-->
+    </BOUNDARYREGIONS>    
+
+    <BOUNDARYCONDITIONS>
+      <REGION REF="0">  <!-- inlet !-->                  
+        <!-- I do it like that (when y>=yMax) in order to avoid discontinuities in the velocity field at the inflow (I had discontinuities, which affect the presure field and therefore the whole domain), the error is of the order of 10^-7 for u and 10^-10 for v ! -->
+        <D VAR="u" VALUE="0" />
+        <D VAR="v" VALUE="0" />
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" /> <!-- high-order boundary condition, VALUE is not used !-->
+      </REGION>
+
+      <REGION REF="1">   <!-- outlet !-->
+        <N VAR="u" VALUE="0" />
+        <N VAR="v" VALUE="0" />
+        <D VAR="p" VALUE="0" />
+      </REGION>  
+            
+      <REGION REF="2">   <!-- top = far-field !-->
+        <!-- I do it like that in order to avoid discontinuities in the velocity field at the top boundary, the error is of the order of 10^-7 for u and 10^-10 for v ! -->
+        <D VAR="u" VALUE="0" />
+        <D VAR="v" VALUE="0" />
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />      
+      </REGION>
+
+      <REGION REF="3">  <!-- bottom = wall no slip !-->  
+        <D VAR="u" VALUE="0" />
+        <D VAR="v" VALUE="0" />      
+        <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />  
+      </REGION>    
+      </BOUNDARYCONDITIONS>
+
+    <FUNCTION NAME="BaseFlow">
+      <F VAR="u,v,p" FILE="baseflow.fld"   />
+    </FUNCTION>
+
+    <FUNCTION NAME="Noise">
+      <E VAR="u" VALUE="-2*weight*(y-y0)*Amplitude*exp(-weight*((x-x0)^2 + (y-y0)^2))*awgn(1.0)" />
+      <E VAR="v" VALUE="2*weight*(x-x0)*Amplitude*exp(-weight*((x-x0)^2 + (y-y0)^2))*awgn(1.0)" />
+      <E VAR="p" VALUE="0" />
+    </FUNCTION>
+
+    
+    <!-- <FUNCTION NAME="InitialConditions"> -->
+    <!--   <F VAR="u,v,p" FILE="mesh_d4_w15_32.chk" /> -->
+    <!-- </FUNCTION> -->
+
+    
+    <FUNCTION NAME="InitialConditions">
+      <E VAR="u" VALUE="0" />
+      <E VAR="v" VALUE="0" />
+      <E VAR="p" VALUE="0" />
+   </FUNCTION>
+  </CONDITIONS>
+    <FORCING>
+      <FORCE TYPE="Field">
+        <FIELDFORCE> Noise </FIELDFORCE>
+      </FORCE>
+    </FORCING>
+  <FILTERS>
+
+    <FILTER TYPE="ReynoldsStresses">
+      <PARAM NAME="OutputFrequency">AverageSteps</PARAM>
+      <PARAM NAME="SampleFrequency">10</PARAM>
+    </FILTER>
+
+
+    <FILTER TYPE="HistoryPoints">
+      <PARAM NAME="OutputFile">HistoryPoints</PARAM>
+      <PARAM NAME="OutputFrequency">HistorySteps</PARAM>
+      <PARAM NAME="Points">
+    -100 0.5 0
+    -75 0.5 0
+    -50 0.5 0
+    -35 0.5 0
+    -25 0.5 0
+    -15 0.5 0
+    -10 0.5 0
+    -5 0.5 0
+    0 0.5 0
+    4.87804878048780487804 0.5 0
+    4.87804878048780487804 -.50000000000000000000 0
+    9.75609756097560975608 0.5 0
+    9.75609756097560975608 -.50000000000000000000 0
+    14.63414634146341463412 0.5 0
+    14.63414634146341463412 -.50000000000000000000 0
+    19.51219512195121951216 0.5 0
+    19.51219512195121951216 -.50000000000000000000 0
+    24.39024390243902439020 0.5 0
+    24.39024390243902439020 -.50000000000000000000 0
+    29.26829268292682926824 0.5 0
+    29.26829268292682926824 -.50000000000000000000 0
+    34.14634146341463414628 0.5 0
+    34.14634146341463414628 -.50000000000000000000 0
+    39.02439024390243902432 0.5 0
+    39.02439024390243902432 -.50000000000000000000 0
+    43.90243902439024390236 0.5 0
+    43.90243902439024390236 -.50000000000000000000 0
+    48.78048780487804878040 0.5 0
+    48.78048780487804878040 -.50000000000000000000 0
+    53.65853658536585365844 0.5 0
+    53.65853658536585365844 -.50000000000000000000 0
+    58.53658536585365853648 0.5 0
+    58.53658536585365853648 -.50000000000000000000 0
+    63.41463414634146341452 0.5 0
+    63.41463414634146341452 -.50000000000000000000 0
+    68.29268292682926829256 0.5 0
+    68.29268292682926829256 -.50000000000000000000 0
+    73.17073170731707317060 0.5 0
+    73.17073170731707317060 -.50000000000000000000 0
+    78.04878048780487804864 0.5 0
+    78.04878048780487804864 -.50000000000000000000 0
+    82.92682926829268292668 0.5 0
+    82.92682926829268292668 -.50000000000000000000 0
+    87.80487804878048780472 0.5 0
+    87.80487804878048780472 -.50000000000000000000 0
+    92.68292682926829268276 0.5 0
+    92.68292682926829268276 -.50000000000000000000 0
+    97.56097560975609756080 0.5 0
+    97.56097560975609756080 -.50000000000000000000 0
+    102.43902439024390243884 0.5 0
+    102.43902439024390243884 -.50000000000000000000 0
+    107.31707317073170731688 0.5 0
+    107.31707317073170731688 -.50000000000000000000 0
+    112.19512195121951219492 0.5 0
+    112.19512195121951219492 -.50000000000000000000 0
+    117.07317073170731707296 0.5 0
+    117.07317073170731707296 -.50000000000000000000 0
+    121.95121951219512195100 0.5 0
+    121.95121951219512195100 -.50000000000000000000 0
+    126.82926829268292682904 0.5 0
+    126.82926829268292682904 -.50000000000000000000 0
+    131.70731707317073170708 0.5 0
+    131.70731707317073170708 -.50000000000000000000 0
+    136.58536585365853658512 0.5 0
+    136.58536585365853658512 -.50000000000000000000 0
+    141.46341463414634146316 0.5 0
+    141.46341463414634146316 -.50000000000000000000 0
+    146.34146341463414634120 0.5 0
+    146.34146341463414634120 -.50000000000000000000 0
+    151.21951219512195121924 0.5 0
+    151.21951219512195121924 -.50000000000000000000 0
+    156.09756097560975609728 0.5 0
+    156.09756097560975609728 -.50000000000000000000 0
+    160.97560975609756097532 0.5 0
+    160.97560975609756097532 -.50000000000000000000 0
+    165.85365853658536585336 0.5 0
+    165.85365853658536585336 -.50000000000000000000 0
+    170.73170731707317073140 0.5 0
+    170.73170731707317073140 -.50000000000000000000 0
+    175.60975609756097560944 0.5 0
+    175.60975609756097560944 -.50000000000000000000 0
+    180.48780487804878048748 0.5 0
+    180.48780487804878048748 -.50000000000000000000 0
+    185.36585365853658536552 0.5 0
+    185.36585365853658536552 -.50000000000000000000 0
+    190.24390243902439024356 0.5 0
+    190.24390243902439024356 -.50000000000000000000 0
+    195.12195121951219512160 0.5 0
+    195.12195121951219512160 -.50000000000000000000 0
+    200 0.5 0
+    205 0.5 0
+    210 0.5 0
+    215 0.5 0
+    225 0.5 0
+    235 0.5 0
+    250 0.5 0
+    275 0.5 0
+    300 0.5 0
+    325 0.5 0
+    350 0.5 0
+    375 0.5 0
+    400 0.5 0
+    425 0.5 0
+    450 0.5 0
+    475 0.5 0
+    500 0.5 0
+    525 0.5 0
+    550 0.5 0
+    575 0.5 0
+    600 0.5 0
+    625 0.5 0
+    650 0.5 0
+    675 0.5 0
+    700 0.5 0
+    725 0.5 0
+    750 0.5 0
+    775 0.5 0
+    800 0.5 0
+    825 0.5 0
+    850 0.5 0
+    875 0.5 0
+    900 0.5 0
+    925 0.5 0
+    950 0.5 0
+    975 0.5 0
+    1000 0.5 0
+    1025 0.5 0
+    1050 0.5 0
+    1075 0.5 0
+    1100 0.5 0
+    1125 0.5 0
+    1150 0.5 0
+    1175 0.5 0
+    1200 0.5 0
+      </PARAM>
+    </FILTER>
+  </FILTERS>
+</NEKTAR>
+

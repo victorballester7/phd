@@ -41,8 +41,8 @@
       
       <!--Disturbance strip parameters-->
       <P> x0        = -95                     </P>
-      <P> y0        = 0.5                  </P> 
-      <P> weight          = 100                  </P> <!-- weight of the Gaussian function !-->
+      <P> y0        = 1                  </P> 
+      <P> weight          = 10                  </P> <!-- weight of the Gaussian function !-->
       <P> Amplitude       = 0.5/weight                   </P> 
       <P> omega = 0.19 </P> <!-- frequency of the disturbance wave !-->
       

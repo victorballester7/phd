@@ -1,0 +1,1 @@
+- do weakly local stability analysis (check blue stability book) for the neutral stability curve

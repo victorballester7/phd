@@ -8,8 +8,8 @@ import matplotlib as mpl
 from pp.fontSizeLaTex import compute_mpl_fontsize, compute_figure_size
 
 
-plt.style.use('plots/style/tsfp.mplstyle')
-# plt.style.use('plots/style/customvictor.mplstyle')
+# plt.style.use('plots/style/tsfp.mplstyle')
+plt.style.use('plots/style/customvictor.mplstyle')
 
 
 

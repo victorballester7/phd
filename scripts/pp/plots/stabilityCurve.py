@@ -24,8 +24,11 @@ class runType:
         self.endFrac = endFrac
 
 
+incRe8002d = runType("inc2dRe800", "Inc. Re = 800 2d", 0.0333, 1.0)
 incRe10002d = runType("inc2dRe1000", "Inc. Re = 1000 2d", 0.0333, 1.0)
+incRe14002d = runType("inc2dRe1400", "Inc. Re = 1400 2d", 0.0333, 1.0)
 incRe20002d = runType("inc2dRe2000", "Inc. Re = 2000 2d", 0.0333, 1.0)
+incRe30002d = runType("inc2dRe3000", "Inc. Re = 3000 2d", 0.0333, 1.0)
 ma005Re1000_2d = runType("Ma0.05Re1000_2d", "Ma = 0.05 Re = 1000 2d", 1.0)
 ma02Re1000_2d = runType("Ma0.2Re1000_2d", "Ma = 0.2 Re = 1000 2d", 0.0333)
 ma04Re1000_2d = runType("Ma0.4Re1000_2d", "Ma = 0.4 Re = 1000 2d", 0.0333)
@@ -34,14 +37,17 @@ ma08Re1000_2d = runType("Ma0.8Re1000_2d", "Ma = 0.8 Re = 1000 2d", 0.028, 0.48)
 incRe10003d = runType("inc3dRe1000", "Inc. Re = 1000 3d", 0.05, 0.58)
 
 PLOT = [
+    incRe8002d,
     incRe10002d,
-    # incRe20002d,
+    incRe14002d,
+    incRe20002d,
+    incRe30002d,
     # incRe10003d,
-    ma005Re1000_2d,
-    ma02Re1000_2d,
-    ma04Re1000_2d,
-    ma06Re1000_2d,
-    ma08Re1000_2d,
+    # ma005Re1000_2d,
+    # ma02Re1000_2d,
+    # ma04Re1000_2d,
+    # ma06Re1000_2d,
+    # ma08Re1000_2d,
 ]
 
 
@@ -268,6 +274,7 @@ def plot_stability_diagram(df, output_path):
         ].values
 
         concatAB = np.concatenate((A, B), axis=0)
+        print(f"Run: {run.label}, A points: {len(A)}, B points: {len(B)}")
 
         std_w = np.std(concatAB[:, 0])
         std_d = np.std(concatAB[:, 1])
@@ -363,10 +370,12 @@ def main():
     # Load data
     data_frame = pd.read_csv(
         data_filename,
-        sep=" ",
+        sep=r"\s+",
         comment="#",
         names=["w", "d", "sigma", "omega", "type", "run"],
     )
+
+    print(data_frame.head())
 
     # Create plot
     plot_stability_diagram(data_frame, output_path)

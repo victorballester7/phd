@@ -5,6 +5,22 @@ from pp.colors import colors
 from pp.ssh.utilities import run_cmd, get_remote_dir
 
 
+def _rsync_parent_dir_include_rules(output_files: list[str]) -> str:
+    """
+    Build rsync include rules only for parent directories needed by output_files.
+    This avoids including every directory with '--include=*/'.
+    """
+    dirs: set[str] = set()
+    for output_file in output_files:
+        parent = os.path.dirname(output_file)
+        while parent:
+            dirs.add(parent)
+            parent = os.path.dirname(parent)
+
+    ordered_dirs = sorted(dirs, key=lambda d: (d.count("/"), d))
+    return " ".join([f"--include='{d}/'" for d in ordered_dirs])
+
+
 def fld2datapts(
     dir_local: str,
     fld_file: str,
@@ -31,9 +47,10 @@ def fld2datapts(
 
     # get the parent directory of {DIR_REMOTE}/{output_file}.pts
     dir_remote_parent_output_file = os.path.dirname(os.path.join(dir_remote, output_file + ".pts"))
+    dir_local_parent_output_file = os.path.dirname(os.path.join(dir_local, output_file + ".pts"))
 
     # Copy pts file
-    run_cmd(f"rsync -av {dir_local}/{output_file}.pts {user}@{host}:{dir_remote_parent_output_file}")
+    run_cmd(f"rsync -av {dir_local}/{output_file}.pts {user}@{host}:{dir_remote_parent_output_file}/")
 
     # Run FieldConvert remotely
     remote_cmd = f"""
@@ -47,11 +64,86 @@ def fld2datapts(
     run_cmd(f'ssh {user}@{host} "{remote_cmd}"')
 
     # Copy result back
-    run_cmd(f"scp {user}@{host}:{dir_remote}/{output_file}.dat {dir_local}")
+    run_cmd(f"scp {user}@{host}:{dir_remote}/{output_file}.dat {dir_local_parent_output_file}/")
 
     print(
         colors.OKGREEN
         + "Interpolation process completed and data copied back to local machine."
+        + colors.ENDC
+    )
+
+
+def fld2datapts_batch(
+    dir_local: str,
+    fld_file: str,
+    output_files: list[str],
+    mesh: str = "mesh.xml",
+    host: str = "hpc",
+    user: str = "vb824",
+):
+    """
+    Interpolates one .fld file onto multiple .pts files using a single SSH call.
+
+    Parameters:
+    - dir_local: Local directory containing the case files.
+    - fld_file: Name of the .fld file to interpolate from.
+    - output_files: List of output file basenames (without extension), e.g. ["data/p1", "data/p2"].
+    - mesh: Name of mesh XML file.
+    - host: Remote host name.
+    - user: Remote user name.
+    """
+    if not output_files:
+        raise ValueError(colors.FAIL + "output_files cannot be empty." + colors.ENDC)
+
+    output_files = list(dict.fromkeys(output_files))
+
+    print(
+        colors.OKBLUE
+        + f"Starting batched interpolation for {len(output_files)} point files..."
+        + colors.ENDC
+    )
+
+    dir_remote = get_remote_dir(dir_local)
+
+    for output_file in output_files:
+        pts_local = os.path.join(dir_local, output_file + ".pts")
+        if not os.path.isfile(pts_local):
+            raise FileNotFoundError(
+                colors.FAIL + f"Missing PTS file: {pts_local}" + colors.ENDC
+            )
+
+    dir_include_rules = _rsync_parent_dir_include_rules(output_files)
+    include_rules = " ".join([f"--include='{f}.pts'" for f in output_files])
+    run_cmd(
+        f"rsync -av {dir_include_rules} {include_rules} --exclude='*' "
+        f"{dir_local}/ {user}@{host}:{dir_remote}/"
+    )
+
+    remote_convert_cmds = []
+    for output_file in output_files:
+        remote_convert_cmds.append(f"rm -f {output_file}.dat")
+        remote_convert_cmds.append(
+            f"FieldConvert -m interppoints:fromxml={mesh}:fromfld={fld_file}:topts={output_file}.pts {output_file}.dat"
+        )
+
+    remote_cmd = f"""
+    set -e
+    source /etc/profile
+    source ~/.bashrc
+    cd {dir_remote}
+    {'; '.join(remote_convert_cmds)}
+    """
+    run_cmd(f'ssh {user}@{host} "{remote_cmd}"')
+
+    include_dat_rules = " ".join([f"--include='{f}.dat'" for f in output_files])
+    run_cmd(
+        f"rsync -av {dir_include_rules} {include_dat_rules} --exclude='*' "
+        f"{user}@{host}:{dir_remote}/ {dir_local}/"
+    )
+
+    print(
+        colors.OKGREEN
+        + f"Batched interpolation completed for {len(output_files)} files."
         + colors.ENDC
     )
 
@@ -72,7 +164,6 @@ def combineAvg(
 
     Parameters:
     - dir_local:  Local directory containing the session and mesh files (e.g., /home/Desktop/...../incNS/baseflow/dns/d3_w24/)
-    - dir_remote: Remote directory on the HPC cluster where the interpolation will be performed (equivalent to dir_local but on the HPC)
     - chkfile: suffix of stress folders
     - mesh: mesh file name
     - combine_avg: whether to perform combineAvg
@@ -191,4 +282,3 @@ def combineAvg(
     run_cmd(f'ssh {user}@{host} "{remote_cmd}"')
 
     print(colors.OKGREEN + "combineAvg completed successfully." + colors.ENDC)
-

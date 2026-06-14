@@ -20,7 +20,11 @@ from sklearn.preprocessing import StandardScaler
 def computeAmplitude(dataFile: str, doLoo: bool) -> Tuple[np.ndarray, np.ndarray]:
     d, w = extract_width_depth(dataFile)
     print(colors.OKBLUE + f"Processing d = {d:.2f}, w = {w:.2f}" + colors.ENDC)
-    x, y, data = readFieldsBySection(dataFile)
+    try:
+        x, y, data = readFieldsBySection(dataFile)
+    except Exception as e:
+        print(colors.FAIL + f"Error reading data from {dataFile}: {e}" + colors.ENDC)
+        return np.array([]), np.array([])
 
     rms = getRMS(data)
 
@@ -38,6 +42,9 @@ def computeAmplitude(dataFile: str, doLoo: bool) -> Tuple[np.ndarray, np.ndarray
 
 def computeNx(dataFile: str, doLoo: bool) -> Tuple[np.ndarray, np.ndarray]:
     x, A = computeAmplitude(dataFile, doLoo)
+    if len(x) == 0 or len(A) == 0:
+        return np.array([]), np.array([])
+    
 
     # filter indices of x such that x <=0
     idx = np.where(x <= 0)[0]
@@ -52,7 +59,7 @@ def computeNx(dataFile: str, doLoo: bool) -> Tuple[np.ndarray, np.ndarray]:
     return x, Nx 
 
 def computeDeltaN(
-    w: float, x: np.ndarray, Nx: np.ndarray, x_flat: np.ndarray, Nx_flat: np.ndarray
+    w: float, x: np.ndarray, Nx: np.ndarray, x_flat: np.ndarray, Nx_flat: np.ndarray, x_start: float = 50, x_end: float = 250
 ) -> float:
     """
     Computes the difference in N factor between a given case and a flat plate case at in a prescribed window of x values.

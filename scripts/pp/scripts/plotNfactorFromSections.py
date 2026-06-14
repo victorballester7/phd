@@ -34,17 +34,18 @@ def addNxplot(
 ) -> None:
     """Plot points for Nx curves"""
     ax.plot(
-        x - w,
+        x,
         Nx,
         markersize=2,
         label=f"d = {d:.2f}, w = {w:.2f}",
         color=c,
         linestyle=ls,
+        linewidth=linewidth,
     )
     return
 
 
-def plotd_vs_dNx(d: float, w: float, dN: float, ax: Axes, plotBFS: bool) -> None:
+def plotd_vs_dNx(d: float, w: float, dN: float, ax: Axes, plotBFS: bool, marker: str = 'o') -> None:
     """Plot d vs DeltaN(x)"""
 
     if not hasattr(plotd_vs_dNx, "used_labels"):
@@ -76,11 +77,13 @@ def plotd_vs_dNx(d: float, w: float, dN: float, ax: Axes, plotBFS: bool) -> None
         print(colors.WARNING + f"Width {w} too large, skipping" + colors.ENDC)
         return
 
+    if marker == 's':
+        label = "BFS"
     if label not in plotd_vs_dNx.used_labels:
-        ax.plot(d, dN, "o", color=col, label=label)
+        ax.plot(d, dN, marker, color=col, label=label)
         plotd_vs_dNx.used_labels.add(label)
     else:
-        ax.plot(d, dN, "o", color=col)
+        ax.plot(d, dN, marker, color=col)
 
 
 def main():
@@ -92,10 +95,10 @@ def main():
     # Parameters to change
     n = 600  # number of points in the wall normal direction
     doLoo = False  # if False, L2 norm is computed
-    plotBFSdata = False
-    plotdeepGapdata = True
+    plotBFSandFFSdata = False
+    plotdeepGapdata = False
 
-    assert not (plotBFSdata and plotdeepGapdata), "Cannot plot BFS data and deep gap data at the same time, as they have different line styles and colors for the same depths, which makes the plot confusing. Please choose one of the two options."
+    assert not (plotBFSandFFSdata and plotdeepGapdata), "Cannot plot BFS data and deep gap data at the same time, as they have different line styles and colors for the same depths, which makes the plot confusing. Please choose one of the two options."
 
     # script path
     pathCurrentScript = os.path.dirname(os.path.abspath(__file__))
@@ -104,7 +107,7 @@ def main():
     filenameDeltaN = "../../../latex/Images/data/DeltaN.dat"
     filenameDeltaN = os.path.join(pathCurrentScript, filenameDeltaN)
 
-    basePath = "../../../src/incGapRe1000/directLinearSolver/blowingSuction/"
+    basePath = "../../../src/incGapRe1000/directLinearSolver/blowingSuctionCoarserMesh/"
     basePath = os.path.join(pathCurrentScript, basePath)
 
     _, ax = plt.subplots(figsize=(8, 6))
@@ -114,7 +117,7 @@ def main():
     dataFile_flat = f"../../../src/flatPlateRe1000inc/directLinearSolver/blowingSuction/wgnInsideDomainDivFree/data/pointsavg_n{n}.dat"
     dataFile_flat = os.path.join(pathCurrentScript, dataFile_flat)
     x_flat, Nx_flat = computeNx(dataFile_flat, doLoo)
-    addNxplot(0, 0, x_flat, Nx_flat, ax, "black", "-", linewidth=2)
+    addNxplot(0, 0, x_flat, Nx_flat, ax, "black", "-", linewidth=3)
 
     # just to do a quick check
     # code_names2 = [
@@ -136,6 +139,15 @@ def main():
         "d0.75",
         "d1",
         "d1.25",
+        "d1.5",
+    ]
+
+    basePathFFS = "../../../src/ffsRe1000inc/directLinearSolver/blowingSuction/"
+    basePathFFS = os.path.join(pathCurrentScript, basePathFFS)
+    ffs_codenames = [
+        "d0.5",
+        "d1",
+        "d1.5",
     ]
 
     basePathDeepGap = "../../../src/deepGapRe1000inc/directLinearSolver/blowingSuction/"
@@ -145,8 +157,10 @@ def main():
         "d100_w10",
         "d100_w15"
     ]
+    
+    bfs_data = []
 
-    if plotBFSdata:
+    if plotBFSandFFSdata:
         for dw in bfs_codenames:
             dataFile_dw = os.path.join(basePathBFS, dw, "data", f"pointsavg_n{n}.dat")
             d, w = extract_width_depth(dataFile_dw)
@@ -155,9 +169,31 @@ def main():
             idx = np.argmin(np.abs(DEPTHS - d))
             c = plt.get_cmap("tab20")(idx)
             ls = LINES[idx % len(LINES)]
-            addNxplot(d, w, x, Nx, ax, c, ls)
-            dN = computeDeltaN(w, x, Nx, x_flat, Nx_flat)
-            plotd_vs_dNx(d, w, dN, ax2, plotBFS=False)
+            addNxplot(d, w, x, Nx, ax, c, ls, linewidth=3)
+            dN = computeDeltaN(w, x, Nx, x_flat, Nx_flat, x_start=150, x_end=350)
+            bfs_data.append([d,dN])
+            plotd_vs_dNx(d, w, dN, ax2, plotBFS=False, marker='s')
+
+        # for dw in ffs_codenames:
+        #     dataFile_dw = os.path.join(basePathFFS, dw, "data", f"pointsavg_n{n}.dat")
+        #     d, w = extract_width_depth(dataFile_dw)
+        #     x, Nx = computeNx(dataFile_dw, doLoo)
+        #     # get the color in tab20 based on the index of the depth in DEPTHS
+        #     idx = np.argmin(np.abs(DEPTHS - d))
+        #     c = plt.get_cmap("tab20")(idx)
+        #     ls = LINES[idx % len(LINES)]
+        #     addNxplot(d, w, x, Nx, ax, c, ls, linewidth=3)
+        #     dN = computeDeltaN(w, x, Nx, x_flat, Nx_flat, x_start=150, x_end=350)
+        #     ffs_data.append([d,dN])
+        #     plotd_vs_dNx(d, w, dN, ax2, plotBFS=False)
+
+        bfs_data = np.array(bfs_data)
+
+        # fit a line to the bfs data
+        xx = np.linspace(0.18,1.3,100)
+        coeffs = np.polyfit(bfs_data[:, 0], bfs_data[:, 1], 1)
+        yy = np.polyval(coeffs, xx)
+        ax2.plot(xx, yy, "--", color="purple", label="BFS fit")
 
     if plotdeepGapdata:
         ls_styles_deepGap = [":", "--", "-."]  # line styles for deep gap cases
@@ -169,7 +205,7 @@ def main():
             idx = np.argmin(np.abs(DEPTHS - d))
             c = "black"
             ls = ls_styles_deepGap[deepGap_codenames.index(dw) % len(ls_styles_deepGap)]  # line style based on the index of the deep gap case
-            addNxplot(d, w, x, Nx, ax, c, ls)
+            addNxplot(d, w, x, Nx, ax, c, ls, linewidth=2)
             dN = computeDeltaN(w, x, Nx, x_flat, Nx_flat)
             plotd_vs_dNx(d, w, dN, ax2, plotBFS=False)
 
@@ -182,12 +218,15 @@ def main():
     for dw in code_names:
         dataFile_dw = os.path.join(basePath, dw, "data", f"pointsavg_n{n}.dat")
         d, w = extract_width_depth(dataFile_dw)
+            
+        # if d > 1.5: 
+        #     continue
 
         ############## TEMPORARY ##############
-        if plotBFSdata and d > 1.25:
-            # skip large depths for now, as they are not relevant for the report and take a long time to compute
-            print(colors.WARNING + f"Depth {d} too large, skipping" + colors.ENDC)
-            continue
+        # if plotBFSandFFSdata and (d > 0.75 or d < 0.75):
+        #     # skip large depths for now, as they are not relevant for the report and take a long time to compute
+        #     print(colors.WARNING + f"Depth {d} too large, skipping" + colors.ENDC)
+        #     continue
 
         if plotdeepGapdata and w > 20:
             # skip large widths for now, as they are not relevant for the report and take a long time to compute
@@ -197,6 +236,9 @@ def main():
         #######################################
 
         x, Nx = computeNx(dataFile_dw, doLoo)
+        if len(x) == 0 or len(Nx) == 0:
+            print(colors.WARNING + f"Skipping case {dw} due to error in reading data" + colors.ENDC)
+            continue
         depths = np.append(depths, d)
         widths = np.append(widths, w)
         # compute deltaN
@@ -213,11 +255,11 @@ def main():
             idx_ls = 0
             prevD = d
 
-        idx_tmp = (idx_ls % len(LINES)) if not plotBFSdata else ((idx_ls % len(LINES) - 1) + 1)  # skip the first line style for the first case of each depth, as it is already used for the BFS case
+        idx_tmp = (idx_ls % len(LINES)) if not plotBFSandFFSdata else ((idx_ls % len(LINES) - 1) + 1)  # skip the first line style for the first case of each depth, as it is already used for the BFS case
         ls = LINES[idx_tmp] # skip the first line style for the first case of each depth, as it is already used for the BFS case
         addNxplot(d, w, x, Nx, ax, c, ls)
         plotd_vs_dNx(d, w, dN, ax2, plotBFS=False)
-
+    
     plotd_vs_dNx(0, 0, 0, ax2, plotBFS=True)
 
     # GPR interpolation and plotting (separated)
@@ -226,7 +268,7 @@ def main():
     plot_deltaN_grid(gpr_result)
 
     ax.set_title(f"n(x) factor using {'Loo' if doLoo else 'L2'} norm")
-    ax.set_xlabel("x - w")
+    ax.set_xlabel("x")
     ax.set_ylabel("n(x)")
     ax.grid()
     ax.legend()
