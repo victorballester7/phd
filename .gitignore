@@ -1,6 +1,5 @@
 runs/
 tutorials/
-nektar*/
 **credentials*.py
 **__pycache__
 **/spod/**/*.dat
