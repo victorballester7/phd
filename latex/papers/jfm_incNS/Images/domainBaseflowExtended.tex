@@ -1,0 +1,252 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{patterns,decorations.markings,backgrounds,arrows.meta}
+
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+\def\a{-20}
+\def\d{4}
+\def\w{15}
+\def\b{55}
+\def\scale{0.3}
+\def\h{20}
+
+\def\aa{\a*\scale}
+\def\dd{\d*\scale}
+\def\ww{\w*\scale}
+\def\bb{\b*\scale}
+\def\hh{\h*\scale}
+
+% Final width = 13.5 cm
+% Original complete width including margins:
+% [-6.4,17.65] -> 24.05 units
+\def\geomscale{0.5613305613}
+
+\newcommand{\fsize}{\fontsize{8.7}{10.44}\selectfont}
+
+\begin{document}
+\begin{tikzpicture}[
+	x=\geomscale cm,
+	y=\geomscale cm,
+	>=Stealth[length=3.2pt,width=2.4pt]
+	]
+
+	% Bounding box including margins
+	\path[use as bounding box] (0,0) rectangle (24.05,8.9);
+
+	% Translation:
+	% old x_min = -6.4 -> new x = 0
+	% old y_min = -2.6 -> new y = 0
+	\begin{scope}[shift={(6.4,2.6)}]
+
+		% Wall
+		\draw[thick]
+		(\aa,0) -- (0,0) -- (0,-\dd)
+		-- (\ww,-\dd) -- (\ww,0) -- (\bb,0);
+
+		\def\lengthWall{0.5}
+
+		\foreach \x in {-5.5,-5,...,0,5,5.5,...,16.5} {
+				\draw (\x,0) -- ++(225:\lengthWall);
+			}
+
+		\foreach \x in {0,0.5,...,4.5} {
+				\draw (\x,-\dd) -- ++(225:\lengthWall);
+			}
+
+		\draw (0,-\dd/2) -- ++(225:\lengthWall);
+
+		% Boundary-layer profile
+		\begin{scope}[shift={(-4,0)}]
+
+			\draw[black,thick]
+			plot[smooth,tension=0.5] coordinates {
+					(-2,0)
+					(-1.8,0.075)
+					(-1.6,0.15)
+					(-1.4,0.225)
+					(-1.2,0.3)
+					(-1.07,0.37)
+					(-1,0.5)
+					(-1,1)
+					(-1,1.25)
+					(-1,1.5)
+				};
+
+			\draw[black,thick] (-2,0) -- (-2,1.5);
+
+			\draw[-{Latex[length=5pt,width=4pt]},thick] (-2,1.5) -- (-1,1.5);
+			\draw[-{Latex[length=5pt,width=4pt]},thick] (-2,1.1125) -- (-1,1.125);
+			\draw[-{Latex[length=5pt,width=4pt]},thick] (-2,0.75) -- (-1,0.75);
+			\draw[-{Latex[length=5pt,width=4pt]},thick] (-2,0.375) -- (-1.09,0.375);
+
+			\node (BLlines) at (-2,1.5) {};
+
+		\end{scope}
+
+		% Displacement thickness
+		\begin{scope}[yscale=1.7,xscale=0.8,shift={(2,0)}]
+
+			\clip (-5,-0.2) rectangle (10,1);
+
+			\def\col{orange!70!black}
+
+			\draw[\col,thick,dotted]
+			plot[smooth,tension=0.5] coordinates {
+					(-2,0)
+					(-1.8,0.075)
+					(-1.6,0.15)
+					(-1.4,0.225)
+					(-1.2,0.3)
+					(-1.07,0.37)
+					(-1,0.5)
+					(-1,1)
+					(-1,1.25)
+					(-1,1.5)
+				};
+
+			\draw[\col,thick,dotted] (-4,0) -- (0,0);
+
+			\draw[
+			\col,
+			{Latex[length=5pt,width=4pt]}-{Latex[length=5pt,width=4pt]},
+			thick,
+			dotted
+			] (-2,0) -- (-2,0.65);
+
+			\node[
+				\col,
+				font=\fsize,
+				anchor=east
+			] at (-2,0.325)
+			{$\delta_{\mathrm{fp}}^*:=1$};
+
+		\end{scope}
+
+		% Coordinate axes
+		\begin{scope}[shift={(2,1.5)}]
+
+			\draw[
+				-Stealth,
+				thick,
+				green!60!black
+			] (0,0.5) -- ++(0,1.4)
+			node[
+				above,
+				anchor=east,
+				font=\fsize
+			] {$y$};
+
+			\draw[
+				-Stealth,
+				thick,
+				red!80!black
+			] (0,0.5) -- ++(1.4,0)
+			node[
+				below,
+				anchor=north west,
+				font=\fsize
+			] {$x$};
+
+		\end{scope}
+
+		% Width w
+		\node[font=\fsize] (width)
+		at (\ww/2,-\dd/2) {$w$};
+
+		\draw[Stealth-]
+		(0.1,-\dd/2) -- (width.west);
+
+		\draw[-Stealth]
+		(width.east) -- (\ww-0.1,-\dd/2);
+
+		% Depth d
+		\node[font=\fsize] (depth)
+		at (\ww+1,-\dd) {$d$};
+
+		\def\lengthdepthArrow{0.8}
+
+		\draw[-Stealth]
+		(\ww+0.5,0.1+\lengthdepthArrow)
+		-- (\ww+0.5,0.1);
+
+		\draw[Stealth-]
+		(\ww+0.5,-\dd)
+		-- (\ww+0.5,-\dd-\lengthdepthArrow);
+
+		% Height h
+		\node[font=\fsize] (height)
+		at (\bb+0.75,\hh/2) {$h$};
+
+		\draw[-Stealth]
+		(height.south) -- (\bb+0.75,0);
+
+		\draw[Stealth-]
+		(\bb+0.75,\hh) -- (height.north);
+
+		% Outer lengths
+		\def\deps{1.1}
+
+		\node[font=\fsize] (ell1)
+		at (\aa/2,-\dd-\deps) {$\ell_{\mathrm{i}}$};
+
+		\draw[-Stealth]
+		(ell1.east) -- (0,-\dd-\deps);
+
+		\draw[Stealth-]
+		(\aa,-\dd-\deps) -- (ell1.west);
+
+		\node[font=\fsize] (ell2)
+		at (\ww/2+\bb/2,-\dd-\deps) {$\ell_{\mathrm{o}}$};
+
+		\draw[-Stealth]
+		(ell2.east) -- (\bb,-\dd-\deps);
+
+		\draw[Stealth-]
+		(\ww,-\dd-\deps) -- (ell2.west);
+
+		% Outer boundaries
+		\draw[dotted,thick] (\aa,\hh) -- (\bb,\hh);
+		\draw[dotted,thick] (\aa,0) -- (\aa,\hh);
+		\draw[dotted,thick] (\bb,0) -- (\bb,\hh);
+
+		% Labels
+		\node[font=\fsize] (W)
+		at (9,-0.8) {Wall};
+
+		\node[
+		font=\fsize,
+		anchor=south west
+		] at (BLlines.north)
+		{$\boldsymbol{u}=\boldsymbol{u}_{\mathrm{BL}}(y)$};
+
+		\node[
+			font=\fsize,
+			anchor=west
+		] at (W.east)
+		{$\boldsymbol{u}=\boldsymbol{0}$};
+
+		\node[
+			font=\fsize,
+			anchor=north
+		] at ({(\bb+\aa)/2},\hh)
+		{$\boldsymbol{u}=\boldsymbol{u}_{\infty}(x)$};
+
+		\node[
+		font=\fsize,
+		anchor=east
+		] at (\bb,\hh/2)
+		{$
+			\partial_{\boldsymbol{n}}\boldsymbol{u}
+			=
+			\boldsymbol{h}_{\mathrm{dong}}
+			(\boldsymbol{u}_{\mathrm{out}})
+		$};
+
+	\end{scope}
+
+\end{tikzpicture}
+\end{document}

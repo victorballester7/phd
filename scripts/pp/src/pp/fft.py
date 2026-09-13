@@ -7,6 +7,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 from pp.colors import colors
+from scipy.signal import welch
+
 
 def detect_fundamentals(peak_freqs, tol=0.03):
     """
@@ -40,9 +42,9 @@ def detect_fundamentals(peak_freqs, tol=0.03):
         # --------------------------------------------------------
         # 3) Check mixed harmonics: f ≈ n*f0 + m*f1
         # --------------------------------------------------------
-        if len(fundamentals) >= 2:  
+        if len(fundamentals) >= 2:
             for i in range(len(fundamentals)):
-                for j in range(i+1, len(fundamentals)):
+                for j in range(i + 1, len(fundamentals)):
                     f0 = fundamentals[i]
                     f1 = fundamentals[j]
 
@@ -67,25 +69,26 @@ def detect_fundamentals(peak_freqs, tol=0.03):
 
     return fundamentals
 
+
 def refine_peak(omega, amp, k):
     """
     Parabolic interpolation around index k to estimate sub-bin peak location.
     Returns refined_frequency, refined_amplitude.
     """
     if k <= 0 or k >= len(amp) - 1:
-        return omega[k], amp[k]   # cannot refine at the edges
+        return omega[k], amp[k]  # cannot refine at the edges
 
-    y1, y2, y3 = amp[k-1], amp[k], amp[k+1]
+    y1, y2, y3 = amp[k - 1], amp[k], amp[k + 1]
 
     # Parabolic vertex offset relative to k
-    denom = (y1 - 2*y2 + y3)
+    denom = y1 - 2 * y2 + y3
     if denom == 0:
         delta = 0
     else:
         delta = 0.5 * (y1 - y3) / denom
 
     # refine frequency
-    domega = omega[k+1] - omega[k]
+    domega = omega[k + 1] - omega[k]
     refined_freq = omega[k] + delta * domega
 
     # refined amplitude at vertex:
@@ -94,7 +97,15 @@ def refine_peak(omega, amp, k):
     return refined_freq, refined_amp
 
 
-def plot_harmonics(omega, fft_data, width: float, depth: float, point: np.ndarray, variable_label: str, prominence: float = 0.15) -> np.ndarray:
+def plot_harmonics(
+    omega,
+    fft_data,
+    width: float,
+    depth: float,
+    point: np.ndarray,
+    variable_label: str,
+    prominence: float = 0.15,
+) -> np.ndarray:
     """
     Detect fundamental harmonics and plot their superharmonics
     in the FFT spectrum. Each fundamental gets its own color.
@@ -105,7 +116,11 @@ def plot_harmonics(omega, fft_data, width: float, depth: float, point: np.ndarra
     """
     amp = np.abs(fft_data)
     if np.max(amp) == 0:
-        print(colors.WARNING + f"No variable signal detected for variable {variable_label} at point x={point[0]:.2f}, y={point[1]:.2f}, z={point[2]:.2f} (d={depth:.2f}, w={width:.2f}). Skipping FFT analysis." + colors.ENDC)
+        print(
+            colors.WARNING
+            + f"No variable signal detected for variable {variable_label} at point x={point[0]:.2f}, y={point[1]:.2f}, z={point[2]:.2f} (d={depth:.2f}, w={width:.2f}). Skipping FFT analysis."
+            + colors.ENDC
+        )
         return np.array([])
     amp_norm = amp / np.max(amp)
 
@@ -122,7 +137,6 @@ def plot_harmonics(omega, fft_data, width: float, depth: float, point: np.ndarra
     peak_freqs = np.array(peak_freqs)
     peak_amps = np.array(peak_amps)
 
-
     # Sort peaks from low to high frequency
     idx = np.argsort(peak_freqs)
     peak_freqs = peak_freqs[idx]
@@ -136,8 +150,10 @@ def plot_harmonics(omega, fft_data, width: float, depth: float, point: np.ndarra
 
     fundamentals = np.array(fundamentals)
 
-    print("Detected fundamental frequencies (ω) for variable "
-          f"{variable_label} at point x={point[0]:.2f}, y={point[1]:.2f}, z={point[2]:.2f} (d={depth:.2f}, w={width:.2f}):")
+    print(
+        "Detected fundamental frequencies (ω) for variable "
+        f"{variable_label} at point x={point[0]:.2f}, y={point[1]:.2f}, z={point[2]:.2f} (d={depth:.2f}, w={width:.2f}):"
+    )
     for omega0 in fundamentals:
         print(f"   ω₀ = {omega0:.6f}")
     try:
@@ -145,15 +161,20 @@ def plot_harmonics(omega, fft_data, width: float, depth: float, point: np.ndarra
         print(f"   ω_max = {peak_freqs[np.argmax(peak_amps)]:.6f}")
         print("")
     except ValueError:
-        print(colors.WARNING + "No peaks detected above the prominence threshold." + colors.ENDC)
+        print(
+            colors.WARNING
+            + "No peaks detected above the prominence threshold."
+            + colors.ENDC
+        )
         return fundamentals
-
 
     # -------- 3) Plot FFT ----------------
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.set_xlabel("ω")
     ax.set_ylabel("normalized FFT")
-    ax.set_title(f"Spectrum of {variable_label} at x = {point[0]:.2f}, y = {point[1]:.2f}, z = {point[2]:.2f} (d{depth:.2f}_w{width:.2f})")
+    ax.set_title(
+        f"Spectrum of {variable_label} at x = {point[0]:.2f}, y = {point[1]:.2f}, z = {point[2]:.2f} (d{depth:.2f}_w{width:.2f})"
+    )
     # -------- 4) Plot superharmonics ----------
     # skip first color (already used in the line plot)
 
@@ -170,13 +191,18 @@ def plot_harmonics(omega, fft_data, width: float, depth: float, point: np.ndarra
     #         n += 1
 
     ax.plot(omega, amp_norm, label="FFT amplitude")
-    ax.grid(True, linestyle='--', alpha=0.5)
+    ax.grid(True, linestyle="--", alpha=0.5)
     ax.legend()
     return fundamentals
 
 
 def fftFreqs(
-    time: np.ndarray, signal: np.ndarray,  width: float, depth: float, point: np.ndarray, variable_label: str
+    time: np.ndarray,
+    signal: np.ndarray,
+    width: float,
+    depth: float,
+    point: np.ndarray,
+    variable_label: str,
 ) -> np.ndarray:
     """
     Perform FFT on the given signal and print frequencies with amplitudes above a threshold.
@@ -187,37 +213,40 @@ def fftFreqs(
         Returns:
             np.ndarray: Reconstructed signal from the highest frequencies.
     """
-    # substract mean to avoid the zero frequency peak 
+    # substract mean to avoid the zero frequency peak
     # hanning window already reduces the mean, so we can skip this step to avoid losing the mean information
     mean = np.mean(signal)
     signal = signal - mean
 
-
-
     # check if dt is constant
     dt_array = np.diff(time)
     if not np.allclose(dt_array, dt_array[0]):
-        print(colors.WARNING + "Warning: time steps are not constant. Taking only the last data with the last dt." + colors.ENDC)
+        print(
+            colors.WARNING
+            + "Warning: time steps are not constant. Taking only the last data with the last dt."
+            + colors.ENDC
+        )
         dt = dt_array[-1]
         idx = np.where(dt_array == dt)[0][0] + 1
         print(idx)
         time = time[idx:]
         signal = signal[idx:]
-        print(colors.OKCYAN + f"Using dt = {dt} from t = {time[0]} to t = {time[-1]}" + colors.ENDC)
+        print(
+            colors.OKCYAN
+            + f"Using dt = {dt} from t = {time[0]} to t = {time[-1]}"
+            + colors.ENDC
+        )
     else:
         dt = time[1] - time[0]
 
-    print( colors.OKGREEN + f"Using constant dt = {dt}" + colors.ENDC)
+    print(colors.OKGREEN + f"Using constant dt = {dt}" + colors.ENDC)
 
     # Apply a Hann window to reduce leakage
     window = np.hanning(len(signal))
     signal = signal * window
 
-
-
     # use fft to get the frequency
     fft_data = rfft(signal)
-
 
     freq = rfftfreq(len(signal), d=dt)
     omega = 2 * np.pi * freq
@@ -235,7 +264,7 @@ def fftFreqs(
     #     if np.abs(fft_data[i]) > threshold:
     #         idx_to_print.append([i, np.abs(fft_data[i])])
     # idx_to_print = np.array(idx_to_print)
-    # 
+    #
     # if len(idx_to_print) == 0:
     #     print("No frequencies found above the threshold.")
     #     return
@@ -248,7 +277,7 @@ def fftFreqs(
     #         f"ω (2 π f): {omega[int(i)]:.8f}, Amplitude: {A:.8f}"
     #     )
 
-    # print(f"\nMinimum frequency: ω_min = {np.min(omega[1:]):.8f}") 
+    # print(f"\nMinimum frequency: ω_min = {np.min(omega[1:]):.8f}")
     # print(f"Maximum frequency: ω_max = {np.max(omega):.8f}\n")
 
     # fig, ax = plt.subplots()
@@ -256,7 +285,6 @@ def fftFreqs(
     # ax.set_xlabel('ω (2 π f)')
     # ax.set_ylabel('Amplitude')
     # ax.set_title(f'FFT Amplitude Spectrum for {variable_label}')
-
 
     # set mean to zero to avoid the zero frequency peak
 
@@ -267,7 +295,42 @@ def fftFreqs(
     # # reconstruct the signal from the highest frequencies
     # signal_reconstructed = irfft(fft_data, n=len(signal))
 
-
     return fundamentals
 
 
+def make_uniform_time(time: np.ndarray, signal: np.ndarray):
+    dt_array = np.diff(time)
+    if len(dt_array) == 0:
+        raise ValueError("Need at least two time samples to compute a PSD.")
+
+    if np.allclose(dt_array, dt_array[0]):
+        return time, signal, dt_array[0]
+
+    dt = np.mean(dt_array)
+    time_uniform = np.arange(time[0], time[-1] + 0.5 * dt, dt)
+    signal_uniform = np.interp(time_uniform, time, signal)
+    print(
+        colors.WARNING
+        + f"Warning: non-uniform time step detected. Interpolating to dt = {dt:g}."
+        + colors.ENDC
+    )
+    return time_uniform, signal_uniform, dt
+
+
+def compute_psd(time: np.ndarray, signal: np.ndarray):
+    time_uniform, signal_uniform, dt = make_uniform_time(time, signal)
+    n_samples = len(time_uniform)
+    nperseg = min(4096, n_samples)
+
+    freq, psd_freq = welch(
+        signal_uniform,
+        fs=1.0 / dt,
+        window="hann",
+        nperseg=nperseg,
+        detrend="constant",
+        scaling="density",
+    )
+
+    omega = 2.0 * np.pi * freq
+    psd_omega = psd_freq / (2.0 * np.pi)
+    return omega, psd_omega

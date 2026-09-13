@@ -180,7 +180,7 @@
     </BOUNDARYCONDITIONS>
 
 <FUNCTION NAME="InitialConditions">
-<F VAR="u,v,w,p" FILE="mesh_63.chk" />
+<F VAR="u,v,w,p" FILE="mesh_85.chk" />
 </FUNCTION>
 <!--     <FUNCTION NAME="InitialConditions"> -->
  <!--      <E VAR="u" VALUE="Uinf * (y>0) * ( -->

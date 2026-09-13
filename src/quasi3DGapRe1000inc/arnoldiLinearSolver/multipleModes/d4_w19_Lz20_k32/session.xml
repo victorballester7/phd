@@ -31,7 +31,7 @@
     <PARAMETERS>
      <!--General parameters-->
       <P> TimeStep = 0.007 </P>
-      <P> NumSteps        = 4e3     </P>
+      <P> NumSteps        = 1.5e3     </P>
       <P> IO_CheckSteps   = NumSteps         </P> 
       <P> IO_InfoSteps    = NumSteps/50       </P> 
       <P> IO_CFLSteps     = IO_InfoSteps         </P>
@@ -47,7 +47,7 @@
       <P> kdim            = 16                   </P>
       <P> nvec            = 2                   </P>
       <P> evtol           = 1e-05               </P>
-      <p> nits            = 500                 </p>
+      <p> nits            = 3000                 </p>
 
       <!-- Parameters for the simulation -->
       <!-- To understand the formulas in the parameters, please refer to the file docs/20250414_Blasius_formulas.md -->
@@ -174,11 +174,11 @@
     </FUNCTION>
 
     <FUNCTION NAME="InitialConditions">
-      <!-- <F VAR="u,v,p" FILE="../initialCond.fld" /> -->
-      <E VAR="u" VALUE="0.1*awgn(1.0)*exp(-(y+3)/5)" />
-      <E VAR="v" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" />
-      <E VAR="w" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" />
-      <E VAR="p" VALUE="0" />
+      <F VAR="u,v,w,p" FILE="mesh_717.chk" />
+      <!-- <E VAR="u" VALUE="0.1*awgn(1.0)*exp(-(y+3)/5)" /> -->
+      <!-- <E VAR="v" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" /> -->
+      <!-- <E VAR="w" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" /> -->
+      <!-- <E VAR="p" VALUE="0" /> -->
     </FUNCTION>
   </CONDITIONS>
 </NEKTAR>

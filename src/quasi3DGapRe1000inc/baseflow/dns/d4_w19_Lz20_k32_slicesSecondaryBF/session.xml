@@ -180,7 +180,7 @@
     </BOUNDARYCONDITIONS>
 
   <FUNCTION NAME="InitialConditions">
-      <F VAR="u,v,w,p" FILE="../d4_w19_Lz20_k32_BFwith2dMode/mesh_7.chk" />
+      <F VAR="u,v,w,p" FILE="../d4_w19_Lz20_k32_BFwith2dMode/mesh_6.chk" />
   </FUNCTION>
  </CONDITIONS>
  <FILTERS>

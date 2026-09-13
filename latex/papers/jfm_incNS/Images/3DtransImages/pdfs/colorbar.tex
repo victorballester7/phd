@@ -1,0 +1,91 @@
+
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\usepgfplotslibrary{colormaps}
+
+\pgfplotsset{compat=1.18}
+
+% Match JFM fonts
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+% Final width in the JFM paper
+\def\figurewidth{13.5}
+
+% Final JFM font size
+\newcommand{\fsize}{\fontsize{8.7}{10.44}\selectfont}
+
+\begin{document}
+\begin{tikzpicture}
+	% \clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+	\def\xmin{0}
+	\def\xmax{\figurewidth}
+	\def\ymin{0}
+	\def\ymax{1.3}
+
+	\path[use as bounding box]
+	(\xmin,\ymin) rectangle (\xmax,\ymax);
+
+	\coordinate (clippedcenter) at ({(\xmin+\xmax)/2}, {(\ymin+\ymax)/2});
+
+	% ============================================================
+	% FIGURE-RELATIVE COLORBAR STYLE
+	% ============================================================
+
+	% Colorbar geometry
+	\pgfmathsetlengthmacro{\colorbarwidth}
+	{0.33*\figurewidth cm}
+
+	\pgfmathsetlengthmacro{\colorbarheight}
+	{0.08*0.33*\figurewidth cm}
+
+	% Matplotlib-like line and tick dimensions
+	\pgfmathsetlengthmacro{\colorbarlinewidth}
+	{0.0020*\figurewidth cm}
+
+	\pgfmathsetlengthmacro{\colorbarticklength}
+	{0.0075*\figurewidth cm}
+
+	\pgfplotscolorbardrawstandalone[
+		colormap={reverse viridis}{
+				indices of colormap={
+						\pgfplotscolormaplastindexof{viridis},...,0 of viridis
+					}
+			},
+		point meta min=0.5,
+		point meta max=1e3,
+		colorbar horizontal,
+		samples=200,
+		scaled x ticks=false,
+		colorbar style={
+				xmode=log,
+				xtick={1,1e1,1e2,1e3,1e4},
+				xticklabel style={
+						font=\fsize,
+					},
+				xticklabels={$10^{-6}$,$10^{-5}$,$10^{-4}$,$10^{-3}$,$10^{-2}$},
+				xlabel={$-\lambda_2$},
+				xlabel style={
+						font=\fsize,
+					},
+				at={(clippedcenter)},
+				anchor=south,
+				yshift=0.55cm,
+				width=\colorbarwidth,
+				height=\colorbarheight,
+				xtick pos=lower,
+				xtick style={
+						black,
+						line width=\colorbarlinewidth,
+					},
+				tickwidth=\colorbarticklength,
+				axis line style={
+						line width=\colorbarlinewidth,
+					},
+			},
+	]
+\end{tikzpicture}
+\end{document}

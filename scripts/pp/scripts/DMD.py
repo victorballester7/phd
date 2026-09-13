@@ -5,7 +5,7 @@ from pp.fft import fftFreqs
 from pp.filterData import timeFilter
 from pp.inputargs import parseArgs
 from pp.colors import colors
-from pp.fileManagement import extract_width_depth, readDataHistoryPointsMultiple
+from pp.fileManagement import extract_depth_width, readDataHistoryPointsMultiple
 from pp.returnMap import getReturnPoints
 from scipy.signal import hilbert
 from scipy.stats import linregress
@@ -59,7 +59,7 @@ def main():
         # fields = np.swapaxes(fields, 0, 1)  # points, time, vars
 
         
-        depth, width = extract_width_depth(f)
+        depth, width = extract_depth_width(f)
 
         print(f"Processing folder: {f}")
         for i, p in enumerate(points):

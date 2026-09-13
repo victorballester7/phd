@@ -4,7 +4,7 @@ from pp.fft import fftFreqs
 from pp.filterData import timeFilter
 from pp.inputargs import parseArgs
 from pp.colors import colors
-from pp.fileManagement import extract_width_depth, readErrorHistoryMultiple
+from pp.fileManagement import extract_depth_width, readErrorHistoryMultiple
 from pp.returnMap import getReturnPoints
 
 
@@ -54,17 +54,26 @@ def main():
         time = time - time[0]  # reset time to start at 0
 
         time, errors = timeFilter(time, errors, args.time_min, args.time_max)
-        depth, width = extract_width_depth(f)
+        depth, width = extract_depth_width(f)
 
         uL2, vL2 = errors[:, 0], errors[:, 3]
 
+        diff_vL2 = np.gradient(vL2, time)
+        
+        areaRectangle = 150*(100 + width + 1000)
+        areaGap = width * depth
+        area_domain = areaRectangle + areaGap
+        print(f"Area of the domain for d{depth}_w{width}: {area_domain}")
+
         if args.returnMap:
             # customize to your needs
-            var_section = vL2
-            var_return = uL2 if var_section is vL2 else vL2
-            section = 15.6
-            min_section_return_variable = 24.55
-            max_section_return_variable = 24.65
+            vL2_returnMap = vL2
+            uL2_returnMap = uL2
+            var_section = vL2_returnMap
+            var_return = vL2_returnMap if var_section is vL2_returnMap else vL2_returnMap
+            section = 12.43
+            min_section_return_variable = 417.09
+            max_section_return_variable = 417.11
             ###################################
 
             _, return_points = getReturnPoints(
@@ -76,9 +85,12 @@ def main():
                 max_section_return_variable,
             )  # return the values of time and the values of vL2 corresponding to the return map with the section np.median(uL2)
             print(return_points)
-            axes[0].plot(uL2, vL2, "-", label=f"d{depth}_w{width}")
-            axes[0].set_xlabel("L2 error u")
-            axes[0].set_ylabel("L2 error v")
+            vL2_returnMap = vL2_returnMap - np.average(vL2_returnMap)
+            uL2_returnMap = uL2_returnMap - np.average(uL2_returnMap)
+            axes[0].plot(vL2_returnMap, uL2_returnMap, "-", label=f"d{depth}_w{width}")
+            axes[0].set_xlabel("L2 error v/area_domain")
+            axes[0].set_ylabel("L2 error u/area_domain")
+            # axes[0].set_ylabel("diff L2 error v")
 
             n_points = len(return_points) - 1 if len(return_points) > 1 else 1
             scatter = True

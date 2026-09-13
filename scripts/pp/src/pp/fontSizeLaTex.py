@@ -4,17 +4,17 @@ import matplotlib as mpl
 def compute_figure_size(latex_width_cm, aspect_ratio=0.75):
     """
     Compute figure size in inches matching the LaTeX target width.
-    
+
     Using the same physical size avoids extreme scaling and keeps
     font rendering crisp.
-    
+
     Parameters
     ----------
     latex_width_cm : float
         Width in LaTeX document (cm)
     aspect_ratio : float
         height / width ratio (default 0.75 = 4:3)
-    
+
     Returns
     -------
     tuple : (width_in, height_in)
@@ -25,7 +25,7 @@ def compute_figure_size(latex_width_cm, aspect_ratio=0.75):
     return width_in, height_in
 
 
-def compute_mpl_fontsize(fig_width_in, latex_width_cm, latex_font_pt):
+def compute_mpl_fontsize(latex_width_cm, latex_font_pt):
     """
     Compute matplotlib font size so that, after scaling in LaTeX,
     it matches the LaTeX document font size.
@@ -52,21 +52,41 @@ def compute_mpl_fontsize(fig_width_in, latex_width_cm, latex_font_pt):
     cm_to_inch = 1 / 2.54
     latex_width_in = latex_width_cm * cm_to_inch
 
+    fig_width_in = mpl.rcParams["figure.figsize"][0]  # width in inches
+
     # S = how much LaTeX will scale the figure (< 1 means shrink)
-    scale_factor = latex_width_in / fig_width_in
+    ratio_widthFontsize_mpl = fig_width_in / mpl.rcParams["font.size"]
+    ratio_widthFontsize_latex = latex_width_in / latex_font_pt
+
+    print(f"ratio_widthFontsize_mpl: {ratio_widthFontsize_mpl:.3f}")
+    print(f"ratio_widthFontsize_latex: {ratio_widthFontsize_latex:.3f}")
+
+    scale_factor = ratio_widthFontsize_mpl / ratio_widthFontsize_latex
+    # scale_factor = 1/scale_factor
 
     # To get latex_font_pt after scaling: mpl_fontsize * scale_factor = latex_font_pt
-    mpl_fontsize = latex_font_pt / scale_factor
+    # scale_factor = fig_width_in / latex_width_in
 
-    print(f"Scale factor: {scale_factor:.3f}, matplotlib font size: {mpl_fontsize:.2f} pt")
+    print(
+        f"Scale factor: {scale_factor:.3f}"
+    )
 
     mpl.rcParams.update(
         {
-            "font.size": mpl_fontsize,
-            "axes.labelsize": mpl_fontsize,
-            "axes.titlesize": mpl_fontsize,
-            "xtick.labelsize": mpl_fontsize,
-            "ytick.labelsize": mpl_fontsize,
-            "legend.fontsize": mpl_fontsize,
+            "font.size": mpl.rcParams["font.size"] * scale_factor,
+            "axes.labelsize": mpl.rcParams["axes.labelsize"] * scale_factor,
+            "axes.titlesize": mpl.rcParams["axes.titlesize"] * scale_factor,
+            "axes.linewidth": mpl.rcParams["axes.linewidth"] * scale_factor,
+            "grid.linewidth": mpl.rcParams["grid.linewidth"] * scale_factor,
+            "lines.linewidth": mpl.rcParams["lines.linewidth"] * scale_factor,
+            "lines.markersize": mpl.rcParams["lines.markersize"] * scale_factor,
+            "lines.markeredgewidth": mpl.rcParams["lines.markeredgewidth"] * scale_factor,
+            "legend.fontsize": mpl.rcParams["legend.fontsize"] * scale_factor,
+            "xtick.labelsize": mpl.rcParams["xtick.labelsize"] * scale_factor,
+            "ytick.labelsize": mpl.rcParams["ytick.labelsize"] * scale_factor,
+            "xtick.major.width": mpl.rcParams["xtick.major.width"] * scale_factor,
+            "ytick.major.width": mpl.rcParams["ytick.major.width"] * scale_factor,
         }
     )
+
+    print("axes.grid =", mpl.rcParams["axes.grid"])

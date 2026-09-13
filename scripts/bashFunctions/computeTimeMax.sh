@@ -7,6 +7,6 @@ function computeTimeMax() {
     # Convert days, hours, minutes, seconds to total seconds
     TIMEMAX=$((days * 86400 + hours * 3600 + minutes * 60 + seconds))
 
-    # substract 30 seconds for safe termination
-    TIMEMAX=$((TIMEMAX - 60))
+    # substract 90 seconds for safe termination
+    TIMEMAX=$((TIMEMAX - 90))
 }

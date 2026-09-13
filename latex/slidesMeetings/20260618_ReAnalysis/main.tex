@@ -1,0 +1,71 @@
+%!TEX program = xelatex
+% Note: this template must be compiled with XeLaTeX rather than PDFLaTeX
+% due to the custom fonts used. The line above should ensure this happens
+% automatically, but if it doesn't, your LaTeX editor should have a simple toggle
+% to switch to using XeLaTeX.
+
+\documentclass[
+  aspectratio=169, % Uncomment to use an aspect ratio of 16:9 (160 mm by 90 mm)
+  %aspectratio=43, % Uncomment to use an aspect ratio of 4:3 (128mm by 96mm)
+  t, % Top align all slide content by default
+  onlytextwidth, % Typeset content in columns at text width
+  10pt, % Default font size, use 10pt for the 16:9 aspect ratio and 8pt for the 4:3 aspect ratio
+]{beamer}
+
+\usepackage{../../ImperialTheme/beamer/beamerthemeImperial} % Use the Imperial theme
+
+\def\imagefolder{../../ImperialTheme/beamer/Images}
+\def\Rey{\text{Re}}
+\title{Re analysis} % Presentation title to appear on the title slide and left footers
+
+\subtitle{} % Presentation subtitle to appear on the title slide
+
+\author{Víctor Ballester} % Author name(s) to appear on the title slide
+
+\date{\today} % Presentation date to appear on the title slide and right footers
+
+\begin{document}
+
+\begingroup
+\setbeamercolor{background canvas}{bg=ICLLightGrey} % Slide background color
+\setbeamercolor{title page title}{fg=ICLBlue} % Title text color
+\setbeamercolor{title page subtitle}{fg=ICLBlue} % Subtitle text color
+\setbeamercolor{author}{fg=ICLBlue} % Author(s) text color
+\setbeamercolor{date}{fg=ICLBlue} % Date text color
+\setbeamertemplate{title page}[logo]{\imagefolder/ICL_Logo_Blue.pdf} % Imperial logo color, use 'ICL_Logo_White.pdf' for white and 'ICL_Logo_Blue.pdf' for blue
+\frame[plain, s]{\titlepage} % Output the title page with no footer ('plain') and vertically distributed text ('s')
+\endgroup
+
+\begin{frame}
+	\begin{columns}[T] % [T] ensures correct vertical alignment
+		\begin{column}{0.495\linewidth} % left column
+			\vspace{-0.8cm}
+			\begin{figure}[ht]
+				\centering
+				\includegraphics[width=\linewidth]{Images/stabilityCurve.pdf}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.495\linewidth} % left column
+			\begin{figure}[ht]
+				\centering
+				\includegraphics[width=\linewidth]{Images/stabilityCurvesCombined.pdf}
+			\end{figure}
+		\end{column}
+	\end{columns}
+\end{frame}
+\begin{frame}
+	\frametitle{$n$ factors for different Re = 800}
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.8\linewidth]{Images/nfactorRe800.png}
+	\end{figure}
+\end{frame}
+\begin{frame}
+  \frametitle{Hopf bifurcation}
+  \begin{itemize}
+    \item I want to prove we have a Hopf bifurcation at Re = 1000 from three particular trajectories in the w vs d space.
+    \item What can I use to prove we have (or not) a Hopf bifurcation as we vary Re? Continuation of eigenvalues?
+  \end{itemize}
+  
+\end{frame}
+\end{document}

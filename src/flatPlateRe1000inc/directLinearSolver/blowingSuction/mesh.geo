@@ -1,7 +1,7 @@
 // Macro parameters
 deltaStar = 1;
 D = 4 * deltaStar; // depth of the gap 
-BL = 2.75 * deltaStar; // height of the second layer of quad elements
+BL = 3.75 * deltaStar; // height of the second layer of quad elements
 x0 = 100 * deltaStar; // x distance from inflow to gap
 lengthOutflow = 1000 * deltaStar; // length after the gap
 x3 = lengthOutflow; // last point of the domain
@@ -14,11 +14,11 @@ size_triag_v_top = 32; // size of the elements in the upper triangular region
 //size_triag_h_inflow = 4; // size of the elements in the horizontal direction in the triangular region (inflow part)
 //size_triag_h_outflow = 8;
 size_quad_h = BL / 6;
-size_quad_v = 1.5;
+size_quad_v = 2.25;
 
 // All the value below are between 0 and 1. =1  means the elements are all equal in size. Avoid using values very close to 1, because we dividing by log(p) in the formula.
 p_quad_v = 1; // densitiy concentration of quad elements, vertically, near the inflow.
-p_quad_h = 0.5;  
+p_quad_h = 0.45;  
 p_triag_h_outflow = 0.8; // densitiy concentration of elements in the triangular region of the domain, horizontally.
 p_triag_h_inflow = p_triag_h_outflow; // density concentration of elements in the triangular region of the domain, horizontally.
 

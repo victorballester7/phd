@@ -53,13 +53,13 @@ def main():
 
     for dw in code_names2:
         dataFile_dw = os.path.join(basePath, dw, "data", f"points{chkfile}_n{n}.dat")
-        x, A = computeAmplitude(dataFile_dw, doLoo=False)
+        x, A = computeAmplitude(dataFile_dw, doLoo=False, field="rms")
         x, alpha = getGrowthRate(x, A)
         ax.plot(x, alpha, "-", label=f"{dw}")
 
 
     dataFile_dw = os.path.join(basePath, "omega0.04", "data", f"points{chkfile}_n{n}old.dat")
-    x, A = computeAmplitude(dataFile_dw, doLoo=False)
+    x, A = computeAmplitude(dataFile_dw, doLoo=False, field="rms")
     x, alpha = getGrowthRate(x, A)
     ax.plot(x, alpha, "-", label="omega=0.04 old")
 

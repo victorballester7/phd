@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from pp.fileManagement import extract_width_depth, readDataHistoryPoints
+from pp.fileManagement import extract_depth_width, readDataHistoryPoints
 from pp.inputargs import parseArgs
 from pp.filterData import timeFilter, spatialFilter
 from pp.spod import plot_confidence_bounds, spod, plot_spectrum
@@ -35,7 +35,7 @@ def main():
     time_min = args.time_min
     time_max = args.time_max
 
-    d, w = extract_width_depth(folder)
+    d, w = extract_depth_width(folder)
 
     xmin = 0
     xmax = 3 * w

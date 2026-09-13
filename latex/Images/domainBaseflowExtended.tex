@@ -7,9 +7,16 @@
 % change font for specific paper
 % \usepackage{newtxtext,newtxmath}
 
-\usepackage{lmodern}
+% Match JFM fonts
 \usepackage[T1]{fontenc}
-\renewcommand{\familydefault}{\sfdefault}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+
+%%%%% for beamer
+% \usepackage{lmodern}
+% \usepackage[T1]{fontenc}
+% \renewcommand{\familydefault}{\sfdefault}
 
 
 \def\a{-20}
@@ -32,7 +39,8 @@
 
 % second value (denominator) is the size of the figure in cm when included in the paper, i.e. thje width in \indcludegraphics[width=XXXXX]{...}
 
-\def\tikzfontscale{20.53/7.85} 
+% \def\tikzfontscale{17.40/12} 
+\def\tikzfontscale{2.5}
 
 \begin{document}
 \begin{tikzpicture}
@@ -117,10 +125,10 @@
 % Labels
 \node[scale=\tikzfontscale,font=\small] (W) at (9,-0.8) {Wall};
 \node[scale=\tikzfontscale,font=\small, anchor=east] (BL) at (\aa,\hh/2) {BL profile};
-\node[scale=\tikzfontscale,font=\small,anchor=north] at (BL.south) {$\mathbf{u}=\mathbf{u}_\text{BL}(y)$};
-\node[scale=\tikzfontscale,font=\small,anchor=west] at (W.east) {$\mathbf{u}=\mathbf{0}$};
-\node[scale=\tikzfontscale,font=\small,anchor=north] at ({(\bb+\aa)/2},\hh) {$\mathbf{u}=\mathbf{u}_\infty(x)$};
-\node[scale=\tikzfontscale,font=\small,anchor=east] at (\bb,\hh/2)  {$\partial_\mathbf{n}\mathbf{u}=\mathbf{h}(\mathbf{u}_\text{out})$};
+\node[scale=\tikzfontscale,font=\small,anchor=north] at (BL.south) {$\boldsymbol{u}=\boldsymbol{u}_\text{BL}(y)$};
+\node[scale=\tikzfontscale,font=\small,anchor=west] at (W.east) {$\boldsymbol{u}=\boldsymbol{0}$};
+\node[scale=\tikzfontscale,font=\small,anchor=north] at ({(\bb+\aa)/2},\hh) {$\boldsymbol{u}=\boldsymbol{u}_\infty(x)$};
+\node[scale=\tikzfontscale,font=\small,anchor=east] at (\bb,\hh/2)  {$\partial_{\boldsymbol{n}}\boldsymbol{u}=\boldsymbol{h}(\boldsymbol{u}_\text{out})$};
 
 \end{tikzpicture}
 \end{document}

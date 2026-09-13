@@ -5,7 +5,7 @@ from pp.filterData import timeFilter
 from pp.inputargs import parseArgs
 from pp.colors import colors
 from pp.fileManagement import (
-    extract_width_depth,
+    extract_depth_width,
     readFourierEnergyMultiple,
     extractValueXML,
 )
@@ -31,7 +31,7 @@ def main():
     _, ax = plt.subplots(1, 1, figsize=(8, 6))
 
     for i, f in enumerate(folders):
-        depth, width = extract_width_depth(f)
+        depth, width = extract_depth_width(f)
         time, energymodes = data[f]
 
         # get basefolder of f

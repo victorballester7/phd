@@ -1,0 +1,127 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,decorations.markings,backgrounds,arrows.meta}
+
+\usepackage{newtxtext,newtxmath}
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{compat=1.18}
+\pgfplotsset{colormap/RdBu}
+
+\def\image{../pngs/d4_w15.png}
+
+\def\figurewidth{4.46}
+\def\pagewidth{13.5}
+\def\geomscale{0.3670781893}
+
+\def\xfirstedge{-5.15}
+\def\yfirstedge{1.1}
+\def\xsecondedge{5.15}
+\def\ysecondedge{-1.6}
+\def\xmin{-5.9}
+\def\xmax{6.35}
+\def\ymax{4.3}
+\def\ymin{-5}
+
+\def\ysmallgap{3.47}
+\def\xsmallgap{-4.88}
+\def\depth{0.5}
+\def\width{9.85}
+
+\newcommand{\fsize}{\fontsize{8.7}{10.44}\selectfont}
+
+\pgfmathsetlengthmacro{\colorbarwidth}
+{0.33*\pagewidth cm}
+
+\pgfmathsetlengthmacro{\colorbarheight}
+{0.08*0.33*\pagewidth cm}
+
+\pgfmathsetlengthmacro{\colorbarlinewidth}
+{0.0020*\pagewidth cm}
+
+\pgfmathsetlengthmacro{\colorbarticklength}
+{0.0075*\pagewidth cm}
+
+
+\begin{document}
+
+\begin{tikzpicture}[x=\geomscale cm,y=\geomscale cm]
+
+	% Horizontal width: 12.15 * 0.3670781893 = 4.46 cm
+	% Extra vertical space is included for the colorbar.
+
+	\path[use as bounding box]
+	(0.175,2.9) rectangle (12.325,9);
+
+	\begin{scope}[shift={(6.075,5)}]
+
+		\clip (\xmin,\ymin) rectangle (\xmax,2.6);
+
+		\node[inner sep=0pt,xshift=0.05cm,yshift=0.25cm] (gap) at (0,0)
+		{\includegraphics[width=\figurewidth cm]{\image}};
+
+		\draw[thick]
+		(\xmin,\yfirstedge)
+		-- (\xfirstedge,\yfirstedge)
+		-- (\xfirstedge,\ysecondedge)
+		-- (\xsecondedge,\ysecondedge)
+		-- (\xsecondedge,\yfirstedge)
+		-- (\xmax,\yfirstedge);
+
+		\def\lengthWall{0.6}
+
+		\foreach \x in {-6,-5.5,...,-5.53,5.72,6.22} {
+				\draw
+				(\x,\yfirstedge)
+				-- ++(225:\lengthWall);
+			}
+
+		\foreach \x in {-4.86,-4.46,...,5.15} {
+				\draw
+				(\x,\ysecondedge)
+				-- ++(225:\lengthWall);
+			}
+
+		\foreach \y in {0.82,0.37,...,-1.5} {
+				\draw
+				(\xfirstedge,\y)
+				-- ++(225:\lengthWall);
+			}
+
+	\end{scope}
+
+	\begin{axis}[
+			hide axis,
+			axis equal image,
+			width=\linewidth,
+			height=0.6\linewidth,
+			xshift=-1.83cm,
+			yshift=1.15cm,
+		]
+
+		\addplot[
+			gray!50!black,
+			postaction={
+					decorate,
+					decoration={
+							markings,
+							mark=at position 0.09 with {\arrow{stealth}},
+							mark=at position 0.24 with {\arrow{stealth}},
+							mark=at position 0.42 with {\arrow{stealth}},
+							mark=at position 0.617 with {\arrow{stealth}},
+							mark=at position 0.8 with {\arrow{stealth}}
+						}
+				}
+		]
+		table[
+				col sep=comma,
+				x={"Points:0"},
+				y={"Points:1"}
+			]{../countourLines/d4_w15.csv};
+
+	\end{axis}
+
+\end{tikzpicture}
+
+\end{document}

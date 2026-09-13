@@ -11,16 +11,18 @@
       <I PROPERTY="EqType"                                VALUE="UnsteadyNavierStokes"       />
       <I PROPERTY="Projection"                            VALUE="Galerkin"                   /> 
       <I PROPERTY="EvolutionOperator"                     VALUE="Nonlinear"                  />
-      <I PROPERTY="TimeIntegrationMethod"                 VALUE="IMEXOrder2"                 />
       <I PROPERTY="SpectralVanishingViscosity"            VALUE="DGKernel"                        />
       <I PROPERTY="SPECTRALHPDEALIASING"                  VALUE="True"           />
       <I PROPERTY="GlobalSysSoln"                         VALUE="XxtMultiLevelStaticCond" />
       <I PROPERTY="Driver"                                VALUE="SteadyState"                />
     </SOLVERINFO>    
-
+    <TIMEINTEGRATIONSCHEME>
+      <METHOD> IMEX </METHOD>
+      <ORDER> 2 </ORDER>
+    </TIMEINTEGRATIONSCHEME>
     <PARAMETERS>
      <!--General parameters-->
-      <P> TimeStep        = 0.004      </P>
+      <P> TimeStep        = 0.007      </P>
       <P> NumSteps        = 1000e4     </P>
       <P> IO_CheckSteps   = NumSteps/100         </P> 
       <P> IO_InfoSteps    = NumSteps/8000       </P> 
@@ -30,6 +32,7 @@
       <P> SVVDiffCoeff    = 1.0                    </P>
       <P> SVVCutoffRatio  = 0.75                    </P>
 
+      <P> TOL            = 1e-11 </P>
 
       <!-- Parameters for the simulation -->
       <!-- To understand the formulas in the parameters, please refer to the file docs/20250414_Blasius_formulas.md -->
@@ -161,52 +164,52 @@
       </REGION>    
     </BOUNDARYCONDITIONS>
     
-    <!-- <FUNCTION NAME="InitialConditions"> -->
-    <!--   <F VAR="u,v,p" FILE="initialCond.fld" /> -->
-    <!-- </FUNCTION> -->
-
     <FUNCTION NAME="InitialConditions">
-       <E VAR="u" VALUE="Uinf * (y>0) * (
-                    (
-                      (a1_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + a2_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + a3_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + a4_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + a5_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + a6_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + a7_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + a8_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + a9_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + a10_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + a11_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11) / 
-                      (1 + b1_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + b2_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + b3_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + b4_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + b5_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + b6_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + b7_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + b8_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + b9_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + b10_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + b11_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11)
-                                                     ) * (y< etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C) +
-                    (
-                      (
-                         a1_u*(etaMax)^1 +
-                         a2_u*(etaMax)^2 + 
-                         a3_u*(etaMax)^3 + 
-                         a4_u*(etaMax)^4 + 
-                         a5_u*(etaMax)^5 +
-                         a6_u*(etaMax)^6 + 
-                         a7_u*(etaMax)^7 + 
-                         a8_u*(etaMax)^8 +
-                         a9_u*(etaMax)^9 + 
-                         a10_u*(etaMax)^10 +
-                         a11_u*(etaMax)^11) /
-                      (1 +
-                         b1_u*(etaMax)^1 + 
-                         b2_u*(etaMax)^2 + 
-                         b3_u*(etaMax)^3 +
-                         b4_u*(etaMax)^4 +
-                         b5_u*(etaMax)^5 + 
-                         b6_u*(etaMax)^6 + 
-                         b7_u*(etaMax)^7 +
-                         b8_u*(etaMax)^8 +
-                         b9_u*(etaMax)^9 +
-                         b10_u*(etaMax)^10 +
-                         b11_u*(etaMax)^11)
-                    ) * (y>=etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C))" />
-       <E VAR="v" VALUE="0.5*Uinf*C/(Re_deltaStar_le * sqrt(1+x*C^2/Re_deltaStar_le))* (y>0) * (
-                    (
-                      (a1_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + a2_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + a3_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + a4_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + a5_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + a6_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + a7_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + a8_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + a9_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + a10_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + a11_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11) / 
-                      (1 + b1_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + b2_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + b3_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + b4_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + b5_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + b6_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + b7_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + b8_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + b9_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + b10_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + b11_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11)
-                    ) * (y< etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C) + 
-                    (
-                      (a1_v*(etaMax)^1 + a2_v*(etaMax)^2 + a3_v*(etaMax)^3 + a4_v*(etaMax)^4 + a5_v*(etaMax)^5 + a6_v*(etaMax)^6 + a7_v*(etaMax)^7 + a8_v*(etaMax)^8 + a9_v*(etaMax)^9 + a10_v*(etaMax)^10 + a11_v*(etaMax)^11) /
-                      (1 + b1_v*(etaMax)^1 + b2_v*(etaMax)^2 + b3_v*(etaMax)^3 + b4_v*(etaMax)^4 + b5_v*(etaMax)^5 + b6_v*(etaMax)^6 + b7_v*(etaMax)^7 + b8_v*(etaMax)^8 + b9_v*(etaMax)^9 + b10_v*(etaMax)^10 + b11_v*(etaMax)^11)
-                    ) * (y>=etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C))" />
-       <E VAR="p" VALUE="0" />
+      <F VAR="u,v,p" FILE="initialCond.fld" />
+    </FUNCTION>
+
+    <!-- <FUNCTION NAME="InitialConditions"> -->
+    <!--    <E VAR="u" VALUE="Uinf * (y>0) * ( -->
+    <!--                 ( -->
+    <!--                   (a1_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + a2_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + a3_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + a4_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + a5_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + a6_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + a7_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + a8_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + a9_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + a10_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + a11_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11) /  -->
+    <!--                   (1 + b1_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + b2_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + b3_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + b4_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + b5_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + b6_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + b7_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + b8_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + b9_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + b10_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + b11_u*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11) -->
+    <!--                                                  ) * (y< etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C) + -->
+    <!--                 ( -->
+    <!--                   ( -->
+    <!--                      a1_u*(etaMax)^1 + -->
+    <!--                      a2_u*(etaMax)^2 +  -->
+    <!--                      a3_u*(etaMax)^3 +  -->
+    <!--                      a4_u*(etaMax)^4 +  -->
+    <!--                      a5_u*(etaMax)^5 + -->
+    <!--                      a6_u*(etaMax)^6 +  -->
+    <!--                      a7_u*(etaMax)^7 +  -->
+    <!--                      a8_u*(etaMax)^8 + -->
+    <!--                      a9_u*(etaMax)^9 +  -->
+    <!--                      a10_u*(etaMax)^10 + -->
+    <!--                      a11_u*(etaMax)^11) / -->
+    <!--                   (1 + -->
+    <!--                      b1_u*(etaMax)^1 +  -->
+       <!--                   b2_u*(etaMax)^2 +  -->
+       <!--                   b3_u*(etaMax)^3 + -->
+       <!--                   b4_u*(etaMax)^4 + -->
+       <!--                   b5_u*(etaMax)^5 +  -->
+       <!--                   b6_u*(etaMax)^6 +  -->
+       <!--                   b7_u*(etaMax)^7 + -->
+       <!--                   b8_u*(etaMax)^8 + -->
+       <!--                   b9_u*(etaMax)^9 + -->
+       <!--                   b10_u*(etaMax)^10 + -->
+       <!--                   b11_u*(etaMax)^11) -->
+       <!--              ) * (y>=etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C))" /> -->
+       <!-- <E VAR="v" VALUE="0.5*Uinf*C/(Re_deltaStar_le * sqrt(1+x*C^2/Re_deltaStar_le))* (y>0) * ( -->
+       <!--              ( -->
+       <!--                (a1_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + a2_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + a3_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + a4_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + a5_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + a6_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + a7_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + a8_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + a9_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + a10_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + a11_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11) /  -->
+       <!--                (1 + b1_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^1 + b2_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^2 + b3_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^3 + b4_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^4 + b5_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^5 + b6_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^6 + b7_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^7 + b8_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^8 + b9_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^9 + b10_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^10 + b11_v*(y*C/sqrt(1+x*C^2/Re_deltaStar_le))^11) -->
+       <!--              ) * (y< etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C) +  -->
+       <!--              ( -->
+       <!--                (a1_v*(etaMax)^1 + a2_v*(etaMax)^2 + a3_v*(etaMax)^3 + a4_v*(etaMax)^4 + a5_v*(etaMax)^5 + a6_v*(etaMax)^6 + a7_v*(etaMax)^7 + a8_v*(etaMax)^8 + a9_v*(etaMax)^9 + a10_v*(etaMax)^10 + a11_v*(etaMax)^11) / -->
+       <!--                (1 + b1_v*(etaMax)^1 + b2_v*(etaMax)^2 + b3_v*(etaMax)^3 + b4_v*(etaMax)^4 + b5_v*(etaMax)^5 + b6_v*(etaMax)^6 + b7_v*(etaMax)^7 + b8_v*(etaMax)^8 + b9_v*(etaMax)^9 + b10_v*(etaMax)^10 + b11_v*(etaMax)^11) -->
+       <!--              ) * (y>=etaMax *  sqrt(1+x*C^2/Re_deltaStar_le) / C))" /> -->
+       <!-- <E VAR="p" VALUE="0" /> -->
     </FUNCTION>
   </CONDITIONS>
 </NEKTAR>

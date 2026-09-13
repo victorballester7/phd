@@ -36,7 +36,8 @@ function readInput {
   # localDIR_baseflow="/home/victor/Desktop/PhD/src/ffsRe1000inc/baseflow/dns/${folder}"
   # localDIR_baseflow="/home/victor/Desktop/PhD/src/bfsRe1000inc/baseflow/dns/${folder}"
   # localDIR_baseflow="/home/victor/Desktop/PhD/src/deepGapRe1000inc/baseflow/dns/${folder}"
-  localDIR_baseflow="/home/victor/Desktop/PhD/src/incGapRe1000/baseflow/dns/${folder}"
+  localDIR_baseflow="/home/victor/Desktop/PhD/src/incGapRe800/baseflow/dns/${folder}"
+  # localDIR_baseflow="/home/victor/Desktop/PhD/src/incGapRe1000/baseflow/dns/${folder}"
   
   localDIRtmp="${localDIR_LS##*/Desktop/}"
   localDIRtmp="Desktop/${localDIRtmp/src/runs}"
@@ -72,9 +73,12 @@ function modifyFile {
   mkdir -p "$folder"
   cd "$folder" || exit 1
   cp "../$session_file" .
+  cp "../pbspro.job" .
+  if $? -ne 0; then
+    cp "$localDIR_baseflow/pbspro.job" .
+  fi
   cp "$localDIR_baseflow/$geo_file" .
   cp "$localDIR_baseflow/$mesh_file" .
-  cp "$localDIR_baseflow/pbspro.job" .
   cp "$localDIR_baseflow/slurm.job" .
 
   updateTimeStepLS

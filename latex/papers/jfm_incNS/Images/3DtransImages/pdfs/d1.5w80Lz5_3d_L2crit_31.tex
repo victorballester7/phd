@@ -1,0 +1,137 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,decorations.markings,backgrounds}
+\usetikzlibrary{arrows.meta}
+
+% Match JFM fonts
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{compat=1.18}
+
+\def\image{../pngs/d1.5_w80_Lz5.png}
+
+% Final width in the JFM paper
+\def\figurewidth{13.5}
+
+% Final JFM font size
+\newcommand{\fsize}{\fontsize{8.7}{10.44}\selectfont}
+
+\begin{document}
+\begin{tikzpicture}
+
+	\def\xmin{0}
+	\def\xmax{\figurewidth}
+	\def\ymin{-1}
+	\def\ymax{3}
+
+	\path[use as bounding box]
+	(\xmin,\ymin) rectangle (\xmax,\ymax);
+
+	\coordinate (clippedcenter) at ({(\xmin+\xmax)/2},{(\ymin+\ymax)/2});
+
+	% import .png figure
+	\draw[thick]
+	(0,0)
+	-- (0.969613,0.186464)
+	-- (0.969613,0.052210)
+	-- (6.362155,1.044199)
+	-- (6.362155,1.155208)
+	-- (13.5,2.461326);
+
+	\draw[thick]
+	(0.820442,0.261050)
+	-- (6.078729,1.193370)
+	-- (6.078729,1.267956)
+	-- (13.5,2.685083);
+
+	\draw[thick]
+	(0,0.223757)
+	-- (0.671271,0.335635)
+	-- (0.969613,0.186464);
+
+	\draw[thick]
+	(0.969613,0.044751)
+	-- (0.783149,0.156630);
+
+	\draw[thick]
+	(6.078729,1.267956)
+	-- (6.362155,1.155208);
+
+	\begin{scope}
+		\node[
+			inner sep=0pt,
+			rotate=0,
+			scale=0.742,
+			xshift=-0.06cm,
+			yshift=0.17cm
+		] (gap) at (clippedcenter)
+		{\includegraphics[width=1.5\textwidth]{\image}};
+	\end{scope}
+	% ============================================================
+	% FIGURE-RELATIVE COLORBAR STYLE
+	% ============================================================
+
+	% Colorbar geometry
+	\pgfmathsetlengthmacro{\colorbarwidth}
+	{0.33*\figurewidth cm}
+
+	\pgfmathsetlengthmacro{\colorbarheight}
+	{0.08*0.33*\figurewidth cm}
+
+	% Matplotlib-like line and tick dimensions
+	\pgfmathsetlengthmacro{\colorbarlinewidth}
+	{0.0020*\figurewidth cm}
+
+	\pgfmathsetlengthmacro{\colorbarticklength}
+	{0.0075*\figurewidth cm}
+
+	\pgfplotscolorbardrawstandalone[
+		colormap={reverse viridis}{
+				indices of colormap={
+						\pgfplotscolormaplastindexof{viridis},...,0 of viridis
+					}
+			},
+		point meta min=0.5,
+		point meta max=1e3,
+		colorbar horizontal,
+		samples=200,
+		scaled x ticks=false,
+		colorbar style={
+				xmode=log,
+				at={(clippedcenter)},
+				yshift=-0.6cm,
+				anchor=north,
+				width=\colorbarwidth,
+				height=\colorbarheight,
+				xtick={1,1e1,1e2,1e3},
+				xticklabels={
+						$10^{-4}$,
+						$10^{-3}$,
+						$10^{-2}$,
+						$10^{-1}$
+					},
+				xtick pos=lower,
+				xticklabel style={
+						font=\fsize,
+					},
+				xtick style={
+						black,
+						line width=\colorbarlinewidth,
+					},
+				tickwidth=\colorbarticklength,
+				axis line style={
+						line width=\colorbarlinewidth,
+					},
+				xlabel={$-\lambda_2$},
+				xlabel style={
+						font=\fsize,
+						yshift=0.2cm,
+					},
+			},
+	]
+\end{tikzpicture}
+\end{document}

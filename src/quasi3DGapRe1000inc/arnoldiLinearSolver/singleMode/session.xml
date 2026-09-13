@@ -30,7 +30,7 @@
     <PARAMETERS>
      <!--General parameters-->
       <P> TimeStep = 0.007 </P>
-      <P> NumSteps        = 1000e4     </P>
+      <P> NumSteps        = 10e3     </P>
       <P> IO_CheckSteps   = NumSteps         </P> 
       <P> IO_InfoSteps    = NumSteps/50       </P> 
       <P> IO_CFLSteps     = IO_InfoSteps         </P>
@@ -168,7 +168,7 @@
       </REGION>    
     </BOUNDARYCONDITIONS>
     <FUNCTION NAME="BaseFlow">
-      <F VAR="u,v,p" FILE="../../baseflow.fld"   />
+      <F VAR="u,v,p" FILE="../baseflow.fld"   />
       <E VAR="w" VALUE="0" />
     </FUNCTION>
 

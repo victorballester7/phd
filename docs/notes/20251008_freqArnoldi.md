@@ -18,7 +18,7 @@ ALWAYS, but
 $$
 \omega = \frac{\arg(\mu) + 2k pi}{T}
 $$
-depends on the choice of $k$. This means that the frequency that we get from Arnoldi is not unique, but depends on the choice of $k$. To get the correct frequency we need to see the physical problem and estimate the correct $k$ (from the computed $\arg(\mu)$ and $T$).
+depends on the choice of $k$. This means that the frequency that we get from Arnoldi is not unique, but depends on the choice of $k$. To get the correct frequency we need to see the physical problem and estimate the correct $k$ (from the computed $\arg(\mu)$ and $T$). If we want to have the right frequency with k = 0, then the time T that we should use in Arnoldi should be such that $\omega * T$ is in the range $[-pi, pi] = [0, pi]$ (because the frequency is positive). 
 
 
 

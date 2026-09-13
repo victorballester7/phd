@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <NEKTAR>  
   <EXPANSIONS>    
-    <E COMPOSITE="C[100,101,102]" NUMMODES="7" FIELDS="u,v" TYPE="MODIFIED" />  
-    <E COMPOSITE="C[100,101,102]" NUMMODES="6" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
+    <E COMPOSITE="C[100,101,102]" NUMMODES="6" FIELDS="u,v" TYPE="MODIFIED" />  
+    <E COMPOSITE="C[100,101,102]" NUMMODES="5" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
   </EXPANSIONS>
   
   <CONDITIONS>    
@@ -11,23 +11,28 @@
       <I PROPERTY="EqType"                               VALUE="UnsteadyNavierStokes"       />
       <I PROPERTY="Projection"                           VALUE="Galerkin"                   /> 
       <I PROPERTY="EvolutionOperator"                     VALUE="Direct"                  />
-      <I PROPERTY="TimeIntegrationMethod"                 VALUE="IMEXOrder2"                 />
+      <I PROPERTY="SpectralVanishingViscosity"            VALUE="DGKernel"                        />
       <I PROPERTY="SPECTRALHPDEALIASING"          VALUE="True"           />
       <I PROPERTY="GlobalSysSoln"                 VALUE="XxtMultiLevelStaticCond" />
       <I PROPERTY="Driver"                               VALUE="Standard"            />
     </SOLVERINFO>    
 
+    <TIMEINTEGRATIONSCHEME>
+      <METHOD> IMEX </METHOD>
+      <ORDER> 2 </ORDER>
+    </TIMEINTEGRATIONSCHEME>
+
     <PARAMETERS>
     <!--General parameters-->
-      <P> TimeStep = .00228635229123241491 </P>
-      <P> NumSteps        = 4000e3     </P>
+      <P> TimeStep        = 0.004      </P>
+      <P> NumSteps        = 6000e3     </P>
       <P> IO_CheckSteps   = NumSteps/25     </P> 
       <P> IO_InfoSteps    = NumSteps/8000        </P> 
       <P> IO_CFLSteps     = IO_InfoSteps         </P>
       <P> HistorySteps    = IO_InfoSteps </P>
       <P> AverageSteps    = NumSteps/100 </P>
-      <!-- <P> SVVDiffCoeff    = 0.1                    </P> -->
-      <!-- <P> SVVCutoffRatio  = 0.75                    </P> -->
+      <P> SVVDiffCoeff    = 0.1                    </P>
+      <P> SVVCutoffRatio  = 0.75                    </P>
       <!-- <P> HomModesZ       = 2                       </P> -->
       <!-- <P> LZ              = 2                     </P> -->
       
@@ -148,8 +153,8 @@
       </BOUNDARYCONDITIONS>
 
     <FUNCTION NAME="BaseFlow">
-  <F VAR="u,v,p" FILE="baseflow.fld"   />
-</FUNCTION>
+      <F VAR="u,v,p" FILE="baseflow.fld"   />
+    </FUNCTION>
 
     <FUNCTION NAME="Noise">
       <E VAR="u" VALUE="-2*weight*(y-y0)*Amplitude*exp(-weight*((x-x0)^2 + (y-y0)^2))*awgn(1.0)" />
@@ -158,16 +163,16 @@
     </FUNCTION>
 
     
-<FUNCTION NAME="InitialConditions">
-<F VAR="u,v,p" FILE="mesh_d1.25_w60_12.chk" />
-</FUNCTION>
+    <!-- <FUNCTION NAME="InitialConditions"> -->
+    <!--   <F VAR="u,v,p" FILE="mesh_d4_w15_32.chk" /> -->
+    <!-- </FUNCTION> -->
 
     
-<!--     <FUNCTION NAME="InitialConditions"> -->
- <!--       <E VAR="u" VALUE="0" /> -->
- <!--       <E VAR="v" VALUE="0" /> -->
- <!--       <E VAR="p" VALUE="0" /> -->
- <!--    </FUNCTION> -->
+    <FUNCTION NAME="InitialConditions">
+      <E VAR="u" VALUE="0" />
+      <E VAR="v" VALUE="0" />
+      <E VAR="p" VALUE="0" />
+   </FUNCTION>
   </CONDITIONS>
     <FORCING>
       <FORCE TYPE="Field">
@@ -195,30 +200,31 @@
     -10 0.5 0
     -5 0.5 0
     0 0.5 0
-    5 0.5 0
-    5 -.62500000000000000000 0
-    10 0.5 0
-    10 -.62500000000000000000 0
-    15 0.5 0
-    15 -.62500000000000000000 0
-    20 0.5 0
-    20 -.62500000000000000000 0
-    25 0.5 0
-    25 -.62500000000000000000 0
-    30 0.5 0
-    30 -.62500000000000000000 0
-    35 0.5 0
-    35 -.62500000000000000000 0
-    40 0.5 0
-    40 -.62500000000000000000 0
-    45 0.5 0
-    45 -.62500000000000000000 0
-    50 0.5 0
-    50 -.62500000000000000000 0
-    55 0.5 0
-    55 -.62500000000000000000 0
+    4.61538461538461538461 0.5 0
+    4.61538461538461538461 -.62500000000000000000 0
+    9.23076923076923076922 0.5 0
+    9.23076923076923076922 -.62500000000000000000 0
+    13.84615384615384615383 0.5 0
+    13.84615384615384615383 -.62500000000000000000 0
+    18.46153846153846153844 0.5 0
+    18.46153846153846153844 -.62500000000000000000 0
+    23.07692307692307692305 0.5 0
+    23.07692307692307692305 -.62500000000000000000 0
+    27.69230769230769230766 0.5 0
+    27.69230769230769230766 -.62500000000000000000 0
+    32.30769230769230769227 0.5 0
+    32.30769230769230769227 -.62500000000000000000 0
+    36.92307692307692307688 0.5 0
+    36.92307692307692307688 -.62500000000000000000 0
+    41.53846153846153846149 0.5 0
+    41.53846153846153846149 -.62500000000000000000 0
+    46.15384615384615384610 0.5 0
+    46.15384615384615384610 -.62500000000000000000 0
+    50.76923076923076923071 0.5 0
+    50.76923076923076923071 -.62500000000000000000 0
+    55.38461538461538461532 0.5 0
+    55.38461538461538461532 -.62500000000000000000 0
     60 0.5 0
-    60 -.62500000000000000000 0
     65 0.5 0
     70 0.5 0
     75 0.5 0

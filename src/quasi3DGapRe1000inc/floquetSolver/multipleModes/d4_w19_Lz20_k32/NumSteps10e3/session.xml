@@ -44,7 +44,7 @@
       <P> HomModesZ      = 32                 </P>
 
       <!-- Baseflow parameters -->
-      <P> N_start           = 0                </P>
+      <P> N_start           = 6                </P>
       <P> N_skip           = 1                </P>
       <P> N_slices           = 102                </P>
       <P> BaseFlow_interporder = 1               </P>
@@ -180,13 +180,14 @@
       <F VAR="u,v,p,w" FILE="../../../../baseflow/dns/d4_w19_Lz20_k32_slicesSecondaryBF/mesh_%d.chk" />
     </FUNCTION>
 
-    <FUNCTION NAME="InitialConditions">
-      <!-- <F VAR="u,v,p" FILE="../initialCond.fld" /> -->
-      <E VAR="u" VALUE="0.1*awgn(1.0)*exp(-(y+3)/5)" />
-      <E VAR="v" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" />
-      <E VAR="w" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" />
-      <E VAR="p" VALUE="0" />
-    </FUNCTION>
+<FUNCTION NAME="InitialConditions">
+ <F VAR="u,v,w,p" FILE="mesh_163.chk" />
+ <!-- <E VAR="u" VALUE="0.1*awgn(1.0)*exp(-(y+3)/5)" /> -->
+ <!-- <E VAR="v" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" /> -->
+ <!-- <E VAR="w" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" /> -->
+ <!-- <E VAR="p" VALUE="0" /> -->
+ </FUNCTION>
+
   </CONDITIONS>
 </NEKTAR>
 

@@ -1,0 +1,187 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,decorations.markings,backgrounds,arrows.meta}
+
+\usepackage{newtxtext,newtxmath}
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{compat=1.18}
+\pgfplotsset{colormap/RdBu}
+
+\def\image{../pngs/d2.25_w35white.png}
+\def\secondimage{../pngs/d2.25_w35whiteunscaled.png}
+
+\def\figurewidth{4.46}
+\def\pagewidth{13.5}
+\def\geomscale{0.3670781893}
+
+\def\xfirstedge{-5.6}
+\def\yfirstedge{-1.42}
+\def\xsecondedge{-1.57}
+\def\ysecondedge{-2.5}
+\def\xmin{-6.075}
+\def\xmax{6.075}
+\def\ymax{4.6}
+\def\ymin{-8}
+
+\def\ysmallgap{3.37}
+\def\xsmallgap{-5.97}
+\def\depth{0.33}
+\def\width{5.28}
+
+\newcommand{\fsize}{\fontsize{8.7}{10.44}\selectfont}
+
+\pgfmathsetlengthmacro{\colorbarwidth}
+{0.33*\pagewidth cm}
+
+\pgfmathsetlengthmacro{\colorbarheight}
+{0.08*0.33*\pagewidth cm}
+
+\pgfmathsetlengthmacro{\colorbarlinewidth}
+{0.0020*\pagewidth cm}
+
+\pgfmathsetlengthmacro{\colorbarticklength}
+{0.0075*\pagewidth cm}
+
+\begin{document}
+
+\begin{tikzpicture}[x=\geomscale cm,y=\geomscale cm]
+
+	\path[use as bounding box]
+	(-1,-0.7) rectangle (12.9,10.6);
+
+	\begin{scope}[shift={(6.075,6)}]
+
+		\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+
+		\node[inner sep=0pt] (gap) at (0,0)
+		{\includegraphics[width=\figurewidth cm]{\image}};
+
+		\draw[thick]
+		(\xmin,\yfirstedge)
+		-- (\xfirstedge,\yfirstedge)
+		-- (\xfirstedge,\ysecondedge)
+		-- (\xsecondedge,\ysecondedge)
+		-- (\xsecondedge,\yfirstedge)
+		-- (\xmax,\yfirstedge);
+
+		\node[
+			inner sep=0pt,
+			yshift=0.47cm
+		] (gap2) at (gap.north)
+		{\includegraphics[
+				trim=0cm 31cm 0cm 20cm,
+				clip,
+				width=\figurewidth cm
+			]{\secondimage}};
+
+		\draw[very thin]
+		(\xmin,\ysmallgap)
+		-- (\xsmallgap,\ysmallgap)
+		-- (\xsmallgap,\ysmallgap-\depth)
+		-- (\xsmallgap+\width,\ysmallgap-\depth)
+		-- (\xsmallgap+\width,\ysmallgap)
+		-- (\xmax,\ysmallgap);
+
+		\def\lengthWall{0.5}
+
+		\foreach \x in {-5.7,-1.1,-0.6,...,6.0} {
+			\draw
+			(\x,\yfirstedge)
+			-- ++(225:\lengthWall);
+		}
+
+		\foreach \x in {-5.6,-5.2,...,-1.47} {
+			\draw
+			(\x,\ysecondedge)
+			-- ++(225:\lengthWall);
+		}
+
+		\draw
+		(\xfirstedge,-1.7)
+		-- ++(225:\lengthWall);
+
+		\draw
+		(\xfirstedge,-2.1)
+		-- ++(225:\lengthWall);
+
+		\def\secondlengthWall{0.1}
+
+		\foreach \x in {-0.6,-0.5,...,6.1} {
+			\draw[ultra thin]
+			(\x,\ysmallgap)
+			-- ++(225:\secondlengthWall);
+		}
+
+		\foreach \x in {-5.97,-5.87,...,-0.7} {
+			\draw[ultra thin]
+			(\x,\ysmallgap-\depth)
+			-- ++(225:\secondlengthWall);
+		}
+
+		\draw[ultra thin]
+		(\xsmallgap,\ysmallgap-\depth/7)
+		-- ++(225:\secondlengthWall);
+
+		\draw[ultra thin]
+		(\xsmallgap,\ysmallgap-2*\depth/5)
+		-- ++(225:\secondlengthWall);
+
+		\draw[ultra thin]
+		(\xsmallgap,\ysmallgap-3.5*\depth/5)
+		-- ++(225:\secondlengthWall);
+
+		\draw[ultra thin]
+		(\xmin+0.05,\ysmallgap)
+		-- ++(225:\secondlengthWall);
+
+	\end{scope}
+
+	% Colorbar geometry is referenced to a 13.5 cm page width.
+	% The actual image itself is 4.46 cm wide.
+
+	\coordinate (colorbarcenter) at (6.075,3);
+
+	\pgfplotscolorbardrawstandalone[
+		colormap={example}{
+			indices of colormap=(
+				10,9,8,7,6,5,4,3,2,1,0 of RdBu
+			),
+		},
+		point meta min=-0.08,
+		point meta max=0.08,
+		colorbar horizontal,
+		samples=5,
+		scaled x ticks=false,
+		colorbar style={
+			xtick={-0.08,-0.04,...,0.08},
+			xticklabel style={
+				/pgf/number format/fixed,
+				/pgf/number format/precision=3,
+				font=\fsize,
+			},
+			xlabel={$v$},
+			xlabel style={
+				font=\fsize,
+				at={(axis description cs:0.5,-1.2)},
+			},
+			at={(colorbarcenter)},
+			anchor=north,
+			width=\colorbarwidth,
+			height=\colorbarheight,
+			xtick pos=lower,
+			xtick style={
+				black,
+				line width=\colorbarlinewidth,
+			},
+			tickwidth=\colorbarticklength,
+			axis line style={
+				line width=\colorbarlinewidth,
+			},
+		},
+	]
+
+\end{tikzpicture}
+
+\end{document}

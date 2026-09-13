@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <NEKTAR>  
   <EXPANSIONS>    
-    <E COMPOSITE="C[100,101,102]" NUMMODES="7" FIELDS="u,v" TYPE="MODIFIED" />  
-    <E COMPOSITE="C[100,101,102]" NUMMODES="6" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
+    <E COMPOSITE="C[100,101,102]" NUMMODES="6" FIELDS="u,v" TYPE="MODIFIED" />  
+    <E COMPOSITE="C[100,101,102]" NUMMODES="5" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
   </EXPANSIONS>
   
   <CONDITIONS>    
@@ -11,23 +11,28 @@
       <I PROPERTY="EqType"                               VALUE="UnsteadyNavierStokes"       />
       <I PROPERTY="Projection"                           VALUE="Galerkin"                   /> 
       <I PROPERTY="EvolutionOperator"                     VALUE="Direct"                  />
-      <I PROPERTY="TimeIntegrationMethod"                 VALUE="IMEXOrder2"                 />
+      <I PROPERTY="SpectralVanishingViscosity"            VALUE="DGKernel"                        />
       <I PROPERTY="SPECTRALHPDEALIASING"          VALUE="True"           />
       <I PROPERTY="GlobalSysSoln"                 VALUE="XxtMultiLevelStaticCond" />
       <I PROPERTY="Driver"                               VALUE="Standard"            />
     </SOLVERINFO>    
 
+    <TIMEINTEGRATIONSCHEME>
+      <METHOD> IMEX </METHOD>
+      <ORDER> 2 </ORDER>
+    </TIMEINTEGRATIONSCHEME>
+
     <PARAMETERS>
     <!--General parameters-->
-      <P> TimeStep = 0.004 </P>
+      <P> TimeStep        = 0.006      </P>
       <P> NumSteps        = 4000e3     </P>
       <P> IO_CheckSteps   = NumSteps/25     </P> 
       <P> IO_InfoSteps    = NumSteps/8000        </P> 
       <P> IO_CFLSteps     = IO_InfoSteps         </P>
       <P> HistorySteps    = IO_InfoSteps </P>
       <P> AverageSteps    = NumSteps/100 </P>
-      <!-- <P> SVVDiffCoeff    = 0.1                    </P> -->
-      <!-- <P> SVVCutoffRatio  = 0.75                    </P> -->
+      <P> SVVDiffCoeff    = 0.1                    </P>
+      <P> SVVCutoffRatio  = 0.75                    </P>
       <!-- <P> HomModesZ       = 2                       </P> -->
       <!-- <P> LZ              = 2                     </P> -->
       
@@ -158,16 +163,16 @@
     </FUNCTION>
 
     
-<FUNCTION NAME="InitialConditions">
-<F VAR="u,v,p" FILE="mesh_d1.75_w15_21.chk" />
-</FUNCTION>
+    <!-- <FUNCTION NAME="InitialConditions"> -->
+    <!--   <F VAR="u,v,p" FILE="mesh_d4_w15_32.chk" /> -->
+    <!-- </FUNCTION> -->
 
     
-<!--     <FUNCTION NAME="InitialConditions"> -->
- <!--       <E VAR="u" VALUE="0" /> -->
- <!--       <E VAR="v" VALUE="0" /> -->
- <!--       <E VAR="p" VALUE="0" /> -->
- <!--    </FUNCTION> -->
+    <FUNCTION NAME="InitialConditions">
+      <E VAR="u" VALUE="0" />
+      <E VAR="v" VALUE="0" />
+      <E VAR="p" VALUE="0" />
+   </FUNCTION>
   </CONDITIONS>
     <FORCING>
       <FORCE TYPE="Field">
@@ -195,12 +200,13 @@
     -10 0.5 0
     -5 0.5 0
     0 0.5 0
-    5 0.5 0
-    5 -.87500000000000000000 0
-    10 0.5 0
-    10 -.87500000000000000000 0
+    3.75000000000000000000 0.5 0
+    3.75000000000000000000 -.87500000000000000000 0
+    7.50000000000000000000 0.5 0
+    7.50000000000000000000 -.87500000000000000000 0
+    11.25000000000000000000 0.5 0
+    11.25000000000000000000 -.87500000000000000000 0
     15 0.5 0
-    15 -.87500000000000000000 0
     20 0.5 0
     25 0.5 0
     30 0.5 0

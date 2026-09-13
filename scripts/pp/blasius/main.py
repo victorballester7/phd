@@ -12,7 +12,7 @@ def main():
         p=11,
         eta_interpolation_max=11,
         x_inflow=-100,
-        incNS=False,
+        incNS=True,
         uinf=1.0,
         rhoinf=1.0,
         re_deltaStar=1000,

@@ -2,17 +2,27 @@ import os
 import numpy as np
 from pp.colors import colors
 from pp.ssh.fieldconvert import fld2datapts
+from pp.fileManagement import extract_depth_width
 
 
-def gen_points_file(ymin: float, ymax: float, n: int, dir_local: str, output_file: str):
+def gen_points_file(
+    ymin: float, ymax: float, n: int, width: float, dir_local: str, output_file: str
+):
     pts_path = os.path.join(dir_local, output_file + ".pts")
 
     base_dir = os.path.dirname(pts_path)
 
     os.makedirs(base_dir, exist_ok=True)
 
-    x_locations = np.arange(-70, 1000, 10) + 3.5
-   
+    x_locations = np.arange(width, width + 950, 2) + 1.5
+    # x_loc1 = np.arange(-70, -10, 10) + 3.5
+    # x_loc2 = (
+    #     np.arange(-10, width + 100, 2) + 1.5
+    # )  # 3.5 just not to coincide with the edges of the gap geoemtry
+    # x_loc3 = np.arange(width + 100, 1000, 10) + 3.5
+    # x_locations = np.unique(np.concatenate((x_loc1, x_loc2, x_loc3)))
+    # x_loc = x_loc2
+
     # x_locations = np.unique(np.concatenate((x_locations_first, x_locations_last)))
     y_locations = ymin + (ymax - ymin) * (np.linspace(0, 1, n) ** 2)
 
@@ -39,49 +49,68 @@ def gen_points_file(ymin: float, ymax: float, n: int, dir_local: str, output_fil
 
 def create_points_file(base_dir: str, case: str):
     dir_local = base_dir + case
+    _, w = extract_depth_width(case)
     n = 600
-    output_file = f"data/pointsavg_n{n}"
-    fld_remote = "mesh_avg.fld"
+    output_file = f"data/pointsPO_n{n}"
+    # output_file = f"data/pointsavg_n{n}"
+    fld_remote = "mesh_po.fld"
+    # fld_remote = "mesh_avg.fld"
     gen_points_file(
-        ymin=-4, ymax=150, n=n, dir_local=dir_local, output_file=output_file
+        ymin=0, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
+        # ymin=-4, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
     )
     fld2datapts(dir_local, fld_remote, output_file)
 
 
 if __name__ == "__main__":
     # case = "d2_w24/omega0.08"
-    # dir_local = f"/home/victor/Desktop/PhD/src/incGapRe1000/directLinearSolver/omegaBlowSuct/{case}"
+    # dir = "/home/victor/Desktop/PhD/src/incGapRe3000/directLinearSolver/blowingSuction/"
     # dir_local = "/home/victor/Desktop/PhD/src/flatPlateRe1000inc/directLinearSolver/omegaBlowSuct/omega0.04"
 
-
     # dir = "/home/victor/Desktop/PhD/src/bfsRe1000inc/directLinearSolver/blowingSuction/"
-    # case = "d1.5"
-    # create_points_file(dir, case=case)
+    # create_points_file(dir, case="d0.25_w40")
 
-
+    # dir = "/home/victor/Desktop/PhD/src/flatPlateRe3000inc/directLinearSolver/blowingSuction/"
+    # create_points_file(dir, case="")
 
     ##### multiple cases at once
 
-    dir_local = "/home/victor/Desktop/PhD/src/incGapRe1000/directLinearSolver/blowingSuctionCoarserMesh/"
-
-    # get all directories in dir_local such that dir/data/ does not exist
-
+    dir_local = "/home/victor/Desktop/PhD/src/incGapRe1000/baseflow/dns/"
+    #
+    # # get all directories in dir_local such that dir/data/ does not exist
+    #
     directories = [
-        # d for d in os.listdir(dir_local) if os.path.isdir(os.path.join(dir_local, d)) and not os.path.exists(os.path.join(dir_local, d, "data"))
-        "d1_w83",
-        "d1_w90",
-        "d1_w71",
-        "d1_w58",
-        "d1_w39",
-        "d1_w31",
-        "d2_w36",
-        "d2_w28",
+        # d
+        # for d in os.listdir(dir_local)
+        # if os.path.isdir(os.path.join(dir_local, d))
+        # and not os.path.exists(os.path.join(dir_local, d, "data"))
+        # "d0.5_w50",
+        # "d2_w41"
+        # "d1_w83",
+        # "d1_w90",
+        # "d1_w71",
+        # "d1_w58",
+        # "d1_w39",
+        # "d1_w31",
+        # "d2_w36",
+        # "d2_w28",
+        # "d1.5_w60",
+        "d1.5_w63",
+        # "d1.5_w65",
+        # "d1.5_w70",
+        # "d1.5_w80",
     ]
 
     # directories = [
-    #     # "d1.5_w200", "d1_w200", "d0.5_w200", 
+    #     # "d1.5_w200", "d1_w200", "d0.5_w200",
     #     d for d in os.listdir(dir_local) if os.path.isdir(os.path.join(dir_local, d)) and not os.path.exists(os.path.join(dir_local, d, "data"))
     # ]
 
     for case in directories:
+        # print(f"Creating points file for case: {case}")
+        print(
+            colors.OKBLUE
+            + f"Creating points file for case {np.where(np.array(directories) == case)[0][0] + 1}/{len(directories)}: {case}"
+            + colors.ENDC
+        )
         create_points_file(dir_local, case=case)

@@ -1,0 +1,140 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{colormap/RdBu}
+\pgfplotsset{compat=1.18}
+
+% Match JFM fonts
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+% Final width in the JFM paper
+\def\figurewidth{13.5}
+
+% Final JFM font size
+\newcommand{\fsize}{\fontsize{8.7}{10.44}\selectfont}
+
+\begin{document}
+\begin{tikzpicture}
+	% \clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+	\def\xmin{0}
+	\def\xmax{\figurewidth}
+	\def\ymin{0}
+	\def\ymax{1.1}
+
+	\path[use as bounding box]
+	(\xmin,\ymin) rectangle (\xmax,\ymax);
+
+	\coordinate (clippedcenter) at ({(\xmin+\xmax)/2}, {(\ymin+\ymax)/2});
+
+	% ============================================================
+	% FIGURE-RELATIVE COLORBAR STYLE
+	% ============================================================
+
+	% Colorbar geometry
+	\pgfmathsetlengthmacro{\colorbarwidth}
+	{0.33*\figurewidth cm}
+
+	\pgfmathsetlengthmacro{\colorbarheight}
+	{0.08*0.33*\figurewidth cm}
+
+	% Matplotlib-like line and tick dimensions
+	\pgfmathsetlengthmacro{\colorbarlinewidth}
+	{0.0020*\figurewidth cm}
+
+	\pgfmathsetlengthmacro{\colorbarticklength}
+	{0.0075*\figurewidth cm}
+
+	\pgfplotscolorbardrawstandalone[
+		colormap={example}{
+				indices of colormap=(
+				10,9,8,7,6,5,4,3,2,1,0 of RdBu
+				),
+			},
+		point meta min=-0.09,
+		point meta max=0.09,
+		colorbar horizontal,
+		samples=200,
+		scaled x ticks=false,
+		colorbar style={
+				xtick={-0.09,-0.045,...,0.09},
+				xticklabel style={
+						/pgf/number format/fixed,
+						/pgf/number format/precision=3,
+						font=\fsize,
+					},
+				xlabel={$v$},
+				xlabel style={
+						font=\fsize,
+						at={(axis description cs:0.5,-1.2)},
+						anchor=north,
+					},
+				at={(clippedcenter)},
+				anchor=south,
+				yshift=0.45cm,
+				width=\colorbarwidth,
+				height=\colorbarheight,
+				xtick pos=lower,
+				xtick style={
+						black,
+						line width=\colorbarlinewidth,
+					},
+				tickwidth=\colorbarticklength,
+				axis line style={
+						line width=\colorbarlinewidth,
+					},
+			},
+	]
+\end{tikzpicture}
+\end{document}
+% 	% Colorbar outside the clipped image scope
+% 	\coordinate (colorbarcenter) at (6.075,0);
+%
+% 	\pgfplotscolorbardrawstandalone[
+% 		colormap={example}{
+% 				indices of colormap=(
+% 				10,9,8,7,6,5,4,3,2,1,0 of RdBu
+% 				),
+% 			},
+% 		point meta min=-0.09,
+% 		point meta max=0.09,
+% 		colorbar horizontal,
+% 		samples=10,
+% 		scaled x ticks=false,
+% 		colorbar style={
+% 				xtick={-0.09,-0.045,...,0.09},
+% 				xticklabel style={
+% 						/pgf/number format/fixed,
+% 						/pgf/number format/precision=3,
+% 						font=\fsize,
+% 					},
+% 				xlabel={$v$},
+% 				xlabel style={
+% 						font=\fsize,
+% 						at={(axis description cs:0.5,-1.7)},
+% 						anchor=north,
+% 					},
+% 				at={(colorbarcenter)},
+% 				yshift=0.85cm,
+% 				anchor=north,
+% 				width=\colorbarwidth,
+% 				height=\colorbarheight,
+% 				xtick pos=lower,
+% 				xtick style={
+% 						black,
+% 						line width=\colorbarlinewidth,
+% 					},
+% 				tickwidth=\colorbarticklength,
+% 				axis line style={
+% 						line width=\colorbarlinewidth,
+% 					},
+% 			},
+% 	]
+%
+% \end{tikzpicture}
+%
+% \end{document}

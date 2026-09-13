@@ -1,0 +1,161 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,decorations.markings,backgrounds,arrows.meta}
+
+\usepackage{newtxtext,newtxmath}
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{compat=1.18}
+\pgfplotsset{colormap/RdBu}
+
+\def\image{../pngs/d1_w60.png}
+\def\secondimage{../pngs/d1_w60unscaled.png}
+
+\def\figurewidth{4.46}
+\def\pagewidth{13.5}
+\def\geomscale{0.3670781893}
+
+\def\xfirstedge{-5.25}
+\def\yfirstedge{0.85}
+\def\xsecondedge{5.05}
+\def\ysecondedge{-1.9}
+\def\xmin{-6.075}
+\def\xmax{6.075}
+\def\ymax{4.0}
+\def\ymin{-5.4}
+
+\def\ysmallgap{3.225}
+\def\xsmallgap{-5.3}
+\def\depth{0.18}
+\def\width{10.3}
+
+
+
+\newcommand{\fsize}{\fontsize{8.7}{10.44}\selectfont}
+
+\pgfmathsetlengthmacro{\colorbarwidth}
+{0.33*\pagewidth cm}
+
+\pgfmathsetlengthmacro{\colorbarheight}
+{0.08*0.33*\pagewidth cm}
+
+\pgfmathsetlengthmacro{\colorbarlinewidth}
+{0.0020*\pagewidth cm}
+
+\pgfmathsetlengthmacro{\colorbarticklength}
+{0.0075*\pagewidth cm}
+
+\begin{document}
+
+\begin{tikzpicture}[x=\geomscale cm,y=\geomscale cm]
+
+	% Horizontal width: 12.15 * 0.3670781893 = 4.46 cm
+	% Extra vertical space is included for the colorbar.
+
+	\path[use as bounding box]
+	(0,2.65) rectangle (12.15,8.75);
+
+	\begin{scope}[shift={(6.075,5)}]
+
+		\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+
+		\node[inner sep=0pt,
+						yshift=-0.98cm,xshift=0.01cm,anchor=south] (gap) at (0,0)
+		{\includegraphics[trim=0cm 0cm 0cm 13cm,
+			clip,
+width=\figurewidth cm]{\image}};
+
+		\draw[thick]
+		(\xmin,\yfirstedge)
+		-- (\xfirstedge,\yfirstedge)
+		-- (\xfirstedge,\ysecondedge)
+		-- (\xsecondedge,\ysecondedge)
+		-- (\xsecondedge,\yfirstedge)
+		-- (\xmax,\yfirstedge);
+
+		\node[
+			inner sep=0pt,
+			yshift=-0.14cm,
+			xshift=-0.01cm,
+		] (gap2) at (gap.north)
+		{\includegraphics[
+				trim=0cm 0cm 0cm 5cm,
+				clip,
+				width=\figurewidth cm
+			]{\secondimage}};
+
+		\draw[very thin]
+		(\xmin,\ysmallgap)
+		-- (\xsmallgap,\ysmallgap)
+		-- (\xsmallgap,\ysmallgap-\depth)
+		-- (\xsmallgap+\width,\ysmallgap-\depth)
+		-- (\xsmallgap+\width,\ysmallgap)
+		-- (\xmax,\ysmallgap);
+
+		\def\lengthWall{0.6}
+
+		\foreach \x in {-6,-5.64,...,-5.53,5.72,6.22} {
+				\draw
+				(\x,\yfirstedge)
+				-- ++(225:\lengthWall);
+			}
+
+		\foreach \x in {-4.86,-4.46,...,4.75} {
+				\draw
+				(\x,\ysecondedge)
+				-- ++(225:\lengthWall);
+			}
+
+		\foreach \y in {0.82,0.37,...,-1.5} {
+				\draw
+				(\xfirstedge,\y)
+				-- ++(225:\lengthWall);
+			}
+
+		\def\secondlengthWall{0.1}
+
+		\foreach \x in {-5.3,-5.2,...,5.1} {
+			\draw[ultra thin] (\x,\ysmallgap-\depth) -- ++(225:\secondlengthWall); % Wall hatching
+		}
+		\foreach \x in {-6,-5.9,...,-5.3,5.2,5.3,...,6.1} {
+			\draw[ultra thin] (\x,\ysmallgap) -- ++(225:\secondlengthWall); % Wall hatching
+		}
+		\draw[ultra thin] (\xsmallgap,\ysmallgap-\depth/3) -- ++(225:\secondlengthWall); % Wall hatching
+
+	\end{scope}
+
+	\begin{axis}[
+			hide axis,
+			axis equal image,
+			xshift=-0.82cm,
+			yshift=1.1cm,
+			yscale=14,
+			xscale=0.88
+		]
+
+		\addplot[
+			gray!50!black,
+			postaction={
+					decorate,
+					decoration={
+							markings,
+							mark=at position 0.12 with {\arrow{stealth}},
+							mark=at position 0.3 with {\arrow{stealth}},
+							mark=at position 0.48 with {\arrow{stealth}},
+							mark=at position 0.72 with {\arrow{stealth}},
+							mark=at position 0.85 with {\arrow{stealth}}
+						}
+				}
+		]
+		table[
+				col sep=comma,
+				x={"Points:0"},
+				y={"Points:1"}
+			]{../countourLines/d1_w60.csv};
+	\end{axis}
+
+
+\end{tikzpicture}
+
+\end{document}

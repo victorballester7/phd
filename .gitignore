@@ -31,3 +31,5 @@ data/*.dat
 # do not sync field files
 *.vtu
 
+# codex files
+*.codex

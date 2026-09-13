@@ -1,7 +1,7 @@
 #!/bin/bash
-#PBS -l select=1:ncpus=256:mem=70gb
+#PBS -l select=1:ncpus=128:mem=50gb
 #PBS -l walltime=07:59:59
-#PBS -N omega0.095
+#PBS -N d0_w0
 #PBS -e log.txt
 #PBS -o output.txt
 

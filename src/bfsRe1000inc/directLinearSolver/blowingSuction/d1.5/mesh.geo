@@ -1,7 +1,7 @@
 // Macro parameters
 deltaStar = 1;
 D = 1.5 * deltaStar; // depth of the gap 
-W = 1 * deltaStar; // width of the gap
+W = 10 * deltaStar; // width of the gap
 r = 16; // length of non-constant quads upstream and downstream of the gap
 s = 8; // length of non-constant quads left and right inside the gap
 BL = 0.25 * deltaStar; // height of the second layer of quad elements
@@ -83,7 +83,7 @@ Point(2) = {0,0,0};
 Point(3) = {0,-D,0};
 Point(4) = {W/2+triad_eps,-D,0};
 Point(5) = {W/2+triad_eps,BL+BL_upper,0};
-Point(6) = {x3,0,0};
+Point(6) = {x3,-D,0};
 Point(8) = {x3,height,0};
 Point(9) = {-x0,height,0};
 Point(10) = {-x0,BL,0};

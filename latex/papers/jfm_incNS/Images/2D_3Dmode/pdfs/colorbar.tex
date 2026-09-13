@@ -1,0 +1,138 @@
+
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+% Match JFM fonts
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{compat=1.18}
+\pgfplotsset{colormap/RdBu}
+
+% Reference page/column width used for styling
+\def\pagewidth{13.5}
+\newcommand{\fsize}{\fontsize{8.7}{10.44}\selectfont}
+
+% Total length of the complete two-sided colorbar:
+% 0.33 * 13.5 cm = 4.455 cm
+\pgfmathsetlengthmacro{\totalcolorbarwidth}
+    {0.33*\pagewidth cm}
+
+% Each of the two halves
+\pgfmathsetlengthmacro{\colorbarwidth}
+    {0.5*0.33*\pagewidth cm}
+
+% Colorbar thickness
+\pgfmathsetlengthmacro{\colorbarheight}
+    {0.08*0.33*\pagewidth cm}
+
+% Matplotlib-like line width
+\pgfmathsetlengthmacro{\colorbarlinewidth}
+    {0.0020*\pagewidth cm}
+
+% Tick length
+\pgfmathsetlengthmacro{\colorbarticklength}
+    {0.0075*\pagewidth cm}
+
+% Distance between figure and colorbar
+\pgfmathsetlengthmacro{\colorbarshift}
+    {-0.045*\pagewidth cm}
+
+
+\begin{document}
+\begin{tikzpicture}
+	\pgfplotscolorbardrawstandalone[
+	colormap={BuRd}{
+			indices of colormap=(
+			5,6,7,8,9,10 of RdBu
+			),
+		},
+	point meta min=0.00003162277660, % 1e-4.5
+		point meta max=1e-2,
+		colorbar horizontal,
+		samples=200,
+		scaled x ticks=false,
+		colorbar style={
+				xmode=log,
+				x dir=reverse,
+				xtick={1e-5,1e-4,1e-3,1e-2},
+	xticklabels={
+	,
+	$-10^{-2}$,
+	,
+	$-1$
+	},
+	xticklabel style={
+			font=\fsize,
+		},
+		xlabel={$\hat{u}/\|\hat{u}\|_\infty$},
+	xlabel style={
+			font=\fsize,
+		},
+	xlabel style={
+			at={(axis description cs:1,-1.3)}
+		},
+	at={(0,0)},
+	yshift=\colorbarshift,
+	anchor=east,
+	width=\colorbarwidth,
+	height=\colorbarheight,
+	xtick pos=lower,
+	xtick style={
+			black,
+			line width=\colorbarlinewidth
+		},
+	tickwidth=\colorbarticklength,
+	axis line style={
+			line width=\colorbarlinewidth
+		}
+	},
+	]
+	\pgfplotscolorbardrawstandalone[
+		colormap={BuRd}{
+				indices of colormap=(
+				5,4,3,2,1,0 of RdBu
+				),
+			},
+		point meta min=0.00003162277660, % 1e-4.5
+		point meta max=1e-2,
+		colorbar horizontal,
+		samples=200,
+		scaled x ticks=false,
+		colorbar style={
+				xmode=log,
+				xtick={1e-5,1e-4,1e-3,1e-2},
+				xticklabels={
+						,
+						$10^{-2}$,,
+						$1$
+					},
+				xticklabel style={
+						font=\fsize,
+					},
+				xlabel={},
+				at={(0,0)},
+				yshift=\colorbarshift,
+				anchor=west,
+				width=\colorbarwidth,
+				height=\colorbarheight,
+				xtick pos=lower,
+				xtick style={
+						black,
+						line width=\colorbarlinewidth
+					},
+				tickwidth=\colorbarticklength,
+				axis line style={
+						line width=\colorbarlinewidth
+					}
+			},
+	]
+
+\end{tikzpicture}
+
+\end{document}

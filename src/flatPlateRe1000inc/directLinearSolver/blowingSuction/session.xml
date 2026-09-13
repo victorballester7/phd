@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <NEKTAR>  
   <EXPANSIONS>    
-    <E COMPOSITE="C[100,102]" NUMMODES="9" FIELDS="u,v" TYPE="MODIFIED" />  
-    <E COMPOSITE="C[100,102]" NUMMODES="8" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
+    <E COMPOSITE="C[100,102]" NUMMODES="7" FIELDS="u,v" TYPE="MODIFIED" />  
+    <E COMPOSITE="C[100,102]" NUMMODES="6" FIELDS="p" TYPE="MODIFIEDQUADPLUS1" />
   </EXPANSIONS>
   
   <CONDITIONS>    
@@ -19,28 +19,25 @@
 
     <PARAMETERS>
     <!--General parameters-->
-      <P> TimeStep        = 0.0085      </P>
-      <P> NumSteps        = 3000e3     </P>
-      <P> IO_CheckSteps   = NumSteps/100         </P> 
+      <P> TimeStep        = 0.006      </P>
+      <P> NumSteps        = 4000e3     </P>
+      <P> IO_CheckSteps   = NumSteps/25     </P> 
       <P> IO_InfoSteps    = NumSteps/8000        </P> 
       <P> IO_CFLSteps     = IO_InfoSteps         </P>
       <P> HistorySteps    = IO_InfoSteps </P>
-      <P> EnergySteps     = IO_InfoSteps * 10</P>
-      <!-- <P> HistorySteps    = IO_InfoSteps * 2 </P> -->
-      <!-- <P> EnergySteps     = IO_InfoSteps * 10</P> -->
-      <!-- <P> IO_FiltersInfoSteps = EnergySteps </P> -->
+      <P> AverageSteps    = NumSteps/100 </P>
       <!-- <P> SVVDiffCoeff    = 0.1                    </P> -->
       <!-- <P> SVVCutoffRatio  = 0.75                    </P> -->
       <!-- <P> HomModesZ       = 2                       </P> -->
       <!-- <P> LZ              = 2                     </P> -->
       
-      <!--Disturbance strip parameters-->
-      <P> omega_r         = 0.095345                     </P> <!-- from Orr-Sommerfeld equation, doing temporal anlaysis varying alpha = (alpha_r, 0) \in (0,1) x {0} and getting the omega_r as the maximum of the curve (omega_r, omega_i) containing all the most unstable eigenvalues (for each alpha) !-->
-      <P> omega           = omega_r          </P> <!-- frequency of the disturbance wave !-->
-      <P> Amplitude       = 0.001                   </P> 
-      <P> weight          = 5                  </P> <!-- weight of the Gaussian function !-->
-      <P> x0        = -70                     </P> <!--[m], left end of strip-->
       
+    <!--Disturbance strip parameters-->
+      <P> x0        = -95                     </P>
+      <P> y0        = 0.5                  </P> 
+      <P> weight          = 100                  </P> <!-- weight of the Gaussian function !-->
+      <P> Amplitude       = 0.5/weight                   </P> 
+
       <!-- Parameters for the simulation -->
       <!-- To understand the formulas in the parameters, please refer to the file docs/20250414_Blasius_formulas.md -->
       <!-- CHANGE THIS BEFORE RUNNING THE SIMULATION -->
@@ -145,66 +142,105 @@
 
       <REGION REF="3">  <!-- bottom = wall no slip !-->  
         <D VAR="u" VALUE="0" />
-        <D VAR="v" USERDEFINEDTYPE="TimeDependent" VALUE="Amplitude*exp(-weight*(x-x0)^2)*sin(omega_r*t)" />    
+        <D VAR="v" VALUE="0" />      
         <N VAR="p" USERDEFINEDTYPE="H" VALUE="0" />  
       </REGION>    
       </BOUNDARYCONDITIONS>
 
     <FUNCTION NAME="BaseFlow">
-      <F VAR="u,v,p" FILE="../baseflow.fld"   />
+      <F VAR="u,v,p" FILE="baseflow.fld"   />
+    </FUNCTION>
+
+
+
+    <FUNCTION NAME="Noise">
+      <E VAR="u" VALUE="-2*weight*(y-y0)*Amplitude*exp(-weight*((x-x0)^2 + (y-y0)^2))*awgn(1.0)" />
+      <E VAR="v" VALUE="2*weight*(x-x0)*Amplitude*exp(-weight*((x-x0)^2 + (y-y0)^2))*awgn(1.0)" />
+      <E VAR="p" VALUE="0" />
+    </FUNCTION>
+
+    
+    <FUNCTION NAME="InitialConditions">
+      <F VAR="u,v,p" FILE="mesh_flat_17.chk" />
     </FUNCTION>
 
     
     <!-- <FUNCTION NAME="InitialConditions"> -->
-    <!--   <F VAR="u,v,p" FILE="mesh_d4_w15_32.chk" /> -->
-    <!-- </FUNCTION> -->
-
-    
-    <FUNCTION NAME="InitialConditions">
-      <E VAR="u" VALUE="0" />
-      <E VAR="v" VALUE="0" />
-      <E VAR="p" VALUE="0" />
-   </FUNCTION>
+    <!--   <E VAR="u" VALUE="0" /> -->
+   <!--    <E VAR="v" VALUE="0" /> -->
+   <!--    <E VAR="p" VALUE="0" /> -->
+   <!-- </FUNCTION> -->
   </CONDITIONS>
+  <FORCING>
+    <FORCE TYPE="Field">
+      <FIELDFORCE> Noise </FIELDFORCE>
+    </FORCE>
+  </FORCING>
   <FILTERS>
 
-    <FILTER TYPE="ModalEnergy">
-      <PARAM NAME="OutputFile">EnergyFile</PARAM>
-      <PARAM NAME="OutputFrequency">EnergySteps</PARAM>
+    <FILTER TYPE="ReynoldsStresses">
+      <PARAM NAME="OutputFrequency">AverageSteps</PARAM>
+      <PARAM NAME="SampleFrequency">10</PARAM>
     </FILTER>
+
 
     <FILTER TYPE="HistoryPoints">
       <PARAM NAME="OutputFile">HistoryPoints</PARAM>
       <PARAM NAME="OutputFrequency">HistorySteps</PARAM>
       <PARAM NAME="Points">
-    -100 1 0
-    -50 1 0
-    -30 1 0
-    -10 1 0
-    0 1 0
-    25 1 0
-    50 1 0
-    75 1 0
-    100 1 0
-    125 1 0
-    150 1 0
-    175 1 0
-    200 1 0
-    250 1 0
-    300 1 0
-    350 1 0
-    400 1 0
-    450 1 0
-    500 1 0
-    550 1 0
-    600 1 0
-    650 1 0
-    700 1 0
-    750 1 0
-    800 1 0
-    850 1 0
-    900 1 0
-    950 1 0
+    -100 0.5 0
+    -75 0.5 0
+    -50 0.5 0
+    -35 0.5 0
+    -25 0.5 0
+    -15 0.5 0
+    -10 0.5 0
+    -5 0.5 0
+    0 0.5 0
+    5 0.5 0
+    10 0.5 0
+    15 0.5 0
+    25 0.5 0
+    35 0.5 0
+    50 0.5 0
+    75 0.5 0
+    100 0.5 0
+    125 0.5 0
+    150 0.5 0
+    175 0.5 0
+    200 0.5 0
+    225 0.5 0
+    250 0.5 0
+    275 0.5 0
+    300 0.5 0
+    325 0.5 0
+    350 0.5 0
+    375 0.5 0
+    400 0.5 0
+    425 0.5 0
+    450 0.5 0
+    475 0.5 0
+    500 0.5 0
+    525 0.5 0
+    550 0.5 0
+    575 0.5 0
+    600 0.5 0
+    625 0.5 0
+    650 0.5 0
+    675 0.5 0
+    700 0.5 0
+    725 0.5 0
+    750 0.5 0
+    775 0.5 0
+    800 0.5 0
+    825 0.5 0
+    850 0.5 0
+    875 0.5 0
+    900 0.5 0
+    925 0.5 0
+    950 0.5 0
+    975 0.5 0
+    1000 0.5 0
       </PARAM>
     </FILTER>
   </FILTERS>

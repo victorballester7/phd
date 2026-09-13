@@ -1,102 +1,81 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import matplotlib.cm as cm
 import pandas as pd
 
 MARKERS = ["o", "s", "^", "P", "*", "X", "h", "8"]
+MARKERSIZES = [6, 6, 7, 8, 10, 8, 7, 8]  # tuned per glyph
 
-runs = ["inc2dRe1000"]
-# runs = ["inc2dRe1000", "inc2dRe2000", "Ma0.4Re1000_2d", "Ma0.6Re1000_2d", "Ma0.8Re1000_2d"]
+runs = ["inc2dRe800", "inc2dRe1000", "inc2dRe1400", "inc2dRe2000", "inc2dRe3000"]
+# runs = ["inc2dRe1000", "inc2dRe1400", "inc2dRe2000", "inc2dRe3000"]
 
-depth_same_color = True
+CMAP = cm.get_cmap("inferno")  # swap to "viridis" if preferred
+
 
 def plot_freq(df: pd.DataFrame):
-    """
-    plot the frequency vs width with different markers for df_1 and df_2,
-    but show only ONE legend entry per depth.
-    """
     fig, ax = plt.subplots(1, 1, figsize=(12, 6))
 
-    print("Unique runs in data:", np.unique(df["run"]))
+    # Global depth range for a consistent colormap across all runs
+    all_depths = np.unique(df.loc[df["run"].isin(runs), "d"])
+    d_min, d_max = all_depths.min(), all_depths.max()
+    norm = mcolors.Normalize(vmin=d_min, vmax=d_max)
 
-    for r, run in enumerate(np.unique(df["run"])):
-        if run not in runs:
+    for r, run in enumerate(runs):
+        if run not in df["run"].values:
             continue
 
-        print(f"Processing run: {run}")
-
         df_run = df.loc[df["run"] == run]
-
-        depths = np.unique(df_run["d"])[::-1]
-
+        depths = np.unique(df_run["d"])
+        marker = MARKERS[r % len(MARKERS)]
+        ms = MARKERSIZES[r % len(MARKERSIZES)]
         label_done = False
-        for i, depth in enumerate(depths):
-            df_depth = df_run.loc[df_run["d"] == depth]
 
+        for depth in depths:
+            df_depth = df_run.loc[
+                (df_run["d"] == depth)
+                & (df_run["type"].isin(["limitcycle"]))
+                # & (df_run["type"].isin(["equilibrium", "limitcycle"]))
+            ]
+            color = CMAP(norm(depth))
 
-            # fix color, ith in the mpl10 color cycle
-            if depth_same_color:
-                color = plt.rcParams["axes.prop_cycle"].by_key()["color"][r % 10]
-            else:
-                color = plt.rcParams["axes.prop_cycle"].by_key()["color"][i % 10]
-
-            # fix marker style based on run
-            marker = MARKERS[r % len(MARKERS)]
-
-            label = ""
-            if not depth_same_color:
-                label = f"Depth = {depth} (run: {run})"
-            elif not label_done:
-                label = f"Run: {run}"
-                label_done = True
-            else:
-                label = "_nolegend_"
+            label = run if not label_done else "_nolegend_"
+            label_done = True
 
             ax.plot(
                 df_depth["w"],
                 df_depth["omega"],
                 marker=marker,
-                markersize=6,
+                markersize=ms,
                 color=color,
                 linestyle="None",
-                # linestyle=linestyles[r % len(linestyles)],
-                # Only label ONCE per depth (for df1)
                 label=label,
             )
 
-            ax.plot(
-                df_depth["w"],
-                df_depth["omega"],
-                color=color,
-                linewidth=1.0,
-                marker=None,
-                linestyle="-",
-                label="_nolegend_",
-            )
+    # Colorbar for depth
+    sm = cm.ScalarMappable(cmap=CMAP, norm=norm)
+    sm.set_array([])
+    cb = fig.colorbar(sm, ax=ax, pad=0.02)
+    cb.set_label(r"$d/\delta^*$")
 
-    ax.set_xlabel("w")
-    ax.set_ylabel("ω")
+    ax.set_xlabel(r"$w/\delta^*$")
+    ax.set_ylabel(r"$\omega$")
     ax.set_title("Frequency vs Width")
-    ax.legend()
+    ax.legend(title="Run")
     ax.grid()
     plt.show()
 
 
 def main():
-    """Main execution function."""
-    # Set up paths
     script_path = os.path.dirname(os.path.abspath(__file__))
     data_dir = os.path.join(script_path, "../../../data/stability/stability.dat")
-
-    # Load data
     df = pd.read_csv(
         data_dir,
-        sep=" ",
+        sep=r"\s+",
         comment="#",
         names=["w", "d", "sigma", "omega", "type", "run"],
     )
-
-    # Create plot
     plot_freq(df)
 
 

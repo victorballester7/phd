@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from pp.fileManagement import extract_width_depth
+from pp.fileManagement import extract_depth_width
 from pp.inputargs import parseArgs
 from scipy.spatial import Voronoi, voronoi_plot_2d
 
@@ -110,7 +110,7 @@ def main():
 
     folder = args.folders[0] # we do one by one
 
-    d, w = extract_width_depth(folder)
+    d, w = extract_depth_width(folder)
 
     xmin = -10
     xmax = w + 4 * w

@@ -181,11 +181,11 @@
     </FUNCTION>
 
     <FUNCTION NAME="InitialConditions">
-      <!-- <F VAR="u,v,p" FILE="../initialCond.fld" /> -->
-      <E VAR="u" VALUE="0.1*awgn(1.0)*exp(-(y+3)/5)" />
-      <E VAR="v" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" />
-      <E VAR="w" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" />
-      <E VAR="p" VALUE="0" />
+      <F VAR="u,v,p" FILE="mesh_107.chk" />
+      <!-- <E VAR="u" VALUE="0.1*awgn(1.0)*exp(-(y+3)/5)" /> -->
+      <!-- <E VAR="v" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" /> -->
+      <!-- <E VAR="w" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" /> -->
+      <!-- <E VAR="p" VALUE="0" /> -->
     </FUNCTION>
   </CONDITIONS>
 </NEKTAR>

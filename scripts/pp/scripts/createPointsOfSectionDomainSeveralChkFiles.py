@@ -2,7 +2,7 @@ import os
 import numpy as np
 from pp.colors import colors
 from pp.ssh.fieldconvert import fld2datapts_batch
-from pp.fileManagement import extract_width_depth
+from pp.fileManagement import extract_depth_width
 
 
 def gen_points_file(
@@ -40,7 +40,7 @@ def gen_points_file(
 
 def create_points_file(base_dir: str, case: str):
     dir_local = base_dir + case
-    d, w = extract_width_depth(case)
+    d, w = extract_depth_width(case)
     print(f"Width: {w}, Depth: {d}")
     n = 600
 
@@ -48,10 +48,11 @@ def create_points_file(base_dir: str, case: str):
     if d != 0:
         x_loc1 = np.arange(-70, -10, 20) + 3.5
         x_loc2 = (
-            np.arange(-10, w + 10, 2) + 0.5
+            np.arange(-10, w + 40, 1) + 1.5
         )  # 3.5 just not to coincide with the edges of the gap geoemtry
-        x_loc3 = np.arange(w + 10, 1000, 20) + 3.5
+        x_loc3 = np.arange(w + 40, 1000, 20) + 3.5
         x_loc = np.unique(np.concatenate((x_loc1, x_loc2, x_loc3)))
+        # x_loc = x_loc2
     else:
         x_loc = (
             np.arange(-70, 1000, 20) - 3.5
@@ -88,19 +89,24 @@ if __name__ == "__main__":
 
     dir_local = (
         # "/home/victor/Desktop/PhD/src/bfsRe1000inc/directLinearSolver/blowingSuction/"
-        "/home/victor/Desktop/PhD/src/incGapRe1000/directLinearSolver/blowingSuctionCoarserMesh/"
+        # "/home/victor/Desktop/PhD/src/incGapRe1000/directLinearSolver/blowingSuction/"
+        "/home/victor/Desktop/PhD/src/incGapRe3000/directLinearSolver/blowingSuction/"
     )
 
     # get all directories in dir_local such that dir/data/ does not exist
 
     directories = [
         # "d1.5_w200", "d1_w200", "d0.5_w200",
-        "d1.5_w15", "d1.5_w20", "d1.5_w25", "d1.5_w30", "d1.5_w35", "d1_w20", "d2_w20", "d2.5_w20", "d3_w21"
-        # d
+        # "d1.5_w10", "d1.5_w15", "d1.5_w20", "d1.5_w25", "d1.5_w30", "d1.5_w35", 
+        # "d0.5_w40", "d0.75_w40", "d1_w39", "d1.25_w40", "d1.5_w40", "d1.75_w40"
+        # "d1.5_w40", "d1.5_w45", "d1.5_w50", 
+        # "d1.5"
+        "d0.75_w93", "d1.25_w38", "d1.5_w33", "d3_w14"
+        # "d1.5_w70", "d1.75_w33", "d3.5_w21"
         # for d in os.listdir(dir_local)
         # if os.path.isdir(os.path.join(dir_local, d))
         # and not os.path.exists(os.path.join(dir_local, d, "data"))
-    ]
+        ]
 
     for case in directories:
         create_points_file(dir_local, case=case)

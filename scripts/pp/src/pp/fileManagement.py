@@ -6,7 +6,7 @@ from pp.colors import colors
 from typing import Tuple, List, Dict
 
 
-def extract_width_depth(filenameFolder: str) -> Tuple[float, float]:
+def extract_depth_width(filenameFolder: str) -> Tuple[float, float]:
     """
     Extract width (YYY) and depth (XXX) from the filename of the form *dXXX_wYYY*
     Args:
@@ -34,6 +34,11 @@ def extract_width_depth(filenameFolder: str) -> Tuple[float, float]:
             )
     return float(depth), float(width)
 
+def extract_reynolds(path: str) -> float:
+    match = re.search(r"Re(\d+(?:\.\d+)?)", path)
+    if match is None:
+        raise ValueError(f"Could not extract Reynolds number from path: {path}")
+    return float(match.group(1))
 
 def readDataHistoryPointsMultiple(
     folders: np.ndarray,
@@ -119,24 +124,41 @@ def _readDataHistoryPoints(path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarra
             - fields: An array of fields (e.g. u, v, p) at every point (axis 0) and timestep (axis 1).
     """
     # Extract data after the header
-    data: List[List[float]] = []
-    points_locations: List[List[float]] = []
-    num_points = -1
-    with open(path, "r") as f:
-        for line in f:
-            if not line.startswith("#"):
-                try:
-                    data.append([float(value) for value in line.split()])
-                except ValueError:
-                    continue
-            else:
-                num_points += 1
-                if num_points > 0:
-                    points_locations.append(
-                        [float(value) for value in line[1:].split()][1:]
-                    )
+    # data: List[List[float]] = []
+    # points_locations: List[List[float]] = []
+    # num_points = -1
+    # with open(path, "r") as f:
+    #     for line in f:
+    #         if not line.startswith("#"):
+    #             try:
+    #                 data.append(np.fromstring(line, sep=" "))
+    #                 # data.append([float(value) for value in line.split()])
+    #             except ValueError:
+    #                 continue
+    #         else:
+    #             num_points += 1
+    #             if num_points > 0:
+    #                 points_locations.append(np.fromstring(line[1:], sep=" "))
+    #                 # points_locations.append(
+    #                 #     [float(value) for value in line[1:].split()][1:]
+    #                 # )
+    # new_data = np.array([data[i::num_points] for i in range(num_points)])
 
-    new_data = np.array([data[i::num_points] for i in range(num_points)])
+    with open(path) as f:
+        points_locations = []
+        num_points = 0
+
+        for line in f:
+            if line.startswith("#"):
+                if num_points > 0:
+                    points_locations.append(np.fromstring(line[1:], sep=" ")[1:])
+                num_points += 1
+
+    num_points -= 1
+
+    data = np.loadtxt(path, comments="#")
+
+    new_data = data.reshape(-1, num_points, data.shape[1]).transpose(1, 0, 2)
 
     print(colors.OKBLUE + f"Read {len(data)} data points from {path}" + colors.ENDC)
 

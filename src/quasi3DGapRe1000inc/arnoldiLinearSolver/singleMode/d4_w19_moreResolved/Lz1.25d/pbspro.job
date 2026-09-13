@@ -1,0 +1,8 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=64:mpiprocs=64:mem=50gb
+#PBS -l walltime=23:59:59
+#PBS -N d4_w19_moreResolved_Lz1.25d
+#PBS -e log.job
+#PBS -o output.job
+
+source $HOME/Desktop/PhD/scripts/pbspro.sh

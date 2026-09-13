@@ -57,11 +57,23 @@ def parseArgs() -> argparse.Namespace:
         action="store_true",
         help="Compute the growth rate and frequency from the data (default: False).",
     )
+
+    parser.add_argument(
+        "--testgaussian",
+        action="store_true",
+        help="Test if the data is Gaussian (default: False).",
+    )
     
     parser.add_argument(
         "--meanmode",
         action="store_true",
         help="Include the mean mode (k=0) in the comparison (default: False).",
+    )
+
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="Suppress showing the plots (default: False).",
     )
 
     # fft and dynamicalSystem are incompatible together
@@ -71,6 +83,12 @@ def parseArgs() -> argparse.Namespace:
         action="store_true",
         help="Use FFT to get frequency data (default: False).",
     )
+    group.add_argument(
+        "--psd",
+        action="store_true",
+        help="Use PSD to get frequency data (default: False).",
+    )
+
     group.add_argument(
         "--returnMap",
         action="store_true",

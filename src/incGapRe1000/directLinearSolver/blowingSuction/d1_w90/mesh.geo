@@ -9,7 +9,7 @@ BL_upper = 3.5 * deltaStar; // height of the third layer of quad elements
 x0 = 100 * deltaStar; // x distance from inflow to gap
 lengthOutflow = 1000 * deltaStar; // length after the gap
 x3 = W + lengthOutflow; // last point of the domain
-height = 75 * deltaStar; // height of the triangular region
+height = 150 * deltaStar; // height of the triangular region
 triagHeightRegion_inflow = height - BL - BL_upper; // height of the triangular region
 
 // Micro parameters

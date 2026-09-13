@@ -1,21 +1,21 @@
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import numpy as np
-from pp.fft import fftFreqs
-from pp.filterData import timeFilter
+from pp.fft import fftFreqs, compute_psd
+from pp.filterData import timeFilter, format_number
 from pp.inputargs import parseArgs
 from pp.colors import colors
-from pp.fileManagement import extract_width_depth, readDataHistoryPointsMultiple
+from pp.fileManagement import (
+    extract_depth_width,
+    readDataHistoryPointsMultiple,
+    extract_reynolds,
+)
 from pp.returnMap import getReturnPoints
 from pp.analyzeData import compute_growthRate
-from scipy.signal import hilbert
-from scipy.stats import linregress
-from scipy.fft import fft, fftfreq
-from scipy.signal import butter, filtfilt
-from scipy.signal import savgol_filter
-from scipy.signal import find_peaks, savgol_filter
-from scipy.interpolate import CubicSpline
-from scipy.stats import linregress
+import os
+import time as t
+from scipy import stats
+import pingouin as pg
 
 
 def createFigure(returnMap: bool, is3d: bool):
@@ -52,7 +52,15 @@ def main():
     folders = args.folders
     is3d = any("3d" in f.lower() for f in folders)
 
+    # compute reading time
+    time_start = t.perf_counter()
     data = readDataHistoryPointsMultiple(folders)
+    time_end = t.perf_counter()
+    print(
+        colors.OKGREEN
+        + f"Data read in {time_end - time_start:.2f} seconds."
+        + colors.ENDC
+    )
 
     fig, axes = createFigure(args.returnMap, is3d)
 
@@ -72,18 +80,18 @@ def main():
                 colors.OKGREEN + "Plotting all points from all folders." + colors.ENDC
             )
 
-    for j, f in enumerate(folders):
-        isIncNS = "inc" in f.lower()
+    for j, fold in enumerate(folders):
+        isIncNS = "inc" in fold.lower()
         isIncNSlabel = "(incNS)" if isIncNS else "(comNS)"
-        is3d_f = "3d" in f.lower()
-        points, time, fields = data[f]
+        is3d_f = "3d" in fold.lower()
+        points, time, fields = data[fold]
         # fileds = np.swapaxes(fields, 0, 1)  # time, points, vars
         time, fields = timeFilter(time, fields, args.time_min, args.time_max)
         # fields = np.swapaxes(fields, 0, 1)  # points, time, vars
 
-        depth, width = extract_width_depth(f)
+        depth, width = extract_depth_width(fold)
 
-        print(f"Processing folder: {f}")
+        print(f"Processing folder: {fold}")
         for i, p in enumerate(points):
             print(f"Point {i}: x = {p[0]}, y = {p[1]}, z = {p[2]}")
 
@@ -125,9 +133,9 @@ def main():
             if args.returnMap:
                 var_section = u
                 var_return = v if var_section is u else u
-                section = 0.43
-                min_section_return_variable = -0.3
-                max_section_return_variable = -0.15
+                section = 0.4
+                min_section_return_variable = -0.015
+                max_section_return_variable = -0.005
                 # section_u = 0.44
                 # min_section_v = -0.04
                 # max_section_v = -0.01
@@ -181,6 +189,60 @@ def main():
                 axes[1].set_xlim([np.min(var_return), np.max(var_return)])
                 axes[1].set_ylim([np.min(var_return), np.max(var_return)])
             else:
+                if args.psd:
+                    columns = []
+                    header_columns = ["omega"]
+
+                if args.testgaussian:
+                    # do a normality test on the data
+                    # u_snap shape: (n_time, n_y, n_x)
+                    print(
+                        colors.OKGREEN
+                        + f"Testing Gaussianity for point {label}..."
+                        + colors.ENDC
+                    )
+                    print(
+                        colors.OKGREEN
+                        + "Using skewness and kurtosis to test for Gaussianity..."
+                        + colors.ENDC
+                    )
+                    print(
+                        colors.OKGREEN
+                        + "For skewness, values less than |0.5| are considered approximately Gaussian."
+                        + colors.ENDC
+                    )
+                    print(
+                        colors.OKGREEN
+                        + "For kurtosis, values less than |1| are considered approximately Gaussian."
+                        + colors.ENDC
+                    )
+                    for f, lab in zip(vars, labels_vars):
+                        skew_field = stats.skew(f, axis=0)
+                        kurt_field = stats.kurtosis(
+                            f, axis=0
+                        )  # excess kurtosis; 0 for Gaussian
+
+                        # then plot skew_field / kurt_field spatially and look for where they
+                        # depart from ~0 — that's your practical "closure breaks down here" boundary
+
+                        print(
+                            f"  Skewness for {lab} at point {label}: {skew_field:.6f}, Kurtosis: {kurt_field:.6f}"
+                        )
+
+                    print(
+                        colors.OKGREEN
+                        + "Testing joint Gaussianity for u and v..."
+                        + colors.ENDC
+                    )
+                    # test joint Gaussianity for u and v
+                    u = vars[0]
+                    v = vars[1]
+                    # Henze-Zirkler statistic for joint normality of (u, v)
+                    result = pg.multivariate_normality(np.column_stack((u, v)), alpha=0.05)
+                    print(
+                        f"  Joint Gaussianity test for u and v at point {label}: {result[0]}, p-value: {result[1]:.6f}"
+                    )
+
                 for f, lab, ax in zip(vars, labels_vars, axes):
                     if args.log:
                         f_plot = np.log(f - np.mean(f))
@@ -281,7 +343,6 @@ def main():
                     # dA/dt = (sigma + i * omega) * A - l_r * |A|^2 * A
                     # dR/dt = sigma * R - l_r * R^3
                     # dtheta/dt = omega - l_i * R^2
-
 
                     # R(t)^-2 = (l_r / sigma) + (R0^-2 - l_r / sigma) * exp(-2 * sigma * t)
                     # theta(t) = theta0 + (omega - l_i / l_r * sigma) * t + l_i / l_r * ln(R(t)/R0)
@@ -391,6 +452,7 @@ def main():
                     #     label=f"Phase {label} {lab}",
                     # )
 
+                    ax.legend()
                     ax.set_xlabel("t")
                     ax.set_ylabel(lab)
 
@@ -454,6 +516,20 @@ def main():
                         except Exception as _:
                             print(f"Could not fit data for {lab} at point {label}")
 
+                    if args.psd:
+                        _, ax2 = plt.subplots(1, 1, figsize=(8, 6))
+                        omega, psd = compute_psd(time, f)
+                        ax2.plot(
+                            omega,
+                            psd,
+                            label=f"PSD {label} {lab}",
+                        )
+                        ax2.legend()
+                        columns.append(psd)
+                        header_columns.append(
+                            f"PSD_{lab}_x{points[p, 0]}_y{points[p, 1]}_z{points[p, 2]}"
+                        )
+
                     # growth_rate = 0.012835
                     # freq = 0.2190548
                     # a = 0.003
@@ -498,9 +574,29 @@ def main():
                     # ).T
                     # # plot all growth rates
                     # ax.plot(time, f, linestyle=":", label=labels)
+                if args.psd:
+                    out = np.column_stack((omega, *columns))
+                    reynolds = extract_reynolds(fold)
+                    filename = (
+                        f"d{format_number(depth)}_"
+                        f"w{format_number(width)}_"
+                        f"Re{format_number(reynolds)}_"
+                        f"x{points[p, 0]}_y{points[p, 1]}_z{points[p, 2]}"
+                    )
+                    out_dir = os.path.abspath(
+                        os.path.join(os.path.dirname(__file__), "../../../data/psd")
+                    )
+                    os.makedirs(out_dir, exist_ok=True)
 
+                    path = os.path.join(out_dir, filename + ".dat")
+                    header = " ".join(header_columns)
+                    np.savetxt(path, out, header=header)
+                    print(colors.OKGREEN + f"Wrote PSD data to {path}" + colors.ENDC)
     plt.legend()
-    plt.show()
+    if args.quiet:
+        plt.close(fig)
+    else:
+        plt.show()
 
 
 if __name__ == "__main__":

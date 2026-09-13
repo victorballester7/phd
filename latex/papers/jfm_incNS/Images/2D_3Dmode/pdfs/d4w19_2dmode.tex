@@ -1,0 +1,70 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+% Match JFM fonts
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{compat=1.18}
+\pgfplotsset{colormap/RdBu}
+
+\def\image{../pngs/2dmode.png}
+% Natural width of this standalone figure
+\def\figurewidth{6.5}
+
+\begin{document}
+\begin{tikzpicture}
+	\def\xmin{0}
+	\def\xmax{\figurewidth}
+	\def\ymin{0}
+	\def\ymax{3.5}
+	\path[use as bounding box]
+	(\xmin,\ymin) rectangle (\xmax,\ymax);
+
+    \begin{scope}[
+        shift={(3.638884*0.8,2.370788*0.8)},
+        scale=0.8,
+        shift={(-3.638884,-2.370788)}
+    ]
+		\draw[ultra thick]
+		(1.709173,0.496211)
+		-- (1.378365,0.716750);
+		\draw[ultra thick]
+		(0,1.736740)
+		-- (0.18,1.81);
+		\draw[ultra thick]
+		(0.58,1.56)
+		-- (1.654038,1.995115)
+		-- (1.654038,2.381057)
+		-- (7.5,4.4);
+		\draw[ultra thick]
+		(1.720200,0.882154)
+		-- (0.165404,1.819442);
+
+		\node[
+			inner sep=0pt,
+			xshift=0.2cm,
+			yshift=-0.08cm,
+			scale=0.055,
+			rotate=-5,
+			% opacity=0.3
+		] (gap) at (3.638884,2.370788)
+		{
+			\includegraphics{\image}
+		};
+		\draw[ultra thick]
+		(0,0)
+		-- (1.709173,0.882154)
+		-- (1.709173,0.496211)
+		-- (3.319103,1.268096)
+		-- (3.319103,1.681606)
+		-- (8.5,4.0);
+	\end{scope}
+\end{tikzpicture}
+
+\end{document}

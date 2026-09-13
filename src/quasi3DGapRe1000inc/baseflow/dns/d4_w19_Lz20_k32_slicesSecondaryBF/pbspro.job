@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -l select=1:ncpus=64:mpiprocs=64:mem=64gb
-#PBS -l walltime=02:59:59
+#PBS -l walltime=00:59:59
 #PBS -N d4w19M0
 #PBS -e log.job
 #PBS -o output.job

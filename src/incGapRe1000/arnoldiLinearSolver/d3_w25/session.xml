@@ -11,17 +11,21 @@
       <I PROPERTY="EqType"                                VALUE="UnsteadyNavierStokes"       />
       <I PROPERTY="Projection"                            VALUE="Galerkin"                   /> 
       <I PROPERTY="EvolutionOperator"                     VALUE="Direct"                  />
-      <I PROPERTY="TimeIntegrationMethod"                 VALUE="IMEXOrder2"                 />
       <!-- <I PROPERTY="SpectralVanishingViscosity"            VALUE="DGKernel"                   /> -->
       <I PROPERTY="SPECTRALHPDEALIASING"                  VALUE="True"           />
       <I PROPERTY="GlobalSysSoln"                         VALUE="XxtMultiLevelStaticCond" />
       <I PROPERTY="Driver"                                VALUE="ModifiedArnoldi"                />
     </SOLVERINFO>    
 
+    <TIMEINTEGRATIONSCHEME>
+      <METHOD> IMEX </METHOD>
+      <ORDER> 2 </ORDER>
+    </TIMEINTEGRATIONSCHEME>
+
     <PARAMETERS>
      <!--General parameters-->
       <P> TimeStep        = 0.005      </P>
-      <P> NumSteps        = 1000e4     </P>
+      <P> NumSteps        = 2e3     </P>
       <P> IO_CheckSteps   = NumSteps         </P> 
       <P> IO_InfoSteps    = NumSteps/50       </P> 
       <P> IO_CFLSteps     = IO_InfoSteps         </P>
@@ -30,8 +34,8 @@
 
       <!-- Parameters for the modified Arnoldi method -->
       <P> kdim            = 16                   </P>
-      <P> nvec            = 2                   </P>
-      <P> evtol           = 1e-05               </P>
+      <P> nvec            = 4                   </P>
+      <P> evtol           = 1e-06               </P>
       <p> nits            = 500                 </p>
 
       <!-- Parameters for the simulation -->
@@ -148,12 +152,11 @@
       </REGION>    
     </BOUNDARYCONDITIONS>
     <FUNCTION NAME="BaseFlow">
-      <F VAR="u,v,p" FILE="../baseflow.fld"   />
+      <F VAR="u,v,p" FILE="baseflow.fld"   />
     </FUNCTION>
 
     <FUNCTION NAME="InitialConditions">
-      <E VAR="u" VALUE="0.1*awgn(1.0)*exp(-(y+3)/5)" />
-      <E VAR="v" VALUE="0.01*awgn(1.0)*exp(-(y+3)/5)" />
+      <F VAR="u,v" FILE="mesh_502.chk" />
       <E VAR="p" VALUE="0" />
     </FUNCTION>
   </CONDITIONS>

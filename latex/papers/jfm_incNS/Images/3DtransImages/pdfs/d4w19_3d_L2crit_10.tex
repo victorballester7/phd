@@ -1,0 +1,53 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+
+\def\image{../pngs/d4w19_3d_L2crit_10.png}
+\def\figurewidth{6.62}
+
+\begin{document}
+\begin{tikzpicture}
+	\def\xmin{0}
+	\def\xmax{6.62}
+	\def\ymin{0}
+	\def\ymax{3.43}
+	\path[use as bounding box]
+	(\xmin,\ymin)
+	rectangle
+	(\xmax,\ymax);
+
+	\draw[ultra thick]
+	(0,0.047743)
+	-- (1.117947,0.548013)
+	-- (1.128907,0.235646)
+	-- (2.778427,1.068626)
+	-- (2.789387,1.342632)
+	-- (6.62,3.233278);
+	\draw[ultra thick]
+	(0.915182,0.465811)
+	-- (1.128907,0.224685);
+	\draw[ultra thick]
+	(0,1.370033)
+	-- (0.284967,1.457715);
+	\draw[ultra thick]
+	(0.515132,1.189189)
+	-- (1.775563,1.671440)
+	-- (1.775563,2.027649)
+	-- (5.940464,3.425083);
+	\draw[ultra thick]
+	(1.117947,0.580894)
+	-- (0.268526,1.452235);
+	\node[
+		inner sep=0pt,
+		anchor=south west,
+		yshift=0.2cm,
+		xshift=0cm
+	] at (0,0)
+	{
+		\includegraphics[
+			width=\figurewidth cm
+		]{\image}
+	};
+
+\end{tikzpicture}
+\end{document}
