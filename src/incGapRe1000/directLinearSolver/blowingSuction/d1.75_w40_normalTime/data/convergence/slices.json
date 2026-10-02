@@ -1,0 +1,119 @@
+{
+  "case": "d1.75_w40",
+  "dt": 0.006,
+  "sample_frequency": 10,
+  "start_folder": "mesh_11_stress.fld",
+  "mintime": 5000.0,
+  "slices": [
+    {
+      "k": 1,
+      "folder": "mesh_20_stress.fld",
+      "t_beg": 5280.000000024302,
+      "t_end": 9600.000000036138,
+      "T_avg": 4320.000000011836,
+      "nsamples": 72000,
+      "nsteps": 720000,
+      "fld": "convAvg_k01.fld",
+      "dat": "data/convergence/pointsavg_n600_convAvg_k01.dat"
+    },
+    {
+      "k": 2,
+      "folder": "mesh_29_stress.fld",
+      "t_beg": 5280.000000024302,
+      "t_end": 13919.999999606565,
+      "T_avg": 8639.999999582264,
+      "nsamples": 144000,
+      "nsteps": 1440000,
+      "fld": "convAvg_k02.fld",
+      "dat": "data/convergence/pointsavg_n600_convAvg_k02.dat"
+    },
+    {
+      "k": 3,
+      "folder": "mesh_38_stress.fld",
+      "t_beg": 5280.000000024302,
+      "t_end": 18239.999999739666,
+      "T_avg": 12959.999999715365,
+      "nsamples": 216000,
+      "nsteps": 2160000,
+      "fld": "convAvg_k03.fld",
+      "dat": "data/convergence/pointsavg_n600_convAvg_k03.dat"
+    },
+    {
+      "k": 4,
+      "folder": "mesh_47_stress.fld",
+      "t_beg": 5280.000000024302,
+      "t_end": 22560.000000619766,
+      "T_avg": 17280.000000595464,
+      "nsamples": 288000,
+      "nsteps": 2880000,
+      "fld": "convAvg_k04.fld",
+      "dat": "data/convergence/pointsavg_n600_convAvg_k04.dat"
+    },
+    {
+      "k": 5,
+      "folder": "mesh_56_stress.fld",
+      "t_beg": 5280.000000024302,
+      "t_end": 26880.000001499866,
+      "T_avg": 21600.000001475564,
+      "nsamples": 360000,
+      "nsteps": 3600000,
+      "fld": "convAvg_k05.fld",
+      "dat": "data/convergence/pointsavg_n600_convAvg_k05.dat"
+    },
+    {
+      "k": 6,
+      "folder": "mesh_64_stress.fld",
+      "t_beg": 5280.000000024302,
+      "t_end": 30720.000002282177,
+      "T_avg": 25440.000002257875,
+      "nsamples": 424000,
+      "nsteps": 4240000,
+      "fld": "convAvg_k06.fld",
+      "dat": "data/convergence/pointsavg_n600_convAvg_k06.dat"
+    },
+    {
+      "k": 7,
+      "folder": "mesh_73_stress.fld",
+      "t_beg": 5280.000000024302,
+      "t_end": 35040.00000316228,
+      "T_avg": 29760.000003137975,
+      "nsamples": 496000,
+      "nsteps": 4960000,
+      "fld": "convAvg_k07.fld",
+      "dat": "data/convergence/pointsavg_n600_convAvg_k07.dat"
+    },
+    {
+      "k": 8,
+      "folder": "mesh_82_stress.fld",
+      "t_beg": 5280.000000024302,
+      "t_end": 39360.00000404238,
+      "T_avg": 34080.000004018075,
+      "nsamples": 568000,
+      "nsteps": 5680000,
+      "fld": "convAvg_k08.fld",
+      "dat": "data/convergence/pointsavg_n600_convAvg_k08.dat"
+    },
+    {
+      "k": 9,
+      "folder": "mesh_91_stress.fld",
+      "t_beg": 5280.000000024302,
+      "t_end": 43680.00000492248,
+      "T_avg": 38400.000004898175,
+      "nsamples": 640000,
+      "nsteps": 6400000,
+      "fld": "convAvg_k09.fld",
+      "dat": "data/convergence/pointsavg_n600_convAvg_k09.dat"
+    },
+    {
+      "k": 10,
+      "folder": "mesh_100_stress.fld",
+      "t_beg": 5280.000000024302,
+      "t_end": 48000.000005802576,
+      "T_avg": 42720.000005778274,
+      "nsamples": 712000,
+      "nsteps": 7120000,
+      "fld": "convAvg_k10.fld",
+      "dat": "data/convergence/pointsavg_n600_convAvg_k10.dat"
+    }
+  ]
+}

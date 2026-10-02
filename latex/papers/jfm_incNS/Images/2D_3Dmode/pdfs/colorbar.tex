@@ -59,18 +59,18 @@
 		scaled x ticks=false,
 		colorbar style={
 				xmode=log,
+				xminorticks=false,
 				x dir=reverse,
 				xtick={1e-5,1e-4,1e-3,1e-2},
 	xticklabels={
 	,
-	$-10^{-2}$,
-	,
+	$-10^{-2}$,$-10^{-1}$,
 	$-1$
 	},
 	xticklabel style={
 			font=\fsize,
 		},
-		xlabel={$\hat{u}/\|\hat{u}\|_\infty$},
+		xlabel={$\Re(\hat{u})/\||\hat{u}|\|_{L^\infty(\Omega)}$},
 	xlabel style={
 			font=\fsize,
 		},
@@ -106,10 +106,11 @@
 		scaled x ticks=false,
 		colorbar style={
 				xmode=log,
+				xminorticks=false,
 				xtick={1e-5,1e-4,1e-3,1e-2},
 				xticklabels={
 						,
-						$10^{-2}$,,
+						$10^{-2}$,$10^{-1}$,
 						$1$
 					},
 				xticklabel style={

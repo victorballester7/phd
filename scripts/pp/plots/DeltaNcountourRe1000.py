@@ -12,33 +12,22 @@ from pp.DeltaN_computation import (
 )
 from pp.colors import colors
 import matplotlib as mpl
-import matplotlib.colors as mcolors
 from pp.fileManagement import extract_depth_width
 from pp.hopfDataPoints import hopf2d_re_stable, hopf_re_unstable
 from pp.filterData import average_curves
+from plots.deltaNstyle import (
+    COL_EXPERIMENT,
+    add_excluded_region,
+    add_numeric_contours,
+    deltaN_colormap,
+)
+from pp.figureFrame import FigureFrame
 
 plt.style.use("plots/style/jfm.mplstyle")
 
 def addBifurcationMask(ax):
-    """Create a mask for points above/right of the bifurcation curve."""
-    # Interpolate bifurcation curve: w as function of d
-    
-    bif_curve = average_curves(hopf2d_re_stable[1000], hopf_re_unstable[1000], npts=500)[2]
-
-    x_curve = bif_curve[:, 0]
-    y_curve = bif_curve[:, 1]
-
-    # fill everything ABOVE the curve with white
-    ax.fill_between(x_curve, y_curve, y2=plt.ylim()[1], color="white", zorder=2)
-
-    ax.plot(
-        x_curve,
-        y_curve,
-        color="black",
-        linestyle=":",
-        label="2D stability boundary",
-        zorder=2,
-    )
+    """Hatch the region above the bifurcation curve, where no equilibrium exists."""
+    add_excluded_region(ax, 1000, label="2D stability boundary")
     return
 
 
@@ -70,7 +59,7 @@ def experimental_levelsets_to_grid(w_range=(0, 90), d_range=(0, 4), resolution=2
     return X_grid, Y_grid, Z_grid
 
 
-def addExperimentalContours(ax: plt.Axes, color="tab:Orange"):
+def addExperimentalContours(ax: plt.Axes, color=COL_EXPERIMENT):
     """
     Plot experimental data as filled contours matching the style of computed contours.
     """
@@ -86,7 +75,8 @@ def addExperimentalContours(ax: plt.Axes, color="tab:Orange"):
         levels=levels,
         colors=color,
         linestyles="--",
-        zorder=1,
+        linewidths=0.9,
+        zorder=3,
     )
 
     ax.plot(
@@ -108,25 +98,14 @@ def addExperimentalContours(ax: plt.Axes, color="tab:Orange"):
 def plot_deltaN_report(xgrid, ygrid, zgrid, save_path: str):
     """Create a paper-quality figure for the Delta N contour plot."""
     # LaTeX document settings: 10pt font, figure width 6cm
-    latex_width_cm = 9.0
-    fig_width_in = latex_width_cm / 2.54
-
-    fig, ax = plt.subplots(
-        figsize=(fig_width_in, fig_width_in * 0.75),
-        constrained_layout=False,
-    )
+    frame = FigureFrame(frame_w=7.0, aspect_ratio=0.8, pad_l=1.4, pad_b=0.8, pad_t=0.11)
+    fig, ax = frame.fig, frame.ax
 
     # Apply bifurcation mask to Z_grid
     # mask = get_bifurcation_mask(result.X_grid, result.Y_grid)
     # Z_masked = np.ma.array(result.Z_grid, mask=mask)
 
-    def truncate_colormap(cmap, minval=0.3, maxval=1.0, n=256):
-        return mcolors.LinearSegmentedColormap.from_list(
-            f"trunc({cmap.name},{minval:.2f},{maxval:.2f})",
-            cmap(np.linspace(minval, maxval, n)),
-        )
-
-    cmap = truncate_colormap(plt.get_cmap("Blues_r"), 0.15, 1.0)
+    cmap = deltaN_colormap()
 
     c = ax.pcolormesh(
         xgrid,
@@ -144,45 +123,43 @@ def plot_deltaN_report(xgrid, ygrid, zgrid, save_path: str):
 
     # Contour lines (also masked)
     contour_levels = [1, 2, 3, 4, 5]
-    CS = ax.contour(
+    add_numeric_contours(
+        ax,
         xgrid,
         ygrid,
         zgrid,
-        levels=contour_levels,
-        colors="darkblue",
-        zorder=2,
+        contour_levels,
+        [(21, 0.5), (33, 0.7), (48, 0.95), (53, 1), (67, 1.2)],
     )
-    ax.plot([], [], color="darkblue", label=r"Numerical $\Delta n$ levels")  # for legend
-    ax.clabel(
-        CS,
-        inline=True,
-        manual=[(21, 0.5), (33, 0.7), (48, 0.95), (53, 1), (67, 1.2)],
-        fmt="%d",
-    )
+    ax.plot([], [], color="black", label=r"Numerical $\Delta n$ levels")  # for legend
+
+    ax.set_xlim(0, 90)
+    ax.set_ylim(0, 4)
+    ax.set_yticks([0, 1, 2, 3, 4])
 
     # Add experimental data as contours (new method with proper formatting)
     addExperimentalContours(ax)
     addBifurcationMask(ax)
 
-    # Draw grid lines manually on top of everything (including white mask)
-    ax.set_axisbelow(False)
+    # No grid: the shading already carries the value, and a grid over the
+    # hatched region would be read as part of the hatch
+    ax.grid(False)
 
-    # ax.legend(loc="upper right")
-    # add legend below the plot, centered
-    ax.legend(loc="center left", bbox_to_anchor=(1.3, 0.5))
-    # ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.3))
+    # draw ticks and spines above the colormap, contours and hatched region
+    frame.axis_on_top()
+    frame.jfm_ticks()
+
+    # inside the hatched region: there is no data there, and putting the
+    # legend outside made the panel half legend by width
+    ax.legend(loc="upper right", frameon=False)
 
     # impose max value for colorbar is 6 to avoid too light colors for high values
     c.set_clim(0, 6)
 
-    cbar = fig.colorbar(c, ax=ax, orientation="vertical", aspect=15)
+    cbar = frame.colorbar(c)
     cbar.set_label(r"$\Delta n$", rotation=0, labelpad=10)
-    ax.set_xlabel(r"$w/\delta^*$")
-    ax.set_ylabel(r"$d/\delta^*$", rotation=0, labelpad=10)
-    ax.set_xlim(0, 90)
-    ax.set_ylim(0, 4)
-
-    # Set white background for masked region
+    ax.set_xlabel(r"$w$")
+    ax.set_ylabel(r"$d$", rotation=0, labelpad=10)
 
     fig.savefig(save_path, format="pdf")
     print(colors.OKGREEN + f"Figure saved to {save_path}" + colors.ENDC)
@@ -216,6 +193,7 @@ def main():
     n = 600
     doLoo = False
     re = 1000
+    useOnly1Re = True 
 
     pathCurrentScript = os.path.dirname(os.path.abspath(__file__))
 
@@ -259,6 +237,8 @@ def main():
 
     if recompute:
         for r in code_names_Re.keys():
+            if useOnly1Re and r != re:
+                continue
             flat_plate_file = (
                 f"../../../src/flatPlateRe{r}inc/"
                 "directLinearSolver/blowingSuction/"

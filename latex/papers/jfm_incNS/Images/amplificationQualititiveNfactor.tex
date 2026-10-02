@@ -14,27 +14,32 @@
 \definecolor{mblue}  {RGB}{0,   114, 189}
 \definecolor{morange}{RGB}{217,  83,  25}
 \definecolor{mgreen} {RGB}{119, 172,  48}
-\definecolor{mpurple}{RGB}{126,  47, 142}
+\definecolor{mgrey}  {RGB}{ 90,  90,  90}
+
+\def\greendark{mgreen!80!black}
+\def\greenlight{mgreen!80!white}
+\def\purpledark{mgrey!90!black}
+\def\purplelight{mgrey!65!white}
 
 %% ── Bézier expressions (reused in both passes via macros) ───────────────
 \def\cubicX{ 0.15+ 7.989*(1-\t)^2*\t + 14.625*(1-\t)*\t^2 + 6.500*\t^3}
 \def\cubicY{ -1.038*(1-\t)^2*\t + 13.260*(1-\t)*\t^2 + 4.767*\t^3}
 
-\def\quinticX{ 0.15+
-    17.040*(1-\t)^4*\t
-  -  1.320*(1-\t)^3*\t^2
-  + 28.150*(1-\t)^2*\t^3
-  + 17.665*(1-\t)*\t^4
-  +  5.950*\t^5}
+\def\quinticX{ 0.15*(1-\t)^5
+  + 12.95*(1-\t)^4*\t
+  + 6.9*(1-\t)^3*\t^2
+  + 28.4*(1-\t)^2*\t^3
+  + 3.5*(1-\t)*\t^4
+  +  5.8*\t^5}
 \def\quinticY{
-  -  1.900*(1-\t)^4*\t
-  + 44.810*(1-\t)^3*\t^2
-  +  5.300*(1-\t)^2*\t^3
-  + 22.905*(1-\t)*\t^4
-  +  5.500*\t^5}
+  -  2.74*(1-\t)^4*\t
+  + 60.1*(1-\t)^3*\t^2
+  +  16*(1-\t)^2*\t^3
+  + 2.84*(1-\t)*\t^4
+  +  5.7*\t^5}
 
 %% ── Fill x-limits (edit only these two lines) ──────────────────────────
-\def\xfillL{2.2}      % left  boundary (x-coordinate)
+\def\xfillL{2.4}      % left  boundary (x-coordinate)
 \def\xfillR{3.5}   % right boundary (x-coordinate) = x_T
 %% ─────────────────────────────────────────────────────────────────────
 \newcommand{\fsize}{\fontsize{8.7}{10.44}\selectfont}
@@ -52,7 +57,7 @@
 				anchor=north},
 		ylabel={$n(x)$},
 		ylabel style={
-				at={(axis description cs:0,1.03)},
+				at={(axis description cs:-0.02,0.95)},
 				anchor=east, rotate=-90},
 		xtick=\empty, ytick=\empty,
 		axis line style={thick, -{Stealth[length=7pt,width=4.5pt]}},
@@ -75,54 +80,55 @@
 		({\quinticX}, {\quinticY});
 
 		%% ── Fill between the two curves, clipped to x ∈ [\xfillL, \xfillR] ────
-		\addplot[mgreen, fill opacity=0.3, draw=none]
+		\addplot[\greenlight, fill opacity=0.2, draw=none]
 		fill between[
 				of=curveA and curveB,
 				soft clip={domain=\xfillL:\xfillR},
 			];
 
 		\def\mA{0.83}
-		\def\mB{0.8}
-		\draw[mgreen!70,thick, dotted](axis cs:\xfillL,0.65) -- (axis cs:\xfillL,2.35);
-		\draw[mgreen!70,thick, dotted](axis cs:\xfillL+0.1,0.65+\mA*0.1) -- (axis cs:\xfillL+0.1,2.35+\mB*0.1);
-		\draw[mgreen!70,thick, dotted](axis cs:\xfillL+0.2,0.65+\mA*0.2) -- (axis cs:\xfillL+0.2,2.35+\mB*0.2);
-		\draw[mgreen!70,thick, dotted](axis cs:\xfillL+0.3,0.65+\mA*0.3) -- (axis cs:\xfillL+0.3,2.35+\mB*0.3);
-		\draw[mgreen!70,thick, dotted](axis cs:\xfillL+0.4,0.65+\mA*0.4) -- (axis cs:\xfillL+0.4,2.35+\mB*0.4);
-		\draw[mgreen!70,thick, dotted](axis cs:\xfillL+0.5,0.65+\mA*0.5) -- (axis cs:\xfillL+0.5,2.35+\mB*0.5);
-		\draw[mgreen!70,thick, loosely dotted, yshift=-0.1cm](axis cs:2.9,2.4) -- (axis cs:3.3,2.7);
+		\def\mB{0.6}
+		\draw[\greenlight,thick, dotted](axis cs:\xfillL,0.8) -- (axis cs:\xfillL,2.45);
+		\draw[\greenlight,thick, dotted](axis cs:\xfillL+0.1,0.8+\mA*0.1) -- (axis cs:\xfillL+0.1,2.45+\mB*0.1);
+		\draw[\greenlight,thick, dotted](axis cs:\xfillL+0.2,0.8+\mA*0.2) -- (axis cs:\xfillL+0.2,2.45+\mB*0.2);
+		\draw[\greenlight,thick, dotted](axis cs:\xfillL+0.3,0.8+\mA*0.3) -- (axis cs:\xfillL+0.3,2.45+\mB*0.3);
+		\draw[\greenlight,thick, loosely dotted, yshift=-0.1cm](axis cs:2.8,2.2) -- (axis cs:3.2,2.5);
 
 		\addplot[mblue, thick,
 			domain=0:0.90, samples=200, variable=\t, smooth]
 		({\cubicX}, {\cubicY});
 
+		% \addplot[red, thick, dashed,
+		% 	domain=0:0.87, samples=300, variable=\t, smooth]
+		% ({\quinticXold}, {\quinticYold});
+
 		\addplot[morange, thick, dashed,
-			domain=0:0.87, samples=300, variable=\t, smooth]
+			domain=0:0.96, samples=300, variable=\t, smooth]
 		({\quinticX}, {\quinticY});
-		\draw[mpurple!40, thick, dotted]
+		\draw[\purplelight, thick, dotted]
 		(axis cs:4.15,-0.7) -- (axis cs:4.15,4.0)
-		node[mpurple!80,pos=0, below] {$x_\text{gap}^{\text{trans}}$};
-		\draw[mpurple!40, thick, dotted]
+		node[\purpledark,pos=0, below] {$x_\text{gap}^{\text{trans}}$};
+		\draw[\purplelight, thick, dotted]
 		(axis cs:5.51,-0.7) -- (axis cs:5.51,4.0)
-		node[mpurple!80,pos=0, below] {$x_\text{flat}^{\text{trans}}$};
-		\draw[mpurple!40, thick, Stealth-]
+		node[\purpledark, pos=0, below] {$x_\text{flat}^{\text{trans}}$};
+		\draw[\purplelight, thick, Stealth-]
 		(axis cs:4.15,2.55) -- (axis cs:4.15,4.0);
-		\draw[mpurple!40, thick, dotted]
+		\draw[\purplelight, thick, dotted]
 		(axis cs:3.85,2.55) -- (axis cs:5.85,2.55);
-		\draw[mpurple!90!black, thick, Stealth-Stealth]
+		\draw[\purpledark, thick, Stealth-Stealth]
 		(axis cs:5.51,2.55) -- (axis cs:5.51,4.0)
 		node[pos=0.5, right] {$\Delta N$};
 		\begin{scope}[yshift=0cm]
-			\draw[black, opacity=0.5, thin] (axis cs:0.15,-0.2) -- (axis cs:1.25,-0.2) -- (axis cs:1.25,-0.4) -- (axis cs:2,-0.4) -- (axis cs:2,-0.2) -- (axis cs:6,-0.2);
+			\draw[black, semithick] (axis cs:0.15,-0.2) -- (axis cs:0.95,-0.2) -- (axis cs:0.95,-0.4) -- (axis cs:1.7,-0.4) -- (axis cs:1.7,-0.2) -- (axis cs:5.7,-0.2);
 		\end{scope}
 
-		\draw[mgreen!80!black,thick, Stealth-Stealth]	(axis cs:\xfillL+1.2,0.65+\mA*1.2+0.1) -- (axis cs:\xfillL+1.2,2.4+\mB*1.2-0.02)
-		node[pos=0-0.2, right] {$\Delta n= \langle n_\text{gap}-n_\text{flat}\rangle_{\mathcal{X}}$};
-		\draw[mgreen!70,dashed, thick] (axis cs:\xfillL,0.65) -- (axis cs:\xfillL,-0.7);
-		\draw[mgreen!70,dashed, thick] (axis cs:\xfillR,1.8) -- (axis cs:\xfillR,-0.7);
-		% \draw[mgreen!80!black,thick,{Bracket[sharp]-Bracket[sharp]}]	(axis cs:\xfillL,-0.7) -- (axis cs:\xfillR,-0.7)
-		% 	node[pos=0.5, below] {$\mathcal{X}$};
-		% \node[mgreen!80!black, rotate=90, scale=3] (bracket) at (axis cs:2.85,-0.7) {\{};
-		\draw [decorate, decoration = {calligraphic brace,mirror}] (axis cs:\xfillL,-0.7) -- (axis cs:\xfillR,-0.7) node[pos=0.5, below] {$\mathcal{X}$};
+		\draw[\greendark,thick, Stealth-Stealth]	(axis cs:\xfillR-0.15,1.65) -- (axis cs:\xfillR-0.15,3.15)
+		node[pos=-0.28, right, xshift=0.1cm, fill=white, inner sep=1.5pt]
+		{$\Delta n= \langle n_\text{gap}-n_\text{flat}\rangle_{\mathcal{X}}$};
+		\draw[\greenlight,dashed, thick] (axis cs:\xfillL,0.65) -- (axis cs:\xfillL,-0.7);
+		\draw[\greenlight,dashed, thick] (axis cs:\xfillR,1.8) -- (axis cs:\xfillR,-0.7);
+
+		\draw [decorate, decoration = {calligraphic brace,mirror}, very thick, pen colour={\greendark}, \greendark] (axis cs:\xfillL,-0.8) -- (axis cs:\xfillR,-0.8) node[pos=0.5, below,yshift=-0.05cm] {$\mathcal{X}$};
 
 		\node[mblue] at (axis cs:6.25,4.9) {$n_\text{flat}(x)$};
 		\node[morange] at (axis cs:4,4.75) {$n_\text{gap}(x)$};

@@ -8,6 +8,7 @@ from matplotlib.patches import Rectangle
 from pp.colors import colors
 from pp.hopfDataPoints import hopf2d_re_stable, hopf_re_unstable
 from pp.filterData import average_curves
+from pp.figureFrame import FigureFrame
 
 plt.style.use("plots/style/jfm.mplstyle")
 
@@ -57,38 +58,28 @@ class HandlerPatchLine(HandlerBase):
 
 def plot_hopf_re(save_path):
 
-    latex_width_cm = 8.0
-    fig_width_in = latex_width_cm / 2.54
-
-    _, ax = plt.subplots(
-        figsize=(fig_width_in, fig_width_in * 0.75),
-        constrained_layout=False,
-    )
-
-    # ax.set_position([
-    #     0.17,  # left
-    #     0.16,  # bottom
-    #     0.66,  # width
-    #     0.76,  # height
-    # ])
-    # Fix axis limits early so fill_between has correct bounds
-    ax.set_xlim([0, 134])
-    ax.set_ylim([0, 4.1])
-
-    linestyles = [
-        "-",  # solid
-        (0, (1, 1)),  # very dense dots
-        (0, (5, 5)),  # medium dashed
-        (0, (10, 3)),  # long dash
-        (0, (3, 1, 1, 1)),  # dash-dot-dot pattern
-    ]
+    
+    frame = FigureFrame(frame_w=6, aspect_ratio=0.75, pad_l=2.6, pad_b=0.8, pad_t=0.15)
+    fig, ax = frame.fig, frame.ax
 
     legend_elements = []
-    alpha = 0.3
-    
+    # light bands: five overlapping bands at a higher alpha turn muddy where
+    # Re = 1400 and Re = 2000 meet
+    alpha = 0.18
+
+    # Re is an ordered variable, so the curves are coloured along a single
+    # perceptually uniform ramp; each also gets its own dash pattern so that
+    # neighbouring curves stay distinguishable where they cross or in greyscale.
     n = 5
-    cmap_tmp = plt.get_cmap("brg_r")
-    cmap = cmap_tmp(np.linspace(0.1, 0.9, n))
+    # start the ramp at 0.4: below that the Re = 800 curve is too faint in print
+    cmap = plt.get_cmap("Reds")(np.linspace(0.4, 1.0, n))
+    linestyles = [
+        "-",  # solid
+        (0, (5, 1.5)),  # dashed
+        (0, (5, 1.5, 1, 1.5)),  # dash-dot
+        (0, (1, 1.2)),  # dotted
+        (0, (5, 1.2, 1, 1.2, 1, 1.2)),  # dash-dot-dot
+    ]
 
     if len(hopf2d_re_stable.keys()) != len(hopf_re_unstable.keys()):
         raise ValueError(
@@ -138,6 +129,7 @@ def plot_hopf_re(save_path):
             middle_curve[:, 1] * scaling_factor,
             color=color,
             linestyle=ls,
+            linewidth=1.0,
             zorder=3,
         )
         line = Line2D([0], [0], color=color, linestyle=ls)
@@ -153,31 +145,33 @@ def plot_hopf_re(save_path):
 
         legend_elements.append((line, patch, rf"$\mathit{{Re}} = {re}$"))
 
-    ax.set_xticks([0, 20, 40, 60, 80, 100, 120])
-
     ax.set_xlim(0, 130)
-    ax.set_ylim(0, 4.1)
+    ax.set_ylim(0, 4)
+    ax.set_xticks([0, 20, 40, 60, 80, 100, 120])
+    ax.set_yticks([0, 1, 2, 3, 4])
+    frame.jfm_ticks()
 
-    ax.set_xlabel(r"$w/\delta^*$")
-    ax.set_ylabel(r"$d/\delta^*$", rotation=0, labelpad=10)
+    ax.set_xlabel(r"$w$")
+    ax.set_ylabel(r"$d$", rotation=0, labelpad=10)
 
     handles = [(line, patch) for line, patch, _ in legend_elements]
     labels = [label for _, _, label in legend_elements]
 
+    # outside the frame, in the right padding
     ax.legend(
         handles,
         labels,
-        # loc="center left",
-        # bbox_to_anchor=(1.02, 0.5),
+        loc="center left",
+        bbox_to_anchor=(1.02, 0.5),
         handler_map={h: HandlerPatchLine() for h in handles},  # ← instance keys
-        # borderaxespad=0,
-        # frameon=True,
+        frameon=False,
     )
+    ax.grid(False)
+    frame.axis_on_top()
 
-    plt.savefig(
+    fig.savefig(
         save_path,
         format="pdf",
-        bbox_inches="tight",
     )
 
     print(colors.OKGREEN + f"✓ Plot saved to: {save_path}" + colors.ENDC)

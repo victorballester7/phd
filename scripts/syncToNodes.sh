@@ -14,7 +14,7 @@ REMOTE_DIR="~/Desktop/PhD"
 
 # List of remote hosts
 # HOSTS=("typhoon" "hpc")
-HOSTS=("hpc")
+HOSTS=("hpc" "typhoon")
 SYNC_DIRS=("${LOCAL_DIR}/scripts")
 
 # I set the src directory separately as it is synced to the runs directory on the remote hosts (which does not exist locally)
@@ -31,6 +31,7 @@ EXCLUSIONS=(
     "--exclude=*.pts"
     "--exclude=*.chk"
     "--exclude=*.vtu"
+    "--exclude=*.npz"
     "--exclude=*scripts/pp*" 
     "--exclude=*scripts/data*" 
     "--exclude=*scripts/images*" 

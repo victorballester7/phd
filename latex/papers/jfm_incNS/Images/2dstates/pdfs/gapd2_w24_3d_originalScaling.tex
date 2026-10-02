@@ -1,0 +1,65 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=1.18}
+
+\def\image{../pngs/d2_w24.png}
+
+\def\geomscale{0.3670781893}
+
+\def\xfirstedge{-11.25}
+\def\yfirstedge{1.1}
+\def\xsecondedge{5.15}
+\def\ysecondedge{-0.3}
+\def\xmin{-14}
+\def\xmax{27}
+
+\begin{document}
+
+\begin{tikzpicture}[x=\geomscale cm,y=\geomscale cm]
+
+	% Horizontal width: 12.15 * 0.3670781893 = 4.46 cm
+	% Extra vertical space is included for the colorbar.
+
+	\path[use as bounding box]
+	(-6.4,4) rectangle (29.35,10);
+
+	\begin{scope}[shift={(6.075,5)}]
+
+		\node[inner sep=0pt,xshift=2.52cm,yshift=0.96cm,xscale=3.216,yscale=1.05] (gap) at (0,0)
+		{\includegraphics[width=4.46cm]{\image}};
+
+		\draw[thick]
+		(\xmin,\yfirstedge)
+		-- (\xfirstedge,\yfirstedge)
+		-- (\xfirstedge,\ysecondedge)
+		-- (\xsecondedge,\ysecondedge)
+		-- (\xsecondedge,\yfirstedge)
+		-- (\xmax,\yfirstedge);
+
+		\def\lengthWall{0.6}
+
+		\foreach \x in {-14,-13.5,...,-11.25,5.72,6.22,...,26.5} {
+				\draw
+				(\x,\yfirstedge)
+				-- ++(225:\lengthWall);
+			}
+
+		\foreach \x in {-10.9,-10.5,...,5.15} {
+				\draw
+				(\x,\ysecondedge)
+				-- ++(225:\lengthWall);
+			}
+
+		\foreach \y in {0.82,0.37,...,-0.3} {
+				\draw
+				(\xfirstedge,\y)
+				-- ++(225:\lengthWall);
+			}
+
+	\end{scope}
+
+\end{tikzpicture}
+
+\end{document}

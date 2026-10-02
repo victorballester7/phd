@@ -30,6 +30,23 @@ LINES = [
     (5, (10, 3)),
 ]
 
+# --- Uncertainty band settings ---------------------------------------------
+# N_EFF: number of effectively independent samples in the time average,
+#        n_eff = T_avg / (2 * tau_int)  (pp.filterData.effective_samples).
+#        n_eff = 1 plots the raw instantaneous oscillation of u^2+v^2, which is
+#        ~sqrt(2) in relative terms and does NOT shrink with averaging time.
+#        Set it to a real value (estimate tau_int from the HistoryPoints
+#        autocorrelation of u^2+v^2) for a band that demonstrates convergence.
+# Y_CORR: wall-normal correlation length of the perturbation; None = fully
+#         correlated profile (coherent mode, conservative, grid independent).
+# REF_CORR: correlation between the amplitude error at x and at the reference
+#           station x0; 0 = independent (band is finite at x0), 1 = pinned at x0.
+N_EFF = 1.0
+Y_CORR = None
+REF_CORR = 0.0
+N_SIGMA = 1.0  # band half-width in standard deviations
+BAND_ALPHA = 0.25
+
 _worker_x_flat = None
 _worker_Nx_flat = None
 
@@ -40,21 +57,51 @@ def init_nfactor_worker(x_flat, Nx_flat):
     _worker_Nx_flat = Nx_flat
 
 
-def compute_nfactor_case(data_file, doLoo):
+def compute_nfactor_case(data_file, doLoo, n_eff, y_corr, ref_corr):
     """Load one gap case and compute its N factor and Delta N independently."""
     d, w = extract_depth_width(data_file)
-    x, Nx = computeNx(data_file, doLoo)
+    x, Nx, sigma_N = computeNx(
+        data_file,
+        doLoo,
+        return_sigma=True,
+        n_eff=n_eff,
+        y_corr=y_corr,
+        ref_corr=ref_corr,
+    )
     if len(x) == 0 or len(Nx) == 0:
-        return d, w, x, Nx, np.nan
+        return d, w, x, Nx, sigma_N, np.nan
 
     dN = computeDeltaN(w, x, Nx, _worker_x_flat, _worker_Nx_flat)
-    return d, w, x, Nx, dN
+    return d, w, x, Nx, sigma_N, dN
 
 
 def addNxplot(
-    d: float, w: float, x: np.ndarray, Nx: np.ndarray, ax: Axes, c, ls, linewidth=1
+    d: float,
+    w: float,
+    x: np.ndarray,
+    Nx: np.ndarray,
+    ax: Axes,
+    c,
+    ls,
+    linewidth=1,
+    sigma: np.ndarray | None = None,
+    n_sigma: float = N_SIGMA,
+    alpha: float = BAND_ALPHA,
 ) -> None:
-    """Plot points for Nx curves"""
+    """Plot points for Nx curves, with an optional +/- n_sigma uncertainty band
+    drawn in the same colour as the curve and made translucent so the
+    oscillations of the curve itself stay visible through it."""
+
+    if sigma is not None and len(sigma) == len(Nx):
+        ax.fill_between(
+            x,
+            Nx - n_sigma * sigma,
+            Nx + n_sigma * sigma,
+            color=c,
+            alpha=alpha,
+            linewidth=0,
+            zorder=1,
+        )
 
     ax.plot(
         x,
@@ -64,8 +111,9 @@ def addNxplot(
         color=c,
         linestyle=ls,
         linewidth=linewidth,
+        zorder=2,
     )
-    
+
 
     x_start = w + 80
     x_end = x_start + 75
@@ -129,10 +177,10 @@ def main():
     # Parameters to change
     n = 600  # number of points in the wall normal direction
     doLoo = False  # if False, L2 norm is computed
-    re = 800  # Reynolds slice to predict/write from the multi-Re GPR model
+    re = 1000  # Reynolds slice to predict/write from the multi-Re GPR model
     plotBFSandFFSdata = False
     plotdeepGapdata = False
-    useOnly1Re = True
+    useOnly1Re = False
 
     if re != 1000:
         plotBFSandFFSdata = False
@@ -158,9 +206,12 @@ def main():
 
     # Flat plate curve for the target slice plot.
     dataFile_flat = flat_plate_file(re)
-    x_flat, Nx_flat = computeNx(dataFile_flat, doLoo)
+    x_flat, Nx_flat, sigma_flat = computeNx(
+        dataFile_flat, doLoo, return_sigma=True, n_eff=N_EFF, y_corr=Y_CORR,
+        ref_corr=REF_CORR,
+    )
     # print(x_flat, Nx_flat)
-    addNxplot(0, 0, x_flat, Nx_flat, ax, "black", "-", linewidth=3)
+    addNxplot(0, 0, x_flat, Nx_flat, ax, "black", "-", linewidth=3, sigma=sigma_flat)
     flat_plate_cache = {re: (x_flat, Nx_flat)}
 
     basePathBFS = f"../../../src/bfsRe{re}inc/directLinearSolver/blowingSuction/"
@@ -192,12 +243,15 @@ def main():
         for dw in bfs_codenames:
             dataFile_dw = os.path.join(basePathBFS, dw, "data", f"pointsavg_n{n}.dat")
             d, w = extract_depth_width(dataFile_dw)
-            x, Nx = computeNx(dataFile_dw, doLoo)
+            x, Nx, sigma_N = computeNx(
+                dataFile_dw, doLoo, return_sigma=True, n_eff=N_EFF,
+                y_corr=Y_CORR, ref_corr=REF_CORR,
+            )
             # get the color in tab20 based on the index of the depth in DEPTHS
             idx = np.argmin(np.abs(DEPTHS - d))
             c = plt.get_cmap("tab20")(idx)
             ls = LINES[idx % len(LINES)]
-            addNxplot(d, w, x, Nx, ax, c, ls, linewidth=3)
+            addNxplot(d, w, x, Nx, ax, c, ls, linewidth=3, sigma=sigma_N)
             dN = computeDeltaN(w, x, Nx, x_flat, Nx_flat, x_start=150, x_end=350)
             bfs_data.append([d, dN])
             plotd_vs_dNx(d, w, dN, ax2, plotBFS=False, marker="s")
@@ -230,14 +284,17 @@ def main():
                 basePathDeepGap, dw, "data", f"pointsavg_n{n}.dat"
             )
             d, w = extract_depth_width(dataFile_dw)
-            x, Nx = computeNx(dataFile_dw, doLoo)
+            x, Nx, sigma_N = computeNx(
+                dataFile_dw, doLoo, return_sigma=True, n_eff=N_EFF,
+                y_corr=Y_CORR, ref_corr=REF_CORR,
+            )
             # get the color in tab20 based on the index of the depth in DEPTHS
             idx = np.argmin(np.abs(DEPTHS - d))
             c = "black"
             ls = ls_styles_deepGap[
                 deepGap_codenames.index(dw) % len(ls_styles_deepGap)
             ]  # line style based on the index of the deep gap case
-            addNxplot(d, w, x, Nx, ax, c, ls, linewidth=2)
+            addNxplot(d, w, x, Nx, ax, c, ls, linewidth=2, sigma=sigma_N)
             dN = computeDeltaN(w, x, Nx, x_flat, Nx_flat)
             plotd_vs_dNx(d, w, dN, ax2, plotBFS=False)
 
@@ -252,7 +309,7 @@ def main():
         if useOnly1Re and r != re:
             continue
         if r not in flat_plate_cache:
-            flat_plate_cache[r] = computeNx(flat_plate_file(r), doLoo)
+            flat_plate_cache[r] = computeNx(flat_plate_file(r), doLoo)[:2]
 
         x_flat_r, Nx_flat_r = flat_plate_cache[r]
         if len(x_flat_r) == 0 or len(Nx_flat_r) == 0:
@@ -290,10 +347,13 @@ def main():
                 compute_nfactor_case,
                 eligible_files,
                 repeat(doLoo),
+                repeat(N_EFF),
+                repeat(Y_CORR),
+                repeat(REF_CORR),
                 chunksize=1,
             )
 
-        for d, w, x, Nx, dN in results:
+        for d, w, x, Nx, sigma_N, dN in results:
             if len(x) == 0 or len(Nx) == 0:
                 print(
                     colors.WARNING
@@ -324,7 +384,7 @@ def main():
             ls = LINES[
                 idx_tmp
             ]  # skip the first line style for the first case of each depth, as it is already used for the BFS case
-            addNxplot(d, w, x, Nx, ax, c, ls)
+            addNxplot(d, w, x, Nx, ax, c, ls, sigma=sigma_N)
             plotd_vs_dNx(d, w, dN, ax2, plotBFS=False)
 
     depths = np.asarray(depths)
@@ -341,7 +401,10 @@ def main():
     write_deltaN_file(gpr_result, filenameDeltaN)
     plot_deltaN_grid(gpr_result)
 
-    ax.set_title(f"n(x) factor using {'Loo' if doLoo else 'L2'} norm")
+    ax.set_title(
+        f"n(x) factor using {'Loo' if doLoo else 'L2'} norm "
+        f"(band: $\\pm{N_SIGMA:g}\\sigma$, $n_{{eff}}$ = {N_EFF:g})"
+    )
     ax.set_xlabel("x")
     ax.set_ylabel("n(x)")
     ax.grid()

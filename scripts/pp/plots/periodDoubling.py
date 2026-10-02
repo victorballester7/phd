@@ -1,10 +1,29 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from pp.colors import colors
+from pp.colors import colors as c
 from pp.fileManagement import extract_depth_width, readErrorHistoryMultiple
 import os
+from pp.figureFrame import FigureFrame
 
 plt.style.use("plots/style/jfm.mplstyle")
+
+
+def add_direction_arrow(ax, x, y, frac, color):
+    """A single arrowhead on the orbit, so the sense of travel is readable."""
+    i = int(frac * (len(x) - 2))
+    ax.annotate(
+        "",
+        xy=(x[i + 1], y[i + 1]),
+        xytext=(x[i], y[i]),
+        arrowprops=dict(
+            arrowstyle="-|>",
+            color=color,
+            linewidth=0.0,
+            mutation_scale=9,
+            shrinkA=0,
+            shrinkB=0,
+        ),
+    )
 
 
 def main():
@@ -20,17 +39,13 @@ def main():
 
     data = readErrorHistoryMultiple(folders)
 
-    latex_width_cm = 8.0
-    fig_width_in = latex_width_cm / 2.54
+    frame = FigureFrame(frame_w=4.5, aspect_ratio=1.0, pad_l=2.4, pad_b=0.9, pad_t=0.05)
+    fig, ax = frame.fig, frame.ax
 
-    _, ax = plt.subplots(
-        figsize=(fig_width_in, fig_width_in * 0.75),
-        constrained_layout=False,
-    )
-
-    col = ["tab:blue", "tab:orange"]
+    cmap = plt.get_cmap('Dark2')
+    col = [cmap.colors[0], cmap.colors[6]]  
     line_styles = ["-", "--"]
-    widths = [33, 33.5]
+    widths = [33.0, 33.5]
     periods = [280, 560]
 
     for i, f in enumerate(folders):
@@ -49,18 +64,30 @@ def main():
             vL2,
             color=col[i],
             linestyle=line_styles[i],
-            label=rf"$w/\delta^* = {widths[i]}$"
+            label=rf"$w = {widths[i]}$"
         )
+        for frac in (0.15, 0.65):
+            add_direction_arrow(ax, uL2, vL2, frac, col[i])
 
     ax.set_xlabel(r"$\|u\|_2^\text{s}$")
     ax.set_ylabel(r"$\|v\|_2^\text{s}$", labelpad=10, rotation=0)
     ax.set_xticks([-1, 0, 1])
     ax.set_yticks([-1, 0, 1])
+    # equal spans on both axes, with a margin around the orbit
+    ax.set_xlim(-2.05, 1.5)
+    ax.set_ylim(-1.5, 2.05)
+    # both axes are the same standardised norm, so the orbit should not be
+    # stretched in one direction; "datalim" keeps the square frame fixed and
+    # adjusts the limits instead of shrinking the axes box
+    ax.set_aspect("equal", adjustable="datalim")
+    ax.grid(False)
+    frame.axis_on_top()
+    frame.jfm_ticks()
 
-    plt.legend()
+    ax.legend(loc="center left", bbox_to_anchor=(1.02, 0.5), frameon=False)
 
-    plt.savefig(save_path, format="pdf", bbox_inches="tight")
-    print(colors.OKGREEN + f"✓ Plot saved to: {save_path}" + colors.ENDC)
+    fig.savefig(save_path, format="pdf")
+    print(c.OKGREEN + f"✓ Plot saved to: {save_path}" + c.ENDC)
 
 
 if __name__ == "__main__":

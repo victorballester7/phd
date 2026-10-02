@@ -11,10 +11,11 @@ from pp.DeltaN_computation import (
     write_deltaN_file,
 )
 from pp.colors import colors
-import matplotlib.colors as mcolors
 from pp.fileManagement import extract_depth_width
 from pp.hopfDataPoints import hopf2d_re_stable, hopf_re_unstable
 from pp.filterData import average_curves
+from plots.deltaNstyle import add_excluded_region, add_numeric_contours, deltaN_colormap
+from pp.figureFrame import FigureFrame
 
 plt.style.use("plots/style/jfm.mplstyle")
 
@@ -39,75 +40,42 @@ def compute_delta_n_case(data_file, doLoo):
 
 class ReStyle:
 
+    # The colour ramp is shared with figure DeltaNcountour.pdf (see
+    # plots.deltaNstyle): three Reynolds numbers drawn in three different hues
+    # cannot be compared by eye, which is the whole point of putting them side
+    # by side. Only the contour levels and their label positions differ.
     def __init__(self, re):
         self.re = re
-        self.colorCountour = ""
-        self.colorLevelSet = ""
         self.contourLevels = []
         self.labelPositions = []
         match re:
             case 800:
-                self.colorCountour = "Greens_r"
-                self.colorLevelSet = "darkgreen"
                 self.contourLevels = [1, 2, 3, 4, 5, 6]
                 self.labelPositions = [(21, 0.5), (33, 0.7), (44, 0.95), (53, 1), (67, 1.2), (82, 1.4)]
             case 1000:
-                self.colorCountour = "Blues_r"
-                self.colorLevelSet = "darkblue"
                 self.contourLevels = [1, 2, 3, 4, 5]
                 self.labelPositions = [(21, 0.5), (33, 0.7), (44, 0.95), (53, 1), (67, 1.2)]
             case 3000:
-                self.colorCountour = "Reds_r"
-                self.colorLevelSet = "maroon"
                 self.contourLevels = [1, 2, 3, 4]
                 self.labelPositions = [(21, 0.5), (33, 0.7), (48, 0.8), (63, 0.75)]
 
 def addBifurcationMask(ax, re):
-    """Create a mask for points above/right of the bifurcation curve."""
-    # Interpolate bifurcation curve: w as function of d
-    
-    bif_curve = average_curves(hopf2d_re_stable[re], hopf_re_unstable[re], npts=500)[2]
-
-    x_curve = bif_curve[:, 0]
-    y_curve = bif_curve[:, 1]
-
-    # fill everything ABOVE the curve with white
-    ax.fill_between(x_curve, y_curve, y2=plt.ylim()[1], color="white", zorder=2)
-
-    ax.plot(
-        x_curve,
-        y_curve,
-        color="black",
-        linestyle=":",
-        label="Linear stability boundary",
-        zorder=2,
-    )
+    """Hatch the region above the bifurcation curve, where no equilibrium exists."""
+    add_excluded_region(ax, re, label="Linear stability boundary")
     return
 
 
 def plot_deltaN_report(restyle, xgrid, ygrid, zgrid, save_path: str):
     """Create a paper-quality figure for the Delta N contour plot."""
     # LaTeX document settings: 10pt font, figure width 6cm
-    latex_width_cm = 6.5
-    fig_width_in = latex_width_cm / 2.54
-
-    fig, ax = plt.subplots(
-        figsize=(fig_width_in, fig_width_in * 0.75),
-        constrained_layout=False,
-    )
+    frame = FigureFrame(frame_w=4.1, aspect_ratio=0.8, pad_l=1.3, pad_b=0.8, pad_t=0.11)
+    fig, ax = frame.fig, frame.ax
 
     # Apply bifurcation mask to Z_grid
     # mask = get_bifurcation_mask(result.X_grid, result.Y_grid)
     # Z_masked = np.ma.array(result.Z_grid, mask=mask)
 
-    def truncate_colormap(cmap, minval=0.3, maxval=1.0, n=256):
-        return mcolors.LinearSegmentedColormap.from_list(
-            f"trunc({cmap.name},{minval:.2f},{maxval:.2f})",
-            cmap(np.linspace(minval, maxval, n)),
-        )
-
-
-    cmap = truncate_colormap(plt.get_cmap(restyle.colorCountour), 0.15, 1.0)
+    cmap = deltaN_colormap()
 
     c = ax.pcolormesh(
         xgrid,
@@ -123,27 +91,27 @@ def plot_deltaN_report(restyle, xgrid, ygrid, zgrid, save_path: str):
     c.set_rasterized(True)
 
 
-    CS = ax.contour(
+    ax.set_xlim(0, 90)
+    ax.set_ylim(0, 4)
+
+    add_numeric_contours(
+        ax,
         xgrid,
         ygrid,
         zgrid,
-        levels=restyle.contourLevels,
-        colors=restyle.colorLevelSet,
-        zorder=2,
+        restyle.contourLevels,
+        restyle.labelPositions,
     )
 
-    ax.clabel(
-        CS,
-        inline=True,
-        manual=restyle.labelPositions,
-        fmt="%d",
-    )
-
-    # Add experimental data as contours (new method with proper formatting)
     addBifurcationMask(ax, restyle.re)
 
-    # Draw grid lines manually on top of everything (including white mask)
-    ax.set_axisbelow(False)
+    # No grid: the shading already carries the value, and a grid over the
+    # hatched region would be read as part of the hatch
+    ax.grid(False)
+
+    # draw ticks and spines above the colormap, contours and hatched region
+    frame.axis_on_top()
+    frame.jfm_ticks()
 
     # ax.legend(loc="upper right")
     # add legend below the plot, centered
@@ -151,21 +119,19 @@ def plot_deltaN_report(restyle, xgrid, ygrid, zgrid, save_path: str):
     # ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.3))
 
     # impose max value for colorbar is 6 to avoid too light colors for high values
-    c.set_clim(0, 7 if restyle.re == 800 else 5)
+    c.set_clim(0, 7)
+    # c.set_clim(0, 7 if restyle.re == 800 else 5)
 
-    cbar = fig.colorbar(c, ax=ax, orientation="vertical", aspect=15)
-    cbar.set_ticks([0, 1, 2, 3, 4, 5, 6, 7] if restyle.re == 800 else [0, 1, 2, 3, 4, 5])
+    cbar = frame.colorbar(c)
+    # cbar.set_ticks([0, 1, 2, 3, 4, 5, 6, 7] if restyle.re == 800 else [0, 1, 2, 3, 4, 5])
+    cbar.set_ticks([0, 1, 2, 3, 4, 5, 6, 7])
 
     # set min max values for colorbar colormap
 
     cbar.set_label(r"$\Delta n$", rotation=0, labelpad=10)
-    ax.set_xlabel(r"$w/\delta^*$")
-    ax.set_ylabel(r"$d/\delta^*$", rotation=0, labelpad=10)
+    ax.set_xlabel(r"$w$")
+    ax.set_ylabel(r"$d$", rotation=0, labelpad=10)
     ax.set_xticks([0, 20, 40, 60, 80])
-    ax.set_xlim(0, 90)
-    ax.set_ylim(0, 4)
-
-    # Set white background for masked region
 
     fig.savefig(save_path, format="pdf")
     print(colors.OKGREEN + f"Figure saved to {save_path}" + colors.ENDC)
@@ -174,13 +140,19 @@ def plot_deltaN_report(restyle, xgrid, ygrid, zgrid, save_path: str):
 
 
 def main():
+    """Both panels of the Delta n figure, at Re = 800 and Re = 3000."""
+    for re in (800, 3000):
+        plot_one_reynolds(re)
+
+
+def plot_one_reynolds(re):
     """
     Computes Delta N for gap configurations and creates a report-quality contour plot
     using GPR interpolation.
     """
     n = 600
     doLoo = False
-    re = 800
+    useOnly1Re = True
     restyle = ReStyle(re)
 
     pathCurrentScript = os.path.dirname(os.path.abspath(__file__))
@@ -225,6 +197,8 @@ def main():
 
     if recompute:
         for r in code_names_Re.keys():
+            if useOnly1Re and r != re:
+                continue
             flat_plate_file = (
                 f"../../../src/flatPlateRe{r}inc/"
                 "directLinearSolver/blowingSuction/"

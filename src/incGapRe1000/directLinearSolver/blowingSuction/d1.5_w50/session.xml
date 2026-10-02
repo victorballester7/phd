@@ -24,8 +24,8 @@
 
     <PARAMETERS>
     <!--General parameters-->
-      <P> TimeStep        = 0.004      </P>
-      <P> NumSteps        = 6000e3     </P>
+      <P> TimeStep = .007 </P>
+      <P> NumSteps        = 20000e3     </P>
       <P> IO_CheckSteps   = NumSteps/25     </P> 
       <P> IO_InfoSteps    = NumSteps/8000        </P> 
       <P> IO_CFLSteps     = IO_InfoSteps         </P>

@@ -23,7 +23,6 @@ def gen_points_file(
     # x_locations = np.unique(np.concatenate((x_loc1, x_loc2, x_loc3)))
     # x_loc = x_loc2
 
-    # x_locations = np.unique(np.concatenate((x_locations_first, x_locations_last)))
     y_locations = ymin + (ymax - ymin) * (np.linspace(0, 1, n) ** 2)
 
     X, Y = np.meshgrid(x_locations, y_locations, indexing="ij")
@@ -49,15 +48,15 @@ def gen_points_file(
 
 def create_points_file(base_dir: str, case: str):
     dir_local = base_dir + case
-    _, w = extract_depth_width(case)
+    d, w = extract_depth_width(case)
     n = 600
-    output_file = f"data/pointsPO_n{n}"
-    # output_file = f"data/pointsavg_n{n}"
-    fld_remote = "mesh_po.fld"
-    # fld_remote = "mesh_avg.fld"
+    # output_file = f"data/pointsPO_n{n}"
+    # fld_remote = "mesh_po.fld"
+    output_file = f"data/pointsavg_n{n}"
+    fld_remote = "mesh_avg.fld"
     gen_points_file(
-        ymin=0, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
-        # ymin=-4, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
+        # ymin=0, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
+        ymin=-d, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
     )
     fld2datapts(dir_local, fld_remote, output_file)
 
@@ -75,7 +74,9 @@ if __name__ == "__main__":
 
     ##### multiple cases at once
 
-    dir_local = "/home/victor/Desktop/PhD/src/incGapRe1000/baseflow/dns/"
+    # dir_local = "/home/victor/Desktop/PhD/src/quasi3DGapRe1000inc/baseflow/dns/"
+    # dir_local = "/home/victor/Desktop/PhD/src/incGapRe1000/baseflow/dns/"
+    dir_local = "/home/victor/Desktop/PhD/src/incGapRe1000/directLinearSolver/blowingSuction/"
     #
     # # get all directories in dir_local such that dir/data/ does not exist
     #
@@ -84,27 +85,14 @@ if __name__ == "__main__":
         # for d in os.listdir(dir_local)
         # if os.path.isdir(os.path.join(dir_local, d))
         # and not os.path.exists(os.path.join(dir_local, d, "data"))
-        # "d0.5_w50",
-        # "d2_w41"
-        # "d1_w83",
-        # "d1_w90",
-        # "d1_w71",
-        # "d1_w58",
-        # "d1_w39",
-        # "d1_w31",
-        # "d2_w36",
-        # "d2_w28",
-        # "d1.5_w60",
-        "d1.5_w63",
-        # "d1.5_w65",
-        # "d1.5_w70",
-        # "d1.5_w80",
+        # "d1.75_w40_new",
+        # "d1.5_w60_Lz5_k32",
+        "d1.5_w64",
+        # "d1.5_w63_Lz6.0_k32",
+        # "d1.5_w65_Lz6.0_k32",
+        # "d1.5_w70_Lz6.0_k32",
+        # "d1.5_w80_Lz6.0_k32"
     ]
-
-    # directories = [
-    #     # "d1.5_w200", "d1_w200", "d0.5_w200",
-    #     d for d in os.listdir(dir_local) if os.path.isdir(os.path.join(dir_local, d)) and not os.path.exists(os.path.join(dir_local, d, "data"))
-    # ]
 
     for case in directories:
         # print(f"Creating points file for case: {case}")

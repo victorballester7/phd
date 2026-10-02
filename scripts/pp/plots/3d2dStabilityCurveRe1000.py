@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from pp.colors import colors
+from pp.colors import colors, mix_with_black
 from pp.hopfDataPoints import (
     hopf2d_re_stable,
     hopf_re_unstable,
@@ -14,6 +14,10 @@ from matplotlib.legend_handler import HandlerBase
 from matplotlib.patches import Rectangle
 from matplotlib.lines import Line2D
 import matplotlib as mpl
+from mpl_toolkits.axes_grid1.inset_locator import BboxConnector, BboxPatch
+from matplotlib.transforms import TransformedBbox
+from matplotlib.backends import backend_pdf
+from pp.figureFrame import FigureFrame, axis_on_top, jfm_ticks
 
 
 plt.style.use("plots/style/jfm.mplstyle")
@@ -51,207 +55,151 @@ class HandlerPatchLine(HandlerBase):
         return [p, l]
 
 
-def create_wiggle_curve(x0, y0, x_end, slope, amplitude, frequency, num_points=500):
-    x_wiggle = np.linspace(x0, x_end, num_points)
-    s_black = x_wiggle - x0
-    y_wiggle = (
-        y0
-        + slope * s_black
-        + amplitude * np.sin(frequency * np.pi * s_black / max(s_black[-1], 1.0))
-    )
-    return x_wiggle, y_wiggle
+# --- Region patterns -----------------------------------------------------
+#
+# The five regions are drawn as vector hatched polygons bounded by the mean
+# stability curves.  Regions II/III are split at the crossing of the two mean
+# curves, and III/IV at X_SEP_III_IV.
+#
+# The PDF backend writes hatch patterns in opaque RGB (alpha is dropped), so
+# the hatch colour is pre-blended with the white background instead.
+
+# Single-character patterns, i.e. the sparse form of each: doubling a hatch
+# character doubles its density, and at this figure size the doubled set read
+# as one uniform texture instead of five distinguishable regions.
+HATCH_PATTERNS = ["/", "o", "*", "O", "x"]
+HATCH_COLOR = "tab:blue"
+ALPHA_PATTERN = 0.48  # opacity of the hatch, emulated by blending with white
+X_SEP_III_IV = 70.0  # w/d* at which region III gives way to region IV
+N_REGION_PTS = 2000  # resolution of the region outlines
 
 
-def main():
-    script_path = os.path.dirname(os.path.abspath(__file__))
-    save_path = os.path.join(
-        script_path, "../../../images/3d2dStabilityCurveRe1000.pdf"
-    )
+def _writeHatches(self):
+    """PdfFile.writeHatches, but filling closed hatch shapes (e.g. the "*"
+    stars) with the hatch colour: upstream leaves the fill colour unset when
+    the patch has no facecolor, so they come out black."""
+    hatchDict = dict()
+    sidelen = 72.0
+    Op = backend_pdf.Op
+    for hatch_style, name in self._hatch_patterns.items():
+        ob = self.reserveObject("hatch pattern")
+        hatchDict[name] = ob
+        res = {
+            "Procsets": [
+                backend_pdf.Name(x) for x in "PDF Text ImageB ImageC ImageI".split()
+            ]
+        }
+        self.beginStream(
+            ob.id,
+            None,
+            {
+                "Type": backend_pdf.Name("Pattern"),
+                "PatternType": 1,
+                "PaintType": 1,
+                "TilingType": 1,
+                "BBox": [0, 0, sidelen, sidelen],
+                "XStep": sidelen,
+                "YStep": sidelen,
+                "Resources": res,
+                "Matrix": [1, 0, 0, 1, 0, self.height * 72],
+            },
+        )
+        stroke_rgb, fill_rgb, hatch, lw = hatch_style
+        self.output(*stroke_rgb[:3], Op.setrgb_stroke)
+        if fill_rgb is not None:
+            self.output(
+                *fill_rgb[:3],
+                Op.setrgb_nonstroke,
+                0,
+                0,
+                sidelen,
+                sidelen,
+                Op.rectangle,
+                Op.fill,
+            )
+        self.output(*stroke_rgb[:3], Op.setrgb_nonstroke)  # <- the fix
+        self.output(lw, Op.setlinewidth)
+        self.output(
+            *self.pathOperations(
+                backend_pdf.Path.hatch(hatch),
+                backend_pdf.Affine2D().scale(sidelen),
+                simplify=False,
+            )
+        )
+        self.output(Op.fill_stroke)
+        self.endStream()
+    self.writeObject(self.hatchObject, hatchDict)
 
-    latex_width_cm = 8.0
-    fig_width_in = latex_width_cm / 2.54
 
-    _, ax = plt.subplots(
-        figsize=(fig_width_in, fig_width_in * 0.75),
-        constrained_layout=False,
-    )
+backend_pdf.PdfFile.writeHatches = _writeHatches
 
-    hopf2d_st, hopf2d_un, hopf2d = average_curves(
-        hopf2d_re_stable[1000], hopf_re_unstable[1000], npts=500
-    )
 
-    inst3d_st, inst3d_un, inst3d = average_curves(
-        instability3d_stable[1000], instability3d_unstable[1000], npts=10000
-    )
+def _curve_y(x, curve):
+    """y(x) of an (N, 2) curve, tolerant of the tiny non-monotonicity left by
+    the Savitzky-Golay smoothing in average_curves."""
+    order = np.argsort(curve[:, 0])
+    return np.interp(x, curve[order, 0], curve[order, 1])
 
-    # Fix axis limits early so fill_between has correct bounds
-    ax.set_xlim([0, 130])
-    ax.set_ylim([0, 4])
 
-    # filter of hopf2d, hopf2d_st and hopf2d_un to be less than 4 for the depth
-    hopf2d_st = hopf2d_st[hopf2d_st[:, 1] < 4]
-    hopf2d_un = hopf2d_un[hopf2d_un[:, 1] < 4]
-    hopf2d = hopf2d[hopf2d[:, 1] < 4]
+def makePatterns(ax, inst3ds, hopf2ds):
+    mpl.rcParams["hatch.linewidth"] = 0.5
 
-    #### curves with filling
+    inst3d = inst3ds[2]
+    hopf2d = hopf2ds[2]
+    x0, x1 = ax.get_xlim()
+    y0, y1 = ax.get_ylim()
 
-    # wiggle
-    x01 = 48
-    x_wiggle1, y_wiggle1 = create_wiggle_curve(
-        x0=x01,
-        y0=1.7,
-        x_end=130,
-        slope=0.005,
-        amplitude=0.05,
-        frequency=5,
-        num_points=500,
-    )
+    # crossing of the two mean curves -> separates regions II and III
+    xs = np.linspace(0.0, np.max(inst3d[:, 0]), 2000)
+    gap = _curve_y(xs, inst3d) - _curve_y(xs, hopf2d)
+    x_cross = xs[np.argmin(np.abs(gap))]
 
-    x02 = 72
-    x_end2 = 69.8
-    x_wiggle2, y_wiggle2 = create_wiggle_curve(
-        x0=x02,
-        y0=1.5,
-        x_end=x_end2,
-        slope=-0.1,
-        amplitude=0.05,
-        frequency=0.6,
-        num_points=100,
-    )
+    def bounds(xa, xb):
+        x = np.linspace(xa, xb, N_REGION_PTS)
+        y2d = _curve_y(x, hopf2d)
+        y3d = _curve_y(x, inst3d)
+        return x, np.minimum(y2d, y3d), np.maximum(y2d, y3d)
 
-    # Plot the black uncertainty boundary.
-    for x, y in zip([x_wiggle1, x_wiggle2], [y_wiggle1, y_wiggle2]):
-        ax.plot(
+    x, lo, hi = bounds(x0, x1)
+    regions = [
+        (x, np.full_like(x, y0), lo),  # I   below both
+        bounds(x0, x_cross),  # II  between, left of the crossing
+        bounds(x_cross, X_SEP_III_IV),  # III
+        bounds(X_SEP_III_IV, x1),  # IV
+        (x, hi, np.full_like(x, y1)),  # V   above both
+    ]
+
+    rgb = np.asarray(mpl.colors.to_rgb(HATCH_COLOR))
+    edgecolor = ALPHA_PATTERN * rgb + (1.0 - ALPHA_PATTERN)  # over white
+    for (x, ya, yb), hatch_pattern in zip(regions, HATCH_PATTERNS):
+        ax.fill_between(
             x,
-            y,
-            color="black",
+            ya,
+            yb,
+            facecolor="none",
+            edgecolor=edgecolor,
             linewidth=0,
-            zorder=6,
+            hatch=hatch_pattern,
+            zorder=1,
         )
 
-    # filter values of inst3d_st and inst3d_un to be less than width = 50
-    inst3d_st_filt = inst3d_st[inst3d_st[:, 0] < 50]
-    inst3d_un_filt = inst3d_un[inst3d_un[:, 0] < 50]
 
-    w_regionI = np.concatenate([[0], inst3d_st[:, 0]])
-    d_2_regionI = np.concatenate([[4], inst3d_st[:, 1]])
-    d_1_regionII = np.interp(inst3d_un_filt[:, 0], hopf2d_st[:, 0], hopf2d_st[:, 1])
-    d_2_regionII = np.interp(inst3d_un_filt[:, 0], inst3d_un[:, 0], inst3d_un[:, 1])
-
-    x_regionIV = np.where(x_wiggle1 >= x_end2)[0]
-    y_1_regionIV = y_wiggle1[x_regionIV]
-    x_regionIV = x_wiggle1[x_regionIV]
-    y_2_regionIV_1 = np.interp(
-        x_regionIV[np.where(x_regionIV <= x02)[0]], x_wiggle2[::-1], y_wiggle2[::-1]
-    )
-    y_2_regionIV_2 = np.interp(
-        x_regionIV[np.where(x_regionIV > x02)[0]], hopf2d_un[:, 0], hopf2d_un[:, 1]
-    )
-    y_2_regionIV = np.concatenate([y_2_regionIV_1, y_2_regionIV_2])
-
-    x_regionV_1 = np.where(x_wiggle1 <= x_end2)[0]
-    y_regionV_1 = y_wiggle1[x_regionV_1]
-    x_regionV_1 = x_wiggle1[x_regionV_1]
-    x_regionV_2 = x_wiggle2[::-1]
-    y_regionV_2 = y_wiggle2[::-1]
-
-    x_regionV = np.concatenate([x_regionV_1, x_regionV_2])
-    y_1_regionV = np.concatenate([y_regionV_1, y_regionV_2])
-    y_2_regionV = np.interp(x_regionV, hopf2d_un[:, 0], hopf2d_un[:, 1])
-    hopf2d_un_filt = hopf2d_un[hopf2d_un[:, 0] < x01]
-    d_2_regionIII = np.concatenate([hopf2d_un_filt[:, 1], y_wiggle1])
-    w_region_top = np.concatenate([hopf2d_un_filt[:, 0], x_wiggle1])
-    d_2_regionIII = np.interp(hopf2d_un[:, 0], w_region_top, d_2_regionIII)
-    #### filling of different regions
-    hatch_patterns = ["//", "O.", "xx", "oo", "**"]
-    alpha_fb = 0.3
-
-    mpl.rcParams["hatch.linewidth"] = 0.7
-
-    ax.fill_between(
-        w_regionI,
-        0,
-        d_2_regionI,
-        facecolor="white",
-        edgecolor="tab:blue",
-        linewidth=0,
-        alpha=alpha_fb,
-        hatch=hatch_patterns[0],
-        zorder=1,
-    )
-
-    ax.fill_between(
-        inst3d_un_filt[:, 0],
-        d_1_regionII,
-        d_2_regionII,
-        facecolor="white",
-        edgecolor="tab:blue",
-        linewidth=0,
-        alpha=alpha_fb,
-        hatch=hatch_patterns[1],
-        zorder=1,
-    )
-
-    ax.fill_between(
-        hopf2d_un[:, 0],
-        4,
-        d_2_regionIII,
-        facecolor="white",
-        edgecolor="tab:blue",
-        linewidth=0.5,
-        alpha=alpha_fb,
-        hatch=hatch_patterns[2],
-        zorder=1,
-    )
-
-    ax.fill_between(
-        x_regionIV,
-        y_1_regionIV,
-        y_2_regionIV,
-        facecolor="white",
-        edgecolor="tab:blue",
-        linewidth=0,
-        alpha=alpha_fb,
-        hatch=hatch_patterns[3],
-        zorder=1,
-    )
-    # print(x_regionIV, y_1_regionIV, y_2_regionIV)
-
-    ax.fill_between(
-        x_regionV,
-        y_1_regionV,
-        y_2_regionV,
-        facecolor="white",
-        edgecolor="tab:blue",
-        linewidth=0,
-        alpha=alpha_fb,
-        hatch=hatch_patterns[4],
-        zorder=1,
-    )
-    ax.plot(
-        x_wiggle2,
-        y_wiggle2,
-        color="tab:blue",
-        linewidth=0.5,
-        alpha=alpha_fb,
-        zorder=1,
-    )
+def plotCurves(ax, inst3ds, hopf2ds, exp_bypass_curve):
+    inst3d_st, inst3d_un, inst3d = inst3ds
+    hopf2d_st, hopf2d_un, hopf2d = hopf2ds
 
     ax.plot(
         hopf2d[:, 0],
         hopf2d[:, 1],
         linestyle="-",
-        label="2D linear stability\nboundary",
         color="tab:green",
         zorder=2,
     )
-
 
     ax.plot(
         inst3d[:, 0],
         inst3d[:, 1],
         linestyle="-.",
-        label="3D linear stability\nboundary",
         color="tab:orange",
         zorder=3,
     )
@@ -261,7 +209,6 @@ def main():
         exp_bypass_curve[:, 1],
         linestyle="--",
         color="tab:brown",
-        label="Experimental bypass\ntransition boundary\n(Crouch $\\it{et\\ al.}$ 2022)",
         zorder=3,
     )
 
@@ -275,19 +222,73 @@ def main():
     )
 
     ax.fill(
-        np.r_[inst3d_st_filt[:, 0], inst3d_un_filt[::-1, 0]],
-        np.r_[inst3d_st_filt[:, 1], inst3d_un_filt[::-1, 1]],
+        np.r_[inst3d_st[:, 0], inst3d_un[::-1, 0]],
+        np.r_[inst3d_st[:, 1], inst3d_un[::-1, 1]],
         color="tab:orange",
         alpha=0.2,
         linewidth=0,
         zorder=1,
     )
 
-    ax.set_xticks([0, 20, 40, 60, 80, 100, 120])
-    ax.set_yticks([0, 1, 2, 3, 4])
-    ax.set_xlabel(r"$w/\delta^*$")
-    ax.set_ylabel(r"$d/\delta^*$", rotation=0, labelpad=10)
 
+def addText(ax, axins):
+    # black, not the hatch colour: a blue numeral sitting on blue hatching
+    # reads as part of the texture
+    textcolor = "tab:blue"
+    textcolor = mix_with_black(textcolor, 0.35)
+    textweight = "bold"
+    textfontsize = [14, 11]
+
+    labels = ["I", "II", "III", "IV", "V"]
+
+    positionsAx = {
+        labels[0]: (0.25, 0.16),
+        labels[1]: (0.14, 0.6),
+        labels[2]: (0.48, 0.34),
+        labels[3]: (0.8, 0.38),
+        labels[4]: (0.535, 0.755),
+    }
+    positionsAxins = {
+        labels[0]: (0.17, 0.13),
+        labels[1]: (np.nan, np.nan),  # not visible in the inset
+        labels[2]: (0.35, 0.4),
+        labels[3]: (0.8, 0.45),
+        labels[4]: (0.485, 0.82),
+    }
+
+    for a, p, t in zip([ax, axins], [positionsAx, positionsAxins], textfontsize):
+        for label, (x, y) in p.items():
+            a.text(
+                x,
+                y,
+                label,
+                transform=a.transAxes,
+                fontsize=t,
+                color=textcolor,
+                fontweight=textweight,
+                ha="center",
+            )
+
+    
+    ax.text(
+        0.8,
+        0.3,
+        r"$d_{\mathrm{2D}}$",
+        transform=ax.transAxes,
+        color="tab:green",
+        ha="center",
+    )
+    ax.text(
+        0.24,
+        0.36,
+        r"$d_{\mathrm{3D}}$",
+        transform=ax.transAxes,
+        color="tab:orange",
+        ha="center",
+    )
+
+
+def addLegend(ax):
     legend_elements = [
         (
             Line2D([0], [0], color="tab:green", linestyle="-"),
@@ -306,59 +307,6 @@ def main():
         ),
     ]
 
-    textcolor = "tab:blue"
-    textfontsize = 12
-
-    ax.text(
-        0.25,
-        0.15,
-        "I",
-        transform=ax.transAxes,
-        fontsize=textfontsize,
-        color=textcolor,
-        ha="center",
-    )
-    ax.text(
-        0.15,
-        0.6,
-        "II",
-        transform=ax.transAxes,
-        fontsize=textfontsize,
-        color=textcolor,
-        ha="center",
-    )
-    ax.text(
-        0.23,
-        0.85,
-        "V",
-        transform=ax.transAxes,
-        fontsize=textfontsize,
-        color=textcolor,
-        ha="center",
-    )
-    ax.text(
-        0.7,
-        0.4,
-        "IV",
-        transform=ax.transAxes,
-        fontsize=textfontsize,
-        color=textcolor,
-        ha="center",
-    )
-    ax.text(
-        0.51,
-        0.36,
-        "III",
-        transform=ax.transAxes,
-        fontsize=textfontsize,
-        color=textcolor,
-        ha="center",
-    )
-
-    # ax.plot([14, 24], [4, 2], color="tab:purple", marker="*", linestyle="none", markersize=8)
-    # ax.plot([19, 40], [4, 2], color="tab:cyan", marker="*", linestyle="none", markersize=8)
-    # ax.plot([80], [1.5], color="tab:red", marker="*", linestyle="none", markersize=8)
-
     handles = [(line, patch) for line, patch, _ in legend_elements]
     labels = [label for _, _, label in legend_elements]
 
@@ -368,10 +316,83 @@ def main():
         loc="center left",
         bbox_to_anchor=(1.02, 0.5),
         handler_map={h: HandlerPatchLine() for h in handles},  # ← instance keys
+        frameon=False,
     )
 
+
+def main():
+    script_path = os.path.dirname(os.path.abspath(__file__))
+    save_path = os.path.join(
+        script_path, "../../../images/3d2dStabilityCurveRe1000.pdf"
+    )
+
+    frame = FigureFrame(
+        frame_w=5.5, aspect_ratio=0.75, pad_l=4.0, pad_b=0.8, pad_t=0.11
+    )
+    fig, ax = frame.fig, frame.ax
+
+    # zoom panel in the left padding, vertically centred on the frame
+    INS_W = 2.6
+    INS_H = INS_W * frame.frame_h / frame.frame_w
+    INS_LEFT = 0.55  # cm from the left figure edge (room for its tick labels)
+    INS_BOTTOM = 0.8
+    axins = frame.add_axes_cm(INS_LEFT, INS_BOTTOM, INS_W, INS_H)
+
+    hopf2ds = average_curves(hopf2d_re_stable[1000], hopf_re_unstable[1000], npts=500)
+
+    inst3ds = average_curves(
+        instability3d_stable[1000], instability3d_unstable[1000], npts=10000
+    )
+
+    # NOTE: set_ticks widens the view interval to span the ticks, so the
+    # limits must be set *after* the ticks or they get silently overridden.
+    ax.set_xticks([0, 20, 40, 60, 80, 100, 120])
+    ax.set_yticks([0, 1, 2, 3, 4])
+    ax.set_xlim([0, 130])
+    ax.set_ylim([0, 4])
+    axins.set_xlim([55, 85])
+    axins.set_ylim([1.3, 1.75])
+
+    # zoomed region on the main axes, joined to the panel on its left:
+    # mark_inset can only join matching corners, so the connectors are built
+    # by hand (panel upper/lower right -> region upper/lower left)
+    zoom_kw = dict(fc="none", ec="0.4", lw=0.5)
+    zoom = TransformedBbox(axins.viewLim, ax.transData)
+    ax.add_patch(BboxPatch(zoom, **zoom_kw))
+    # the connectors belong to ax, below its axis artists (zorder 10 from
+    # axis_on_top), so they pass under the y tick labels and the y label
+    for loc_ins, loc_zoom in ((1, 1), (4, 4)):
+        connector = BboxConnector(
+            axins.bbox, zoom, loc1=loc_ins, loc2=loc_zoom, zorder=5, **zoom_kw
+        )
+        connector.set_clip_on(False)
+        ax.add_patch(connector)
+    ax.set_xlabel(r"$w$")
+    ax.set_ylabel(r"$d$", rotation=0, labelpad=10)
+    # remove grid
+    ax.grid(False)
+    axins.grid(False)
+    frame.jfm_ticks()
+    jfm_ticks(axins)
+    # draw ticks and spines above the patterns, bands and curves
+    frame.axis_on_top()
+    axis_on_top(axins)
+
+    # white behind the y labels, so the connectors read as passing beneath
+    # them rather than through them
+    label_bg = dict(facecolor="white", edgecolor="none", pad=1.3)
+    ax.yaxis.label.set_bbox(label_bg)
+    for label in ax.get_yticklabels():
+        label.set_bbox(label_bg)
+
+    for a in [ax, axins]:
+        makePatterns(a, inst3ds, hopf2ds)
+        plotCurves(a, inst3ds, hopf2ds, exp_bypass_curve)
+    addText(ax, axins)
+    addLegend(ax)
+
     # Save with fixed figure size (no bbox_inches="tight" to preserve exact dimensions)
-    plt.savefig(save_path, format="pdf")
+    fig.savefig(save_path, format="pdf")
     print(colors.OKGREEN + f"✓ Plot saved to: {save_path}" + colors.ENDC)
 
 

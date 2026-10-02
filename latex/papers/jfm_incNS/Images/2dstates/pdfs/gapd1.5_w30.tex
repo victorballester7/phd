@@ -59,7 +59,7 @@
 		\clip (\xmin,\ymin) rectangle (\xmax,\ymax);
 
 		\node[inner sep=0pt,
-			yshift=-0.88cm,xshift=0.05cm,anchor=south] (gap) at (0,0)
+			yshift=-0.82cm,xshift=0.05cm,anchor=south] (gap) at (0,0)
 		{\includegraphics[trim=0cm 0cm 0cm 13cm,
 				clip,
 				width=\figurewidth cm]{\image}};
@@ -74,10 +74,11 @@
 
 		\node[
 			inner sep=0pt,
-			yshift=-0.1cm,
+			yshift=0.0cm,
+			xshift=0.045cm,
 		] (gap2) at (gap.north)
 		{\includegraphics[
-				width=\figurewidth cm
+				width=4.74 cm
 			]{\secondimage}};
 
 		\draw[very thin]

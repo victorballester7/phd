@@ -154,7 +154,7 @@ def main(input_file, output_file, upperLowerBranch):
 if __name__ == "__main__":
     # cases = ["flat"]
     # cases = ["d1.5_w10", "d1.5_w15", "d1.5_w20", "flat"]
-    cases = ["bfs"]
+    cases = ["d3_w16_re800", "d3_w16_re1000", "d3_w16_re3000"]
     upperLowerBranch = True
     leftRightBranch = not upperLowerBranch
 

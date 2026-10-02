@@ -1,36 +1,54 @@
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
+from matplotlib.ticker import AutoMinorLocator
 
-from pp.fontSizeLaTex import compute_mpl_fontsize, compute_figure_size
-from pp.colors import mix_with_black, colors
-from pp.analyzeData import shared_depth_curve, build_bifurcation_pairs
-from pp.smoothing import smooth_curve
 from pp.filterData import average_curves
 from pp.hopfDataPoints import hopf2d_re_stable, hopf_re_unstable
+from pp.figureFrame import FigureFrame, axis_on_top, jfm_ticks
 
-import matplotlib as mpl
 
 plt.style.use("plots/style/jfm.mplstyle")
 
+# gamma_1 and gamma_2 are read on the left axis (global norm), gamma_3 on the
+# right one (norm over Omega'). The two groups are told apart by colour, and
+# the right axis carries the colour of its curve: black and grey on the left,
+# dark red on the right -- the same colours as the arrows of the stability
+# panel.
+COLORS = ["black", "0.45", "darkred"]
+MARKERS = ["o", "s", "^"]
+FIT_LS = ["--", "--", "--"]
+COL3 = COLORS[2]
+
+# gamma_3 amplitude on the right axis: right = K3_Y * left. The origin is the
+# same on both axes, so the three paths share the bifurcation point.
+K3_Y = 0.05
+
+
+def mu_along(w, d, w_c, d_c, tangent):
+    """
+    Relative distance from the crossing point of a path,
+
+        mu = +- sqrt((w/w_c - 1)^2 + (d/d_c - 1)^2),
+
+    positive on the unstable side, so that the bifurcation is at mu = 0 on
+    every path (eq. hopfdistance of the paper). Measuring w and d relative to
+    their critical values puts the three paths on the same scale: along
+    gamma_1 it is (w - w_c)/w_c, along gamma_3 (d - d_c)/d_c, whereas a
+    distance in w units moved about thirty times faster along gamma_1 than
+    one in d units along gamma_3.
+    """
+    side = np.sign((w - w_c) * tangent[0] + (d - d_c) * tangent[1])
+    return side * np.hypot(w / w_c - 1.0, d / d_c - 1.0)
+
 
 def makePlot():
-    useVL2 = True
-
     wd_c = np.array([[25.415, 3], [45.117, 1.736], [80, 1.405]])
-
-    uvL2_muc = np.array(
-        [
-            [407.9995, 0.4677355],
-            [411.5315, 0.451751],
-            [417.6885, 0.680634],
-        ]
-    )
 
     def bifLine2(w):
         return 0.0365 * w + 0.0898
 
+    # gamma_1 and gamma_2: w, d, ||u'||_L2 and ||v'||_L2 over the whole domain
     data = [
         np.array(
             [
@@ -60,46 +78,68 @@ def makePlot():
                 [47.1000, 1.8090, 4.802795e-01, 3.529278e-01],
             ]
         ),
-        np.array(
-            [
-                [80, 1.35, 0, 0],
-                [80, 1.37, 0, 0],
-                [80, 1.38, 0, 0],
-                [80, 1.39, 0, 0],
-                [80, 1.4, 0, 0],
-                [80, 1.41, 2.837676e-01, 1.787734e-01],
-                [80, 1.42, 5.560265e-01, 3.447882e-01],
-                [80, 1.43, 1.141631e00, 6.933020e-01],
-                [80, 1.44, 6.076028e00, 3.787439e00],
-                [80, 1.45, 8.950815e00, 5.609746e00],
-                [80, 1.5, 1.194457e01, 7.804305e00],
-                [80, 1.55, 1.398018e01, 8.999930e00],
-            ]
-        ),
     ]
+
+    # gamma_3 over the whole domain, same columns as above. Not plotted: past
+    # the bifurcation the global norm is dominated by the wave the limit cycle
+    # excites downstream of the gap, and it does not grow linearly (see text).
+    gamma3_global = np.array(  # noqa: F841 -- kept for reference
+        [
+            [80, 1.41, 2.837676e-01, 1.787734e-01],
+            [80, 1.42, 5.560265e-01, 3.447882e-01],
+            [80, 1.43, 1.141631e00, 6.933020e-01],
+            [80, 1.44, 6.076028e00, 3.787439e00],
+            [80, 1.45, 8.950815e00, 5.609746e00],
+            [80, 1.5, 1.194457e01, 7.804305e00],
+            [80, 1.55, 1.398018e01, 8.999930e00],
+        ]
+    )
+
+    # gamma_3 over Omega' = [w - 10, w] x [-d/2, 0.5], the end of the shear
+    # layer over the gap up to the downstream edge. Columns: w, d,
+    # sum over the history points in Omega' of A_u^2 + A_v^2, where A is half
+    # the peak-to-peak amplitude over the last 15% of the run
+    # (HistoryPoints.his of the d*_w80 DNS; five points: x = 70.6, 75.3 at
+    # y = 0.5 and y = -d/2, and x = 80 at y = 0.5). The region stops at the
+    # edge: the points downstream of it already carry the convected wave and
+    # bend the curve upwards. Runs below d = 1.405 are still decaying towards
+    # the equilibrium; beyond d = 1.45 the growth is no longer linear.
+    gamma3_local = np.array(
+        [
+            [80, 1.35, 0],
+            [80, 1.37, 0],
+            [80, 1.38, 0],
+            [80, 1.39, 0],
+            [80, 1.40, 0],
+            [80, 1.41, 6.011134e-03],
+            [80, 1.42, 1.522502e-02],
+            [80, 1.43, 2.435115e-02],
+            [80, 1.44, 3.412315e-02],
+            [80, 1.45, 4.607494e-02],
+        ]
+    )
 
     # ------------------------------------------------------------------
     # Figure with two panels
     # ------------------------------------------------------------------
 
-    latex_width_cm = 10.0
-    fig_width_in = latex_width_cm / 2.54
-
-    fig = plt.figure(
-        figsize=(fig_width_in, fig_width_in * 0.55),
-        constrained_layout=False,
+    frame = FigureFrame(
+        frame_w=4.6, aspect_ratio=0.85, pad_l=4.4, pad_b=0.85, pad_t=0.15
     )
+    fig, ax = frame.fig, frame.ax
 
-    gs = GridSpec(
-        3,
-        2,
-        width_ratios=[2, 1],
-        height_ratios=[1, 2, 1],
-        wspace=0.3,
+    # right panel: a small square in pad_r, vertically centred on the frame
+    STAB_SIZE = 2.0  # cm
+    # between the frame and the panel: the gamma_3 axis on the right of the
+    # frame, then the panel's own d label and ticks
+    STAB_GAP = 2.15  # cm
+    HEIGHT_FROM_BOTTOM = 0.85
+    ax_stab = frame.add_axes_cm(
+        frame.pad_l + frame.frame_w + STAB_GAP,
+        HEIGHT_FROM_BOTTOM,
+        STAB_SIZE,
+        STAB_SIZE,
     )
-
-    ax = fig.add_subplot(gs[:, 0])  # left plot spans all rows
-    ax_stab = fig.add_subplot(gs[1, 1])  # right plot only middle row
 
     # ------------------------------------------------------------------
     # LEFT PANEL : Hopf amplitude
@@ -111,65 +151,89 @@ def makePlot():
         np.array([0.0, 1.0]),
     ]
 
-    for i, (block, tangent) in enumerate(zip(data, bif_paths_tangent)):
-        if i > 1:
-            continue
-
-        w, d = block[:, 0], block[:, 1]
+    # (mu, A^2 in the units of its own axis, scale to the left axis)
+    paths = []
+    for i, block in enumerate(data):
         w_c, d_c = wd_c[i]
+        mu = mu_along(block[:, 0], block[:, 1], w_c, d_c, bif_paths_tangent[i])
+        paths.append((mu, block[:, 2] ** 2 + block[:, 3] ** 2, 1.0))
+    w_c, d_c = wd_c[2]
+    mu3 = mu_along(
+        gamma3_local[:, 0], gamma3_local[:, 1], w_c, d_c, bif_paths_tangent[2]
+    )
+    paths.append((mu3, gamma3_local[:, 2], K3_Y))
 
-        mu = (w - w_c) * tangent[0] + (d - d_c) * tangent[1]
+    for i, (mu, amp2, scale) in enumerate(paths):
+        c, m = COLORS[i], MARKERS[i]
+        above = mu > 0.0
+        fit_line = np.poly1d(np.polyfit(mu[above], amp2[above], 1))
+        label = rf"$\boldsymbol\gamma_{{{i + 1}}}$"
+        if i < 2:
+            label += " (left axis)"
+        if i == 2:
+            label += " (right axis)"
 
-        idx = 2 if not useVL2 else 3
-
-        idx_mu_positive = np.where(mu > 0)[0]
-
-        mu_pos = mu[idx_mu_positive]
-        block_pos = block[idx_mu_positive, idx]
-
-        coeffs = np.polyfit(
-            mu_pos,
-            block_pos**2,
-            1,
-        )
-
-        fit_line = np.poly1d(coeffs)
-
-        x_fit = np.linspace(
-            -0.2,
-            max(3, np.max(mu_pos)),
-            100,
-        )
-
-        col = plt.get_cmap("tab10")(i)
-
+        # Open markers on the stable side of the bifurcation: those points are
+        # not small-amplitude limit cycles, they are equilibria with no limit
+        # cycle at all, and a filled marker made them look like data lying on
+        # a flat branch.
+        ax.plot(mu[above], amp2[above] / scale, m, alpha=0.8, color=c, label=label)
         ax.plot(
-            mu,
-            block[:, idx] ** 2,
-            "o",
-            alpha=0.7,
-            color=col,
-            label=rf"$\boldsymbol\gamma_{{{i + 1}}}$",
+            mu[~above],
+            amp2[~above] / scale,
+            m,
+            alpha=0.8,
+            markerfacecolor="none",
+            markeredgecolor=c,
+            markeredgewidth=0.7,
+            linestyle="none",
         )
 
-        ax.plot(
-            x_fit,
-            fit_line(x_fit),
-            "--",
-            color=col,
-        )
+        # the fit is drawn until it leaves the frame
+        x_fit = np.linspace(-0.005, 0.2, 200)
+        y_fit = fit_line(x_fit) / scale
+        keep = y_fit <= 1.6
+        ax.plot(x_fit[keep], y_fit[keep], FIT_LS[i], color=c)
 
-    ax.set_xlabel(r"$\mu-\mu_c$")
+    ax.set_xlim([-0.08, 0.08])
+    ax.set_ylim([-0.1, 1.6])
+    ax.set_xticks([-0.05, 0, 0.05])
+    ax.set_xlabel(r"$\mu$")
 
     ax.set_ylabel(
-        r"$\|v'(\mu)\|_{L_2}^{2}$",
-        # r"$\displaystyle\frac{\|v'(\mu)\|_{L_2}^{2}}{\|v'(\mu_c)\|_{L_2}^{2}}$",
+        r"$\||\boldsymbol{u}'|\|_{L_2(\Omega)}^{2}$",
         rotation=0,
-        labelpad=20,
+        labelpad=10,
+        va="center",  # horizontal labels on both sides: centre them on the axis
     )
 
-    ax.legend()
-    ax.grid(True)
+    # inside the frame: the right of the plot holds the stability panel
+    ax.legend(
+        loc="center left", bbox_to_anchor=(1.33, 0.8), handlelength=1.0, frameon=False
+        # loc="center left", bbox_to_anchor=(-0.85, 0.5), handlelength=1.0, frameon=False
+    )
+    ax.grid(False)
+    frame.axis_on_top()
+    frame.jfm_ticks()
+    # the right edge belongs to the gamma_3 axis
+    ax.tick_params(which="both", right=False)
+
+    ax3 = ax.secondary_yaxis(
+        "right", functions=(lambda y: y * K3_Y, lambda y: y / K3_Y)
+    )
+    ax3.set_yticks([0, 0.025, 0.050, 0.075])
+    ax3.yaxis.set_minor_locator(AutoMinorLocator(2))
+    ax3.set_ylabel(
+        r"$\||\boldsymbol{u}'|\|_{L_2(\Omega')}^{2}$",
+        color=COL3,
+        labelpad=4,
+        rotation=0,
+        va="center",
+    )
+    ax3.tick_params(which="both", colors=COL3)
+    ax3.tick_params(which="minor", length=2)
+    ax3.spines["right"].set_color(COL3)
+    ax.spines["right"].set_color(COL3)  # drawn over the secondary spine
 
     # ------------------------------------------------------------------
     # RIGHT PANEL : stability diagram
@@ -192,7 +256,7 @@ def makePlot():
     w_extended = np.concatenate([[0], w_hopf, [140]])
     d_extended = np.concatenate([[5], d_hopf, [d_hopf[-1]]])
 
-    alpha_fb = 0.3
+    alpha_fb = 0.2
 
     ax_stab.fill_between(
         w_extended,
@@ -221,22 +285,17 @@ def makePlot():
     )
 
     # draw an arrow to indicate the bifurcation direction
-    # arrow_start = [(15, 3), (38, bifLine2(38)), (80, 0.9)]
-    # arrow_direction = [(1, 0), (1,0.0365), (0, 1)]
-    # length = [25, 20, 1.2]
-    # labels = [r"$\boldsymbol\gamma_1$", r"$\boldsymbol\gamma_2$", r"$\boldsymbol\gamma_3$"]
-    arrow_start = [(15, 3), (38, bifLine2(38)), (80, 0.9)]
-    arrow_direction = [(1, 0), (1,0.0365), (0, 1)]
-    length = [25, 20, 1.2]
-    labels = [r"$\boldsymbol\gamma_1$", r"$\boldsymbol\gamma_2$", r"$\boldsymbol\gamma_3$"]
-    colors = ["black", "black", "darkred"]
+    arrow_start = [(13, 3), (38, bifLine2(37)), (80, 1.0)]
+    arrow_direction = [(1, 0), (1, 0.0365), (0, 1)]
+    length = [31, 20, 0.95]
+    labels = [
+        r"$\boldsymbol\gamma_1$",
+        r"$\boldsymbol\gamma_2$",
+        r"$\boldsymbol\gamma_3$",
+    ]
 
     for ars, ard, l, label, c in zip(
-        arrow_start,
-        arrow_direction,
-        length,
-        labels,
-        colors
+        arrow_start, arrow_direction, length, labels, COLORS
     ):
         end = (
             ars[0] + l * ard[0],
@@ -253,8 +312,6 @@ def makePlot():
                 lw=1.5,
             ),
         )
-        
-        
 
         ax_stab.text(
             ars[0],
@@ -265,18 +322,19 @@ def makePlot():
             va="top",
         )
 
-    ax_stab.set_xlim([0, 100])
+    ax_stab.set_xlim([0, 130])
     ax_stab.set_ylim([1, 4])
 
-    ax_stab.set_xlabel(r"$w/\delta^*$")
-    ax_stab.set_ylabel(r"$d/\delta^*$", rotation=0, labelpad=10)
+    ax_stab.set_xlabel(r"$w$", labelpad=2)
+    ax_stab.set_ylabel(r"$d$", rotation=0, labelpad=7)
 
     # cleaner small panel
-    ax_stab.set_xticks([0, 25, 50, 75,100])
+    ax_stab.set_xticks([0, 40, 80, 120])
     ax_stab.set_yticks([0, 1, 2, 3, 4])
 
-    # no legend
-    # no points
+    ax_stab.grid(False)
+    axis_on_top(ax_stab)
+    jfm_ticks(ax_stab)
 
     # ------------------------------------------------------------------
     # Save
@@ -289,11 +347,7 @@ def makePlot():
         "../../../images/hopfAmplitude.pdf",
     )
 
-    plt.savefig(
-        save_path,
-        format="pdf",
-        bbox_inches="tight",
-    )
+    fig.savefig(save_path, format="pdf")
 
     print("✓ Plot saved to:", save_path)
 

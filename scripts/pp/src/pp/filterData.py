@@ -86,16 +86,32 @@ def spatialFilter(
     return filtered_points, filtered_fields
 
 
-def getRMS(data: np.ndarray) -> np.ndarray:
+def getQmean(data: np.ndarray) -> np.ndarray:
     """
-    Computes the RMS of the fields array along the time axis, i.e. E(u^2 + v^2) = E(u)^2 + E(v)^2 + E(uu) + E(vv)
+    Mean kinetic-energy-like quantity Q = u^2 + v^2 averaged in time:
+
+        Qbar = E[u^2 + v^2] = E[u]^2 + E[v]^2 + <u'u'> + <v'v'>
+
+    where columns (u, v) of the avg file are the time-averaged velocities and
+    (uu, uv, vv) are the Reynolds stresses (fluctuation covariances, mean
+    already removed by Nektar's ReynoldsStresses filter).
+
+    This is exactly ``getRMS(data)**2``, but it is the quantity that enters the
+    L2 amplitude *linearly*, which is what makes the uncertainty propagation in
+    ``pp.DeltaN_computation`` exact rather than linearized.
     """
     u = data[:, :, 2]
     v = data[:, :, 3]
     uu = data[:, :, 5]
     vv = data[:, :, 7]
-    rms = np.sqrt(np.abs(u**2 + v**2 + uu + vv))
-    return rms
+    return np.abs(u**2 + v**2 + uu + vv)
+
+
+def getRMS(data: np.ndarray) -> np.ndarray:
+    """
+    Computes the RMS of the fields array along the time axis, i.e. E(u^2 + v^2) = E(u)^2 + E(v)^2 + E(uu) + E(vv)
+    """
+    return np.sqrt(getQmean(data))
 
 
 def getRMSVar(data: np.ndarray) -> np.ndarray:
@@ -104,6 +120,30 @@ def getRMSVar(data: np.ndarray) -> np.ndarray:
 
     Since the time series are gaussian and (u,v) are also jointly gaussian, using the Isserlis theorem we can compute the variance of the RMS as follows:
     Var(u^2 + v^2) = 4 E[u]^2E[uu] + 4 E[v]^2E[vv] + 2 E[uu]^2 + 2 E[vv]^2 + 8 E[u]E[v]E[uv] + 4 E[uv]^2
+
+    Derivation (checked): write u = U + u', v = V + v' with (u', v') jointly
+    gaussian, zero mean, covariances (<u'u'>, <u'v'>, <v'v'>) = (uu, uv, vv).
+    Then Q = u^2 + v^2 = (U^2 + V^2) + (2U u' + 2V v') + (u'^2 + v'^2), so
+
+        Var(Q) = Var(2U u' + 2V v') + Var(u'^2 + v'^2) + 2 Cov(linear, quadratic)
+
+    The linear part gives 4 U^2 uu + 4 V^2 vv + 8 U V uv. The quadratic part
+    gives, by Isserlis, Var(u'^2) = 2 uu^2, Var(v'^2) = 2 vv^2 and
+    Cov(u'^2, v'^2) = 2 uv^2, i.e. 2 uu^2 + 2 vv^2 + 4 uv^2. The cross term
+    vanishes because odd-order moments of a zero-mean gaussian are zero. Summing
+    reproduces the formula above, so it is correct as written.
+
+    IMPORTANT -- what this is and is not. This is the variance of the
+    *instantaneous* signal Q(t) = u(t)^2 + v(t)^2, i.e. how much Q oscillates in
+    time about its mean. It does NOT shrink as the averaging window grows, so on
+    its own it cannot demonstrate convergence. The uncertainty of the *time
+    average* that the .dat files actually store is
+
+        Var(Qbar_estimated) = Var(Q) / n_eff,     n_eff = T_avg / (2 tau_int)
+
+    with T_avg the averaging window and tau_int the integral time scale of Q.
+    That one does decay like 1/T_avg. See ``effective_samples`` and the
+    ``n_eff`` argument of ``pp.DeltaN_computation.computeAmplitude``.
     """
     u = data[:, :, 2]
     v = data[:, :, 3]
@@ -118,7 +158,32 @@ def getRMSVar(data: np.ndarray) -> np.ndarray:
         + 8 * u * v * uv
         + 4 * uv**2
     )
-    return var
+    return np.maximum(var, 0.0)
+
+
+def effective_samples(T_avg: float, tau_int: float) -> float:
+    """
+    Effective number of independent samples in a time average of length
+    ``T_avg`` for a stationary process with integral time scale ``tau_int``:
+
+        n_eff = T_avg / (2 * tau_int)
+
+    ``tau_int = int_0^inf rho(tau) dtau`` is the integral time scale of the
+    *energy* signal Q = u^2 + v^2 (not of u itself), which for the narrowband
+    TS-wave response to white-noise forcing is of the order of the inverse
+    bandwidth of the amplified frequency band -- typically several TS periods,
+    not one time step. Estimate it from the HistoryPoints time series of a run
+    (autocorrelation of u^2 + v^2 at a point inside the boundary layer), then
+    feed the resulting ``n_eff`` to the N-factor routines.
+
+    Note that the raw sample count is a large overestimate of n_eff: with
+    SampleFrequency=10 and dt=0.007 the samples are 0.07 apart, i.e. thousands
+    of samples per TS period, and consecutive samples are almost perfectly
+    correlated.
+    """
+    if tau_int <= 0:
+        raise ValueError("tau_int must be positive")
+    return float(T_avg) / (2.0 * float(tau_int))
 
 
 def arc_length_parameterization(curve):

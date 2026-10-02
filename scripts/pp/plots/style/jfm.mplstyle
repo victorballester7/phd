@@ -39,5 +39,4 @@ xtick.major.width: 0.5
 ytick.major.width: 0.5
 
 # --- Savefig ---
-savefig.bbox: tight
 savefig.dpi: 300

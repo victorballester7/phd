@@ -3,7 +3,7 @@ from pp.colors import colors
 from scipy.ndimage import gaussian_filter, median_filter
 import matplotlib.pyplot as plt
 from pp.fileManagement import extract_depth_width, readFieldsBySection
-from pp.filterData import getRMS
+from pp.filterData import getRMS, getQmean, getRMSVar
 from typing import Tuple
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C, WhiteKernel
@@ -11,17 +11,121 @@ from sklearn.gaussian_process.kernels import Matern, Kernel, Hyperparameter
 from sklearn.preprocessing import StandardScaler
 
 
-def computeAmplitude(dataFile: str, doLoo: bool, field: str) -> Tuple[np.ndarray, np.ndarray]:
+_TINY = 1e-300
+
+
+def _trapz_weights(y: np.ndarray) -> np.ndarray:
+    """Quadrature weights w such that np.trapezoid(g, y) == np.sum(w * g)."""
+    w = np.zeros_like(y, dtype=float)
+    dy = np.diff(y)
+    w[:-1] += 0.5 * dy
+    w[1:] += 0.5 * dy
+    return w
+
+
+def _integrated_sigma(
+    sigmaQ: np.ndarray, y: np.ndarray, y_corr: float | None
+) -> np.ndarray:
+    """
+    Standard deviation of S(x) = int_0^ymax Qbar(x, y) dy given the pointwise
+    standard deviation ``sigmaQ(x, y)`` of the integrand.
+
+    In general Var(S) = int int Cov(Q(y), Q(y')) dy dy', so a correlation model
+    in the wall-normal direction is unavoidable.
+
+    * ``y_corr is None`` (default): fully correlated profile, rho = 1, giving
+
+          sigma_S = int sigma_Q(y) dy.
+
+      This is the right model here -- the perturbation is one coherent TS mode,
+      so the whole profile is a fixed shape function times a single random
+      amplitude, and its wall-normal values rise and fall together. It is also
+      the Cauchy-Schwarz upper bound, and crucially it is independent of the
+      wall-normal discretisation.
+
+      The naive alternative of adding the variances point by point (implicitly
+      assuming uncorrelated y-points) is *not* usable: it gives
+      Var(S) = sum w_i^2 sigma_i^2 -> 0 as the grid is refined, so it would
+      manufacture arbitrarily small error bars just by adding grid points.
+
+    * ``y_corr`` given: exponential correlation rho = exp(-|y-y'|/y_corr), a
+      less conservative estimate if the profile is known to decorrelate over a
+      finite wall-normal distance.
+    """
+    w = _trapz_weights(y)
+    g = sigmaQ * w  # (nx, ny)
+    if y_corr is None:
+        return np.sum(g, axis=1)
+
+    R = np.exp(-np.abs(y[:, None] - y[None, :]) / float(y_corr))
+    var = np.einsum("xi,ij,xj->x", g, R, g, optimize=True)
+    return np.sqrt(np.maximum(var, 0.0))
+
+
+def computeAmplitude(
+    dataFile: str,
+    doLoo: bool,
+    field: str,
+    return_sigma: bool = False,
+    n_eff: float = 1.0,
+    y_corr: float | None = None,
+) -> Tuple[np.ndarray, ...]:
+    """
+    Amplitude A(x) of the perturbation, and optionally its uncertainty.
+
+    With ``return_sigma=True`` (only supported for ``field="rms"``) the routine
+    also returns ``sigma_A(x)``, the standard deviation of the amplitude induced
+    by the finite-time averaging of the fields.
+
+    How the uncertainty is propagated
+    ---------------------------------
+    Write Q = u^2 + v^2. The stored file gives Qbar = E[Q] (``getQmean``) and,
+    via Isserlis, Var(Q) (``getRMSVar``). The uncertainty of the *stored time
+    average* is Var(Q)/n_eff, with ``n_eff`` the number of effectively
+    independent samples in the averaging window (see
+    ``pp.filterData.effective_samples``); call its square root s(x, y).
+
+    1. L2 amplitude. The key simplification is that the L2 integrand is exactly
+       Qbar, because the integrand f = rms satisfies f^2 = Qbar:
+
+           A(x)^2 = int_0^ymax f^2 dy = int_0^ymax Qbar(x, y) dy =: S(x).
+
+       S is therefore *linear* in the uncertain quantity Qbar, so this step is
+       exact -- no linearisation. Its standard deviation sigma_S follows from
+       ``_integrated_sigma``.
+
+    2. Square root. A = sqrt(S), so by the delta method
+
+           sigma_A = sigma_S / (2 A),   i.e.   sigma_A/A = (1/2) sigma_S/S.
+
+       Taking the square root halves the *relative* error.
+
+    3. Loo amplitude. A = max_y sqrt(Qbar) = sqrt(Qbar(y*)), so the same
+       relation holds with S -> Qbar(y*) and sigma_S -> s(y*). The randomness of
+       the location y* of the maximum is a second-order effect and is ignored.
+
+    Steps 2 (and the logarithm in ``computeNx``) are first-order expansions, so
+    they are trustworthy while the relative error is small compared to 1. With
+    the default ``n_eff=1`` it is not: sigma_Q/Qbar is approximately sqrt(2)
+    everywhere (the instantaneous swing of a narrowband gaussian signal), which
+    is the physical oscillation amplitude of the signal, not an averaging error.
+    Pass a realistic ``n_eff`` to get an error bar that actually shrinks with
+    averaging time.
+    """
     d, w = extract_depth_width(dataFile)
     print(colors.OKBLUE + f"Processing d = {d:.2f}, w = {w:.2f}" + colors.ENDC)
+    empty = (np.array([]),) * (3 if return_sigma else 2)
     try:
         x, y, data = readFieldsBySection(dataFile)
     except Exception as e:
         print(colors.FAIL + f"Error reading data from {dataFile}: {e}" + colors.ENDC)
-        return np.array([]), np.array([])
+        return empty
+
+    if return_sigma and field != "rms":
+        raise ValueError("return_sigma is only defined for field='rms'")
 
     f = np.zeros_like(data[:, :, 0])  # Initialize f with the same shape as one field component
-    
+
     match field:
         case "u":
             f = data[:, :, 2]
@@ -32,10 +136,21 @@ def computeAmplitude(dataFile: str, doLoo: bool, field: str) -> Tuple[np.ndarray
         case "rms":
             f = getRMS(data)
 
+    # Standard deviation of the *time-averaged* Q stored in the file.
+    sigmaQ = None
+    if return_sigma:
+        if n_eff <= 0:
+            raise ValueError("n_eff must be positive")
+        sigmaQ = np.sqrt(getRMSVar(data) / float(n_eff))
 
     if doLoo:
         Loo = np.max(np.abs(f), axis=1)
-        return x, Loo
+        if not return_sigma:
+            return x, Loo
+        jstar = np.argmax(np.abs(f), axis=1)
+        s_star = sigmaQ[np.arange(sigmaQ.shape[0]), jstar]
+        sigma_A = 0.5 * s_star / np.maximum(Loo, _TINY)
+        return x, Loo, sigma_A
     else:
         # integrate from 0 to ymax
         ymax = 150
@@ -43,13 +158,63 @@ def computeAmplitude(dataFile: str, doLoo: bool, field: str) -> Tuple[np.ndarray
 
         L2 = np.sqrt(np.trapezoid(f[:, :yindx] ** 2, y[:yindx]))
 
-        return x, L2
+        if not return_sigma:
+            return x, L2
 
-def computeNx(dataFile: str, doLoo: bool) -> Tuple[np.ndarray, np.ndarray]:
-    x, A = computeAmplitude(dataFile, doLoo, field="rms")
+        sigma_S = _integrated_sigma(sigmaQ[:, :yindx], y[:yindx], y_corr)
+        sigma_A = 0.5 * sigma_S / np.maximum(L2, _TINY)
+        return x, L2, sigma_A
+
+
+def computeNx(
+    dataFile: str,
+    doLoo: bool,
+    return_sigma: bool = False,
+    n_eff: float = 1.0,
+    y_corr: float | None = None,
+    ref_corr: float = 0.0,
+) -> Tuple[np.ndarray, ...]:
+    """
+    N factor N(x) = log(A(x)/A0), and optionally its uncertainty sigma_N(x).
+
+    Propagating through the logarithm: d log A = dA / A, so the *relative*
+    amplitude error becomes an *absolute* N-factor error. With
+    r(x) = sigma_A(x)/A(x) and r0 = sigma_A0/A0,
+
+        sigma_N(x)^2 = r(x)^2 + r0^2 - 2 rho r(x) r0,
+
+    rho = ``ref_corr`` being the correlation between the amplitude estimate at
+    station x and at the reference station x0.
+
+    * ``ref_corr=0`` (default, conservative): the two stations are treated as
+      independent. The band then has a finite width r0*sqrt(2) at x = x0 even
+      though N(x0) = 0 by construction -- which is honest, since A0 is itself
+      uncertain and an error in A0 shifts the whole curve rigidly up or down.
+    * ``ref_corr=1``: assumes the errors at x and x0 are perfectly correlated,
+      giving sigma_N = |r(x) - r0|, which vanishes at x0. Use it if you want the
+      band to show only the *shape* uncertainty of the curve and to pin it at
+      the normalisation point.
+
+    Note that sigma_N is an absolute N-factor uncertainty: since N is a log, an
+    error bar of 0.1 in N means 10% in amplitude, regardless of where on the
+    curve it sits. It therefore does not grow downstream just because A does.
+    """
+    out = computeAmplitude(
+        dataFile,
+        doLoo,
+        field="rms",
+        return_sigma=return_sigma,
+        n_eff=n_eff,
+        y_corr=y_corr,
+    )
+    if return_sigma:
+        x, A, sigma_A = out
+    else:
+        x, A = out
+        sigma_A = None
     # print(x,A)
     if len(x) == 0 or len(A) == 0:
-        return np.array([]), np.array([])
+        return (np.array([]),) * (3 if return_sigma else 2)
 
     # filter indices of x such that x <=0
     idx = np.where(x <= 0)[0]
@@ -61,7 +226,15 @@ def computeNx(dataFile: str, doLoo: bool) -> Tuple[np.ndarray, np.ndarray]:
 
     Nx = np.log(A / A0)
 
-    return x, Nx
+    if not return_sigma:
+        return x, Nx
+
+    sigma_A = sigma_A[A0_arg:]
+    r = sigma_A / np.maximum(A, _TINY)  # relative amplitude error per station
+    r0 = r[0]  # after the truncation above, A[0] is exactly A0
+    sigma_N = np.sqrt(np.maximum(r**2 + r0**2 - 2.0 * ref_corr * r * r0, 0.0))
+
+    return x, Nx, sigma_N
 
 
 def computeDeltaN(

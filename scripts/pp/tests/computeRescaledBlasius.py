@@ -1,14 +1,14 @@
 import numpy as np
 
-from scripts.plotNeutralCurve import RE_REFERENCE, BLASIUS_C
+from scripts.plotNeutralCurve import BLASIUS_C
 from pp.fileManagement import editFile
 
 
-def computeDeltaStar(x: float, filename: str) -> float:
+def computeDeltaStar(x: float, re: float, filename: str) -> float:
     analytical_blasius = True
 
     if analytical_blasius:
-        dstar = np.sqrt(1.0 + x * BLASIUS_C**2 / RE_REFERENCE)
+        dstar = np.sqrt(1.0 + x * BLASIUS_C**2 / re)
     else:
         # read the velocity profile from the file and compute delta_star
         data = np.loadtxt(filename, skiprows=3)
@@ -35,13 +35,13 @@ def rescaleProfile(filename: str, delta_star: float, saveTo: str) -> None:
 
 
 def main():
-    case = "d1.5_w20"
-    x = 2.5
-    filename = f"/home/victor/Desktop/PhD/src/bfsRe1000inc/directLinearSolver/blowingSuction/d1.5/data/xSections/points_n600_x{x}.dat"
-    # filename = f"/home/victor/Desktop/PhD/src/incGapRe1000/directLinearSolver/blowingSuction/{case}/data/xSections/points_n600_x{x}.dat"
+    case = "d3_w16"
+    x = 7.5
+    re = 3000
+    filename = f"/home/victor/Desktop/PhD/src/incGapRe{re}/directLinearSolver/blowingSuction/{case}/data/xSections/points_n600_x{x}.dat"
     saveTo = "/home/victor/Desktop/orrSommerfeldSolver/data/custom_tmp.dat"
     filename_toml = "/home/victor/Desktop/orrSommerfeldSolver/config/input.toml"
-    dstar = computeDeltaStar(x, filename)
+    dstar = computeDeltaStar(x, re, filename)
     rescaleProfile(filename, dstar, saveTo)
     line_startswith = np.array(
         [
@@ -64,7 +64,7 @@ def main():
     replacement_line = np.array(
         [
             "n = 175",
-            f"re = {RE_REFERENCE * dstar}",
+            f"re = {re * dstar}",
             "beta = { r = 0.0, i = 0.0 }",
             "useTargetEV = false",
             "vars_r = {min = 0.01, max = 1.15, num = 50}",

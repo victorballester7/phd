@@ -2,12 +2,14 @@ import os
 
 import matplotlib
 from matplotlib.lines import Line2D
+from matplotlib.colors import LinearSegmentedColormap
 from pp.colors import colors, mix_with_black
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import matplotlib.cm as cm
 import pandas as pd
+from pp.figureFrame import FigureFrame
 
 plt.style.use("plots/style/jfm.mplstyle")
 
@@ -19,7 +21,6 @@ runs = ["inc2dRe800", "inc2dRe1000", "inc2dRe1400", "inc2dRe2000", "inc2dRe3000"
 # runs = ["inc2dRe800"]
 
 CMAP = matplotlib.colormaps.get_cmap("viridis")  # swap to "viridis" if preferred
-# CMAP = matplotlib.colormaps.get_cmap("Blues")  # swap to "viridis" if preferred
 
 
 def getRe(run: str):
@@ -34,13 +35,8 @@ def getRe(run: str):
 
 
 def plot_freq(df: pd.DataFrame, save_path: str):
-    latex_width_cm = 9.0
-    fig_width_in = latex_width_cm / 2.54
-
-    fig, ax = plt.subplots(
-        figsize=(fig_width_in, fig_width_in * 0.75),
-        constrained_layout=False,
-    )
+    frame = FigureFrame(frame_w=5.6, aspect_ratio=0.85, pad_l=3.85, pad_b=0.8, pad_t=0.15)
+    fig, ax = frame.fig, frame.ax
 
     ax.set_xlim([15, 95])
     ax.set_ylim([0.07, 0.28])
@@ -49,22 +45,22 @@ def plot_freq(df: pd.DataFrame, save_path: str):
         x_tmp,
         0,
         0.127,
-        color="tab:red",
+        color="maroon",
         alpha=0.2,
     )
     ax.plot(
         x_tmp,
         0.127 * np.ones_like(x_tmp),
-        color="darkred",
+        color="maroon",
         linestyle="--",
         linewidth=1.0,
     )
     ax.text(
         0.48,
-        0.015,
+        0.04,
         "Convectively unstable\nregion at " + r"${\mbox{\textit{Re}}}=1000$",
         transform=ax.transAxes,
-        color="darkred",
+        color="maroon",
         ha="left",
         va="bottom",
     )
@@ -91,7 +87,8 @@ def plot_freq(df: pd.DataFrame, save_path: str):
             ]
             color = CMAP(norm(depth))
 
-            color_edge = mix_with_black(color, alpha=0.1)
+            # a visible edge: without it the dense cluster at small w merges
+            color_edge = mix_with_black(color, alpha=0.45)
 
             ax.plot(
                 df_depth["w"],
@@ -101,6 +98,7 @@ def plot_freq(df: pd.DataFrame, save_path: str):
                 markersize=ms,
                 markerfacecolor=color,
                 markeredgecolor=color_edge,
+                markeredgewidth=0.5,
                 color=color,
                 linestyle="None",
                 label=rf"$Re={re}$" if not label_done else "_nolegend_",
@@ -111,14 +109,13 @@ def plot_freq(df: pd.DataFrame, save_path: str):
     sm = cm.ScalarMappable(cmap=CMAP, norm=norm)
     sm.set_array([])
 
-    cb = fig.colorbar(sm, ax=ax)
-    cb.set_label(r"$d/\delta^*$", rotation=0, labelpad=15)
+    cb = frame.colorbar(sm)
+    cb.set_label(r"$d$", rotation=0, labelpad=5)
 
     # ax.set_xlim([10,110])
-    ax.set_xlabel(r"$w/\delta^*$")
-    ax.set_ylabel(r"$\omega/(\frac{\delta^*}{u_\infty})$", rotation=0, labelpad=18)
+    ax.set_xlabel(r"$w$")
+    ax.set_ylabel(r"$\omega$", rotation=0, labelpad=10)
     ax.set_xticks([20, 40, 60, 80])
-    ax.legend()
 
     legend_handles = []
 
@@ -134,15 +131,31 @@ def plot_freq(df: pd.DataFrame, save_path: str):
                 marker=m,
                 markersize=ms,
                 linestyle="None",
-                markerfacecolor=CMAP(norm(3.0)),  # dark blue
-                markeredgecolor=mix_with_black(CMAP(norm(3.0)), alpha=0.1),
+                # neutral grey: colour encodes the gap depth, so a coloured
+                # legend marker would read as a particular depth
+                markerfacecolor="0.65",
+                markeredgecolor="0.25",
+                markeredgewidth=0.5,
                 label=rf"$Re={re}$",
             )
         )
 
-    ax.legend(handles=legend_handles)
+    ax.grid(False)
+    frame.axis_on_top()
+    frame.jfm_ticks()
 
-    plt.savefig(save_path, format="pdf", bbox_inches="tight")
+    # right of the plot like the other figures, but past the colorbar, its
+    # tick labels and its label (CBAR_SPACE cm from the frame)
+    CBAR_SPACE = 1.3
+    ax.legend(
+        handles=legend_handles,
+        loc="center left",
+        bbox_to_anchor=(1.05 + CBAR_SPACE / frame.frame_w, 0.5),
+        handlelength=1.0,
+        frameon=False,
+    )
+
+    fig.savefig(save_path, format="pdf")
     print(colors.OKGREEN + f"✓ Plot saved to: {save_path}" + colors.ENDC)
 
 

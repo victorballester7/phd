@@ -33,3 +33,4 @@ data/*.dat
 
 # codex files
 *.codex
+backups/

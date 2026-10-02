@@ -1,0 +1,368 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{patterns,decorations.markings,backgrounds,arrows.meta}
+
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+% jfm.cls maps the upper-case Greek letters onto their slanted (var) forms,
+% so \Omega is italic in the paper; do the same here.
+\let\Omega\varOmega
+
+% ==================================================================
+%  Three-dimensional view of the computational domain.
+%  Oblique (cabinet-type) projection: x and y are drawn undistorted,
+%  so the plane z = 0 is exactly the two-dimensional slice, and the
+%  spanwise axis z is drawn along (zx,zy).  The domain is periodic
+%  in z, with period b.
+% ==================================================================
+
+% ------------------------------------------------------------------
+%  Geometry (streamwise/wall-normal lengths anisotropically rescaled)
+% ------------------------------------------------------------------
+\def\xin{-20}   % inlet
+\def\xo{55}     % outlet
+\def\d{4}       % gap depth
+\def\w{15}      % gap width
+\def\h{20}      % domain height
+\def\scale{0.3}
+
+\def\aa{\xin*\scale}
+\def\dd{\d*\scale}
+\def\ww{\w*\scale}
+\def\oo{\xo*\scale}
+\def\hh{\h*\scale}
+
+% drawn spanwise extent (b = 4d in the simulations; strongly
+% exaggerated here with respect to the streamwise lengths)
+\def\zb{6.2}
+
+% oblique projection of the spanwise axis
+\def\zx{0.46}
+\def\zy{0.33}
+\pgfmathsetmacro{\zangle}{atan(\zy/\zx)}   % its angle on the page
+
+% Final width = 13.5 cm
+\def\geomscale{0.5089}
+\pgfmathsetmacro{\zxcm}{\zx*\geomscale}
+\pgfmathsetmacro{\zycm}{\zy*\geomscale}
+
+\newcommand{\fsize}{\fontsize{8.7}{10.44}\selectfont}
+\newcommand{\fsizebig}{\fontsize{12}{14.4}\selectfont}
+
+\def\surfcol{black!6}    % wall surface (lit from above)
+\def\floorcol{black!13}  % gap floor
+\def\facecol{black!28}   % upstream face inside the gap
+\def\edgecol{black!55}   % edges of the receding surfaces
+\def\ghostcol{black!45}  % inlet profile at z = b
+
+% Blasius profile at a given spanwise station:
+%   #1 = z,  #2 = style of the profile,  #3 = style of the arrows
+\newcommand{\blprofile}[3]{%
+	\draw[#2]
+	plot[smooth,tension=0.5] coordinates {
+			(-2,0,#1)
+			(-1.8,0.075,#1)
+			(-1.6,0.15,#1)
+			(-1.4,0.225,#1)
+			(-1.2,0.3,#1)
+			(-1.07,0.37,#1)
+			(-1,0.5,#1)
+			(-1,1,#1)
+			(-1,1.25,#1)
+			(-1,1.5,#1)
+		};
+	\draw[#2] (-2,0,#1) -- (-2,1.5,#1);
+	\draw[#3] (-2,1.5,#1) -- (-1,1.5,#1);
+	\draw[#3] (-2,1.125,#1) -- (-1,1.125,#1);
+	\draw[#3] (-2,0.75,#1) -- (-1,0.75,#1);
+	\draw[#3] (-2,0.375,#1) -- (-1.09,0.375,#1);
+}
+
+\begin{document}
+\begin{tikzpicture}[
+	x=\geomscale cm,
+	y=\geomscale cm,
+	z={(\zxcm cm,\zycm cm)},
+	>={Stealth[length=3.2pt,width=2.4pt]},
+	]
+
+	% ----------------------------------------------------------
+	% Far-field box: back plane and spanwise edges
+	% ----------------------------------------------------------
+	\draw[dotted,thick,black!45] (\aa,\hh,\zb) -- (\oo,\hh,\zb);
+	\draw[dotted,thick,black!45] (\aa,0,\zb) -- (\aa,\hh,\zb);
+	\draw[dotted,thick,black!45] (\oo,0,\zb) -- (\oo,\hh,\zb);
+	\draw[dotted,thick,black!45] (\aa,\hh,0) -- (\aa,\hh,\zb);
+	\draw[dotted,thick,black!45] (\oo,\hh,0) -- (\oo,\hh,\zb);
+
+	% ----------------------------------------------------------
+	% Gap and wall surfaces (painter's order: far to near)
+	% ----------------------------------------------------------
+	% gap floor
+	\draw[fill=\floorcol,draw=\edgecol,thin]
+	(0,-\dd,0) -- (\ww,-\dd,0) -- (\ww,-\dd,\zb) -- (0,-\dd,\zb) -- cycle;
+
+	% upstream face inside the gap
+	\draw[fill=\facecol,draw=\edgecol,thin]
+	(0,0,0) -- (0,-\dd,0) -- (0,-\dd,\zb) -- (0,0,\zb) -- cycle;
+
+	%downstream face of the gap
+	\draw[fill=\facecol,draw=black, thin]
+	(\ww,0,0) -- (\ww,-\dd,0) -- (\ww,-\dd,\zb) -- (\ww,0,\zb) -- cycle;
+
+	% wall surface upstream of the gap
+	\draw[fill=\surfcol,draw=\edgecol,thin]
+	(\aa,0,0) -- (0,0,0) -- (0,0,\zb) -- (\aa,0,\zb) -- cycle;
+
+	% wall surface downstream of the gap
+	\draw[fill=\surfcol,draw=\edgecol,thin]
+	(\ww,0,0) -- (\oo,0,0) -- (\oo,0,\zb) -- (\ww,0,\zb) -- cycle;
+
+	% ----------------------------------------------------------
+	% Inlet Blasius profile, swept over the whole span
+	% ----------------------------------------------------------
+	\begin{scope}[shift={(-4,0)}]
+
+		% profile at z = b, and the lines ruling the swept surface
+		\blprofile{\zb}{\ghostcol,thin}{-{Latex[length=4pt,width=3pt]},\ghostcol,thin}
+
+		\draw[\ghostcol,thin] (-2,1.5,0) -- (-2,1.5,\zb);
+		\draw[\ghostcol,thin] (-1,1.5,0) -- (-1,1.5,\zb);
+		\draw[\ghostcol,thin] (-1,0.43,0) -- (-1,0.43,\zb);
+
+		% profile at z = 0
+		\blprofile{0}{black,thick}{-{Latex[length=5pt,width=4pt]},thick}
+
+	\end{scope}
+
+	% wall contour
+	\draw[thin]
+	(\aa,0) -- (0,0) -- (0,-\dd)
+	-- (\ww,-\dd) -- (\ww,0) -- (\oo,0);
+
+	% ----------------------------------------------------------
+	% Displacement thickness of the smooth-wall reference flow at the
+	% upstream edge of the gap: sketched at mid-span, not to scale
+	% ----------------------------------------------------------
+	\begin{scope}[shift={(0,0,\zb/2)}]
+		\begin{scope}[yscale=1.7,xscale=0.8,shift={(1.85,0)}]
+
+			\clip (-5,-0.2) rectangle (10,1);
+
+			\def\col{orange!70!black}
+
+			\draw[\col,thick,dotted,yscale=1.3]
+			plot[smooth,tension=0.5] coordinates {
+					(-2,0)
+					(-1.8,0.075)
+					(-1.6,0.15)
+					(-1.4,0.225)
+					(-1.2,0.3)
+					(-1.07,0.37)
+					(-1,0.5)
+					(-1,1)
+					(-1,1.25)
+					(-1,1.5)
+					(-1,1.75)
+				};
+
+			\draw[\col,thick,dotted] (-4,0) -- (-0.5,0);
+
+			\draw[
+			\col,
+			{Latex[length=5pt,width=4pt]}-{Latex[length=5pt,width=4pt]},
+			thick,
+			dotted
+			] (-2,0) -- (-2,0.75);
+
+			\node[
+				\col,
+				font=\fsize,
+				anchor=east
+			] at (-2,0.325)
+			{$\delta_{\mathrm{fp}}^*:=1$};
+
+		\end{scope}
+	\end{scope}
+
+	% ----------------------------------------------------------
+	% Origin of coordinates, at the upstream edge of the gap
+	% ----------------------------------------------------------
+	% filled: a white disc with a hairline outline was invisible against the
+	% pale plate it sits on
+	\draw[fill=white,thin] (0,0,0) circle (1.6pt);
+
+	\node[font=\fsize,anchor=south east, xshift=0.1cm]
+	at (0,0,0) {$\boldsymbol{x}=\boldsymbol{0}$};
+
+	% ----------------------------------------------------------
+	% Coordinate axes
+	% ----------------------------------------------------------
+	\begin{scope}[shift={(2,3.2)}]
+
+		\draw[
+			-Stealth,
+			thick,
+			green!60!black
+		] (0,0.5) -- ++(0,1.4)
+		node[
+			above,
+			anchor=east,
+			font=\fsize
+		] {$y$};
+
+		\draw[
+			-Stealth,
+			thick,
+			red!80!black
+		] (0,0.5) -- ++(1.4,0)
+		node[
+			below,
+			anchor=north west,
+			font=\fsize
+		] {$x$};
+
+		\draw[
+			-Stealth,
+			thick,
+			blue!70!black
+		] (0,0.5) -- ++(0,0,2.5)
+		node[
+			anchor=north west,
+			inner sep=1.5pt,
+			font=\fsize
+		] {$z$};
+
+	\end{scope}
+
+	% ----------------------------------------------------------
+	% Dimensions
+	% ----------------------------------------------------------
+	% domain Omega
+	\node[font=\fsizebig] (Omega)
+	at (\aa*1.4,\hh,\zb*0.75) {$\Omega$};
+
+	% width w
+	\node[font=\fsize] (width)
+	at (\ww/2,-\dd/2) {$w$};
+
+	\draw[Stealth-]
+	(0.1,-\dd/2) -- (width.west);
+
+	\draw[-Stealth]
+	(width.east) -- (\ww-0.1,-\dd/2);
+
+	% depth d
+	\draw[Stealth-Stealth]
+	(-0.5,-0.1) -- (-0.5,-\dd);
+
+	\node[font=\fsize,anchor=east]
+	at (-0.6,-\dd/2) {$d$};
+
+	% spanwise period b
+	\node[font=\fsize] (span)
+	at (\ww+1.9,0,\zb/2) {$b$};
+
+	\draw[Stealth-]
+	(\ww+1.9,0,0.12) -- (span.\zangle+180);
+
+	\draw[-Stealth]
+	(span.\zangle) -- (\ww+1.9,0,\zb-0.12);
+
+	% height h
+	\node[font=\fsize] (height)
+	at (\aa-0.75,\hh/2) {$h$};
+
+	\draw[-Stealth]
+	(height.south) -- (\aa-0.75,0);
+
+	\draw[Stealth-]
+	(\aa-0.75,\hh) -- (height.north);
+
+	% streamwise extents
+	\def\deps{0.6}
+
+	\node[font=\fsize] (ell1)
+	at (\aa/2,-\dd-\deps) {$\ell_{\mathrm{i}}$};
+
+	\draw[-Stealth]
+	(ell1.east) -- (0,-\dd-\deps);
+
+	\draw[Stealth-]
+	(\aa,-\dd-\deps) -- (ell1.west);
+
+	\node[font=\fsize] (ell2)
+	at (\ww/2+\oo/2,-\dd-\deps) {$\ell_{\mathrm{o}}$};
+
+	\draw[-Stealth]
+	(ell2.east) -- (\oo,-\dd-\deps);
+
+	\draw[Stealth-]
+	(\ww,-\dd-\deps) -- (ell2.west);
+
+	% ----------------------------------------------------------
+	% Outer boundaries (near spanwise plane)
+	% ----------------------------------------------------------
+	\draw[dotted,thick] (\aa,\hh) -- (\oo,\hh);
+	\draw[dotted,thick] (\aa,0) -- (\aa,\hh);
+	\draw[dotted,thick] (\oo,0) -- (\oo,\hh);
+
+	% ----------------------------------------------------------
+	% Boundary conditions
+	% ----------------------------------------------------------
+	\node[font=\fsize] (W)
+	at (9,-0.5) {Wall};
+
+	\node[
+	font=\fsize,
+	anchor=south west,
+	fill=white,
+	inner sep=1.5pt
+	] at (\aa,4.2)
+	{$\boldsymbol{u}=\boldsymbol{u}_{\mathrm{BL}}(y)$};
+
+	\node[
+		font=\fsize,
+		anchor=west
+	] at (W.east)
+	{$\boldsymbol{u}=\boldsymbol{0}$};
+
+	\node[
+		font=\fsize
+	] at ({(\oo+\aa)/2},\hh,\zb/2)
+	{$\boldsymbol{u}=\boldsymbol{u}_{\infty}(x)$};
+
+	\node[
+	font=\fsize,
+	anchor=east,
+	fill=white,
+	inner sep=2pt,
+	xshift=-2pt
+	] at (\oo,\hh/2-1,\zb)
+	{$
+		\partial_{\boldsymbol{n}}\boldsymbol{u}
+		=
+		\boldsymbol{h}
+		(\boldsymbol{u}_{\mathrm{out}})
+	$};
+
+	% the two spanwise boundaries are identified
+	\def\xper{12}
+
+	% witness lines lying in each of the two spanwise planes
+	\draw[black,thin] (\xper,\hh-0.75,0) -- (\xper,\hh+0.15,0);
+	\draw[black,thin] (\xper,\hh-0.75,\zb) -- (\xper,\hh+0.15,\zb);
+
+	\draw[Stealth-Stealth] (\xper,\hh,0.1) -- (\xper,\hh,\zb-0.1);
+
+	\node[
+		font=\fsize,
+		anchor=north west,
+		inner sep=2.5pt
+	] at (\xper,\hh,\zb/2) {periodic};
+
+\end{tikzpicture}
+\end{document}

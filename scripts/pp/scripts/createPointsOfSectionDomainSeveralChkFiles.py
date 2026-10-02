@@ -90,19 +90,14 @@ if __name__ == "__main__":
     dir_local = (
         # "/home/victor/Desktop/PhD/src/bfsRe1000inc/directLinearSolver/blowingSuction/"
         # "/home/victor/Desktop/PhD/src/incGapRe1000/directLinearSolver/blowingSuction/"
-        "/home/victor/Desktop/PhD/src/incGapRe3000/directLinearSolver/blowingSuction/"
+        "/home/victor/Desktop/PhD/src/incGapRe800/directLinearSolver/blowingSuction/"
     )
 
     # get all directories in dir_local such that dir/data/ does not exist
 
     directories = [
-        # "d1.5_w200", "d1_w200", "d0.5_w200",
-        # "d1.5_w10", "d1.5_w15", "d1.5_w20", "d1.5_w25", "d1.5_w30", "d1.5_w35", 
-        # "d0.5_w40", "d0.75_w40", "d1_w39", "d1.25_w40", "d1.5_w40", "d1.75_w40"
-        # "d1.5_w40", "d1.5_w45", "d1.5_w50", 
-        # "d1.5"
-        "d0.75_w93", "d1.25_w38", "d1.5_w33", "d3_w14"
-        # "d1.5_w70", "d1.75_w33", "d3.5_w21"
+        # "d0.5_w90",
+        "d4_w12",
         # for d in os.listdir(dir_local)
         # if os.path.isdir(os.path.join(dir_local, d))
         # and not os.path.exists(os.path.join(dir_local, d, "data"))

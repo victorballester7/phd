@@ -35,6 +35,7 @@
       <P> IO_CheckSteps   = NumSteps/100         </P>
       <P> IO_CFLSteps     = IO_InfoSteps         </P>
       <P> HistorySteps    = 0.5/TimeStep  </P>
+      <P> AverageSteps    = NumSteps/100 </P>
       <P> SVVDiffCoeff    = 1.0                    </P>
       <P> SVVCutoffRatio  = 0.75                    </P>
 
@@ -180,7 +181,7 @@
     </BOUNDARYCONDITIONS>
 
 <FUNCTION NAME="InitialConditions">
-<F VAR="u,v,w,p" FILE="mesh_98.chk" />
+<F VAR="u,v,w,p" FILE="mesh_116.chk" />
 </FUNCTION>
     <!-- <FUNCTION NAME="InitialConditions"> -->
     <!--  <E VAR="u" VALUE="Uinf * (y>0) * ( -->
@@ -232,6 +233,11 @@
     <!--   <PARAM NAME="OutputFrequency">NumSteps/100</PARAM> -->
     <!--   <PARAM NAME="OutputStartTime">50.0</PARAM> -->
     <!-- </FILTER> -->
+    <FILTER TYPE="ReynoldsStresses">
+      <PARAM NAME="OutputFrequency">AverageSteps</PARAM>
+      <PARAM NAME="SampleFrequency">10</PARAM>
+    </FILTER>
+
     <FILTER TYPE="ModalEnergy">
       <PARAM NAME="OutputFile">EnergyFourierModes</PARAM>
       <PARAM NAME="OutputFrequency">HistorySteps</PARAM>

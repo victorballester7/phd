@@ -25,13 +25,13 @@
 
 	\def\xmin{0}
 	\def\xmax{\figurewidth}
-	\def\ymin{-1}
-	\def\ymax{3}
+	\def\ymin{-1.15}
+	\def\ymax{2.9}
 
 	\path[use as bounding box]
 	(\xmin,\ymin) rectangle (\xmax,\ymax);
 
-	\coordinate (clippedcenter) at ({(\xmin+\xmax)/2},{(\ymin+\ymax)/2});
+	\coordinate (clippedcenter) at ({(\xmin+\xmax)/2},{1});
 
 	% import .png figure
 	\draw[thick]
@@ -102,6 +102,7 @@
 		scaled x ticks=false,
 		colorbar style={
 				xmode=log,
+				xminorticks=false,
 				at={(clippedcenter)},
 				yshift=-0.6cm,
 				anchor=north,
@@ -129,7 +130,7 @@
 				xlabel={$-\lambda_2$},
 				xlabel style={
 						font=\fsize,
-						yshift=0.2cm,
+						yshift=0.0cm,
 					},
 			},
 	]
