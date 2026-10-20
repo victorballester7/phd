@@ -37,17 +37,17 @@ ma08Re1000_2d = runType("Ma0.8Re1000_2d", "Ma = 0.8 Re = 1000 2d", 0.028, 0.48)
 incRe10003d = runType("inc3dRe1000", "Inc. Re = 1000 3d", 0.05, 0.58)
 
 PLOT = [
-    incRe8002d,
+    # incRe8002d,
     incRe10002d,
-    incRe14002d,
-    incRe20002d,
-    incRe30002d,
+    # incRe14002d,
+    # incRe20002d,
+    # incRe30002d,
     # incRe10003d,
-    # ma005Re1000_2d,
-    # ma02Re1000_2d,
-    # ma04Re1000_2d,
-    # ma06Re1000_2d,
-    # ma08Re1000_2d,
+    ma005Re1000_2d,
+    ma02Re1000_2d,
+    ma04Re1000_2d,
+    ma06Re1000_2d,
+    ma08Re1000_2d,
 ]
 
 

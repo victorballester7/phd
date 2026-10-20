@@ -76,7 +76,7 @@ function convert_msh2xml {
         echo -e "${CYAN}Processing: ${file}${RESET}"
         
         # Convert the file to .xml format
-        NekMesh "${file}" "${name}.xml"
+        NekMesh -f "${file}" "${name}.xml" # -f: overwrite an existing mesh.xml (otherwise NekMesh silently keeps the old one)
 
         if [ $? -eq 0 ]; then
             echo -e "${GREEN}File ${name}.xml created successfully.${RESET}"
@@ -122,6 +122,11 @@ directory=$(pwd)
 
 convert_geo2msh
 convert_msh2xml
+
+# non-conforming meshes: the number of interfaces depends on the geometry, regenerate them in the session file
+if grep -q "<MOVEMENT>" "$session_file"; then
+    python3 $DIR_SCRIPT/nonConfInterfaces.py "$mesh_file" "$session_file"
+fi
 
 depth=$1
 width=$2

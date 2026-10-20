@@ -435,7 +435,7 @@ def plot_panel(re, name, geom, save_path):
 
     xlim = geom["xlim"]
     ax.set_xlim(*x_to_re(np.array(xlim)))
-    ax.set_xlabel(r"$\mbox{\textit{Re}}_\ell$", labelpad=2)
+    ax.set_xlabel(r"$\mbox{\textit{Re}}_\mathrm{loc}$", labelpad=2)
     ax.set_ylabel(r"$F$", rotation=0, labelpad=5)
     # set_yticks widens the view to cover the ticks, so the limits have to be
     # imposed after them, not before -- otherwise a tick above the requested
@@ -511,7 +511,7 @@ def plot_colorbar(save_path):
         spacing="uniform",
         ticks=GROWTH_TICKS,
     )
-    cb.set_label(r"$-\alpha_i$", labelpad=2)
+    cb.set_label(r"$-\alpha_\mathrm{i}$", labelpad=2)
     cb.ax.xaxis.set_major_formatter(FixedFormatter(GROWTH_TICKLABELS))
     cb.ax.tick_params(which="both", direction="out", length=2.0, width=0.5, pad=1.5)
     cb.outline.set_linewidth(0.5)

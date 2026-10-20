@@ -208,7 +208,7 @@ def plotCurves(ax, inst3ds, hopf2ds, exp_bypass_curve):
         exp_bypass_curve[:, 0],
         exp_bypass_curve[:, 1],
         linestyle="--",
-        color="tab:brown",
+        color="k",
         zorder=3,
     )
 
@@ -301,7 +301,7 @@ def addLegend(ax):
             "3D linear stability\nboundary",
         ),
         (
-            Line2D([0], [0], color="tab:brown", linestyle="--"),
+            Line2D([0], [0], color="k", linestyle="--"),
             Rectangle((0, 0), 1, 1, facecolor="white", alpha=0.0),
             "Experimental bypass\ntransition boundary\n(Crouch $\\it{et\\ al.}$ 2022)",
         ),

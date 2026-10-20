@@ -159,8 +159,11 @@ LOW_BRANCH_FIT = 20  # stations used by that fit
 SMOOTH_PASSES = 2
 
 # gap shading, drawn behind everything
-SHADE_ALPHA = 0.3
-SHADE_GREY = "0.88"
+SHADE_GREY = "0.88"  # a single gap
+# nested gaps: grey levels bracketing SHADE_GREY, from the stretch every gap
+# covers (lightest) to the one only the widest gap reaches (darkest)
+SHADE_LIGHT = 0.95
+SHADE_DARK = 0.83
 
 
 def gap_width(name):
@@ -177,12 +180,12 @@ def shade_gaps(ax, entries):
     """
     Mark where the gap is.
 
-    When every case in the family has the same gap there is one band and it is
-    grey, as a plain background. When the widths differ, each case colours the
-    stretch its own gap adds to the one before it -- the widths are nested, all
-    starting at x = 0 -- so the shading is a staircase whose steps are the
-    downstream edges, and each colour appears once, at its own edge, with no
-    translucent bands stacked on top of each other.
+    One grey band when every case in the family has the same gap. When the
+    widths differ they are nested, all starting at x = 0, and each case shades
+    the stretch its own gap adds to the one before it, in a grey that darkens
+    with the width: the narrowest gap lightest, the widest darkest. The
+    shading then reads like the single band of the constant width family while
+    every downstream edge stays visible as a step in the grey.
 
     A step has no downstream edge and so nothing to delimit; it is left out.
     """
@@ -190,14 +193,11 @@ def shade_gaps(ax, entries):
     if not widths:
         return
     if len(widths) == 1:
-        ax.axvspan(*x_to_re(np.array([0.0, widths[0]])), color=SHADE_GREY,
-                   lw=0, zorder=0)
+        ax.axvspan(*x_to_re(np.array([0.0, widths[0]])), color=SHADE_GREY, lw=0, zorder=0)
         return
-    col_of = {w: c for _, _, c, w in entries if 0.0 < w < np.inf}
     lo = 0.0
-    for w in widths:
-        ax.axvspan(*x_to_re(np.array([lo, w])), color=col_of[w],
-                   alpha=SHADE_ALPHA, lw=0, zorder=0)
+    for grey, w in zip(np.linspace(SHADE_LIGHT, SHADE_DARK, len(widths)), widths):
+        ax.axvspan(*x_to_re(np.array([lo, w])), color=str(grey), lw=0, zorder=0)
         lo = w
 
 
@@ -461,7 +461,7 @@ def plot_family(key, fam, save_path):
     ax.set_yticks(FTICKS)
     ax.set_xlim(*x_to_re(np.array(XLIM_X)))
     ax.set_ylim(*FLIM)
-    ax.set_xlabel(r"$\mbox{\textit{Re}}_\ell$", labelpad=2)
+    ax.set_xlabel(r"$\mbox{\textit{Re}}_\mathrm{loc}$", labelpad=2)
     ax.set_ylabel(r"$F$", rotation=0, labelpad=8)
 
     # each horizontal edge carries its own ladder, major ticks only: Re_l on

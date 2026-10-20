@@ -1,0 +1,18 @@
+% Relabels Crouch et al. (2022) set-up sketch (../jeffSetup.png, 1020x560 px):
+% x_T - x_G -> x_{T,gap} - x_gap and x_{T0} - x_G -> x_{T,flat} - x_gap.
+% Build: pdflatex jeffSetupRelabel.tex && cp jeffSetupRelabel.pdf ../jeffSetupRelabelled.pdf
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+\begin{document}
+\begin{tikzpicture}[x=1bp, y=-1bp, every node/.style={inner sep=0pt}]
+	% 1 px = 1 bp, origin at the top-left corner of the image
+	\node[anchor=north west] at (0,0) {\includegraphics[width=1020bp]{../jeffSetup.png}};
+	\fill[white] (452,100) rectangle (546,127);
+	\fill[white] (446,214) rectangle (550,242);
+	\node[font=\fontsize{27}{32}\selectfont] at (500,112) {$x_{T,\mathrm{gap}} - x_\mathrm{gap}$};
+	\node[font=\fontsize{27}{32}\selectfont] at (500,226) {$x_{T,\mathrm{flat}} - x_\mathrm{gap}$};
+\end{tikzpicture}
+\end{document}

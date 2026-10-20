@@ -68,7 +68,7 @@
 		%% ── A_T reference line ──────────────────────────────────────────────────
 		\addplot[thin, black, no markers]
 		coordinates {(0,4.0)(6.2,4.0)}
-		node[pos=1, right] {$n^{\text{trans}}$};
+		node[pos=1, right] {$n^{\mathrm{trans}}$};
 
 		%% ── Pass 1 : invisible named paths (geometry only, used by fillbetween) ─
 		\addplot[draw=none, name path=curveA,
@@ -107,10 +107,10 @@
 		({\quinticX}, {\quinticY});
 		\draw[\purplelight, thick, dotted]
 		(axis cs:4.15,-0.7) -- (axis cs:4.15,4.0)
-		node[\purpledark,pos=0, below] {$x_\text{gap}^{\text{trans}}$};
+		node[\purpledark,pos=0, below] {$x_\mathrm{gap}^{\mathrm{trans}}$};
 		\draw[\purplelight, thick, dotted]
 		(axis cs:5.51,-0.7) -- (axis cs:5.51,4.0)
-		node[\purpledark, pos=0, below] {$x_\text{flat}^{\text{trans}}$};
+		node[\purpledark, pos=0, below] {$x_\mathrm{flat}^{\mathrm{trans}}$};
 		\draw[\purplelight, thick, Stealth-]
 		(axis cs:4.15,2.55) -- (axis cs:4.15,4.0);
 		\draw[\purplelight, thick, dotted]
@@ -124,14 +124,14 @@
 
 		\draw[\greendark,thick, Stealth-Stealth]	(axis cs:\xfillR-0.15,1.65) -- (axis cs:\xfillR-0.15,3.15)
 		node[pos=-0.28, right, xshift=0.1cm, fill=white, inner sep=1.5pt]
-		{$\Delta n= \langle n_\text{gap}-n_\text{flat}\rangle_{\mathcal{X}}$};
+		{$\Delta n= \langle n_\mathrm{gap}-n_\mathrm{flat}\rangle_{\mathcal{X}}$};
 		\draw[\greenlight,dashed, thick] (axis cs:\xfillL,0.65) -- (axis cs:\xfillL,-0.7);
 		\draw[\greenlight,dashed, thick] (axis cs:\xfillR,1.8) -- (axis cs:\xfillR,-0.7);
 
 		\draw [decorate, decoration = {calligraphic brace,mirror}, very thick, pen colour={\greendark}, \greendark] (axis cs:\xfillL,-0.8) -- (axis cs:\xfillR,-0.8) node[pos=0.5, below,yshift=-0.05cm] {$\mathcal{X}$};
 
-		\node[mblue] at (axis cs:6.25,4.9) {$n_\text{flat}(x)$};
-		\node[morange] at (axis cs:4,4.75) {$n_\text{gap}(x)$};
+		\node[mblue] at (axis cs:6.25,4.9) {$n_\mathrm{flat}(x)$};
+		\node[morange] at (axis cs:4,4.75) {$n_\mathrm{gap}(x)$};
 
 	\end{axis}
 \end{tikzpicture}

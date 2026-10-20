@@ -69,8 +69,8 @@ def main():
         for frac in (0.15, 0.65):
             add_direction_arrow(ax, uL2, vL2, frac, col[i])
 
-    ax.set_xlabel(r"$\|u\|_2^\text{s}$")
-    ax.set_ylabel(r"$\|v\|_2^\text{s}$", labelpad=10, rotation=0)
+    ax.set_xlabel(r"$\|u_x\|_2^\mathrm{s}$")
+    ax.set_ylabel(r"$\|u_y\|_2^\mathrm{s}$", labelpad=10, rotation=0)
     ax.set_xticks([-1, 0, 1])
     ax.set_yticks([-1, 0, 1])
     # equal spans on both axes, with a margin around the orbit

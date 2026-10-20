@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<NEKTAR>
+    <Metadata>
+        <Provenance>
+            <GitBranch>refs/heads/feature/LinearisedCompressibleFlow</GitBranch>
+            <GitSHA1>2b3e47623114c5cb1e0d5cb35be9bab9d9560b8e</GitSHA1>
+            <Hostname>cx3-2-18</Hostname>
+            <NektarVersion>5.10.0</NektarVersion>
+            <Timestamp>14-Oct-2026 17:53:52</Timestamp>
+        </Provenance>
+        <ChkFileNum>42</ChkFileNum>
+        <SessionName0>mesh.opt</SessionName0>
+        <SessionName1>mesh_xml/P0000000.xml</SessionName1>
+        <Time>11759.999999593492</Time>
+    </Metadata>
+    <Partition FileName="P0000000.fld">640-648,881-904</Partition>
+    <Partition FileName="P0000001.fld">905-938</Partition>
+    <Partition FileName="P0000002.fld">649-654,981-983,1016-1039</Partition>
+    <Partition FileName="P0000003.fld">1040-1073</Partition>
+    <Partition FileName="P0000004.fld">789-813,939-946</Partition>
+    <Partition FileName="P0000005.fld">947-980</Partition>
+    <Partition FileName="P0000006.fld">814-846</Partition>
+    <Partition FileName="P0000007.fld">847-880</Partition>
+    <Partition FileName="P0000008.fld">403,984-1015</Partition>
+    <Partition FileName="P0000009.fld">404-437</Partition>
+    <Partition FileName="P0000010.fld">438-470</Partition>
+    <Partition FileName="P0000011.fld">471-504</Partition>
+    <Partition FileName="P0000012.fld">505-537</Partition>
+    <Partition FileName="P0000013.fld">538-571</Partition>
+    <Partition FileName="P0000014.fld">572-605</Partition>
+    <Partition FileName="P0000015.fld">606-639</Partition>
+    <Partition FileName="P0000016.fld">269-301</Partition>
+    <Partition FileName="P0000017.fld">302-335</Partition>
+    <Partition FileName="P0000018.fld">336-368</Partition>
+    <Partition FileName="P0000019.fld">369-402</Partition>
+    <Partition FileName="P0000020.fld">655-687</Partition>
+    <Partition FileName="P0000021.fld">688-721</Partition>
+    <Partition FileName="P0000022.fld">722-754</Partition>
+    <Partition FileName="P0000023.fld">755-788</Partition>
+    <Partition FileName="P0000024.fld">164-196</Partition>
+    <Partition FileName="P0000025.fld">0-15,19,197-213</Partition>
+    <Partition FileName="P0000026.fld">16-18,20-44,214-219</Partition>
+    <Partition FileName="P0000027.fld">45-71,220-226</Partition>
+    <Partition FileName="P0000028.fld">96,100-125,234-239</Partition>
+    <Partition FileName="P0000029.fld">72-95,97-99,227-233</Partition>
+    <Partition FileName="P0000030.fld">126-151,240-246</Partition>
+    <Partition FileName="P0000031.fld">152-163,247-268</Partition>
+</NEKTAR>

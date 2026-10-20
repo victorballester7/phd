@@ -44,7 +44,8 @@ function run {
 }
 
 # Paths and solvers
-NEK_PATH=$HOME/nektar-v5.9.0
+NEK_PATH=$HOME/nektar-NLArnoldi
+# NEK_PATH=$HOME/nektar-v5.9.0
 INC_SOLVER=$NEK_PATH/build/dist/bin/IncNavierStokesSolver 
 COM_SOLVER=$NEK_PATH/build/dist/bin/CompressibleFlowSolver 
 SCRIPTS_DIR=$HOME/Desktop/PhD/scripts

@@ -50,13 +50,13 @@ def create_points_file(base_dir: str, case: str):
     dir_local = base_dir + case
     d, w = extract_depth_width(case)
     n = 600
-    # output_file = f"data/pointsPO_n{n}"
-    # fld_remote = "mesh_po.fld"
-    output_file = f"data/pointsavg_n{n}"
-    fld_remote = "mesh_avg.fld"
+    output_file = f"data/pointsPO_n{n}"
+    fld_remote = "mesh_po.fld"
+    # output_file = f"data/pointsavg_n{n}"
+    # fld_remote = "mesh_avg.fld"
     gen_points_file(
-        # ymin=0, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
-        ymin=-d, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
+        ymin=0, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
+        # ymin=-d, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
     )
     fld2datapts(dir_local, fld_remote, output_file)
 
@@ -74,9 +74,9 @@ if __name__ == "__main__":
 
     ##### multiple cases at once
 
-    # dir_local = "/home/victor/Desktop/PhD/src/quasi3DGapRe1000inc/baseflow/dns/"
+    dir_local = "/home/victor/Desktop/PhD/src/quasi3DGapRe1000inc/baseflow/dns/"
     # dir_local = "/home/victor/Desktop/PhD/src/incGapRe1000/baseflow/dns/"
-    dir_local = "/home/victor/Desktop/PhD/src/incGapRe1000/directLinearSolver/blowingSuction/"
+    # dir_local = "/home/victor/Desktop/PhD/src/incGapRe1000/directLinearSolver/blowingSuction/"
     #
     # # get all directories in dir_local such that dir/data/ does not exist
     #
@@ -86,12 +86,15 @@ if __name__ == "__main__":
         # if os.path.isdir(os.path.join(dir_local, d))
         # and not os.path.exists(os.path.join(dir_local, d, "data"))
         # "d1.75_w40_new",
-        # "d1.5_w60_Lz5_k32",
-        "d1.5_w64",
+        # "d1.5_w60_Lz6.0_k32",
         # "d1.5_w63_Lz6.0_k32",
         # "d1.5_w65_Lz6.0_k32",
-        # "d1.5_w70_Lz6.0_k32",
+        # "d1.5_w66_Lz6.0_k32",
+        "d1.5_w70_Lz6.0_k32",
         # "d1.5_w80_Lz6.0_k32"
+        # "d1.5_w66",
+        # "d1.5_w67"
+        # "d1.5_w70"
     ]
 
     for case in directories:

@@ -31,6 +31,21 @@ def get_first_lines(file, num_lines=40, scale=0.8):
     return first_lines
 
 
+def strip_warnings(lines):
+    """Remove Nektar++ warning blocks (a 'Warning' line followed by its
+    message, up to the next blank line) so only real errors remain."""
+    errors = []
+    in_warning = False
+    for line in lines:
+        if "warning" in line.lower():
+            in_warning = True
+        elif not line.strip():
+            in_warning = False
+        elif not in_warning:
+            errors.append(line)
+    return errors
+
+
 def check_and_notify(job_id):
     output_file = "output.txt"
     log_file = "log.txt"
@@ -42,7 +57,16 @@ def check_and_notify(job_id):
         log_lines = get_last_lines(log_file)
         output_lines = get_last_lines(output_file)
         timeout = any(("timeout" in line.lower()) for line in log_lines)
-        finished = any("Elapsed time Avg" in line for line in output_lines) or any("Total Computation Time" in line for line in output_lines)
+        finished_markers = (
+            "Elapsed time Avg",
+            "Total Computation Time",
+            "L inf error",  # CompressibleFlowSolver prints error norms at the end
+        )
+        finished = any(
+            marker in line for line in output_lines for marker in finished_markers
+        )
+        with open(log_file, "r") as f:
+            log_errors = strip_warnings(f.readlines())
         print(f"Timeout: {timeout}, Finished: {finished}")
         if timeout:
             message = (
@@ -59,7 +83,7 @@ def check_and_notify(job_id):
                 )
             except Exception:
                 details = f"\n\n No <code>{output_file}</code> file found."
-        elif not log_lines or finished:
+        elif not log_errors or finished:
             message = (
                 "✅ <b>Program finished successfully</b> 🏁\n\n"
                     f"📂 <b>Directory</b>: <code>{current_directory}</code>\n"

@@ -1,0 +1,13 @@
+% Crouch et al. (2022) scatter (../jeffScatter.png, 1360x632 px), left panel
+% only: first overlay before jeffScatterZoom.pdf, same size so nothing moves.
+% Build: pdflatex jeffScatterLeft.tex && cp jeffScatterLeft.pdf ../jeffScatterLeft.pdf
+\documentclass{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}[x=1bp, y=-1bp]
+	% 1 px = 1 bp, origin at the top-left corner of the image
+	\node[anchor=north west, inner sep=0pt] at (0,0) {\includegraphics[width=1360bp]{../jeffScatter.png}};
+	\fill[white] (48,38) rectangle (100,90);    % (a)
+	\fill[white] (690,0) rectangle (1360,632);  % right panel
+\end{tikzpicture}
+\end{document}

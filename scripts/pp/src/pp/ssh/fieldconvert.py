@@ -4,6 +4,13 @@ import xml.etree.ElementTree as ET
 from pp.colors import colors
 from pp.ssh.utilities import run_cmd, get_remote_dir
 
+# ~/.bashrc on the HPC only loads these modules in interactive shells, so load them explicitly
+_NEKTAR_MODULES = (
+    "tools/eb-dev CMake/3.24.3-GCCcore-11.3.0 SCOTCH/7.0.1-gompi-2022a Boost/1.79.0-GCC-11.3.0 "
+    "OpenBLAS/0.3.20-GCC-11.3.0 FlexiBLAS/3.2.0-GCC-11.3.0 FFTW/3.3.10-GCC-11.3.0 "
+    "ScaLAPACK/2.2.0-gompi-2022a-fb HDF5/1.12.2-gompi-2022a VTK/9.2.2-foss-2022a"
+)
+
 
 def _rsync_parent_dir_include_rules(output_files: list[str]) -> str:
     """
@@ -55,7 +62,8 @@ def fld2datapts(
     # Run FieldConvert remotely
     remote_cmd = f"""
     source /etc/profile
-    source ~/.bashrc  # Ensure modules are available
+    source ~/.bashrc
+    module load {_NEKTAR_MODULES}
     cd {dir_remote}
     rm -rf {dir_remote_parent_output_file}/*.dat
     FieldConvert -m interppoints:fromxml={mesh}:fromfld={fld_file}:topts={output_file}.pts {output_file}.dat
@@ -130,6 +138,7 @@ def fld2datapts_batch(
     set -e
     source /etc/profile
     source ~/.bashrc
+    module load {_NEKTAR_MODULES}
     cd {dir_remote}
     {'; '.join(remote_convert_cmds)}
     """
@@ -274,6 +283,7 @@ def combineAvg(
     remote_cmd = f"""
     source /etc/profile
     source ~/.bashrc
+    module load {_NEKTAR_MODULES}
     cd {dir_remote}
     rm -rf mesh_avg.fld
     FieldConvert -m combineAvg:fromfld={stressBEG} {mesh} {stressFINAL} {final_avg_file}

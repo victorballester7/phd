@@ -198,7 +198,7 @@ def makePlot():
     ax.set_xlim([-0.08, 0.08])
     ax.set_ylim([-0.1, 1.6])
     ax.set_xticks([-0.05, 0, 0.05])
-    ax.set_xlabel(r"$\mu$")
+    ax.set_xlabel(r"$\epsilon$")
 
     ax.set_ylabel(
         r"$\||\boldsymbol{u}'|\|_{L_2(\Omega)}^{2}$",

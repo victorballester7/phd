@@ -62,6 +62,15 @@ def _integrated_sigma(
     return np.sqrt(np.maximum(var, 0.0))
 
 
+def _read_variable_names(dataFile: str) -> list[str]:
+    """Variable names from the 'Variables = x, y, u, ...' header line."""
+    with open(dataFile) as fh:
+        for line in fh:
+            if line.strip().lower().startswith("variables"):
+                return [v.strip() for v in line.split("=", 1)[1].split(",")]
+    return []
+
+
 def computeAmplitude(
     dataFile: str,
     doLoo: bool,
@@ -132,7 +141,11 @@ def computeAmplitude(
         case "v":
             f = data[:, :, 3]
         case "|u|":
-            f = np.sqrt(data[:, :, 2] ** 2 + data[:, :, 3] ** 2)
+            f = data[:, :, 2] ** 2 + data[:, :, 3] ** 2
+            variables = _read_variable_names(dataFile)
+            if "w" in variables:
+                f += data[:, :, variables.index("w")] ** 2
+            f = np.sqrt(f)
         case "rms":
             f = getRMS(data)
 

@@ -1,0 +1,5 @@
+- put images on the outline, more or less one by each point
+- put the 3d modes and 2d modes in small next to the instability diagram
+- in slide 17, only put one and put jeff image next to it
+- slide 18 as well
+- in slide 32, add comments around the image, instead of table

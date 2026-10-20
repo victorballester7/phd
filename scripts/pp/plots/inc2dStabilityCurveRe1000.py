@@ -110,7 +110,9 @@ def plot_stability_diagram(df, save_path):
         exp_bypass_curve[:, 0],
         exp_bypass_curve[:, 1],
         linestyle="--",
-        color="tab:brown",
+        # black: brown was hard to pick out against the red unstable region
+        color="k",
+        lw=1.3,
         label="Experimental bypass\ntransition boundary\n(Crouch $\\it{et\\ al.}$ 2022)",
         zorder=5,
     )

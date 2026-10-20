@@ -5,11 +5,14 @@ import credentialsTelegram as ct
 TOKEN = ct.TOKEN
 CHAT_ID = ct.CHAT_ID
 
+TIMEOUT = 20  # seconds; avoid hanging forever if the network stalls
+
+
 def send_telegram_message(message, details=""):
-    print("Sending message to Telegram...")
+    print("Sending message to Telegram...", flush=True)
     host = "api.telegram.org"
     endpoint = f"/bot{TOKEN}/sendMessage"
-    conn = http.client.HTTPSConnection(host)
+    conn = http.client.HTTPSConnection(host, timeout=TIMEOUT)
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
     try:
@@ -43,6 +46,8 @@ def send_telegram_message(message, details=""):
 
             # Encode the parameters
             body = urlencode(params)
+            conn.close()
+            conn = http.client.HTTPSConnection(host, timeout=TIMEOUT)
             conn.request("POST", endpoint, body, headers)
             response = conn.getresponse()
             if response.status == 200:
@@ -52,4 +57,6 @@ def send_telegram_message(message, details=""):
                 print(f"Response: {response.read().decode()}")
     except Exception as e:
         print(f"An error occurred while sending the message: {e}")
+    finally:
+        conn.close()
 

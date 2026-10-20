@@ -1,0 +1,95 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\usepgfplotslibrary{colorbrewer,colormaps}
+
+\pgfplotsset{colormap/RdBu}
+\pgfplotsset{compat=1.18}
+
+% Match JFM fonts
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+% Final width in the JFM paper
+\def\figurewidth{13.5}
+
+% Slide copy of papers/jfm_incNS/Images/2dstates/pdfs/colorbar_equilibrium.tex
+% with larger labels (was 8.7pt) and label v.
+% Build: pdflatex colorbar_equilibrium.tex && cp colorbar_equilibrium.pdf ../colorbar_equilibriumBig.pdf
+\newcommand{\fsize}{\fontsize{11.5}{13.8}\selectfont}
+
+\begin{document}
+\begin{tikzpicture}
+	% \clip (\xmin,\ymin) rectangle (\xmax,\ymax);
+	\def\xmin{0}
+	\def\xmax{\figurewidth}
+	\def\ymin{-0.45}
+	\def\ymax{1.1}
+
+	\path[use as bounding box]
+	(\xmin,\ymin) rectangle (\xmax,\ymax);
+
+	\coordinate (clippedcenter) at ({(\xmin+\xmax)/2}, {(\ymin+\ymax)/2});
+
+	% ============================================================
+	% FIGURE-RELATIVE COLORBAR STYLE
+	% ============================================================
+
+	% Colorbar geometry
+	\pgfmathsetlengthmacro{\colorbarwidth}
+	{0.33*\figurewidth cm}
+
+	\pgfmathsetlengthmacro{\colorbarheight}
+	{0.08*0.33*\figurewidth cm}
+
+	% Matplotlib-like line and tick dimensions
+	\pgfmathsetlengthmacro{\colorbarlinewidth}
+	{0.0020*\figurewidth cm}
+
+	\pgfmathsetlengthmacro{\colorbarticklength}
+	{0.0075*\figurewidth cm}
+
+	\pgfplotscolorbardrawstandalone[
+		colormap={example}{
+				indices of colormap=(
+				10,9,8,7,6,5,4,3,2,1,0 of RdBu
+				),
+			},
+		point meta min=-0.1,
+		point meta max=0.1,
+		colorbar horizontal,
+		samples=200,
+		scaled x ticks=false,
+		colorbar style={
+				xtick={-0.1,-0.05,...,0.1},
+				xticklabel style={
+						/pgf/number format/fixed,
+						/pgf/number format/precision=3,
+						font=\fsize,
+					},
+				xlabel={$v$},
+				xlabel style={
+						font=\fsize,
+						at={(axis description cs:0.5,-1.25)},
+						anchor=north,
+					},
+				at={(clippedcenter)},
+				anchor=south,
+				yshift=0.45cm,
+				width=\colorbarwidth,
+				height=\colorbarheight,
+				xtick pos=lower,
+				xtick style={
+						black,
+						line width=\colorbarlinewidth,
+					},
+				tickwidth=\colorbarticklength,
+				axis line style={
+						line width=\colorbarlinewidth,
+					},
+			},
+	]
+\end{tikzpicture}
+\end{document}
