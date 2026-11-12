@@ -1,0 +1,60 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=1:mem=16gb
+#PBS -l walltime=02:00:00
+#PBS -N ic.05d0.85_w40
+#PBS -j oe
+#PBS -o ic_job.log
+# Stage 2 IC of a Ma0.05 R1 DNS (see ~/compImpulseStudy/legacyR1/prep_coarse.sh): the newest complete checkpoint of
+# the coarse-mesh DNS ../d0.85_w40, interpolated at the R1 quadrature points (icprep/q.pts) and turned into
+# ic_from_coarse.fld. Exits 1 (so the afterok R1 DNS does not start) unless the coarse run's velocity changed by less
+# than GATE at every history point over its last 150 tu.
+GATE=1e-4
+module load tools/eb-dev CMake/3.24.3-GCCcore-11.3.0 SCOTCH/7.0.1-gompi-2022a Boost/1.79.0-GCC-11.3.0 OpenBLAS/0.3.20-GCC-11.3.0 FlexiBLAS/3.2.0-GCC-11.3.0 FFTW/3.3.10-GCC-11.3.0 ScaLAPACK/2.2.0-gompi-2022a-fb HDF5/1.12.2-gompi-2022a VTK/9.2.2-foss-2022a
+FC=$HOME/nektar-NLArnoldi/build/dist/bin/FieldConvert
+cd $PBS_O_WORKDIR
+CO=../d0.85_w40
+CHK=$(python3 - $CO $GATE <<'EOF'
+import os, re, sys
+case, gate = sys.argv[1], float(sys.argv[2])
+src = open(os.path.expanduser("~/Desktop/PhD/scripts/steadyBaseflows.py")).read().split("for M in MACH:")[0]
+sys.argv = [sys.argv[0]]
+exec(src)
+his = os.path.join(case, "HistoryPoints.his")
+dmax, span = change(his, npoints(his))
+n0 = len(os.listdir(os.path.join(case, "mesh_0.chk")))
+ks = sorted(int(m.group(1)) for d in os.listdir(case) for m in [re.fullmatch(r"mesh_(\d+)\.chk", d)] if m)
+ks = [k for k in ks if len(os.listdir(os.path.join(case, "mesh_%d.chk" % k))) == n0]
+ok = dmax is not None and span >= WINDOW - 1 and dmax < gate and ks and ks[-1] > 0
+print(("mesh_%d.chk" % ks[-1] if ok else "NOT_READY") + " max_change=%s span=%.0f" % (dmax, span))
+EOF
+)
+echo "coarse state: $CHK"
+[[ "$CHK" == mesh_*.chk* ]] || exit 1
+K=${CHK%% *}
+cd icprep && cp ../mesh.xml mesh.xml
+# R1 quadrature points with this FieldConvert build (0-step run with the self-similar IC of run 1)
+$HOME/nektar-NLArnoldi/build/dist/bin/CompressibleFlowSolver mesh.xml s0.xml > run0.log 2>&1; [ -e mesh.fld ] || { echo run0 failed; exit 1; }
+$FC -f mesh.xml s0.xml mesh.fld quad.pts > fc.log 2>&1 || { echo quad.pts failed; exit 1; }
+python3 - quad.pts q.pts <<'EOF2' || exit 1
+import sys, re
+txt = open(sys.argv[1]).read()
+head, body, tail = re.match(r'(.*?<POINTS[^>]*>)(.*?)(</POINTS>.*)', txt, re.S).groups()
+pts = [l.split()[:2] for l in body.strip().split('\n') if l.strip()]
+head = re.sub(r'FIELDS="[^"]*"', 'FIELDS=""', head)
+open(sys.argv[2], 'w').write(head + '\n' + '\n'.join(' '.join(p) for p in pts) + '\n' + tail)
+EOF2
+$FC -f -m interppoints:fromxml=../$CO/mesh.xml:fromfld=../$CO/$K:topts=q.pts vals.pts > ip.log 2>&1 || { echo interppoints failed; exit 1; }
+python3 - q.pts vals.pts vals_xy.pts <<'EOF' || exit 1
+import sys, re
+q = [l.split()[:2] for l in re.search(r'<POINTS[^>]*>(.*?)</POINTS>', open(sys.argv[1]).read(), re.S).group(1).strip().split('\n') if l.strip()]
+txt = open(sys.argv[2]).read()
+head, body, tail = re.match(r'(.*?<POINTS[^>]*>)(.*?)(</POINTS>.*)', txt, re.S).groups()
+rows = [l.split() for l in body.strip().split('\n') if l.strip()]
+assert len(rows) == len(q), (len(rows), len(q))
+rho = [float(r[2]) for r in rows]
+assert min(rho) > 0.9 and max(rho) < 1.1, ('rho range', min(rho), max(rho))
+open(sys.argv[3], 'w').write(head + '\n' + '\n'.join(' '.join(qq + r[2:]) for qq, r in zip(q, rows)) + '\n' + tail)
+print('%d points, rho in [%.6f, %.6f]' % (len(q), min(rho), max(rho)))
+EOF
+$FC -f -m pointdatatofld:frompts=vals_xy.pts mesh.xml s0.xml ../ic_from_coarse.fld > p2f.log 2>&1 || { echo pointdatatofld failed; exit 1; }
+echo "ic_from_coarse.fld <- $CO/$K" | tee ../ic_from_coarse.README

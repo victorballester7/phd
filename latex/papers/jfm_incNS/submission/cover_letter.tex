@@ -1,0 +1,44 @@
+\documentclass[11pt,a4paper]{letter}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[british]{babel}
+\usepackage{newtxtext,newtxmath}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\Rey}{\mbox{\textit{Re}}}
+
+% ---- Handling Associate Editor (choose in ScholarOne; Y. Hwang is a co-author and cannot handle it)
+\newcommand{\AEname}{Professor Denis Sipp}
+\newcommand{\AEdear}{Professor Sipp}
+
+\signature{Víctor Ballester Ribó\\
+Department of Aeronautics, Imperial College London\\
+\href{mailto:v.ballester-ribo24@imperial.ac.uk}{v.ballester-ribo24@imperial.ac.uk}}
+\address{Department of Aeronautics\\Imperial College London\\South Kensington\\London SW7 2AZ, UK}
+\date{\today}
+
+\begin{document}
+\begin{letter}{\AEname\\Associate Editor\\\textit{Journal of Fluid Mechanics}}
+
+\opening{Dear \AEdear,}
+
+Please consider our manuscript \emph{``Transition over surface gaps in incompressible laminar boundary layers''}, by Víctor Ballester Ribó, Jeffrey D. Crouch, Yongyun Hwang and Spencer J. Sherwin, for publication as a JFM Paper.
+
+Laminar-flow aircraft surfaces have panel joints, access doors and control-surface seams. Each one leaves a surface gap whose size is set by manufacturing tolerances. Experiments, most recently the systematic low-Mach-number sweep of Crouch \textit{et al.}\ (\textit{Flow}, 2022), show two regimes. Small gaps only advance transition, by an amount that the $e^N$ method can correlate. Beyond a well-defined boundary in the width--depth plane, transition jumps onto the gap itself at frequencies outside the Tollmien--Schlichting band. The mechanism behind this bypass boundary has remained unclear. Previous explanations relied on compressible acoustic feedback or considered linear instability alone.
+
+We study incompressible boundary layers over spanwise-uniform rectangular gaps by direct numerical simulation, global (including Floquet) stability analysis and local stability analysis. The study covers gap widths $w\in[0,130]$, depths $d\in[0,4]$ and Reynolds numbers $\Rey_{\delta^*}\in[800,3000]$, the range relevant to the leading-edge region of a transport-aircraft nacelle. The main contributions are as follows.
+\begin{itemize}
+\item While the flow over the gap is steady, the gap acts purely as an amplifier, and the amplification increment $\Delta n$ obtained from forced linearised simulations agrees with the measured $\Delta N$. Local analysis explains why $\Delta n$ decreases with Reynolds number for narrow gaps but increases for wide ones: the gap shear layer destabilises a band of frequencies over a streamwise distance, and the two effects compete.
+\item The steady flow loses stability either to a two-dimensional Hopf bifurcation or to a three-dimensional centrifugal mode, depending on the aspect ratio. The Hopf neutral curve is non-monotonic in width.
+\item Linear instability alone does not cause transition. The three-dimensional mode saturates without breakdown, and the two-dimensional limit cycle breaks down only downstream of the gap, at a distance set by the background disturbance level. Transition moves onto the gap only when both instabilities are present. The upper envelope of the two neutral curves reproduces the experimental bypass boundary without any calibration.
+\end{itemize}
+These results show that the bypass boundary is set by a bifurcation of the flow, which can be computed directly. They also show that compressibility is not needed to explain gap-located transition. To our knowledge, this is the first study to follow the two- and three-dimensional gap instabilities beyond saturation and show how they interact. The work should interest readers working on hydrodynamic stability, transition prediction and cavity flows. It also gives a physical basis for the manufacturing tolerances of laminar-flow surfaces.
+
+This manuscript has not been published and is not under consideration for publication elsewhere. \todo{if a preprint is posted, state: ``A preprint has been deposited on arXiv (arXiv:XXXX.XXXXX).''} All authors have approved the manuscript and agree with its submission to the \textit{Journal of Fluid Mechanics}. Co-author Yongyun Hwang serves as an Associate Editor of the journal. We therefore ask that he has no involvement in the handling of this submission. \todo{optional: suggested referees / referees to exclude, with reasons}
+
+\closing{Yours sincerely,}
+
+\end{letter}
+\end{document}

@@ -1,0 +1,26 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=8:mem=32gb
+#PBS -l walltime=00:59:59
+#PBS -N bfPts
+#PBS -e job.log
+#PBS -o job.log
+
+# Steady 2D base flow (baseflow2DwithW.fld, a 2D field) of the unforced d=1.5 cases on the
+# pointsPO_n600 points -> <case>/data/bf_pointsPO_n600.dat (x y u v w p), input of the
+# local secondary-stability analysis (total flow = this + the 2D pointsPO_n600.dat).
+
+module load tools/eb-dev CMake/3.24.3-GCCcore-11.3.0 SCOTCH/7.0.1-gompi-2022a Boost/1.79.0-GCC-11.3.0 OpenBLAS/0.3.20-GCC-11.3.0 FlexiBLAS/3.2.0-GCC-11.3.0 FFTW/3.3.10-GCC-11.3.0 ScaLAPACK/2.2.0-gompi-2022a-fb HDF5/1.12.2-gompi-2022a VTK/9.2.2-foss-2022a
+export PATH=$HOME/nektar-v5.9.0/build/dist/bin:$PATH
+R=$HOME/Desktop/PhD/runs/quasi3DGapRe1000inc/baseflow/dns
+cd $PBS_O_WORKDIR
+python3 $HOME/Desktop/PhD/scripts/jobStart.py $PBS_JOBID
+exec > output.txt 2> log.txt
+# cases: qsub -v CASES="..." bfPts.job (default: the region-IV cases)
+for c in ${CASES:-d1.5_w65_Lz6.0_k32 d1.5_w66_Lz6.0_k32 d1.5_w70_Lz6.0_k32}; do
+    cd $R/$c
+    FieldConvert -f -m interppoints:fromxml=mesh.xml:fromfld=baseflow2DwithW.fld:topts=data/pointsPO_n600.pts data/bf_pointsPO_n600.dat > /dev/null &&
+    echo "$c done" || echo "FAILED $c"
+done
+cd $PBS_O_WORKDIR
+echo DONE
+python3 $HOME/Desktop/PhD/scripts/jobFinish.py $PBS_JOBID

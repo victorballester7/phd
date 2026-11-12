@@ -25,7 +25,7 @@ function setup {
     computeTimeMax
     getOutputFiles
     uploadDateFile
-    updateHistoryEnergyFiles
+    compressHistoryEnergyFiles  # leftovers of a run killed before folding (and old .old files) -> X.gz
 
     rm -f $output_file_nek $log_file_nek $output_file $log_file
 
@@ -60,10 +60,12 @@ NP=$(wc -l $PBS_NODEFILE | awk '{print $1}')
 source $SCRIPTS_DIR/bashFunctions/computeTimeMax.sh
 source $SCRIPTS_DIR/bashFunctions/getMeshSessionFiles.sh
 source $SCRIPTS_DIR/bashFunctions/uploadDateFile.sh
-source $SCRIPTS_DIR/bashFunctions/updateHistoryEnergyFiles.sh
+source $SCRIPTS_DIR/bashFunctions/compressHistoryEnergyFiles.sh
 source $SCRIPTS_DIR/bashFunctions/runNS.sh
 
 cd $PBS_O_WORKDIR
 
 setup
 run
+# fold this run's history/energy files into the single X.gz files (time reserved in computeTimeMax)
+compressHistoryEnergyFiles

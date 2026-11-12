@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --nodelist=dragon
+#SBATCH --ntasks=56
+#SBATCH --mem=120GB
+#SBATCH --time=5-00:00:00
+#SBATCH --job-name=w65L12
+#SBATCH --partition=long
+#SBATCH --account=aero_research_sherwin
+#SBATCH --output=output.txt
+#SBATCH --error=log.txt
+
+# continue from the newest complete checkpoint (56 partitions + Info.xml), if any
+last=$(for c in $(ls -d mesh_*.chk 2>/dev/null | sort -t_ -k2 -n -r); do
+         [ -f $c/Info.xml ] && [ $(ls $c/P*.fld | wc -l) -eq $SLURM_NTASKS ] && { echo $c; break; }
+       done)
+[ -n "$last" ] && sed -i "s|<F VAR=\"u,v,w,p\" FILE=\"[^\"]*\" />|<F VAR=\"u,v,w,p\" FILE=\"$last\" />|" session.xml
+
+source $HOME/Desktop/PhD/scripts/slurm.sh

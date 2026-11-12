@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --nodelist=gauntlet
+#SBATCH --ntasks=56
+#SBATCH --mem=50GB
+#SBATCH --time=5-00:00:00
+#SBATCH --job-name=w65s1m9
+#SBATCH --partition=long
+#SBATCH --account=aero_research_sherwin
+#SBATCH --output=output.txt
+#SBATCH --error=log.txt
+
+source $HOME/Desktop/PhD/scripts/slurm.sh

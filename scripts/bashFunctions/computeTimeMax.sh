@@ -7,6 +7,6 @@ function computeTimeMax() {
     # Convert days, hours, minutes, seconds to total seconds
     TIMEMAX=$((days * 86400 + hours * 3600 + minutes * 60 + seconds))
 
-    # substract 90 seconds for safe termination
-    TIMEMAX=$((TIMEMAX - 90))
+    # substract 300 seconds: safe termination of mpirun, then compressHistoryEnergyFiles (pbspro.sh)
+    TIMEMAX=$((TIMEMAX - 300))
 }

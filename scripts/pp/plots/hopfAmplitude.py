@@ -167,7 +167,7 @@ def makePlot():
         c, m = COLORS[i], MARKERS[i]
         above = mu > 0.0
         fit_line = np.poly1d(np.polyfit(mu[above], amp2[above], 1))
-        label = rf"$\boldsymbol\gamma_{{{i + 1}}}$"
+        label = rf"$\boldsymbol\Gamma_{{{i + 1}}}$"
         if i < 2:
             label += " (left axis)"
         if i == 2:
@@ -285,13 +285,13 @@ def makePlot():
     )
 
     # draw an arrow to indicate the bifurcation direction
-    arrow_start = [(13, 3), (38, bifLine2(37)), (80, 1.0)]
+    arrow_start = [(13, 2.97), (38, bifLine2(37)), (80, 1.03)]
     arrow_direction = [(1, 0), (1, 0.0365), (0, 1)]
-    length = [31, 20, 0.95]
+    length = [32, 21, 1.0]
     labels = [
-        r"$\boldsymbol\gamma_1$",
-        r"$\boldsymbol\gamma_2$",
-        r"$\boldsymbol\gamma_3$",
+        r"$\boldsymbol\Gamma_1$",
+        r"$\boldsymbol\Gamma_2$",
+        r"$\boldsymbol\Gamma_3$",
     ]
 
     for ars, ard, l, label, c in zip(

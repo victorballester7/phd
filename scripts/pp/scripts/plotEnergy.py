@@ -33,7 +33,7 @@ def createFigure(returnMap: bool):
 
 def main():
     """
-    Main function to plot history points from one or multiple folders as a function of time or in phase space (u vs v). The points are stored in the historyPoints.dat file in each folder.
+    Main function to plot the L2 errors (EnergyError.err) of one or multiple folders as a function of time, or as a return map. Each folder holds EnergyError.err.gz (all finished runs, see scripts/bashFunctions/compressHistoryEnergyFiles.sh) and, while a run is in progress, EnergyError.err; pp.fileManagement.readErrorHistory merges them.
     """
     args = parseArgs()
 

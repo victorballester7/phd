@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=32
+#SBATCH --mem=32GB
+#SBATCH --time=05:59:59
+#SBATCH --job-name=chk_d4k15bfP6
+#SBATCH --partition=short
+#SBATCH --output=output.txt
+#SBATCH --error=log.txt
+# verification of the b=8d beta scan (d4_w15, k=15): base flow at NUMMODES 6 (production: 4)
+source $HOME/Desktop/PhD/scripts/slurm.sh

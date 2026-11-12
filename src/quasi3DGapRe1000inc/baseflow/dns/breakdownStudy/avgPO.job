@@ -1,0 +1,56 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=32:mpiprocs=32:mem=64gb
+#PBS -l walltime=07:59:59
+#PBS -N avgPO
+#PBS -e log.job
+#PBS -o output.job
+
+# Time average of <|u'|^2>_z and <w'^2>_z over the checkpoints in which the breakdown
+# front of the unforced d=1.5 runs has stopped moving (3D seed at the round-off floor):
+#   w=70: chk 144-200 (t = 23.9k-29.1k), w=66: chk 218-275 (t = 56.3k-61.6k).
+# u' = u - baseflow2DwithW (the steady 2D base flow), as for mesh_po.fld.
+# Writes <case>/data/pointsPOavg_n600.dat with columns x y u v w p uvw ww, where every
+# field is the z-mean averaged over the window (so w is <w'>_z and ww is <w'^2>_z).
+
+module load tools/eb-dev CMake/3.24.3-GCCcore-11.3.0 SCOTCH/7.0.1-gompi-2022a Boost/1.79.0-GCC-11.3.0 OpenBLAS/0.3.20-GCC-11.3.0 FlexiBLAS/3.2.0-GCC-11.3.0 FFTW/3.3.10-GCC-11.3.0 ScaLAPACK/2.2.0-gompi-2022a-fb HDF5/1.12.2-gompi-2022a VTK/9.2.2-foss-2022a
+
+R=$HOME/Desktop/PhD/runs/quasi3DGapRe1000inc/baseflow/dns
+# not on PATH inside PBS jobs (it comes from ~/.bashrc on the login node)
+export PATH=$HOME/nektar-v5.9.0/build/dist/bin:$PATH
+NPAR=6
+SCR=${TMPDIR:-/tmp}/avgPO_$$
+mkdir -p $SCR
+
+function process {
+    n=$1
+    out=data/avg/pointsPO_n600_chk$n.dat
+    [ -s $out ] && return
+    t=$SCR/$(basename $PWD)_$n
+    FieldConvert -f -m addfld:fromfld=baseflow2DwithW.fld:scale=-1 mesh.xml session.xml mesh_$n.chk ${t}_pert.fld > /dev/null &&
+    FieldConvert -f -m fieldfromstring:fieldstr="u^2+v^2+w^2":fieldname="uvw" mesh.xml session.xml ${t}_pert.fld ${t}_a.fld > /dev/null &&
+    FieldConvert -f -m fieldfromstring:fieldstr="w^2":fieldname="ww" mesh.xml session.xml ${t}_a.fld ${t}_b.fld > /dev/null &&
+    FieldConvert -f -m meanmode mesh.xml session.xml ${t}_b.fld ${t}_Zmean.fld > /dev/null &&
+    FieldConvert -f -m interppoints:fromxml=mesh.xml:fromfld=${t}_Zmean.fld:topts=data/pointsPO_n600.pts $out > /dev/null ||
+    echo "FAILED chk $n in $PWD"
+    rm -rf ${t}_pert.fld ${t}_a.fld ${t}_b.fld ${t}_Zmean.fld
+}
+
+for spec in "d1.5_w70_Lz6.0_k32 144 200" "d1.5_w66_Lz6.0_k32 218 275"; do
+    set -- $spec
+    cd $R/$1
+    mkdir -p data/avg
+    for n in $(seq $2 $3); do
+        process $n &
+        while [ $(jobs -r | wc -l) -ge $NPAR ]; do sleep 5; done
+    done
+    wait
+    files=$(for n in $(seq $2 $3); do echo data/avg/pointsPO_n600_chk$n.dat; done)
+    nf=$(echo $files | wc -w)
+    head -3 data/avg/pointsPO_n600_chk$2.dat > data/pointsPOavg_n600.dat
+    # same points in the same order in every file: average line by line
+    awk 'FNR==1{k++} FNR>3{for(i=1;i<=NF;i++) s[FNR,i]+=$i; nc=NF; nl=FNR}
+        END{for(l=4;l<=nl;l++){line=""; for(i=1;i<=nc;i++) line=line sprintf("%.8g ", s[l,i]/k); print line}}' $files >> data/pointsPOavg_n600.dat
+    echo "$1: averaged $nf checkpoints ($2-$3)"
+done
+rm -rf $SCR
+echo DONE

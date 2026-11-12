@@ -1,0 +1,6 @@
+Source-refined w=100 impulse run (2026-11-10). mesh.xml: parent mesh with the upstream end x < xa of the boundary-layer
+quad block replaced by a triangle patch graded to h=0.05 around the source (-95, 0.5) (scripts/refineSourceMesh.py,
+spliced, identical to the parent mesh outside the patch). baseflow.fld: parent base flow copied element by element
+outside the patch, interpolated (interppoints + pointdatatofld) in the patch (scripts/spliceBaseflow.py).
+session.xml: the _impulse100 session with composite 103 added to EXPANSIONS. baseflow_interpfield_NOTUSED.fld: the
+FieldConvert interpfield version, NOT used (interpfield is off by ~3e-3 even between identical meshes).

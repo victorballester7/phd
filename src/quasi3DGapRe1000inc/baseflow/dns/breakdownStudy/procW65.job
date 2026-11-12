@@ -1,0 +1,64 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=16
+#SBATCH --mem=96GB
+#SBATCH --time=0-05:59:59
+#SBATCH --job-name=procW65
+#SBATCH --partition=short
+#SBATCH --output=job.log
+#SBATCH --error=job.log
+
+# Typhoon version of the HPC breakdownStudy/procChk.job, for the w = 65 seeded runs:
+# z-means of u' = u - baseflow2DwithW, |u'|^2 and w'^2 of every checkpoint on the
+# pointsPO_n600 points (<case>/data/avg/pointsPO_n600_chk<n>.dat), then per snapshot
+#   xb_w65.dat              case chk t xb-w eta(xb) zeta(40) zeta(60) zeta(80)   (xb.awk)
+#   profiles/<case>_chk<n>.txt  x, int |u'|^2 dy, int w'^2 dy                    (prof.awk)
+# Usage (so that the nektar++ module of .bashrc is loaded):
+#   bash -ic 'sbatch --export=ALL,CASES="<case> ...",SKIP_LAST=<case> procW65.job' </dev/null
+# SKIP_LAST: a run still in progress, whose newest checkpoint may be incomplete.
+
+cd $SLURM_SUBMIT_DIR
+python3 $HOME/Desktop/PhD/scripts/jobStart.py $SLURM_JOB_ID
+exec > output.txt 2> log.txt
+R=$HOME/Desktop/PhD/runs/quasi3DGapRe1000inc/baseflow/dns
+B=$R/breakdownStudy
+NPAR=8
+SCR=${TMPDIR:-/tmp}/procW65_$$
+mkdir -p $SCR $B/profiles
+
+function process {
+    c=$1; n=$2
+    out=data/avg/pointsPO_n600_chk$n.dat
+    t=$SCR/${c}_$n
+    if [ ! -s $out ]; then
+        FieldConvert -f -m addfld:fromfld=baseflow2DwithW.fld:scale=-1 mesh.xml session.xml mesh_$n.chk ${t}_pert.fld > /dev/null &&
+        FieldConvert -f -m fieldfromstring:fieldstr="u^2+v^2+w^2":fieldname="uvw" mesh.xml session.xml ${t}_pert.fld ${t}_a.fld > /dev/null &&
+        FieldConvert -f -m fieldfromstring:fieldstr="w^2":fieldname="ww" mesh.xml session.xml ${t}_a.fld ${t}_b.fld > /dev/null &&
+        FieldConvert -f -m meanmode mesh.xml session.xml ${t}_b.fld ${t}_Zmean.fld > /dev/null &&
+        FieldConvert -f -m interppoints:fromxml=mesh.xml:fromfld=${t}_Zmean.fld:topts=data/pointsPO_n600.pts $out > /dev/null ||
+        { echo "FAILED chk $n in $c"; rm -f $out; }
+        rm -rf ${t}_pert.fld ${t}_a.fld ${t}_b.fld ${t}_Zmean.fld
+    fi
+    [ -s $out ] || return
+    tt=$(grep -o "<Time>[^<]*" mesh_$n.chk/Info.xml | cut -c7-)
+    echo "$c $n $tt $(awk -v W=65 -f $B/xb.awk $out)" > $SCR/xb_${c}_$n.txt
+    awk -f $B/prof.awk $out > $B/profiles/${c}_chk$n.txt
+}
+
+for c in $CASES; do
+    cd $R/$c
+    mkdir -p data/avg
+    chks=$(ls -d mesh_*.chk | sed 's/mesh_//;s/.chk//' | sort -n)
+    [ "$c" = "$SKIP_LAST" ] && chks=$(echo "$chks" | head -n -1)
+    for n in $chks; do
+        process $c $n &
+        while [ $(jobs -r | wc -l) -ge $NPAR ]; do sleep 5; done
+    done
+    wait
+    echo "$c: processed chk $(echo $chks | awk '{print $1"-"$NF}')"
+done
+cat $SCR/xb_*.txt 2>/dev/null | sort -k1,1 -k2,2n >> $B/xb_w65.dat
+sort -u -k1,1 -k2,2n $B/xb_w65.dat -o $B/xb_w65.dat
+rm -rf $SCR
+echo DONE
+python3 $HOME/Desktop/PhD/scripts/jobFinish.py $SLURM_JOB_ID

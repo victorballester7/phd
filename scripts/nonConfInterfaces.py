@@ -5,7 +5,8 @@ Nektar++ session file from the composites of a mesh generated with a non-conform
 (e.g. src/comGapRe1000Ma0.8/baseflow/dns/d4_w19/mesh.geo).
 
 Convention of the .geo file:
-  - Physical Surface(100 + i) -> domain D[i] -> zone i (100: first layer of quads, 101: gap, 102 + k: strip k)
+  - Physical Surface(100 + i) -> domain D[i] -> zone i (100: first layer of quads, 101: gap, 102 + k: strip k).
+    Without a gap (flat plate, no composite 101) the zones are 100, 102, 103, ...: D[0] is the first layer and D[k + 1] strip k
   - Physical Curve(200 + 2*j) / (201 + 2*j): lower / upper side of interface j, with j = k*nSeg + i
     (k: interface between strip k-1 (or the first layer of quads if k = 0) and strip k, i: segment in x)
 
@@ -22,8 +23,10 @@ mesh = open(mesh_file).read()
 domains = sorted(int(d) for d in re.findall(r'<D ID="(\d+)">', mesh))
 iface_comps = sorted(int(c) for c in re.findall(r'<C ID="(\d+)">', mesh) if int(c) >= 200)
 
+surfaces = sorted(int(c) for c in re.findall(r'<C ID="(\d+)">', mesh) if 100 <= int(c) < 200)
+has_gap = 101 in surfaces
 nDomains = len(domains)
-nStrips = nDomains - 2
+nStrips = nDomains - (2 if has_gap else 1)
 nPairs = len(iface_comps) // 2
 if nStrips < 1 or nPairs == 0 or nPairs % nStrips != 0:
     sys.exit(f"Unexpected composites: {nDomains} domains, {len(iface_comps)} interface composites")
@@ -39,8 +42,8 @@ lines += [f'      <FIXED ID="{i}" DOMAIN="D[{i}]" />' for i in range(nDomains)]
 lines += ["    </ZONES>", "    <INTERFACES>"]
 for j in range(nPairs):
     k = j // nSeg
-    left = 0 if k == 0 else k + 1
-    right = k + 2
+    left = 0 if k == 0 else k + (1 if has_gap else 0)
+    right = k + (2 if has_gap else 1)
     lines += [
         f'      <INTERFACE NAME="if{k}_{j % nSeg}">',
         f'        <LEFT  ID="{left}" BOUNDARY="C[{200 + 2 * j}]" />',
@@ -57,6 +60,7 @@ if pattern.search(session):
 else:
     session = session.replace("</EXPANSIONS>", "</EXPANSIONS>\n\n" + movement, 1)
 
-session = re.sub(r'(<E COMPOSITE=")C\[[^\]]*\]', rf"\1C[100-{100 + nDomains - 1}]", session, count=1)
+comp = f"C[100-{100 + nDomains - 1}]" if has_gap else f"C[100,102-{102 + nStrips - 1}]"
+session = re.sub(r'(<E COMPOSITE=")C\[[^\]]*\]', rf"\1{comp}", session, count=1)
 open(session_file, "w").write(session)
 print(f"{session_file}: {nDomains} zones, {nPairs} interfaces ({nStrips} x {nSeg} segments)")

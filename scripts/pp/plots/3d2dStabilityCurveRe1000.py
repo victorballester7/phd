@@ -14,10 +14,8 @@ from matplotlib.legend_handler import HandlerBase
 from matplotlib.patches import Rectangle
 from matplotlib.lines import Line2D
 import matplotlib as mpl
-from mpl_toolkits.axes_grid1.inset_locator import BboxConnector, BboxPatch
-from matplotlib.transforms import TransformedBbox
 from matplotlib.backends import backend_pdf
-from pp.figureFrame import FigureFrame, axis_on_top, jfm_ticks
+from pp.figureFrame import FigureFrame
 
 
 plt.style.use("plots/style/jfm.mplstyle")
@@ -57,20 +55,19 @@ class HandlerPatchLine(HandlerBase):
 
 # --- Region patterns -----------------------------------------------------
 #
-# The five regions are drawn as vector hatched polygons bounded by the mean
+# The four regions are drawn as vector hatched polygons bounded by the mean
 # stability curves.  Regions II/III are split at the crossing of the two mean
-# curves, and III/IV at X_SEP_III_IV.
+# curves.
 #
 # The PDF backend writes hatch patterns in opaque RGB (alpha is dropped), so
 # the hatch colour is pre-blended with the white background instead.
 
 # Single-character patterns, i.e. the sparse form of each: doubling a hatch
 # character doubles its density, and at this figure size the doubled set read
-# as one uniform texture instead of five distinguishable regions.
-HATCH_PATTERNS = ["/", "o", "*", "O", "x"]
+# as one uniform texture instead of four distinguishable regions.
+HATCH_PATTERNS = ["/", "o", "*", "x"]
 HATCH_COLOR = "tab:blue"
 ALPHA_PATTERN = 0.48  # opacity of the hatch, emulated by blending with white
-X_SEP_III_IV = 70.0  # w/d* at which region III gives way to region IV
 N_REGION_PTS = 2000  # resolution of the region outlines
 
 
@@ -141,6 +138,13 @@ def _curve_y(x, curve):
     return np.interp(x, curve[order, 0], curve[order, 1])
 
 
+def _curve_crossing(inst3d, hopf2d):
+    """w at which the two mean stability curves cross (regions II | III)."""
+    xs = np.linspace(0.0, np.max(inst3d[:, 0]), 2000)
+    gap = _curve_y(xs, inst3d) - _curve_y(xs, hopf2d)
+    return xs[np.argmin(np.abs(gap))]
+
+
 def makePatterns(ax, inst3ds, hopf2ds):
     mpl.rcParams["hatch.linewidth"] = 0.5
 
@@ -150,9 +154,7 @@ def makePatterns(ax, inst3ds, hopf2ds):
     y0, y1 = ax.get_ylim()
 
     # crossing of the two mean curves -> separates regions II and III
-    xs = np.linspace(0.0, np.max(inst3d[:, 0]), 2000)
-    gap = _curve_y(xs, inst3d) - _curve_y(xs, hopf2d)
-    x_cross = xs[np.argmin(np.abs(gap))]
+    x_cross = _curve_crossing(inst3d, hopf2d)
 
     def bounds(xa, xb):
         x = np.linspace(xa, xb, N_REGION_PTS)
@@ -164,9 +166,8 @@ def makePatterns(ax, inst3ds, hopf2ds):
     regions = [
         (x, np.full_like(x, y0), lo),  # I   below both
         bounds(x0, x_cross),  # II  between, left of the crossing
-        bounds(x_cross, X_SEP_III_IV),  # III
-        bounds(X_SEP_III_IV, x1),  # IV
-        (x, hi, np.full_like(x, y1)),  # V   above both
+        bounds(x_cross, x1),  # III between, right of the crossing
+        (x, hi, np.full_like(x, y1)),  # IV  above both
     ]
 
     rgb = np.asarray(mpl.colors.to_rgb(HATCH_COLOR))
@@ -231,43 +232,26 @@ def plotCurves(ax, inst3ds, hopf2ds, exp_bypass_curve):
     )
 
 
-def addText(ax, axins):
+def addText(ax, inst3d, hopf2d):
     # black, not the hatch colour: a blue numeral sitting on blue hatching
     # reads as part of the texture
     textcolor = "tab:blue"
     textcolor = mix_with_black(textcolor, 0.35)
-    textweight = "bold"
-    textfontsize = [14, 11]
+    kw = dict(fontsize=14, color=textcolor, fontweight="bold", ha="center")
 
-    labels = ["I", "II", "III", "IV", "V"]
+    for label, (x, y) in {
+        "I": (0.25, 0.16),
+        "II": (0.14, 0.6),
+        "IV": (0.535, 0.755),
+    }.items():
+        ax.text(x, y, label, transform=ax.transAxes, **kw)
 
-    positionsAx = {
-        labels[0]: (0.25, 0.16),
-        labels[1]: (0.14, 0.6),
-        labels[2]: (0.48, 0.34),
-        labels[3]: (0.8, 0.38),
-        labels[4]: (0.535, 0.755),
-    }
-    positionsAxins = {
-        labels[0]: (0.17, 0.13),
-        labels[1]: (np.nan, np.nan),  # not visible in the inset
-        labels[2]: (0.35, 0.4),
-        labels[3]: (0.8, 0.45),
-        labels[4]: (0.485, 0.82),
-    }
-
-    for a, p, t in zip([ax, axins], [positionsAx, positionsAxins], textfontsize):
-        for label, (x, y) in p.items():
-            a.text(
-                x,
-                y,
-                label,
-                transform=a.transAxes,
-                fontsize=t,
-                color=textcolor,
-                fontweight=textweight,
-                ha="center",
-            )
+    # III: centre of the thin strip between the two curves, right of their
+    # crossing, in data coordinates
+    x_cross = _curve_crossing(inst3d, hopf2d)
+    x_mid = 0.5 * (x_cross + ax.get_xlim()[1])
+    y_mid = 0.5 * (_curve_y(x_mid, inst3d) + _curve_y(x_mid, hopf2d))
+    ax.text(x_mid, y_mid, "III", va="center_baseline", **kw)
 
     
     ax.text(
@@ -327,16 +311,9 @@ def main():
     )
 
     frame = FigureFrame(
-        frame_w=5.5, aspect_ratio=0.75, pad_l=4.0, pad_b=0.8, pad_t=0.11
+        frame_w=5.5, aspect_ratio=0.75, pad_l=4.0, pad_b=0.8, pad_t=0.11  # pad_r = pad_l: frame centred, legend in pad_r
     )
     fig, ax = frame.fig, frame.ax
-
-    # zoom panel in the left padding, vertically centred on the frame
-    INS_W = 2.6
-    INS_H = INS_W * frame.frame_h / frame.frame_w
-    INS_LEFT = 0.55  # cm from the left figure edge (room for its tick labels)
-    INS_BOTTOM = 0.8
-    axins = frame.add_axes_cm(INS_LEFT, INS_BOTTOM, INS_W, INS_H)
 
     hopf2ds = average_curves(hopf2d_re_stable[1000], hopf_re_unstable[1000], npts=500)
 
@@ -350,45 +327,17 @@ def main():
     ax.set_yticks([0, 1, 2, 3, 4])
     ax.set_xlim([0, 130])
     ax.set_ylim([0, 4])
-    axins.set_xlim([55, 85])
-    axins.set_ylim([1.3, 1.75])
 
-    # zoomed region on the main axes, joined to the panel on its left:
-    # mark_inset can only join matching corners, so the connectors are built
-    # by hand (panel upper/lower right -> region upper/lower left)
-    zoom_kw = dict(fc="none", ec="0.4", lw=0.5)
-    zoom = TransformedBbox(axins.viewLim, ax.transData)
-    ax.add_patch(BboxPatch(zoom, **zoom_kw))
-    # the connectors belong to ax, below its axis artists (zorder 10 from
-    # axis_on_top), so they pass under the y tick labels and the y label
-    for loc_ins, loc_zoom in ((1, 1), (4, 4)):
-        connector = BboxConnector(
-            axins.bbox, zoom, loc1=loc_ins, loc2=loc_zoom, zorder=5, **zoom_kw
-        )
-        connector.set_clip_on(False)
-        ax.add_patch(connector)
     ax.set_xlabel(r"$w$")
     ax.set_ylabel(r"$d$", rotation=0, labelpad=10)
-    # remove grid
     ax.grid(False)
-    axins.grid(False)
     frame.jfm_ticks()
-    jfm_ticks(axins)
     # draw ticks and spines above the patterns, bands and curves
     frame.axis_on_top()
-    axis_on_top(axins)
 
-    # white behind the y labels, so the connectors read as passing beneath
-    # them rather than through them
-    label_bg = dict(facecolor="white", edgecolor="none", pad=1.3)
-    ax.yaxis.label.set_bbox(label_bg)
-    for label in ax.get_yticklabels():
-        label.set_bbox(label_bg)
-
-    for a in [ax, axins]:
-        makePatterns(a, inst3ds, hopf2ds)
-        plotCurves(a, inst3ds, hopf2ds, exp_bypass_curve)
-    addText(ax, axins)
+    makePatterns(ax, inst3ds, hopf2ds)
+    plotCurves(ax, inst3ds, hopf2ds, exp_bypass_curve)
+    addText(ax, inst3ds[2], hopf2ds[2])
     addLegend(ax)
 
     # Save with fixed figure size (no bbox_inches="tight" to preserve exact dimensions)

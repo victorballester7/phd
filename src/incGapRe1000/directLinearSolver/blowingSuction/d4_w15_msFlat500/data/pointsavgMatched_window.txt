@@ -1,0 +1,1 @@
+t0=5040 t1=13199.999999678161 end_file=mesh_55_stress.fld

@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=32
+#SBATCH --mem=32GB
+#SBATCH --time=06:00:00
+#SBATCH --job-name=d125w90Js
+#SBATCH --partition=short
+#SBATCH --output=output.job
+#SBATCH --error=log.job
+
+# Source-refined mesh (scripts/refineSourceMesh.py, 2026-11-10). Impulse-response run (scripts/makeImpulseCases.py) with ~/nektar-NLArnoldi: git archive of commit
+# 2b3e476 (feature/LinearisedCompressibleFlow), the same source as the HPC build used by pbspro.sh
+source /etc/profile.d/modules.sh
+module load boost/1.82.0 scotch/7.0.3
+cd $SLURM_SUBMIT_DIR
+date > start.date
+mpirun -np $SLURM_NTASKS $HOME/nektar-NLArnoldi/build/dist/bin/IncNavierStokesSolver -v mesh.xml session.xml > output.txt 2> log.txt
+echo RUN_EXIT=$? >> output.txt
+date > end.date

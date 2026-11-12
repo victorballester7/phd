@@ -45,7 +45,7 @@ def createFigure(returnMap: bool, is3d: bool):
 
 def main():
     """
-    Main function to plot history points from one or multiple folders as a function of time or in phase space (u vs v). The points are stored in the historyPoints.dat file in each folder.
+    Main function to plot history points from one or multiple folders as a function of time or in phase space (u vs v). Each folder holds HistoryPoints.his.gz (all finished runs, see scripts/bashFunctions/compressHistoryEnergyFiles.sh) and, while a run is in progress, HistoryPoints.his; pp.fileManagement.readDataHistoryPoints merges them.
     """
     args = parseArgs()
 

@@ -2,7 +2,23 @@ import os
 import numpy as np
 from pp.colors import colors
 from pp.ssh.fieldconvert import fld2datapts
-from pp.fileManagement import extract_depth_width
+from pp.fileManagement import extract_depth_width, readFieldsBySection
+
+# True: convert the interpolated .dat into a compressed .npz (x, y and one
+# (nx, ny) array per field, named as in the .dat header) and delete the .dat.
+COMPRESS_NPZ = True
+
+
+def dat2npz(dat_path: str) -> str:
+    with open(dat_path) as fh:
+        names = [s.strip() for s in fh.readline().split("=", 1)[1].split(",")]
+    x, y, d = readFieldsBySection(dat_path)
+    fields = {name: d[:, :, i] for i, name in enumerate(names) if name not in ("x", "y")}
+    npz_path = os.path.splitext(dat_path)[0] + ".npz"
+    np.savez_compressed(npz_path, x=x, y=y, **fields)
+    os.remove(dat_path)
+    print(colors.OKGREEN + f"Compressed {dat_path} -> {npz_path} (fields: {', '.join(fields)})" + colors.ENDC)
+    return npz_path
 
 
 def gen_points_file(
@@ -59,6 +75,8 @@ def create_points_file(base_dir: str, case: str):
         # ymin=-d, ymax=150, n=n, width=w, dir_local=dir_local, output_file=output_file
     )
     fld2datapts(dir_local, fld_remote, output_file)
+    if COMPRESS_NPZ:
+        dat2npz(os.path.join(dir_local, output_file + ".dat"))
 
 
 if __name__ == "__main__":
@@ -88,9 +106,10 @@ if __name__ == "__main__":
         # "d1.75_w40_new",
         # "d1.5_w60_Lz6.0_k32",
         # "d1.5_w63_Lz6.0_k32",
-        # "d1.5_w65_Lz6.0_k32",
+        # "d1.5_w64_Lz6.0_k32_kick",
+        "d1.5_w65_Lz6.0_k32",
         # "d1.5_w66_Lz6.0_k32",
-        "d1.5_w70_Lz6.0_k32",
+        # "d1.5_w70_Lz6.0_k32",
         # "d1.5_w80_Lz6.0_k32"
         # "d1.5_w66",
         # "d1.5_w67"

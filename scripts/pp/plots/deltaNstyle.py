@@ -49,6 +49,16 @@ def deltaN_colormap():
     return truncate_colormap(plt.get_cmap(BASE_CMAP), *CMAP_RANGE)
 
 
+# The compressible (Mach) maps use their own single-hue ramp, so a reader never mistakes a Mach map for a
+# Reynolds one. Same truncation as the blue ramp; every panel of the Mach figure (including its incompressible
+# comparison panel) uses it, so equal shades still mean equal Delta n within that figure.
+MACH_CMAP = "Oranges"
+
+
+def deltaN_colormap_mach():
+    return truncate_colormap(plt.get_cmap(MACH_CMAP), *CMAP_RANGE)
+
+
 def add_numeric_contours(ax, xgrid, ygrid, zgrid, levels, label_positions):
     cs = ax.contour(
         xgrid,

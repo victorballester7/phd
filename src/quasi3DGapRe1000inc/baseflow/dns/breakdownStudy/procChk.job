@@ -1,0 +1,50 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=32:mpiprocs=32:mem=64gb
+#PBS -l walltime=03:59:59
+#PBS -N procChk
+#PBS -e log.job
+#PBS -o output.job
+
+# z-means of u' = u - baseflow2DwithW, |u'|^2 and w'^2 of selected checkpoints on the
+# pointsPO_n600 points (<case>/data/avg/pointsPO_n600_chk<n>.dat, columns x y u v w p uvw ww),
+# for the time averages of fig:L2normPO. Usage:
+#   qsub -v SPECS="<case> <first> <last>;<case> <first> <last>" procChk.job
+
+module load tools/eb-dev CMake/3.24.3-GCCcore-11.3.0 SCOTCH/7.0.1-gompi-2022a Boost/1.79.0-GCC-11.3.0 OpenBLAS/0.3.20-GCC-11.3.0 FlexiBLAS/3.2.0-GCC-11.3.0 FFTW/3.3.10-GCC-11.3.0 ScaLAPACK/2.2.0-gompi-2022a-fb HDF5/1.12.2-gompi-2022a VTK/9.2.2-foss-2022a
+
+R=$HOME/Desktop/PhD/runs/quasi3DGapRe1000inc/baseflow/dns
+# not on PATH inside PBS jobs (it comes from ~/.bashrc on the login node)
+export PATH=$HOME/nektar-v5.9.0/build/dist/bin:$PATH
+NPAR=6
+SCR=${TMPDIR:-/tmp}/avgPO_$$
+mkdir -p $SCR
+
+function process {
+    n=$1
+    out=data/avg/pointsPO_n600_chk$n.dat
+    [ -s $out ] && return
+    t=$SCR/$(basename $PWD)_$n
+    FieldConvert -f -m addfld:fromfld=baseflow2DwithW.fld:scale=-1 mesh.xml session.xml mesh_$n.chk ${t}_pert.fld > /dev/null &&
+    FieldConvert -f -m fieldfromstring:fieldstr="u^2+v^2+w^2":fieldname="uvw" mesh.xml session.xml ${t}_pert.fld ${t}_a.fld > /dev/null &&
+    FieldConvert -f -m fieldfromstring:fieldstr="w^2":fieldname="ww" mesh.xml session.xml ${t}_a.fld ${t}_b.fld > /dev/null &&
+    FieldConvert -f -m meanmode mesh.xml session.xml ${t}_b.fld ${t}_Zmean.fld > /dev/null &&
+    FieldConvert -f -m interppoints:fromxml=mesh.xml:fromfld=${t}_Zmean.fld:topts=data/pointsPO_n600.pts $out > /dev/null ||
+    echo "FAILED chk $n in $PWD"
+    rm -rf ${t}_pert.fld ${t}_a.fld ${t}_b.fld ${t}_Zmean.fld
+}
+
+IFS=';' read -ra LIST <<< "$SPECS"
+for spec in "${LIST[@]}"; do
+    set -- $spec
+    cd $R/$1
+    mkdir -p data/avg
+    for n in $(seq $2 $3); do
+        [ -d mesh_$n.chk ] || continue
+        process $n &
+        while [ $(jobs -r | wc -l) -ge $NPAR ]; do sleep 5; done
+    done
+    wait
+    echo "$1: processed chk $2-$3"
+done
+rm -rf $SCR
+echo DONE

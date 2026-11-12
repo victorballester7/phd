@@ -1,0 +1,62 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=32:mpiprocs=32:mem=50gb
+#PBS -l walltime=23:59:59
+#PBS -N c.05d1.3w85
+#PBS -e log.job
+#PBS -o output.job
+# d1.3_w85 copy (2026-11-11): gap gate raised 1e-3 -> 1e-2 (mapped start from the slowly decaying d1.35_w85; a limit cycle would swing ~0.2).
+# Conditional continuation of an R1 DNS (2026-11-06), submitted afterany on the running DNS job of this directory.
+#  - steady (velocity change < 1e-6 at every history point over 150 tu, as impulse_job.pbs): exit, nothing to do;
+#  - gap region (x < widthGap + 60) still swinging > 1e-3 over 150 tu: probably a limit cycle -> do NOT continue;
+#  - otherwise: newest complete chk K -> restart_chkK.chk, InitialConditions = restart_chkK.chk, NumSteps = NSTEPS,
+#    previous session kept as session_before_contK.xml, then the usual pbspro.sh run (time and chk numbering continue).
+NSTEPS=1200e3
+cd $PBS_O_WORKDIR
+R=$(python3 - . <<'EOF'
+import os, re, sys
+case = sys.argv[1]
+src = open(os.path.expanduser("~/Desktop/PhD/scripts/steadyBaseflows.py")).read().split("for M in MACH:")[0]
+sys.argv = [sys.argv[0]]
+exec(src)
+his = os.path.join(case, "HistoryPoints.his")
+n = npoints(his)
+dmax, span = change(his, n)
+n0 = len(os.listdir(os.path.join(case, "mesh_0.chk")))
+ks = sorted(int(m.group(1)) for d in os.listdir(case) for m in [re.fullmatch(r"mesh_(\d+)\.chk", d)] if m)
+ks = [k for k in ks if len(os.listdir(os.path.join(case, "mesh_%d.chk" % k))) == n0]
+if dmax is not None and span >= WINDOW - 1 and dmax < TOL:
+    print("STEADY max_change=%.2e" % dmax); sys.exit()
+# swing in the gap region only
+W = float(re.search(r"_w([0-9.]+)_R1", os.path.basename(os.path.abspath(case))).group(1))
+xs = []
+for l in hisheader(his):
+    p = l.split()
+    if len(p) == 5: xs.append(float(p[2]))
+tail = histail(his, int(n * (WINDOW / 0.5 + 50)))
+rows = [list(map(float, l.split())) for l in tail if l and not l.startswith("#")]
+rows = rows[len(rows) % n:]
+S = [rows[i:i + n] for i in range(0, len(rows), n)]
+S = [s for s in S if s[0][0] >= S[-1][0][0] - WINDOW]
+gsw = max(max(s[p][k] / s[p][1] for s in S) - min(s[p][k] / s[p][1] for s in S) for p in range(n) if xs[p] < W + 60 for k in (2, 3))
+if gsw > 1e-2:
+    print("UNSTEADY_GAP gap_swing=%.2e max_change=%.2e" % (gsw, dmax)); sys.exit()
+print("CONTINUE %d max_change=%.2e gap_swing=%.2e" % (ks[-1], dmax, gsw))
+EOF
+)
+echo "$(date) continuation check: $R" | tee -a cont.log
+[[ "$R" == CONTINUE* ]] || exit 0
+K=$(echo $R | awk '{print $2}')
+cp -r mesh_$K.chk restart_chk$K.chk && cp session.xml session_before_cont$K.xml || exit 1
+python3 - session.xml $K $NSTEPS <<'EOF' || exit 1
+import re, sys
+f, K, ns = sys.argv[1:]; s = open(f).read()
+blk = re.search(r'^[ \t]*<FUNCTION NAME="InitialConditions">.*?</FUNCTION>', s, flags=re.S | re.M)
+assert blk and '<REFFLOW> SpongeRef </REFFLOW>' in s
+ic = ('<FUNCTION NAME="InitialConditions"> <!-- continuation (cont_job.pbs) from mesh_%s.chk; previous session: session_before_cont%s.xml -->\n'
+      '      <F VAR="rho,rhou,rhov,E" FILE="restart_chk%s.chk" />\n    </FUNCTION>') % (K, K, K)
+s = s[:blk.start()] + ic + s[blk.end():]
+s, n = re.subn(r'(<P> *NumSteps *= *)[0-9.e+]+( *</P>)[^\n]*', r'\g<1>%s\g<2> <!-- continuation -->' % ns, s); assert n == 1
+open(f, 'w').write(s)
+EOF
+echo "$(date) continuing from mesh_$K.chk, NumSteps=$NSTEPS" | tee -a cont.log
+source $HOME/Desktop/PhD/scripts/pbspro.sh

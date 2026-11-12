@@ -1,4 +1,5 @@
 from typing import Dict
+import gzip
 import re
 import os
 import numpy as np
@@ -40,6 +41,34 @@ def extract_reynolds(path: str) -> float:
         raise ValueError(f"Could not extract Reynolds number from path: {path}")
     return float(match.group(1))
 
+
+def historyParts(folder: str, name: str) -> List[str]:
+    """
+    Files that hold the history/energy output ``name`` (e.g. "HistoryPoints.his") of a run directory, oldest first.
+
+    Since 2026-11-10 pbspro.sh keeps every finished run in ``name.gz`` (one header, then the data of all runs) and only
+    the run in progress in plain ``name``; ``name.old`` is the previous scheme (still read if present). ``folder`` may
+    be the directory or any of these files.
+    """
+    if os.path.isdir(folder):
+        base = os.path.join(folder, name)
+    else:
+        base = re.sub(r"\.(gz|old)$", "", folder)
+    parts = [p for p in (base + ".gz", base + ".old", base) if os.path.isfile(p)]
+    if not parts:
+        raise FileNotFoundError(f"No {base}(.gz/.old) found")
+    return parts
+
+
+def _openText(path: str):
+    return gzip.open(path, "rt") if path.endswith(".gz") else open(path)
+
+
+def _hasData(path: str) -> bool:
+    """False for a file that only holds the header (a run that has just started)."""
+    with _openText(path) as f:
+        return any(line.strip() and not re.match(r"[#A-Za-z]", line) for line in f)
+
 def readDataHistoryPointsMultiple(
     folders: np.ndarray,
 ) -> Dict[str, Tuple[np.ndarray, np.ndarray, np.ndarray]]:
@@ -79,36 +108,25 @@ def readDataHistoryPoints(folder: str) -> Tuple[np.ndarray, np.ndarray, np.ndarr
     # oldPath = os.path.join(folder, old_file_nameHistoryPoints)
     # newPath = os.path.join(folder, file_nameHistoryPoints)
 
-    # check if folder is a file or folder
-    if os.path.isfile(folder):
-        newPath = folder
-    else:
-        newPath = os.path.join(folder, "HistoryPoints.his")
-    oldPath = f"{newPath}.old"
-
-    points_new, time_new, fields_new = _readDataHistoryPoints(newPath)
-
-    if os.path.exists(oldPath):
-        points_old, time_old, fields_old = _readDataHistoryPoints(oldPath)
-
-        if points_old.size != points_new.size:
+    parts = [p for p in historyParts(folder, "HistoryPoints.his") if _hasData(p)]
+    read = [(p, *_readDataHistoryPoints(p)) for p in parts]
+    # the newest file defines the points; older files with other points are ignored (as with the .old scheme)
+    path_new, points_new, time_new, fields_new = read[-1]
+    times, fieldss = [], []
+    for path, points, time, fields in read:
+        if points.shape != points_new.shape:
             print(
                 colors.WARNING
-                + f"Warning: File {oldPath} is detected but has a different number of points than {newPath}. Ignoring {oldPath}."
+                + f"Warning: {path} has a different number of points than {path_new}. Ignoring {path}."
                 + colors.ENDC
             )
-        elif points_old.size == points_new.size:
-            print(
-                colors.OKGREEN
-                + f"Info: File {oldPath} is detected and has the same number of points as {newPath}. Merging data."
-                + colors.ENDC
-            )
+            continue
+        times.append(time)
+        fieldss.append(fields)
+    if len(times) > 1:
+        print(colors.OKGREEN + f"Info: merged {len(times)} files: {', '.join(parts)}" + colors.ENDC)
 
-            # merge data
-            time_new = np.concatenate((time_old, time_new))
-            fields_new = np.concatenate((fields_old, fields_new), axis=1)
-
-    return points_new, time_new, fields_new
+    return points_new, np.concatenate(times), np.concatenate(fieldss, axis=1)
 
 
 def _readDataHistoryPoints(path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -144,11 +162,13 @@ def _readDataHistoryPoints(path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarra
     #                 # )
     # new_data = np.array([data[i::num_points] for i in range(num_points)])
 
-    with open(path) as f:
+    with _openText(path) as f:
         points_locations = []
         num_points = 0
 
         for line in f:
+            if not line.startswith("#"):
+                break  # header only (a .gz holds it once, at the top)
             if line.startswith("#"):
                 if num_points > 0:
                     points_locations.append(np.fromstring(line[1:], sep=" ")[1:])
@@ -156,7 +176,7 @@ def _readDataHistoryPoints(path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarra
 
     num_points -= 1
 
-    data = np.loadtxt(path, comments="#")
+    data = np.loadtxt(path, comments="#", ndmin=2)
 
     new_data = data.reshape(-1, num_points, data.shape[1]).transpose(1, 0, 2)
 
@@ -205,21 +225,10 @@ def readErrorHistory(folder: str) -> Tuple[np.ndarray, np.ndarray]:
     # oldPath = os.path.join(folder, old_file_nameErrorHistory)
     # newPath = os.path.join(folder, file_nameErrorHistory)
 
-    # check if folder ends with .err
-    if not folder.endswith(".err") and not folder.endswith(".err.old"):
-        newPath = os.path.join(folder, "EnergyError.err")
-    else:
-        newPath = folder
-    oldPath = f"{newPath}.old"
-
-    time, errors = _readErrorHistory(newPath)
-
-    if os.path.exists(oldPath):
-        time_old, errors_old = _readErrorHistory(oldPath)
-
-        # merge data
-        time = np.concatenate((time_old, time))
-        errors = np.concatenate((errors_old, errors), axis=0)
+    parts = [p for p in historyParts(folder, "EnergyError.err") if _hasData(p)]
+    read = [_readErrorHistory(p) for p in parts]
+    time = np.concatenate([r[0] for r in read])
+    errors = np.concatenate([r[1] for r in read], axis=0)
 
     return time, errors
 
@@ -235,7 +244,7 @@ def _readErrorHistory(path: str) -> Tuple[np.ndarray, np.ndarray]:
             - time: An array of time values.
             - Error: An array of energy values.
     """
-    data = np.loadtxt(path, skiprows=1)
+    data = np.loadtxt(path, comments=("#", "Time"), ndmin=2)  # header "Time u_L2 ..." (once per file)
     time = data[:, 0]
     errors = data[
         :, 1:
@@ -281,21 +290,10 @@ def readFourierEnergy(folder: str) -> Tuple[np.ndarray, np.ndarray]:
     # oldPath = os.path.join(folder, old_file_nameFourierEnergy)
     # newPath = os.path.join(folder, file_nameFourierEnergy)
 
-    # check if folder ends with .mdl
-    if not folder.endswith(".mdl") and not folder.endswith(".mdl.old"):
-        newPath = os.path.join(folder, "EnergyFourierModes.mdl")
-    else:
-        newPath = folder
-    oldPath = f"{newPath}.old"
-
-    time, energy = _readFourierEnergy(newPath)
-
-    if os.path.exists(oldPath):
-        time_old, energy_old = _readFourierEnergy(oldPath)
-
-        # merge data
-        time = np.concatenate((time_old, time))
-        energy = np.concatenate((energy_old, energy), axis=1)
+    parts = [p for p in historyParts(folder, "EnergyFourierModes.mdl") if _hasData(p)]
+    read = [_readFourierEnergy(p) for p in parts]
+    time = np.concatenate([r[0] for r in read])
+    energy = np.concatenate([r[1] for r in read], axis=1)
 
     return time, energy
 
@@ -311,7 +309,7 @@ def _readFourierEnergy(path: str) -> Tuple[np.ndarray, np.ndarray]:
             - time: An array of time values.
             - Energy: An 2d array of Fourier energy values, indexed by mode.
     """
-    data = np.loadtxt(path, skiprows=1)
+    data = np.loadtxt(path, comments="#", ndmin=2)
     time = data[:, 0]
     modes = data[:, 1]
     energy = data[:, 2]

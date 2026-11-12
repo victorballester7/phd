@@ -1,0 +1,7 @@
+Source-refined w=100 impulse run for the n-factor curves of jfm_incNS fig. nfactorCurves (2026-11-12), same procedure as
+the 2026-11-10 validation runs. mesh.xml: parent mesh with the upstream end x < xa of the boundary-layer quad block
+replaced by a triangle patch graded to h=0.05 around the source (-95, 0.5) (scripts/refineSourceMesh.py gap),
+spliced, identical to the parent mesh outside the patch. baseflow.fld: parent base flow copied element by element
+outside the patch, interpolated (interppoints + pointdatatofld) in the patch (scripts/spliceBaseflow.py).
+session.xml: parent session made an impulse run by scripts/makeImpulseCases.py (weight 100, T=4800, stats every 192),
+composite 103 added to EXPANSIONS, dt = 0.006 (the long noise runs used 0.007, which does not divide T=4800).

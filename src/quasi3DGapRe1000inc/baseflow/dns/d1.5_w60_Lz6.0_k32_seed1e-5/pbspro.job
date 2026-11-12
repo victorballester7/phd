@@ -1,0 +1,22 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=128:mpiprocs=128:mem=64gb
+#PBS -l walltime=23:59:59
+#PBS -N w60s1m5
+#PBS -e log.job
+#PBS -o output.job
+
+# the elements are divided into 128 / nfourier cpus and on each of these groups, the fourier expansion is computed in parallel (using nfourier cpus)
+nfourier=4
+
+# Chained restarts (qsub -W depend=afterany:...): restart from the newest complete
+# checkpoint. A checkpoint cut short by the walltime has fewer files than the one
+# before it, and is skipped.
+cd $PBS_O_WORKDIR
+chks=$(ls -d mesh_*.chk 2>/dev/null | grep -E '^mesh_[0-9]+\.chk$' | sed -E 's/mesh_([0-9]+)\.chk/\1/' | sort -n)
+last=$(echo "$chks" | tail -1)
+prev=$(echo "$chks" | tail -2 | head -1)
+if [ -n "$prev" ] && [ "$prev" != "$last" ] && [ $(ls mesh_$last.chk | wc -l) -lt $(ls mesh_$prev.chk | wc -l) ]; then last=$prev; fi
+sed -i -E "0,/<F VAR=\"u,v,w,p\" FILE=\"mesh_[0-9]+\.chk\"/s//<F VAR=\"u,v,w,p\" FILE=\"mesh_${last}.chk\"/" session.xml
+echo "restart from mesh_${last}.chk" > restart_${PBS_JOBID%%.*}.txt
+
+source $HOME/Desktop/PhD/scripts/pbspro.sh

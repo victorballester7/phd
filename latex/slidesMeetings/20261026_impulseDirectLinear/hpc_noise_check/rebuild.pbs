@@ -1,0 +1,12 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=32:mpiprocs=32:mem=64gb
+#PBS -l walltime=03:00:00
+#PBS -N rebuild_jfdirect
+#PBS -j oe
+#PBS -o rebuild_jfdirect.log
+# Full recompile of SolverUtils and the compressible solver (incremental builds left stale objects before)
+module load tools/eb-dev CMake/3.24.3-GCCcore-11.3.0 SCOTCH/7.0.1-gompi-2022a Boost/1.79.0-GCC-11.3.0 OpenBLAS/0.3.20-GCC-11.3.0 FlexiBLAS/3.2.0-GCC-11.3.0 FFTW/3.3.10-GCC-11.3.0 ScaLAPACK/2.2.0-gompi-2022a-fb HDF5/1.12.2-gompi-2022a VTK/9.2.2-foss-2022a
+cd $HOME/nektar-jfdirect
+find library/SolverUtils solvers/CompressibleFlowSolver -name "*.cpp" -exec touch {} +
+cd build && make -j32 CompressibleFlowSolver FieldConvert > make_rebuild.log 2>&1
+echo MAKE=$?

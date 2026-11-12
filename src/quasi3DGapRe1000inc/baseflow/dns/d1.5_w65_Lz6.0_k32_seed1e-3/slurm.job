@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --nodelist=fury
+#SBATCH --ntasks=48
+#SBATCH --mem=50GB
+#SBATCH --time=0-23:59:59
+#SBATCH --job-name=w65s1m3
+#SBATCH --partition=medium
+#SBATCH --output=output.txt
+#SBATCH --error=log.txt
+
+source $HOME/Desktop/PhD/scripts/slurm.sh

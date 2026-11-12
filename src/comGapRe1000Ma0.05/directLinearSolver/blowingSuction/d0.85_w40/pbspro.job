@@ -1,0 +1,41 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=32:mpiprocs=32:mem=50gb
+#PBS -l walltime=12:00:00
+#PBS -N i.05d0.85_w40
+#PBS -j oe
+#PBS -o job.log
+# Impulse response of the linear perturbation (Jacobian-free direct linear solver, ~/nektar-jfdirect). The base flow is
+# the R1-mesh DNS in ../../../baseflow/dns/d0.85_w40_R1 (same mesh: no interpolation). Submitted with afterany on that DNS; it only runs if the DNS
+# is steady (velocity change < 1e-6 at every history point over the last 150 tu, as steadyBaseflows.py), and then links
+# baseflow.fld to the newest complete checkpoint.
+module load tools/eb-dev CMake/3.24.3-GCCcore-11.3.0 SCOTCH/7.0.1-gompi-2022a Boost/1.79.0-GCC-11.3.0 OpenBLAS/0.3.20-GCC-11.3.0 FlexiBLAS/3.2.0-GCC-11.3.0 FFTW/3.3.10-GCC-11.3.0 ScaLAPACK/2.2.0-gompi-2022a-fb HDF5/1.12.2-gompi-2022a VTK/9.2.2-foss-2022a
+cd $PBS_O_WORKDIR
+DNS=../../../baseflow/dns/d0.85_w40_R1
+python3 $HOME/Desktop/PhD/scripts/jobStart.py $PBS_JOBID
+CHK=$(python3 - $DNS <<'EOF'
+import os, re, sys
+case = sys.argv[1]
+src = open(os.path.expanduser("~/Desktop/PhD/scripts/steadyBaseflows.py")).read().split("for M in MACH:")[0]
+sys.argv = [sys.argv[0]]
+exec(src)
+his = os.path.join(case, "HistoryPoints.his")
+dmax, span = change(his, npoints(his))
+n0 = len(os.listdir(os.path.join(case, "mesh_0.chk")))
+ks = sorted(int(m.group(1)) for d in os.listdir(case) for m in [re.fullmatch(r"mesh_(\d+)\.chk", d)] if m)
+ks = [k for k in ks if len(os.listdir(os.path.join(case, "mesh_%d.chk" % k))) == n0]
+ok = dmax is not None and span >= WINDOW - 1 and dmax < TOL and ks and ks[-1] > 0
+print("mesh_%d.chk" % ks[-1] if ok else "NOT_STEADY max_change=%s span=%.0f" % (dmax, span))
+EOF
+)
+echo "base flow check: $CHK"
+if [[ "$CHK" != mesh_*.chk ]]; then
+    echo "DNS $DNS is not steady ($CHK): impulse not run" | tee output.txt > log.txt
+    echo RUN_EXIT=NOT_STEADY >> output.txt
+    python3 $HOME/Desktop/PhD/scripts/jobFinish.py $PBS_JOBID
+    exit 0
+fi
+ln -sfn $DNS/$CHK baseflow.fld
+echo "baseflow.fld -> $DNS/$CHK" > baseflow.README
+mpirun -np 32 $HOME/nektar-jfdirect/build/solvers/CompressibleFlowSolver/CompressibleFlowSolver mesh.xml session.xml > output.txt 2> log.txt
+echo RUN_EXIT=$? >> output.txt
+python3 $HOME/Desktop/PhD/scripts/jobFinish.py $PBS_JOBID  # Telegram: reads output.txt and log.txt

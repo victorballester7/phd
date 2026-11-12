@@ -1,0 +1,16 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=32:mpiprocs=32:mem=50gb
+#PBS -l walltime=12:00:00
+#PBS -N iflatM0.4
+#PBS -j oe
+#PBS -o job.log
+# Impulse response of the linear perturbation (Jacobian-free direct linear solver, ~/nektar-jfdirect) on the flat
+# plate at Ma = 0.4. Same mesh as the base-flow DNS (../../baseflow/dns/R1u), so baseflow.fld is a link to its
+# steady checkpoint: no interpolation.
+module load tools/eb-dev CMake/3.24.3-GCCcore-11.3.0 SCOTCH/7.0.1-gompi-2022a Boost/1.79.0-GCC-11.3.0 OpenBLAS/0.3.20-GCC-11.3.0 FlexiBLAS/3.2.0-GCC-11.3.0 FFTW/3.3.10-GCC-11.3.0 ScaLAPACK/2.2.0-gompi-2022a-fb HDF5/1.12.2-gompi-2022a VTK/9.2.2-foss-2022a
+cd $PBS_O_WORKDIR
+[ -e baseflow.fld ] || { echo "baseflow.fld missing (link it to the steady DNS checkpoint)"; exit 1; }
+python3 $HOME/Desktop/PhD/scripts/jobStart.py $PBS_JOBID
+mpirun -np 32 $HOME/nektar-jfdirect/build/solvers/CompressibleFlowSolver/CompressibleFlowSolver mesh.xml session.xml > output.txt 2> log.txt
+echo RUN_EXIT=$? >> output.txt
+python3 $HOME/Desktop/PhD/scripts/jobFinish.py $PBS_JOBID  # Telegram: reads output.txt and log.txt

@@ -37,10 +37,10 @@ D_LIM = (0, 4)
 
 # Extra space between the frame and the legend and gap sketch on its right
 # (cm). Sized so that, once the figure is centred in the JFM text width, the
-# white margin between the text edge and the ink is the same on both sides:
-# the y label sits 0.27 cm inside the left edge of the figure, so the legend
-# and sketch are pushed out until they end 0.27 cm inside the right edge.
-SIDE_GAP = 0.28
+# legend just right of the frame; gap sketch in the left pad, its right edge
+# this far from the frame (clear of the y tick labels)
+LEGEND_GAP = 0.0  # cm
+SKETCH_GAP = 0.45  # cm
 
 
 def _curve_y(x, curve):
@@ -133,39 +133,52 @@ def addLegend(frame):
     labels = [
         "2D stability\nboundary",
         "3D stability\nboundary",
-        "Experimental\nbypass transition\nboundary (Crouch\n$\\it{et\\ al.}$ 2022)",
+        "Experimental\nbypass\ntransition\nboundary\n(Crouch\n$\\it{et\\ al.}$ 2022)",
     ]
     frame.ax.legend(
         handles,
         labels,
-        loc="lower left",
-        bbox_to_anchor=(1.01 + SIDE_GAP / frame.frame_w, -0.02),
+        loc="center left",
+        bbox_to_anchor=(0.985 + LEGEND_GAP / frame.frame_w, 0.5),
         frameon=False,
-        handlelength=2.0,
-        # handletextpad=0.5,
+        handlelength=2.2,
+        handletextpad=0.5,
     )
 
 
 def addGapSketch(frame):
-    """Small rectangular gap defining w and d, above the right of the frame."""
-    W, H = 2.6, 1.0  # cm
+    """Small rectangular gap defining w, d and dstar, in the left pad at the
+    top of the frame."""
+    xl, xr, yb, yt = -1.5, 2.3, -1.08, 1.13  # data limits
+    W, H = (xr - xl) / 1.5, (yt - yb) / 1.7  # cm
     sk = frame.add_axes_cm(
-        frame.pad_l + frame.frame_w + 0.25 + SIDE_GAP, frame.pad_b + frame.frame_h - H, W, H
+        frame.pad_l - SKETCH_GAP - W,
+        frame.pad_b + frame.frame_h + 0.05 - H,  # top-aligned with the frame
+        W,
+        H,
     )
     sk.set_axis_off()
-    sk.set_xlim(-1.6, 2.6)
-    sk.set_ylim(-1.15, 0.75)
-    wall = [(-1.6, 0), (0, 0), (0, -0.8), (1, -0.8), (1, 0), (2.6, 0)]
+    sk.set_xlim(xl, xr)
+    sk.set_ylim(yb, yt)
+    gw, gd = 1.5, 0.9  # gap width and depth
+    wall = [(xl, 0), (0, 0), (0, -gd), (gw, -gd), (gw, 0), (xr, 0)]
     sk.add_patch(
-        Polygon(
-            wall + [(2.6, -1.15), (-1.6, -1.15)], closed=True, fc="0.85", ec="none"
-        )
+        Polygon(wall + [(xr, yb), (xl, yb)], closed=True, fc="0.85", ec="none")
     )
     sk.plot(*zip(*wall), color="k", lw=0.8)
+    # displacement thickness growing up to the upstream edge, where it is marked
+    xs = np.linspace(xl, 0, 50)
+    ds = 0.5
+    sk.plot(xs, ds * np.sqrt((xs + 3) / 3), color="k", lw=0.5, ls=(0, (2, 1.5)))
+    sk.annotate(
+        "", xy=(-0.55, 0), xytext=(-0.55, ds),
+        arrowprops=dict(arrowstyle="<->,head_length=0.25,head_width=0.12", color="k", lw=0.5, shrinkA=0, shrinkB=0),
+    )
+    sk.text(-0.65, 0.2, r"$\delta^*$", ha="right", va="center")
     # boundary-layer flow arrow with a stealth head (matplotlib has no built-in
     # one); head sized in cm, converted to data units since x and y scale differ
-    x0, x1, y = -1.5, -0.4, 0.45
-    cx, cy = W / 4.2, H / 1.9  # cm per data unit
+    x0, x1, y = -1.4, -0.3, 1.05
+    cx, cy = W / (xr - xl), H / (yt - yb)  # cm per data unit
     hl, hw = 0.2 / cx, 0.07 / cy  # head length, half-width
     sk.plot([x0, x1 - 0.5 * hl], [y, y], color="k", lw=0.6)
     sk.add_patch(
@@ -176,15 +189,15 @@ def addGapSketch(frame):
     )
     # dimension marks
     sk.annotate(
-        "", xy=(0, 0.15), xytext=(1, 0.15),
+        "", xy=(0, 0.15), xytext=(gw, 0.15),
         arrowprops=dict(arrowstyle="<->", color="k", lw=0.5, shrinkA=0, shrinkB=0),
     )
-    sk.text(0.5, 0.22, r"$w$", ha="center", va="bottom")
+    sk.text(gw / 2, 0.22, r"$w$", ha="center", va="bottom")
     sk.annotate(
-        "", xy=(1.2, 0), xytext=(1.2, -0.8),
+        "", xy=(gw + 0.2, 0), xytext=(gw + 0.2, -gd),
         arrowprops=dict(arrowstyle="<->", color="k", lw=0.5, shrinkA=0, shrinkB=0),
     )
-    sk.text(1.4, -0.4, r"$d$", ha="left", va="center")
+    sk.text(gw + 0.4, -gd / 2, r"$d$", ha="left", va="center")
 
 
 def main():
@@ -192,7 +205,7 @@ def main():
     save_path = os.path.join(script_path, "../../../images/introRegimeMap.pdf")
 
     frame = FigureFrame(
-        frame_w=8.5, aspect_ratio=0.55, pad_l=0.9, pad_r=4.0, pad_b=0.8, pad_t=0.11
+        frame_w=7.4, aspect_ratio=0.633, pad_l=3.05, pad_b=0.8, pad_t=0.11  # pad_r = pad_l: frame centred, legend and sketch in pad_r
     )
     fig, ax = frame.fig, frame.ax
 

@@ -1,0 +1,1 @@
+Mesh of the first flat-plate DNS (2026-11-01): gap generator without the gap, still refined towards x = 0 and W = 25 (1791 quads). Its checkpoints (mesh_*.chk in ..) are on this mesh: keep it to interpolate them onto later meshes.

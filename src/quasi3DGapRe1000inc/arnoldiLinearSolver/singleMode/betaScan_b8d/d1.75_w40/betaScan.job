@@ -1,0 +1,12 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=32:mpiprocs=32:mem=32gb
+#PBS -l walltime=11:59:59
+#PBS -J 1-31
+#PBS -N b8d_d1.75_w40
+#PBS -j oe
+# Array of single-mode Arnoldi runs, k = PBS_ARRAY_INDEX, beta_k = 2 pi k/b with b = 8d.
+# Each subjob runs the standard pbspro.sh (Telegram start/finish, output.txt/log.txt) inside k<NN>/.
+# Resubmit one wavenumber alone with: cd k<NN> && qsub pbspro.job
+cd $PBS_O_WORKDIR/k$(printf %02d $PBS_ARRAY_INDEX)
+export PBS_O_WORKDIR=$PWD
+source $HOME/Desktop/PhD/scripts/pbspro.sh

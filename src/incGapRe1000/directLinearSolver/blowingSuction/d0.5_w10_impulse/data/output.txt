@@ -1,0 +1,1462 @@
+Shared filesystem detected
+Trying to use time integration scheme:
+	 Method : IMEX
+	 Variant: 
+	 Order  : 2
+Parameters:
+	A10_U = -0.0645796
+	A10_V = -0.0438352
+	A11_U = 0.00617977
+	A11_V = 0.00340801
+	A1_U = 0.332639
+	A1_V = -1.9959e-05
+	A2_U = 8830.51
+	A2_V = 0.166955
+	A3_U = 58.9737
+	A3_V = -0.575205
+	A4_U = 615.052
+	A4_V = -0.4341
+	A5_U = 32.1239
+	A5_V = 299.371
+	A6_U = -17.1668
+	A6_V = -93.8379
+	A7_U = 11.0218
+	A7_V = 16.2664
+	A8_U = -1.96451
+	A8_V = -1.89905
+	A9_U = 0.501044
+	A9_V = 0.337299
+	AMPLITUDE = 0.5
+	AVERAGESTEPS = 32000
+	B10_U = -0.0634142
+	B10_V = -0.0244667
+	B11_U = 0.00617977
+	B11_V = 0.00198049
+	B1_U = 26593.4
+	B1_V = -3.38041
+	B2_U = 176.806
+	B2_V = -3.17539
+	B3_U = 1855.77
+	B3_V = 1805.08
+	B4_U = 272.539
+	B4_V = -569.106
+	B5_U = -39.2219
+	B5_V = 102.779
+	B6_U = 36.2423
+	B6_V = 4.5615
+	B7_U = -0.0779505
+	B7_V = -2.02722
+	B8_U = -0.842187
+	B8_V = -0.0187599
+	B9_U = 0.444108
+	B9_V = 0.144168
+	C = 1.72079
+	DELTASTAR_BC = 0.838981
+	DELTASTAR_LE = 1
+	ETAMAX = 9.84
+	HISTORYSTEPS = 200
+	IO_CFLSTEPS = 2000
+	IO_CHECKSTEPS = 160000
+	IO_INFOSTEPS = 2000
+	KINVIS = 0.001
+	LENGTHBEFOREGAP = -100
+	NUMSTEPS = 800000
+	RE_DELTASTAR_LE = 1000
+	SVVCUTOFFRATIO = 0.75
+	SVVDIFFCOEFF = 0.1
+	TIMESTEP = 0.006
+	UINF = 1
+	VINF = 0.00102552
+	WEIGHT = 1
+	X0 = -95
+	Y0 = 0.5
+	Y2ETA = 2.05105
+	YMAX = 4.79755
+
+Solver Info:
+	DRIVER = Standard
+	EQTYPE = UnsteadyNavierStokes
+	EVOLUTIONOPERATOR = Direct
+	GLOBALMATRIXSTORAGETYPE = SmvBSR
+	GLOBALSYSSOLN = XxtMultiLevelStaticCond
+	LINEARPRECONSOLVER = Xxt
+	LINSYSITERSOLVER = ConjugateGradient
+	LOCALMATRIXSTORAGESTRATEGY = Sparse
+	PRECONDITIONER = Diagonal
+	PROJECTION = Galerkin
+	SOLVERTYPE = VelocityCorrectionScheme
+	SPECTRALHPDEALIASING = True
+	SPECTRALVANISHINGVISCOSITY = DGKernel
+	STANDARDEXTRAPOLATE = StandardExtrapolate
+
+Trying to use time integration scheme:
+	 Method : IMEX
+	 Variant: 
+	 Order  : 2
+Parameters:
+	A10_U = -0.0645796
+	A10_V = -0.0438352
+	A11_U = 0.00617977
+	A11_V = 0.00340801
+	A1_U = 0.332639
+	A1_V = -1.9959e-05
+	A2_U = 8830.51
+	A2_V = 0.166955
+	A3_U = 58.9737
+	A3_V = -0.575205
+	A4_U = 615.052
+	A4_V = -0.4341
+	A5_U = 32.1239
+	A5_V = 299.371
+	A6_U = -17.1668
+	A6_V = -93.8379
+	A7_U = 11.0218
+	A7_V = 16.2664
+	A8_U = -1.96451
+	A8_V = -1.89905
+	A9_U = 0.501044
+	A9_V = 0.337299
+	AMPLITUDE = 0.5
+	AVERAGESTEPS = 32000
+	B10_U = -0.0634142
+	B10_V = -0.0244667
+	B11_U = 0.00617977
+	B11_V = 0.00198049
+	B1_U = 26593.4
+	B1_V = -3.38041
+	B2_U = 176.806
+	B2_V = -3.17539
+	B3_U = 1855.77
+	B3_V = 1805.08
+	B4_U = 272.539
+	B4_V = -569.106
+	B5_U = -39.2219
+	B5_V = 102.779
+	B6_U = 36.2423
+	B6_V = 4.5615
+	B7_U = -0.0779505
+	B7_V = -2.02722
+	B8_U = -0.842187
+	B8_V = -0.0187599
+	B9_U = 0.444108
+	B9_V = 0.144168
+	C = 1.72079
+	DELTASTAR_BC = 0.838981
+	DELTASTAR_LE = 1
+	ETAMAX = 9.84
+	HISTORYSTEPS = 200
+	IO_CFLSTEPS = 2000
+	IO_CHECKSTEPS = 160000
+	IO_INFOSTEPS = 2000
+	KINVIS = 0.001
+	LENGTHBEFOREGAP = -100
+	NUMSTEPS = 800000
+	RE_DELTASTAR_LE = 1000
+	SVVCUTOFFRATIO = 0.75
+	SVVDIFFCOEFF = 0.1
+	TIMESTEP = 0.006
+	UINF = 1
+	VINF = 0.00102552
+	WEIGHT = 1
+	X0 = -95
+	Y0 = 0.5
+	Y2ETA = 2.05105
+	YMAX = 4.79755
+
+Solver Info:
+	DRIVER = Standard
+	EQTYPE = UnsteadyNavierStokes
+	EVOLUTIONOPERATOR = Direct
+	GLOBALMATRIXSTORAGETYPE = SmvBSR
+	GLOBALSYSSOLN = XxtMultiLevelStaticCond
+	LINEARPRECONSOLVER = Xxt
+	LINSYSITERSOLVER = ConjugateGradient
+	LOCALMATRIXSTORAGESTRATEGY = Sparse
+	PRECONDITIONER = Diagonal
+	PROJECTION = Galerkin
+	SOLVERTYPE = VelocityCorrectionScheme
+	SPECTRALHPDEALIASING = True
+	SPECTRALVANISHINGVISCOSITY = DGKernel
+	STANDARDEXTRAPOLATE = StandardExtrapolate
+
+Collection Implementation for Quadrilateral ( 6 6 ) for ngeoms = 11
+	    Op.    :	opt. Impl.	 (IterLocExp,  IterStdExp,  StdMat,     SumFac,      MatrixFree)
+	 BwdTrans: 	IterStdExp	 (2.87437e-06, 2.84842e-06, 1.41969e-05, 5.59805e-06, 2.92367e-06)
+	 Helmholtz: 	MatFree   	 (2.72994e-05, 2.7023e-05,      --    ,      --    , 2.0837e-05)
+	 LinearADR: 	MatFree   	 (0.000123133, 2.75361e-05,      --    ,      --    , 2.14863e-05)
+	 IPWrtBase: 	SumFac    	 (5.67806e-06, 6.08107e-06, 1.67246e-05, 4.43842e-06, 4.89875e-06)
+	 IPWrtDBase: 	MatFree   	 (2.79514e-05, 1.33122e-05, 3.53741e-05, 1.10755e-05, 1.07054e-05)
+	 PhysDeriv: 	MatFree   	 (5.16705e-06, 5.42429e-06, 3.86428e-05, 8.06391e-06, 4.14465e-06)
+	 PhysInterp1DScaled: 	MatFree   	 (1.13242e-05,      --    ,      --    ,      --    , 6.13269e-06)
+Collection Implementation for Triangle ( 6 6 ) for ngeoms = 71
+	    Op.    :	opt. Impl.	 (IterLocExp,  IterStdExp,  StdMat,     SumFac,      MatrixFree)
+	 BwdTrans: 	MatFree   	 (2.37194e-05, 2.24593e-05, 5.15302e-05, 2.36538e-05, 1.6049e-05)
+	 Helmholtz: 	MatFree   	 (0.000179156, 0.000249138,      --    ,      --    , 0.000114892)
+	 LinearADR: 	MatFree   	 (0.000941391, 0.000247523,      --    ,      --    , 0.000124195)
+	 IPWrtBase: 	SumFac    	 (3.324e-05, 3.38272e-05, 4.7113e-05, 2.04362e-05, 2.63794e-05)
+	 IPWrtDBase: 	SumFac    	 (0.000200007, 0.000129856, 0.000100578, 5.15375e-05, 5.99319e-05)
+	 PhysDeriv: 	MatFree   	 (5.88924e-05, 5.72746e-05, 0.000216115, 4.44202e-05, 2.45063e-05)
+	 PhysInterp1DScaled: 	MatFree   	 (6.16912e-05,      --    ,      --    ,      --    , 5.32966e-05)
+Collection Implementation for Quadrilateral ( 6 6 ) for ngeoms = 33
+	    Op.    :	opt. Impl.	 (IterLocExp,  IterStdExp,  StdMat,     SumFac,      MatrixFree)
+	 BwdTrans: 	MatFree   	 (9.61593e-06, 9.06182e-06, 4.0064e-05, 1.62178e-05, 7.96369e-06)
+	 Helmholtz: 	MatFree   	 (8.07506e-05, 7.91364e-05,      --    ,      --    , 6.23376e-05)
+	 LinearADR: 	MatFree   	 (0.0003848, 8.18376e-05,      --    ,      --    , 6.58597e-05)
+	 IPWrtBase: 	SumFac    	 (1.79683e-05, 1.818e-05, 4.97625e-05, 1.34129e-05, 1.46104e-05)
+	 IPWrtDBase: 	SumFac    	 (8.70604e-05, 3.7932e-05, 0.000103595, 3.08566e-05, 4.88612e-05)
+	 PhysDeriv: 	MatFree   	 (1.67055e-05, 1.48931e-05, 0.000113568, 2.26046e-05, 1.26117e-05)
+	 PhysInterp1DScaled: 	MatFree   	 (3.30387e-05,      --    ,      --    ,      --    , 1.72624e-05)
+Collection group: num. = 3; mean len = 38 (min = 11, max = 71)
+Collection group: num. = 1; mean len = 11 (min = 11, max = 11)
+gs_setup: 368 unique labels shared
+   pairwise times (avg, min, max): 8.62869e-06 5.8326e-06 1.35828e-05
+   crystal router                : 1.26157e-05 1.24421e-05 1.26819e-05
+   all reduce                    : 1.89963e-05 1.84362e-05 1.95818e-05
+   used all_to_all method: crystal router
+   handle bytes (avg, min, max): 5039.5 3100 6436
+   buffer bytes (avg, min, max): 740 512 976
+gs_setup: 0 unique labels shared
+   pairwise times (avg, min, max): 2.20469e-08 1.69e-08 2.85e-08
+   crystal router                : 3.87681e-06 3.7278e-06 3.9724e-06
+   all reduce                    : 1.60531e-08 1.3e-08 2.25e-08
+   used all_to_all method: allreduce
+   handle bytes (avg, min, max): 148 148 148
+   buffer bytes (avg, min, max): 0 0 0
+gs_setup: 378 unique labels shared
+   pairwise times (avg, min, max): 5.73189e-06 4.3183e-06 6.5052e-06
+   crystal router                : 4.27887e-06 4.2141e-06 4.3502e-06
+   all reduce                    : 2.51704e-05 2.50219e-05 2.53127e-05
+   used all_to_all method: crystal router
+   handle bytes (avg, min, max): 5319.25 3292 6868
+   buffer bytes (avg, min, max): 791.5 560 1056
+gs_setup: 368 unique labels shared
+   pairwise times (avg, min, max): 3.02828e-06 2.3046e-06 3.3157e-06
+   crystal router                : 9.22776e-06 9.0241e-06 9.9722e-06
+   all reduce                    : 2.52237e-05 2.51322e-05 2.53102e-05
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 850 516 1164
+   buffer bytes (avg, min, max): 368 192 512
+gs_setup: 1850 unique labels shared
+   pairwise times (avg, min, max): 4.89957e-06 2.8134e-06 5.7203e-06
+   crystal router                : 6.53439e-06 6.426e-06 6.6354e-06
+   all reduce                    : 3.50263e-05 3.44667e-05 3.5684e-05
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 3109 1692 4348
+   buffer bytes (avg, min, max): 1893 976 2672
+gs_setup: 1850 unique labels shared
+   pairwise times (avg, min, max): 4.7016e-06 2.9029e-06 5.6633e-06
+   crystal router                : 6.59005e-06 6.4265e-06 6.7092e-06
+   all reduce                    : 3.67547e-05 3.59854e-05 3.74868e-05
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 3109 1692 4348
+   buffer bytes (avg, min, max): 1893 976 2672
+gs_setup: 0 unique labels shared
+   pairwise times (avg, min, max): 2.42188e-08 2.01e-08 3.38e-08
+   crystal router                : 4.08363e-06 3.9693e-06 4.1556e-06
+   all reduce                    : 1.75187e-08 1.5e-08 2.1e-08
+   used all_to_all method: allreduce
+   handle bytes (avg, min, max): 148 148 148
+   buffer bytes (avg, min, max): 0 0 0
+Assembly map statistics for field u (CG):
+  - Number of local/global dof             : 98148 64206
+  - Number of local/global boundary dof    : 62380 28438
+  - Number of local/global Dirichlet dof   : 2202 1836
+  - dof valency (min/max/mean)             : 1 8 2
+  - Local dof dist. (min/max/mean/dev)     : 2511 3375 3067.12 173.504
+  - Local bnd dof dist. (min/max/mean/dev) : 1765 2045 1949.38 57.2242
+  - M-level sc. dist. (min/max/mean/dev)   : 6 7 6.0625 0.242061
+Stats at lowest static cond. level:
+  - Number of local/global dof             : 8218 4839
+  - Number of local/global boundary dof    : 7025 3646
+  - Number of local/global Dirichlet dof   : 2202 1836
+  - dof valency (min/max/mean)             : 1 8 1
+  - Local dof dist. (min/max/mean/dev)     : 167 294 256.812 23.2909
+  - Local bnd dof dist. (min/max/mean/dev) : 127 261 219.531 23.7263
+Collection Implementation for Quadrilateral ( 5 5 ) for ngeoms = 11
+	    Op.    :	opt. Impl.	 (IterLocExp,  IterStdExp,  StdMat,     SumFac,      MatrixFree)
+	 BwdTrans: 	MatFree   	 (2.53367e-06, 2.4671e-06, 9.56424e-06, 4.50382e-06, 2.12718e-06)
+	 Helmholtz: 	MatFree   	 (2.28084e-05, 2.25777e-05,      --    ,      --    , 1.64357e-05)
+	 LinearADR: 	MatFree   	 (0.000114755, 2.32203e-05,      --    ,      --    , 1.73351e-05)
+	 IPWrtBase: 	SumFac    	 (4.70477e-06, 5.09117e-06, 9.97771e-06, 3.59685e-06, 3.8576e-06)
+	 IPWrtDBase: 	MatFree   	 (2.37777e-05, 1.14714e-05, 2.15054e-05, 9.11041e-06, 8.72851e-06)
+	 PhysDeriv: 	MatFree   	 (5.11689e-06, 5.43077e-06, 3.88725e-05, 8.18851e-06, 4.17522e-06)
+	 PhysInterp1DScaled: 	MatFree   	 (1.13506e-05,      --    ,      --    ,      --    , 6.03263e-06)
+Collection Implementation for Triangle ( 5 5 ) for ngeoms = 71
+	    Op.    :	opt. Impl.	 (IterLocExp,  IterStdExp,  StdMat,     SumFac,      MatrixFree)
+	 BwdTrans: 	MatFree   	 (1.65113e-05, 1.51789e-05, 3.6744e-05, 2.23923e-05, 1.02766e-05)
+	 Helmholtz: 	MatFree   	 (0.000158969, 0.000223875,      --    ,      --    , 9.61987e-05)
+	 LinearADR: 	MatFree   	 (0.000874721, 0.00022082,      --    ,      --    , 0.000105986)
+	 IPWrtBase: 	SumFac    	 (2.87969e-05, 2.94642e-05, 3.45997e-05, 1.61683e-05, 2.25003e-05)
+	 IPWrtDBase: 	SumFac    	 (0.000188774, 0.000118796, 7.49408e-05, 4.39649e-05, 5.14224e-05)
+	 PhysDeriv: 	MatFree   	 (5.92266e-05, 5.6771e-05, 0.000216168, 4.45429e-05, 2.48713e-05)
+	 PhysInterp1DScaled: 	MatFree   	 (6.22112e-05,      --    ,      --    ,      --    , 5.36908e-05)
+Collection Implementation for Quadrilateral ( 5 5 ) for ngeoms = 33
+	    Op.    :	opt. Impl.	 (IterLocExp,  IterStdExp,  StdMat,     SumFac,      MatrixFree)
+	 BwdTrans: 	MatFree   	 (7.77722e-06, 7.19869e-06, 2.8301e-05, 1.42831e-05, 6.0227e-06)
+	 Helmholtz: 	MatFree   	 (6.91341e-05, 6.71318e-05,      --    ,      --    , 5.12956e-05)
+	 LinearADR: 	MatFree   	 (0.0003617, 7.07948e-05,      --    ,      --    , 5.48714e-05)
+	 IPWrtBase: 	SumFac    	 (1.4611e-05, 1.51253e-05, 2.89918e-05, 1.04417e-05, 1.1527e-05)
+	 IPWrtDBase: 	SumFac    	 (7.43832e-05, 3.22175e-05, 6.14785e-05, 2.48071e-05, 3.14852e-05)
+	 PhysDeriv: 	MatFree   	 (1.65606e-05, 1.48903e-05, 0.000114299, 2.30803e-05, 1.29346e-05)
+	 PhysInterp1DScaled: 	MatFree   	 (3.34619e-05,      --    ,      --    ,      --    , 1.77543e-05)
+Collection group: num. = 3; mean len = 38 (min = 11, max = 71)
+Collection group: num. = 1; mean len = 11 (min = 11, max = 11)
+gs_setup: 368 unique labels shared
+   pairwise times (avg, min, max): 3.03781e-06 2.0824e-06 3.5676e-06
+   crystal router                : 4.53472e-06 4.4331e-06 4.5907e-06
+   all reduce                    : 2.21408e-05 2.12093e-05 2.23633e-05
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 850 516 1164
+   buffer bytes (avg, min, max): 368 192 512
+gs_setup: 0 unique labels shared
+   pairwise times (avg, min, max): 2.10406e-08 1.69e-08 2.69e-08
+   crystal router                : 3.77359e-06 3.644e-06 3.8256e-06
+   all reduce                    : 1.63688e-08 1.35e-08 2.19e-08
+   used all_to_all method: allreduce
+   handle bytes (avg, min, max): 148 148 148
+   buffer bytes (avg, min, max): 0 0 0
+gs_setup: 378 unique labels shared
+   pairwise times (avg, min, max): 3.20409e-06 2.0053e-06 3.8436e-06
+   crystal router                : 4.66362e-06 4.5905e-06 4.7392e-06
+   all reduce                    : 2.45207e-05 2.43731e-05 2.47254e-05
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 901 540 1292
+   buffer bytes (avg, min, max): 421 208 624
+gs_setup: 368 unique labels shared
+   pairwise times (avg, min, max): 3.95578e-06 3.0307e-06 5.2511e-06
+   crystal router                : 1.01298e-05 9.4737e-06 1.04519e-05
+   all reduce                    : 2.10181e-05 2.06595e-05 2.21047e-05
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 850 516 1164
+   buffer bytes (avg, min, max): 368 192 512
+gs_setup: 1482 unique labels shared
+   pairwise times (avg, min, max): 4.16804e-06 2.5604e-06 4.8799e-06
+   crystal router                : 6.66477e-06 6.6062e-06 6.7317e-06
+   all reduce                    : 3.3081e-05 3.26432e-05 3.36339e-05
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 2557 1404 3580
+   buffer bytes (avg, min, max): 1525 784 2160
+gs_setup: 1482 unique labels shared
+   pairwise times (avg, min, max): 4.43832e-06 2.7395e-06 5.181e-06
+   crystal router                : 6.38118e-06 6.1977e-06 6.4891e-06
+   all reduce                    : 3.47093e-05 3.44872e-05 3.49931e-05
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 2557 1404 3580
+   buffer bytes (avg, min, max): 1525 784 2160
+gs_setup: 0 unique labels shared
+   pairwise times (avg, min, max): 2.385e-08 2e-08 2.89e-08
+   crystal router                : 4.04757e-06 3.9839e-06 4.0926e-06
+   all reduce                    : 1.78e-08 1.52e-08 2.18e-08
+   used all_to_all method: allreduce
+   handle bytes (avg, min, max): 148 148 148
+   buffer bytes (avg, min, max): 0 0 0
+Assembly map statistics for field p (CG):
+  - Number of local/global dof             : 69140 41245
+  - Number of local/global boundary dof    : 49904 22009
+  - Number of local/global Dirichlet dof   : 75 61
+  - dof valency (min/max/mean)             : 1 8 2
+  - Local dof dist. (min/max/mean/dev)     : 1790 2365 2160.62 115.554
+  - Local bnd dof dist. (min/max/mean/dev) : 1412 1636 1559.5 45.7794
+  - M-level sc. dist. (min/max/mean/dev)   : 6 7 6.53125 0.499022
+Stats at lowest static cond. level:
+  - Number of local/global dof             : 5216 2532
+  - Number of local/global boundary dof    : 4226 1542
+  - Number of local/global Dirichlet dof   : 75 61
+  - dof valency (min/max/mean)             : 1 8 2
+  - Local dof dist. (min/max/mean/dev)     : 126 205 163 19.7373
+  - Local bnd dof dist. (min/max/mean/dev) : 101 183 132.062 20.6366
+baseflow info : interpolation order 0, period inf, periodicity yes
+baseflow info : files from -793788464 to -793788464 (skip 21860) with 1 time intervals
+Collection group: num. = 1; mean len = 11 (min = 11, max = 11)
+=======================================================================
+	        EquationType: UnsteadyNavierStokes
+	        Session Name: mesh
+	        Spatial Dim.: 2
+	  Max SEM Exp. Order: 6
+	      Num. Processes: 32
+	      Expansion Dim.: 2
+	     Projection Type: Continuous Galerkin
+	 Advect. advancement: explicit
+	Diffuse. advancement: implicit
+	           Time Step: 0.006
+	        No. of Steps: 800000
+	 Checkpoints (steps): 160000
+	  Integration Scheme: IMEX
+	   Integration Order: 2
+	    Splitting Scheme: Velocity correction (strong press. form)
+	          Dealiasing: spectral/hp
+	    Smoothing-SpecHP: SVV (spectral/hp DG Kernel (diff coeff = 0.10000000000000001*Uh/p))
+=======================================================================
+Initial Conditions:
+Writing: "mesh_0.chk" (0.0129453s, XML)
+xxt: separator sizes on 0 = 0 48 48 52 57 49
+xxt: shared dofs on 0 = 97
+xxt: max non-shared dofs = 0
+xxt: max shared dofs = 130
+xxt: max X cols = 279
+xxt: max X size = 190072 bytes
+xxt: separator sizes on 0 = 0 59 59 64 69 59
+xxt: shared dofs on 0 = 119
+xxt: max non-shared dofs = 0
+xxt: max shared dofs = 158
+xxt: max X cols = 340
+xxt: max X size = 280992 bytes
+xxt: separator sizes on 0 = 0 59 59 64 69 59
+xxt: shared dofs on 0 = 119
+xxt: max non-shared dofs = 0
+xxt: max shared dofs = 158
+xxt: max X cols = 340
+xxt: max X size = 280992 bytes
+Steps: 2000     Time: 12           CPU Time: 8.36107s
+CFL: 0.010294 (in elmt 3043)
+Steps: 4000     Time: 24           CPU Time: 7.96752s
+CFL: 0.00592554 (in elmt 3042)
+Steps: 6000     Time: 36           CPU Time: 7.93236s
+CFL: 0.004011 (in elmt 3040)
+Steps: 8000     Time: 48           CPU Time: 7.9359s 
+CFL: 0.00333662 (in elmt 3039)
+Steps: 10000    Time: 60           CPU Time: 7.90884s
+CFL: 0.00304325 (in elmt 3038)
+Steps: 12000    Time: 72           CPU Time: 7.90382s
+CFL: 0.00280685 (in elmt 3037)
+Steps: 14000    Time: 84           CPU Time: 7.9064s 
+CFL: 0.00266659 (in elmt 3036)
+Steps: 16000    Time: 96           CPU Time: 7.90294s
+CFL: 0.00255243 (in elmt 3033)
+Steps: 18000    Time: 108          CPU Time: 7.90741s
+CFL: 0.00248602 (in elmt 3032)
+Steps: 20000    Time: 120          CPU Time: 7.90644s
+CFL: 0.00244346 (in elmt 3031)
+CPU time for filter ReynoldsStresses:        0.00019654s 
+	 Percentage of time integration:     0.00248582%
+CPU time for filter HistoryPoints:           0.000358126s
+	 Percentage of time integration:     0.00452955%
+Total filters CPU Time:			     0.000554666s
+Steps: 22000    Time: 132          CPU Time: 7.94416s
+CFL: 0.00244265 (in elmt 3030)
+Steps: 24000    Time: 144          CPU Time: 7.98892s
+CFL: 0.00243576 (in elmt 3028)
+Steps: 26000    Time: 156          CPU Time: 7.96538s
+CFL: 0.00242048 (in elmt 3027)
+Steps: 28000    Time: 168          CPU Time: 7.96091s
+CFL: 0.00291728 (in elmt 3012)
+Steps: 30000    Time: 180          CPU Time: 7.96971s
+CFL: 0.00622725 (in elmt 3344)
+Steps: 32000    Time: 192          CPU Time: 7.97392s
+CFL: 0.0117737 (in elmt 3012)
+Writing: "mesh_1_stress.fld" (0.169913s, XML)
+Steps: 34000    Time: 204          CPU Time: 8.05056s
+CFL: 0.0170917 (in elmt 47)
+Steps: 36000    Time: 216          CPU Time: 8.07161s
+CFL: 0.0410996 (in elmt 47)
+Steps: 38000    Time: 228          CPU Time: 8.06113s
+CFL: 0.0328305 (in elmt 46)
+Steps: 40000    Time: 240          CPU Time: 8.0798s 
+CFL: 0.0854459 (in elmt 47)
+CPU time for filter ReynoldsStresses:        0.000204513s
+	 Percentage of time integration:     0.00253116%
+CPU time for filter HistoryPoints:           0.000349481s
+	 Percentage of time integration:     0.00432537%
+Total filters CPU Time:			     0.000553994s
+Steps: 42000    Time: 252          CPU Time: 8.05507s
+CFL: 0.0218713 (in elmt 2993)
+Steps: 44000    Time: 264          CPU Time: 8.04601s
+CFL: 0.0966229 (in elmt 47)
+Steps: 46000    Time: 276          CPU Time: 8.04034s
+CFL: 0.0284485 (in elmt 48)
+Steps: 48000    Time: 288          CPU Time: 8.03563s
+CFL: 0.052958 (in elmt 47)
+Steps: 50000    Time: 300          CPU Time: 8.04186s
+CFL: 0.0303293 (in elmt 47)
+Steps: 52000    Time: 312          CPU Time: 8.05692s
+CFL: 0.0125359 (in elmt 46)
+Steps: 54000    Time: 324          CPU Time: 8.05022s
+CFL: 0.0131988 (in elmt 47)
+Steps: 56000    Time: 336          CPU Time: 8.08089s
+CFL: 0.00643078 (in elmt 2969)
+Steps: 58000    Time: 348          CPU Time: 8.08821s
+CFL: 0.00635252 (in elmt 2967)
+Steps: 60000    Time: 360          CPU Time: 8.27143s
+CFL: 0.00622438 (in elmt 2964)
+CPU time for filter ReynoldsStresses:        0.00024263s 
+	 Percentage of time integration:     0.00293335%
+CPU time for filter HistoryPoints:           0.000382813s
+	 Percentage of time integration:     0.00462813%
+Total filters CPU Time:			     0.000625443s
+Steps: 62000    Time: 372          CPU Time: 8.54577s
+CFL: 0.00612688 (in elmt 2962)
+Steps: 64000    Time: 384          CPU Time: 8.50968s
+CFL: 0.00602902 (in elmt 2960)
+Writing: "mesh_2_stress.fld" (0.0218465s, XML)
+Steps: 66000    Time: 396          CPU Time: 8.33539s
+CFL: 0.00593584 (in elmt 2958)
+Steps: 68000    Time: 408          CPU Time: 8.03967s
+CFL: 0.0058477 (in elmt 2956)
+Steps: 70000    Time: 420          CPU Time: 7.98638s
+CFL: 0.00574505 (in elmt 2954)
+Steps: 72000    Time: 432          CPU Time: 7.99192s
+CFL: 0.00576021 (in elmt 2946)
+Steps: 74000    Time: 444          CPU Time: 8.00178s
+CFL: 0.00578722 (in elmt 2944)
+Steps: 76000    Time: 456          CPU Time: 8.00101s
+CFL: 0.00580736 (in elmt 2942)
+Steps: 78000    Time: 468          CPU Time: 8.01188s
+CFL: 0.00582425 (in elmt 2940)
+Steps: 80000    Time: 480          CPU Time: 8.01875s
+CFL: 0.00583894 (in elmt 2938)
+CPU time for filter ReynoldsStresses:        0.000204798s
+	 Percentage of time integration:     0.00255399%
+CPU time for filter HistoryPoints:           0.000396171s
+	 Percentage of time integration:     0.00494056%
+Total filters CPU Time:			     0.000600969s
+Steps: 82000    Time: 492          CPU Time: 8.02673s
+CFL: 0.00584991 (in elmt 2936)
+Steps: 84000    Time: 504          CPU Time: 8.04682s
+CFL: 0.00585327 (in elmt 2934)
+Steps: 86000    Time: 516          CPU Time: 8.04284s
+CFL: 0.00584262 (in elmt 2932)
+Steps: 88000    Time: 528          CPU Time: 8.21099s
+CFL: 0.00584575 (in elmt 2930)
+Steps: 90000    Time: 540          CPU Time: 8.57063s
+CFL: 0.00583813 (in elmt 2929)
+Steps: 92000    Time: 552          CPU Time: 8.59149s
+CFL: 0.00584923 (in elmt 2927)
+Steps: 94000    Time: 564          CPU Time: 8.5687s 
+CFL: 0.00583084 (in elmt 2925)
+Steps: 96000    Time: 576          CPU Time: 8.34935s
+CFL: 0.00580803 (in elmt 2923)
+Writing: "mesh_3_stress.fld" (0.0226112s, XML)
+Steps: 98000    Time: 588          CPU Time: 8.00847s
+CFL: 0.00578288 (in elmt 2921)
+Steps: 100000   Time: 600          CPU Time: 7.97594s
+CFL: 0.0057551 (in elmt 2919)
+CPU time for filter ReynoldsStresses:        0.000195857s
+	 Percentage of time integration:     0.0024556%
+CPU time for filter HistoryPoints:           0.000355923s
+	 Percentage of time integration:     0.00446246%
+Total filters CPU Time:			     0.00055178s
+Steps: 102000   Time: 612          CPU Time: 7.94888s
+CFL: 0.00575054 (in elmt 2918)
+Steps: 104000   Time: 624          CPU Time: 7.95284s
+CFL: 0.0057148 (in elmt 2916)
+Steps: 106000   Time: 636          CPU Time: 7.95607s
+CFL: 0.00567927 (in elmt 2914)
+Steps: 108000   Time: 648          CPU Time: 7.96545s
+CFL: 0.00564031 (in elmt 2912)
+Steps: 110000   Time: 660          CPU Time: 7.98696s
+CFL: 0.00562835 (in elmt 2911)
+Steps: 112000   Time: 672          CPU Time: 8.3125s 
+CFL: 0.00557647 (in elmt 2904)
+Steps: 114000   Time: 684          CPU Time: 8.44678s
+CFL: 0.00564153 (in elmt 2903)
+Steps: 116000   Time: 696          CPU Time: 8.53995s
+CFL: 0.00566217 (in elmt 2901)
+Steps: 118000   Time: 708          CPU Time: 8.54768s
+CFL: 0.00568502 (in elmt 2899)
+Steps: 120000   Time: 720          CPU Time: 8.53938s
+CFL: 0.00572953 (in elmt 2898)
+CPU time for filter ReynoldsStresses:        0.000214412s
+	 Percentage of time integration:     0.00251086%
+CPU time for filter HistoryPoints:           0.000378916s
+	 Percentage of time integration:     0.00443728%
+Total filters CPU Time:			     0.000593328s
+Steps: 122000   Time: 732          CPU Time: 8.54943s
+CFL: 0.00573969 (in elmt 2896)
+Steps: 124000   Time: 744          CPU Time: 8.06841s
+CFL: 0.00577765 (in elmt 2895)
+Steps: 126000   Time: 756          CPU Time: 7.95338s
+CFL: 0.00577401 (in elmt 2893)
+Steps: 128000   Time: 768          CPU Time: 7.94645s
+CFL: 0.00579619 (in elmt 2892)
+Writing: "mesh_4_stress.fld" (0.0214905s, XML)
+Steps: 130000   Time: 780          CPU Time: 7.94454s
+CFL: 0.00581157 (in elmt 2890)
+Steps: 132000   Time: 792          CPU Time: 7.9144s 
+CFL: 0.0058053 (in elmt 2888)
+Steps: 134000   Time: 804          CPU Time: 7.91248s
+CFL: 0.00583207 (in elmt 2887)
+Steps: 136000   Time: 816          CPU Time: 7.89894s
+CFL: 0.00582025 (in elmt 2886)
+Steps: 138000   Time: 828          CPU Time: 7.89927s
+CFL: 0.00583491 (in elmt 2884)
+Steps: 140000   Time: 840          CPU Time: 7.8895s 
+CFL: 0.00583983 (in elmt 2883)
+CPU time for filter ReynoldsStresses:        0.000201343s
+	 Percentage of time integration:     0.00255204%
+CPU time for filter HistoryPoints:           0.000373576s
+	 Percentage of time integration:     0.0047351%
+Total filters CPU Time:			     0.000574919s
+Steps: 142000   Time: 852          CPU Time: 7.90465s
+CFL: 0.0058303 (in elmt 2881)
+Steps: 144000   Time: 864          CPU Time: 7.90785s
+CFL: 0.00584638 (in elmt 2880)
+Steps: 146000   Time: 876          CPU Time: 7.90478s
+CFL: 0.00581892 (in elmt 2878)
+Steps: 148000   Time: 888          CPU Time: 7.90754s
+CFL: 0.00582629 (in elmt 2877)
+Steps: 150000   Time: 900          CPU Time: 7.90296s
+CFL: 0.0058015 (in elmt 2875)
+Steps: 152000   Time: 912          CPU Time: 7.90068s
+CFL: 0.0057947 (in elmt 2874)
+Steps: 154000   Time: 924          CPU Time: 7.91687s
+CFL: 0.00579678 (in elmt 2873)
+Steps: 156000   Time: 936          CPU Time: 7.89587s
+CFL: 0.00580869 (in elmt 2867)
+Steps: 158000   Time: 948          CPU Time: 7.90566s
+CFL: 0.00584213 (in elmt 2866)
+Steps: 160000   Time: 960          CPU Time: 7.89137s
+CFL: 0.00587508 (in elmt 2865)
+Writing: "mesh_5_stress.fld" (0.0226464s, XML)
+CPU time for filter ReynoldsStresses:        0.0250118s  
+	 Percentage of time integration:     0.316951% 
+CPU time for filter HistoryPoints:           0.000424442s
+	 Percentage of time integration:     0.00537856%
+Total filters CPU Time:			     0.0254362s
+Writing: "mesh_1.chk" (0.165114s, XML)
+Steps: 162000   Time: 972          CPU Time: 7.89157s
+CFL: 0.00590632 (in elmt 2863)
+Steps: 164000   Time: 984          CPU Time: 7.82603s
+CFL: 0.00593387 (in elmt 2862)
+Steps: 166000   Time: 996          CPU Time: 7.79871s
+CFL: 0.00596422 (in elmt 2861)
+Steps: 168000   Time: 1008         CPU Time: 7.80705s
+CFL: 0.00600163 (in elmt 2860)
+Steps: 170000   Time: 1020         CPU Time: 7.80566s
+CFL: 0.00601857 (in elmt 2858)
+Steps: 172000   Time: 1032         CPU Time: 7.80318s
+CFL: 0.006032 (in elmt 2857)
+Steps: 174000   Time: 1044         CPU Time: 7.79614s
+CFL: 0.00606959 (in elmt 2856)
+Steps: 176000   Time: 1056         CPU Time: 7.81031s
+CFL: 0.00607953 (in elmt 2855)
+Steps: 178000   Time: 1068         CPU Time: 7.80904s
+CFL: 0.00608807 (in elmt 2853)
+Steps: 180000   Time: 1080         CPU Time: 7.79997s
+CFL: 0.00610282 (in elmt 2852)
+CPU time for filter ReynoldsStresses:        0.000217105s
+	 Percentage of time integration:     0.00278341%
+CPU time for filter HistoryPoints:           0.000354329s
+	 Percentage of time integration:     0.0045427%
+Total filters CPU Time:			     0.000571434s
+Steps: 182000   Time: 1092         CPU Time: 7.77837s
+CFL: 0.00613087 (in elmt 2851)
+Steps: 184000   Time: 1104         CPU Time: 7.79235s
+CFL: 0.006142 (in elmt 2850)
+Steps: 186000   Time: 1116         CPU Time: 7.80036s
+CFL: 0.00614178 (in elmt 2848)
+Steps: 188000   Time: 1128         CPU Time: 7.79918s
+CFL: 0.00614535 (in elmt 2847)
+Steps: 190000   Time: 1140         CPU Time: 7.79198s
+CFL: 0.00615236 (in elmt 2846)
+Steps: 192000   Time: 1152         CPU Time: 7.78872s
+CFL: 0.0061675 (in elmt 2845)
+Writing: "mesh_6_stress.fld" (0.0219973s, XML)
+Steps: 194000   Time: 1164         CPU Time: 7.78898s
+CFL: 0.00617009 (in elmt 2844)
+Steps: 196000   Time: 1176         CPU Time: 7.76188s
+CFL: 0.00617384 (in elmt 3170)
+Steps: 198000   Time: 1188         CPU Time: 7.76834s
+CFL: 0.00620052 (in elmt 3169)
+Steps: 200000   Time: 1200         CPU Time: 7.7605s 
+CFL: 0.00624696 (in elmt 3168)
+CPU time for filter ReynoldsStresses:        0.000218821s
+	 Percentage of time integration:     0.00281968%
+CPU time for filter HistoryPoints:           0.000363527s
+	 Percentage of time integration:     0.00468432%
+Total filters CPU Time:			     0.000582348s
+Steps: 202000   Time: 1212         CPU Time: 7.76969s
+CFL: 0.00627182 (in elmt 3167)
+Steps: 204000   Time: 1224         CPU Time: 7.8258s 
+CFL: 0.00630858 (in elmt 2834)
+Steps: 206000   Time: 1236         CPU Time: 7.8034s 
+CFL: 0.00635816 (in elmt 2833)
+Steps: 208000   Time: 1248         CPU Time: 7.82849s
+CFL: 0.00639496 (in elmt 2832)
+Steps: 210000   Time: 1260         CPU Time: 7.80026s
+CFL: 0.00641919 (in elmt 2831)
+Steps: 212000   Time: 1272         CPU Time: 7.8268s 
+CFL: 0.006446 (in elmt 2829)
+Steps: 214000   Time: 1284         CPU Time: 7.83621s
+CFL: 0.00647927 (in elmt 2828)
+Steps: 216000   Time: 1296         CPU Time: 7.7994s 
+CFL: 0.00649857 (in elmt 2827)
+Steps: 218000   Time: 1308         CPU Time: 7.79023s
+CFL: 0.00652015 (in elmt 2826)
+Steps: 220000   Time: 1320         CPU Time: 7.8353s 
+CFL: 0.00654304 (in elmt 3153)
+CPU time for filter ReynoldsStresses:        0.000231241s
+	 Percentage of time integration:     0.00295127%
+CPU time for filter HistoryPoints:           0.000416434s
+	 Percentage of time integration:     0.00531484%
+Total filters CPU Time:			     0.000647675s
+Steps: 222000   Time: 1332         CPU Time: 7.79854s
+CFL: 0.00658799 (in elmt 3152)
+Steps: 224000   Time: 1344         CPU Time: 7.80979s
+CFL: 0.00663063 (in elmt 3151)
+Writing: "mesh_7_stress.fld" (0.0209657s, XML)
+Steps: 226000   Time: 1356         CPU Time: 7.79679s
+CFL: 0.00669888 (in elmt 3150)
+Steps: 228000   Time: 1368         CPU Time: 7.7693s 
+CFL: 0.00675139 (in elmt 3149)
+Steps: 230000   Time: 1380         CPU Time: 7.78612s
+CFL: 0.00679348 (in elmt 3148)
+Steps: 232000   Time: 1392         CPU Time: 7.77413s
+CFL: 0.00683414 (in elmt 3147)
+Steps: 234000   Time: 1404         CPU Time: 7.77097s
+CFL: 0.00689128 (in elmt 3146)
+Steps: 236000   Time: 1416         CPU Time: 7.7607s 
+CFL: 0.00693747 (in elmt 3145)
+Steps: 238000   Time: 1428         CPU Time: 7.79255s
+CFL: 0.00698084 (in elmt 3144)
+Steps: 240000   Time: 1440         CPU Time: 7.80288s
+CFL: 0.0070272 (in elmt 3143)
+CPU time for filter ReynoldsStresses:        0.000228916s
+	 Percentage of time integration:     0.00293374%
+CPU time for filter HistoryPoints:           0.000339341s
+	 Percentage of time integration:     0.00434892%
+Total filters CPU Time:			     0.000568257s
+Steps: 242000   Time: 1452         CPU Time: 7.78324s
+CFL: 0.00707128 (in elmt 3142)
+Steps: 244000   Time: 1464         CPU Time: 7.8245s 
+CFL: 0.00710511 (in elmt 3141)
+Steps: 246000   Time: 1476         CPU Time: 7.79503s
+CFL: 0.00714496 (in elmt 3140)
+Steps: 248000   Time: 1488         CPU Time: 7.79844s
+CFL: 0.007186 (in elmt 3139)
+Steps: 250000   Time: 1500         CPU Time: 7.79202s
+CFL: 0.00721603 (in elmt 3138)
+Steps: 252000   Time: 1512         CPU Time: 7.8115s 
+CFL: 0.00724106 (in elmt 3137)
+Steps: 254000   Time: 1524         CPU Time: 7.7996s 
+CFL: 0.00726726 (in elmt 3136)
+Steps: 256000   Time: 1536         CPU Time: 7.78684s
+CFL: 0.00730804 (in elmt 3135)
+Writing: "mesh_8_stress.fld" (0.0214606s, XML)
+Steps: 258000   Time: 1548         CPU Time: 7.79259s
+CFL: 0.00734213 (in elmt 3134)
+Steps: 260000   Time: 1560         CPU Time: 7.78427s
+CFL: 0.00737012 (in elmt 3133)
+CPU time for filter ReynoldsStresses:        0.000225037s
+	 Percentage of time integration:     0.00289092%
+CPU time for filter HistoryPoints:           0.000360245s
+	 Percentage of time integration:     0.00462786%
+Total filters CPU Time:			     0.000585282s
+Steps: 262000   Time: 1572         CPU Time: 7.79265s
+CFL: 0.00738446 (in elmt 3132)
+Steps: 264000   Time: 1584         CPU Time: 7.7761s 
+CFL: 0.0074081 (in elmt 3131)
+Steps: 266000   Time: 1596         CPU Time: 7.78491s
+CFL: 0.00744954 (in elmt 3130)
+Steps: 268000   Time: 1608         CPU Time: 7.79051s
+CFL: 0.00747678 (in elmt 3129)
+Steps: 270000   Time: 1620         CPU Time: 7.76988s
+CFL: 0.0074811 (in elmt 3128)
+Steps: 272000   Time: 1632         CPU Time: 7.78381s
+CFL: 0.00752804 (in elmt 3127)
+Steps: 274000   Time: 1644         CPU Time: 7.81536s
+CFL: 0.00755874 (in elmt 3123)
+Steps: 276000   Time: 1656         CPU Time: 7.78211s
+CFL: 0.0076276 (in elmt 3122)
+Steps: 278000   Time: 1668         CPU Time: 7.78997s
+CFL: 0.00765719 (in elmt 3121)
+Steps: 280000   Time: 1680         CPU Time: 7.7667s 
+CFL: 0.00774994 (in elmt 3120)
+CPU time for filter ReynoldsStresses:        0.000225383s
+	 Percentage of time integration:     0.00290192%
+CPU time for filter HistoryPoints:           0.000360072s
+	 Percentage of time integration:     0.0046361%
+Total filters CPU Time:			     0.000585455s
+Steps: 282000   Time: 1692         CPU Time: 7.77506s
+CFL: 0.00777686 (in elmt 3119)
+Steps: 284000   Time: 1704         CPU Time: 7.80856s
+CFL: 0.00784772 (in elmt 3118)
+Steps: 286000   Time: 1716         CPU Time: 7.78799s
+CFL: 0.00790224 (in elmt 3117)
+Steps: 288000   Time: 1728         CPU Time: 7.79244s
+CFL: 0.00795679 (in elmt 3116)
+Writing: "mesh_9_stress.fld" (0.020717s, XML)
+Steps: 290000   Time: 1740         CPU Time: 7.79305s
+CFL: 0.00799696 (in elmt 3116)
+Steps: 292000   Time: 1752         CPU Time: 7.77643s
+CFL: 0.00802676 (in elmt 3115)
+Steps: 294000   Time: 1764         CPU Time: 7.76882s
+CFL: 0.00808206 (in elmt 3114)
+Steps: 296000   Time: 1776         CPU Time: 7.78242s
+CFL: 0.00813371 (in elmt 3113)
+Steps: 298000   Time: 1788         CPU Time: 7.77222s
+CFL: 0.00815873 (in elmt 3112)
+Steps: 300000   Time: 1800         CPU Time: 7.79043s
+CFL: 0.0082313 (in elmt 3111)
+CPU time for filter ReynoldsStresses:        0.000258005s
+	 Percentage of time integration:     0.00331182%
+CPU time for filter HistoryPoints:           0.000401451s
+	 Percentage of time integration:     0.00515313%
+Total filters CPU Time:			     0.000659456s
+Steps: 302000   Time: 1812         CPU Time: 7.77437s
+CFL: 0.00828091 (in elmt 3110)
+Steps: 304000   Time: 1824         CPU Time: 7.79854s
+CFL: 0.00830905 (in elmt 3110)
+Steps: 306000   Time: 1836         CPU Time: 7.77583s
+CFL: 0.00833469 (in elmt 3109)
+Steps: 308000   Time: 1848         CPU Time: 7.78127s
+CFL: 0.00836043 (in elmt 3108)
+Steps: 310000   Time: 1860         CPU Time: 7.77894s
+CFL: 0.0084228 (in elmt 3107)
+Steps: 312000   Time: 1872         CPU Time: 7.77253s
+CFL: 0.00847013 (in elmt 3106)
+Steps: 314000   Time: 1884         CPU Time: 7.76963s
+CFL: 0.00850174 (in elmt 3105)
+Steps: 316000   Time: 1896         CPU Time: 7.76571s
+CFL: 0.00853056 (in elmt 3105)
+Steps: 318000   Time: 1908         CPU Time: 7.7732s 
+CFL: 0.00856536 (in elmt 3104)
+Steps: 320000   Time: 1920         CPU Time: 7.76246s
+CFL: 0.00860411 (in elmt 3103)
+Writing: "mesh_10_stress.fld" (0.0212186s, XML)
+CPU time for filter ReynoldsStresses:        0.0234014s  
+	 Percentage of time integration:     0.301469% 
+CPU time for filter HistoryPoints:           0.000327832s
+	 Percentage of time integration:     0.0042233%
+Total filters CPU Time:			     0.0237293s
+Writing: "mesh_2.chk" (0.0134928s, XML)
+Steps: 322000   Time: 1932         CPU Time: 7.7997s 
+CFL: 0.00860766 (in elmt 3102)
+Steps: 324000   Time: 1944         CPU Time: 7.78733s
+CFL: 0.00867286 (in elmt 3101)
+Steps: 326000   Time: 1956         CPU Time: 7.79227s
+CFL: 0.00870847 (in elmt 3101)
+Steps: 328000   Time: 1968         CPU Time: 7.80091s
+CFL: 0.00871757 (in elmt 3100)
+Steps: 330000   Time: 1980         CPU Time: 7.79658s
+CFL: 0.00873973 (in elmt 3099)
+Steps: 332000   Time: 1992         CPU Time: 7.76449s
+CFL: 0.00877304 (in elmt 3098)
+Steps: 334000   Time: 2004         CPU Time: 7.78638s
+CFL: 0.00883665 (in elmt 3094)
+Steps: 336000   Time: 2016         CPU Time: 7.76653s
+CFL: 0.00891381 (in elmt 3093)
+Steps: 338000   Time: 2028         CPU Time: 7.79569s
+CFL: 0.00896093 (in elmt 3092)
+Steps: 340000   Time: 2040         CPU Time: 7.79297s
+CFL: 0.00898759 (in elmt 3092)
+CPU time for filter ReynoldsStresses:        0.000226847s
+	 Percentage of time integration:     0.00291092%
+CPU time for filter HistoryPoints:           0.000338521s
+	 Percentage of time integration:     0.00434393%
+Total filters CPU Time:			     0.000565368s
+Steps: 342000   Time: 2052         CPU Time: 7.77468s
+CFL: 0.00905197 (in elmt 3091)
+Steps: 344000   Time: 2064         CPU Time: 7.77561s
+CFL: 0.00911907 (in elmt 3090)
+Steps: 346000   Time: 2076         CPU Time: 7.76156s
+CFL: 0.00918126 (in elmt 3089)
+Steps: 348000   Time: 2088         CPU Time: 7.77618s
+CFL: 0.00922992 (in elmt 3089)
+Steps: 350000   Time: 2100         CPU Time: 7.77052s
+CFL: 0.00924338 (in elmt 3088)
+Steps: 352000   Time: 2112         CPU Time: 7.78589s
+CFL: 0.00931491 (in elmt 3087)
+Writing: "mesh_11_stress.fld" (0.0211876s, XML)
+Steps: 354000   Time: 2124         CPU Time: 7.77114s
+CFL: 0.00941952 (in elmt 3086)
+Steps: 356000   Time: 2136         CPU Time: 7.77263s
+CFL: 0.00945497 (in elmt 3086)
+Steps: 358000   Time: 2148         CPU Time: 7.7752s 
+CFL: 0.00946119 (in elmt 3085)
+Steps: 360000   Time: 2160         CPU Time: 7.79393s
+CFL: 0.00955779 (in elmt 3084)
+CPU time for filter ReynoldsStresses:        0.000229483s
+	 Percentage of time integration:     0.00294438%
+CPU time for filter HistoryPoints:           0.000353072s
+	 Percentage of time integration:     0.00453009%
+Total filters CPU Time:			     0.000582555s
+Steps: 362000   Time: 2172         CPU Time: 7.77275s
+CFL: 0.00961143 (in elmt 3083)
+Steps: 364000   Time: 2184         CPU Time: 7.78504s
+CFL: 0.00961998 (in elmt 3083)
+Steps: 366000   Time: 2196         CPU Time: 7.76488s
+CFL: 0.0096968 (in elmt 3082)
+Steps: 368000   Time: 2208         CPU Time: 7.77047s
+CFL: 0.00976404 (in elmt 3081)
+Steps: 370000   Time: 2220         CPU Time: 7.7857s 
+CFL: 0.00980855 (in elmt 3081)
+Steps: 372000   Time: 2232         CPU Time: 7.77299s
+CFL: 0.00983856 (in elmt 3080)
+Steps: 374000   Time: 2244         CPU Time: 7.77251s
+CFL: 0.0098727 (in elmt 3079)
+Steps: 376000   Time: 2256         CPU Time: 7.77479s
+CFL: 0.00995972 (in elmt 3078)
+Steps: 378000   Time: 2268         CPU Time: 7.79902s
+CFL: 0.00999243 (in elmt 3078)
+Steps: 380000   Time: 2280         CPU Time: 7.79017s
+CFL: 0.0100388 (in elmt 3077)
+CPU time for filter ReynoldsStresses:        0.000215969s
+	 Percentage of time integration:     0.00277233%
+CPU time for filter HistoryPoints:           0.000350132s
+	 Percentage of time integration:     0.00449454%
+Total filters CPU Time:			     0.000566101s
+Steps: 382000   Time: 2292         CPU Time: 7.77727s
+CFL: 0.0100993 (in elmt 3076)
+Steps: 384000   Time: 2304         CPU Time: 7.78685s
+CFL: 0.0101129 (in elmt 3076)
+Writing: "mesh_12_stress.fld" (0.0215828s, XML)
+Steps: 386000   Time: 2316         CPU Time: 7.79459s
+CFL: 0.010127 (in elmt 3075)
+Steps: 388000   Time: 2328         CPU Time: 7.77894s
+CFL: 0.0101977 (in elmt 3074)
+Steps: 390000   Time: 2340         CPU Time: 7.7758s 
+CFL: 0.0102519 (in elmt 3073)
+Steps: 392000   Time: 2352         CPU Time: 7.77242s
+CFL: 0.010285 (in elmt 3073)
+Steps: 394000   Time: 2364         CPU Time: 7.78086s
+CFL: 0.010346 (in elmt 3072)
+Steps: 396000   Time: 2376         CPU Time: 7.76689s
+CFL: 0.0103939 (in elmt 3071)
+Steps: 398000   Time: 2388         CPU Time: 7.77447s
+CFL: 0.010402 (in elmt 3068)
+Steps: 400000   Time: 2400         CPU Time: 7.77039s
+CFL: 0.0104795 (in elmt 3070)
+CPU time for filter ReynoldsStresses:        0.000235044s
+	 Percentage of time integration:     0.00302487%
+CPU time for filter HistoryPoints:           0.000326067s
+	 Percentage of time integration:     0.00419628%
+Total filters CPU Time:			     0.000561111s
+Steps: 402000   Time: 2412         CPU Time: 7.7857s 
+CFL: 0.0105732 (in elmt 3066)
+Steps: 404000   Time: 2424         CPU Time: 7.78395s
+CFL: 0.0106028 (in elmt 3066)
+Steps: 406000   Time: 2436         CPU Time: 7.78332s
+CFL: 0.0106207 (in elmt 3065)
+Steps: 408000   Time: 2448         CPU Time: 7.78777s
+CFL: 0.0107675 (in elmt 3064)
+Steps: 410000   Time: 2460         CPU Time: 7.77527s
+CFL: 0.0108286 (in elmt 3064)
+Steps: 412000   Time: 2472         CPU Time: 7.78455s
+CFL: 0.0108765 (in elmt 3063)
+Steps: 414000   Time: 2484         CPU Time: 7.78591s
+CFL: 0.0109803 (in elmt 3062)
+Steps: 416000   Time: 2496         CPU Time: 7.78412s
+CFL: 0.0110154 (in elmt 3062)
+Writing: "mesh_13_stress.fld" (0.0216532s, XML)
+Steps: 418000   Time: 2508         CPU Time: 7.83615s
+CFL: 0.0110731 (in elmt 3061)
+Steps: 420000   Time: 2520         CPU Time: 7.83734s
+CFL: 0.011159 (in elmt 3060)
+CPU time for filter ReynoldsStresses:        0.000224001s
+	 Percentage of time integration:     0.00285812%
+CPU time for filter HistoryPoints:           0.000356744s
+	 Percentage of time integration:     0.00455185%
+Total filters CPU Time:			     0.000580745s
+Steps: 422000   Time: 2532         CPU Time: 7.80547s
+CFL: 0.0111862 (in elmt 3060)
+Steps: 424000   Time: 2544         CPU Time: 7.81311s
+CFL: 0.0112598 (in elmt 3059)
+Steps: 426000   Time: 2556         CPU Time: 7.81907s
+CFL: 0.0113461 (in elmt 3058)
+Steps: 428000   Time: 2568         CPU Time: 7.80401s
+CFL: 0.0113708 (in elmt 3058)
+Steps: 430000   Time: 2580         CPU Time: 7.77295s
+CFL: 0.0114149 (in elmt 3057)
+Steps: 432000   Time: 2592         CPU Time: 7.79271s
+CFL: 0.0115248 (in elmt 3056)
+Steps: 434000   Time: 2604         CPU Time: 7.79799s
+CFL: 0.0115196 (in elmt 3056)
+Steps: 436000   Time: 2616         CPU Time: 7.78291s
+CFL: 0.0116257 (in elmt 3055)
+Steps: 438000   Time: 2628         CPU Time: 7.78245s
+CFL: 0.0116543 (in elmt 3055)
+Steps: 440000   Time: 2640         CPU Time: 7.7866s 
+CFL: 0.0116803 (in elmt 3054)
+CPU time for filter ReynoldsStresses:        0.000219428s
+	 Percentage of time integration:     0.00281802%
+CPU time for filter HistoryPoints:           0.000344646s
+	 Percentage of time integration:     0.00442614%
+Total filters CPU Time:			     0.000564074s
+Steps: 442000   Time: 2652         CPU Time: 7.7791s 
+CFL: 0.0117706 (in elmt 3053)
+Steps: 444000   Time: 2664         CPU Time: 7.80501s
+CFL: 0.0118006 (in elmt 3053)
+Steps: 446000   Time: 2676         CPU Time: 7.81914s
+CFL: 0.0120778 (in elmt 3046)
+Steps: 448000   Time: 2688         CPU Time: 7.80955s
+CFL: 0.0120113 (in elmt 3051)
+Writing: "mesh_14_stress.fld" (0.0207402s, XML)
+Steps: 450000   Time: 2700         CPU Time: 7.81863s
+CFL: 0.011991 (in elmt 3051)
+Steps: 452000   Time: 2712         CPU Time: 7.79554s
+CFL: 0.0120651 (in elmt 3050)
+Steps: 454000   Time: 2724         CPU Time: 7.80588s
+CFL: 0.0131019 (in elmt 3046)
+Steps: 456000   Time: 2736         CPU Time: 7.78569s
+CFL: 0.014639 (in elmt 3046)
+Steps: 458000   Time: 2748         CPU Time: 7.78161s
+CFL: 0.0140894 (in elmt 3046)
+Steps: 460000   Time: 2760         CPU Time: 7.79198s
+CFL: 0.0118185 (in elmt 3048)
+CPU time for filter ReynoldsStresses:        0.000224751s
+	 Percentage of time integration:     0.00288439%
+CPU time for filter HistoryPoints:           0.000371051s
+	 Percentage of time integration:     0.00476196%
+Total filters CPU Time:			     0.000595802s
+Steps: 462000   Time: 2772         CPU Time: 7.79956s
+CFL: 0.0125284 (in elmt 3047)
+Steps: 464000   Time: 2784         CPU Time: 7.79215s
+CFL: 0.0138681 (in elmt 3046)
+Steps: 466000   Time: 2796         CPU Time: 7.80038s
+CFL: 0.015636 (in elmt 3046)
+Steps: 468000   Time: 2808         CPU Time: 7.78025s
+CFL: 0.0149727 (in elmt 3046)
+Steps: 470000   Time: 2820         CPU Time: 7.78732s
+CFL: 0.0108285 (in elmt 3048)
+Steps: 472000   Time: 2832         CPU Time: 7.77798s
+CFL: 0.0115047 (in elmt 3047)
+Steps: 474000   Time: 2844         CPU Time: 7.79154s
+CFL: 0.0127811 (in elmt 3046)
+Steps: 476000   Time: 2856         CPU Time: 7.79648s
+CFL: 0.0145768 (in elmt 3046)
+Steps: 478000   Time: 2868         CPU Time: 7.80557s
+CFL: 0.0142676 (in elmt 3046)
+Steps: 480000   Time: 2880         CPU Time: 7.79514s
+CFL: 0.0098255 (in elmt 3046)
+Writing: "mesh_15_stress.fld" (1.16677s, XML)
+CPU time for filter ReynoldsStresses:        1.16906s    
+	 Percentage of time integration:     14.9973%  
+CPU time for filter HistoryPoints:           0.000996076s
+	 Percentage of time integration:     0.0127782%
+Total filters CPU Time:			     1.17005s  
+Writing: "mesh_3.chk" (1.39866s, XML)
+Steps: 482000   Time: 2892         CPU Time: 7.77572s
+CFL: 0.00915797 (in elmt 3047)
+Steps: 484000   Time: 2904         CPU Time: 7.82533s
+CFL: 0.0101611 (in elmt 3047)
+Steps: 486000   Time: 2916         CPU Time: 7.81893s
+CFL: 0.0117131 (in elmt 3046)
+Steps: 488000   Time: 2928         CPU Time: 7.80798s
+CFL: 0.0120075 (in elmt 3046)
+Steps: 490000   Time: 2940         CPU Time: 7.80537s
+CFL: 0.00882448 (in elmt 3046)
+Steps: 492000   Time: 2952         CPU Time: 7.79419s
+CFL: 0.00627045 (in elmt 3047)
+Steps: 494000   Time: 2964         CPU Time: 7.81078s
+CFL: 0.00716801 (in elmt 2715)
+Steps: 496000   Time: 2976         CPU Time: 7.79326s
+CFL: 0.0084342 (in elmt 2715)
+Steps: 498000   Time: 2988         CPU Time: 7.83863s
+CFL: 0.00874451 (in elmt 3046)
+Steps: 500000   Time: 3000         CPU Time: 7.82535s
+CFL: 0.00700165 (in elmt 3046)
+CPU time for filter ReynoldsStresses:        0.000211545s
+	 Percentage of time integration:     0.00270333%
+CPU time for filter HistoryPoints:           0.000368604s
+	 Percentage of time integration:     0.00471039%
+Total filters CPU Time:			     0.000580149s
+Steps: 502000   Time: 3012         CPU Time: 7.82521s
+CFL: 0.00375278 (in elmt 2716)
+Steps: 504000   Time: 3024         CPU Time: 7.80658s
+CFL: 0.00426736 (in elmt 2715)
+Steps: 506000   Time: 3036         CPU Time: 7.84058s
+CFL: 0.00511528 (in elmt 2715)
+Steps: 508000   Time: 3048         CPU Time: 7.82133s
+CFL: 0.00538092 (in elmt 3046)
+Steps: 510000   Time: 3060         CPU Time: 7.83296s
+CFL: 0.00476204 (in elmt 3046)
+Steps: 512000   Time: 3072         CPU Time: 7.82557s
+CFL: 0.00292965 (in elmt 3046)
+Writing: "mesh_16_stress.fld" (0.0213978s, XML)
+Steps: 514000   Time: 3084         CPU Time: 7.78258s
+CFL: 0.00213569 (in elmt 2715)
+Steps: 516000   Time: 3096         CPU Time: 7.79255s
+CFL: 0.00258239 (in elmt 2715)
+Steps: 518000   Time: 3108         CPU Time: 7.7791s 
+CFL: 0.00293881 (in elmt 2715)
+Steps: 520000   Time: 3120         CPU Time: 7.78757s
+CFL: 0.00271246 (in elmt 3046)
+CPU time for filter ReynoldsStresses:        0.000236021s
+	 Percentage of time integration:     0.00303074%
+CPU time for filter HistoryPoints:           0.000389145s
+	 Percentage of time integration:     0.004997% 
+Total filters CPU Time:			     0.000625166s
+Steps: 522000   Time: 3132         CPU Time: 7.82097s
+CFL: 0.00193165 (in elmt 3046)
+Steps: 524000   Time: 3144         CPU Time: 7.8263s 
+CFL: 0.000930962 (in elmt 2716)
+Steps: 526000   Time: 3156         CPU Time: 7.78093s
+CFL: 0.00112398 (in elmt 2715)
+Steps: 528000   Time: 3168         CPU Time: 7.79374s
+CFL: 0.00132917 (in elmt 2715)
+Steps: 530000   Time: 3180         CPU Time: 7.7787s 
+CFL: 0.00130114 (in elmt 2715)
+Steps: 532000   Time: 3192         CPU Time: 7.79605s
+CFL: 0.00103667 (in elmt 3046)
+Steps: 534000   Time: 3204         CPU Time: 7.79488s
+CFL: 0.000574995 (in elmt 3046)
+Steps: 536000   Time: 3216         CPU Time: 7.78029s
+CFL: 0.000409537 (in elmt 2715)
+Steps: 538000   Time: 3228         CPU Time: 7.76663s
+CFL: 0.000493005 (in elmt 2715)
+Steps: 540000   Time: 3240         CPU Time: 7.76472s
+CFL: 0.000541385 (in elmt 2715)
+CPU time for filter ReynoldsStresses:        0.000232018s
+	 Percentage of time integration:     0.00298811%
+CPU time for filter HistoryPoints:           0.000368486s
+	 Percentage of time integration:     0.00474564%
+Total filters CPU Time:			     0.000600504s
+Steps: 542000   Time: 3252         CPU Time: 7.77394s
+CFL: 0.000453102 (in elmt 3046)
+Steps: 544000   Time: 3264         CPU Time: 7.78211s
+CFL: 0.000301539 (in elmt 3046)
+Writing: "mesh_17_stress.fld" (0.0207842s, XML)
+Steps: 546000   Time: 3276         CPU Time: 7.79552s
+CFL: 0.000126268 (in elmt 2716)
+Steps: 548000   Time: 3288         CPU Time: 7.77919s
+CFL: 0.000156705 (in elmt 2715)
+Steps: 550000   Time: 3300         CPU Time: 7.80271s
+CFL: 0.000183819 (in elmt 2715)
+Steps: 552000   Time: 3312         CPU Time: 7.7834s 
+CFL: 0.000172002 (in elmt 2715)
+Steps: 554000   Time: 3324         CPU Time: 7.80511s
+CFL: 0.000124339 (in elmt 3046)
+Steps: 556000   Time: 3336         CPU Time: 7.79149s
+CFL: 6.41429e-05 (in elmt 3046)
+Steps: 558000   Time: 3348         CPU Time: 7.7928s 
+CFL: 4.32358e-05 (in elmt 2715)
+Steps: 560000   Time: 3360         CPU Time: 7.78669s
+CFL: 5.18159e-05 (in elmt 2715)
+CPU time for filter ReynoldsStresses:        0.000226473s
+	 Percentage of time integration:     0.00290846%
+CPU time for filter HistoryPoints:           0.000367923s
+	 Percentage of time integration:     0.00472502%
+Total filters CPU Time:			     0.000594396s
+Steps: 562000   Time: 3372         CPU Time: 7.79278s
+CFL: 5.51535e-05 (in elmt 2715)
+Steps: 564000   Time: 3384         CPU Time: 7.80375s
+CFL: 4.26772e-05 (in elmt 2715)
+Steps: 566000   Time: 3396         CPU Time: 7.81926s
+CFL: 2.61964e-05 (in elmt 3046)
+Steps: 568000   Time: 3408         CPU Time: 7.79446s
+CFL: 1.00866e-05 (in elmt 330)
+Steps: 570000   Time: 3420         CPU Time: 7.79412s
+CFL: 1.23441e-05 (in elmt 2715)
+Steps: 572000   Time: 3432         CPU Time: 7.80072s
+CFL: 1.44073e-05 (in elmt 2715)
+Steps: 574000   Time: 3444         CPU Time: 7.81272s
+CFL: 1.26713e-05 (in elmt 2715)
+Steps: 576000   Time: 3456         CPU Time: 7.8012s 
+CFL: 8.11957e-06 (in elmt 3046)
+Writing: "mesh_18_stress.fld" (0.0205412s, XML)
+Steps: 578000   Time: 3468         CPU Time: 7.79466s
+CFL: 3.72424e-06 (in elmt 3046)
+Steps: 580000   Time: 3480         CPU Time: 7.78796s
+CFL: 2.90861e-06 (in elmt 2715)
+CPU time for filter ReynoldsStresses:        0.000225391s
+	 Percentage of time integration:     0.0028941%
+CPU time for filter HistoryPoints:           0.000365402s
+	 Percentage of time integration:     0.00469188%
+Total filters CPU Time:			     0.000590793s
+Steps: 582000   Time: 3492         CPU Time: 7.78018s
+CFL: 3.42804e-06 (in elmt 2715)
+Steps: 584000   Time: 3504         CPU Time: 7.78147s
+CFL: 3.3771e-06 (in elmt 2715)
+Steps: 586000   Time: 3516         CPU Time: 7.77662s
+CFL: 2.42147e-06 (in elmt 3046)
+Steps: 588000   Time: 3528         CPU Time: 7.79482s
+CFL: 1.47678e-06 (in elmt 3046)
+Steps: 590000   Time: 3540         CPU Time: 7.77142s
+CFL: 7.44533e-07 (in elmt 2700)
+Steps: 592000   Time: 3552         CPU Time: 7.79257s
+CFL: 5.87758e-07 (in elmt 3380)
+Steps: 594000   Time: 3564         CPU Time: 7.7799s 
+CFL: 5.9621e-07 (in elmt 2715)
+Steps: 596000   Time: 3576         CPU Time: 7.78738s
+CFL: 5.62015e-07 (in elmt 3396)
+Steps: 598000   Time: 3588         CPU Time: 7.76729s
+CFL: 5.56383e-07 (in elmt 3395)
+Steps: 600000   Time: 3600         CPU Time: 7.76662s
+CFL: 5.51008e-07 (in elmt 3395)
+CPU time for filter ReynoldsStresses:        0.000229798s
+	 Percentage of time integration:     0.00295879%
+CPU time for filter HistoryPoints:           0.000370753s
+	 Percentage of time integration:     0.00477367%
+Total filters CPU Time:			     0.000600551s
+Steps: 602000   Time: 3612         CPU Time: 7.78051s
+CFL: 5.45792e-07 (in elmt 3394)
+Steps: 604000   Time: 3624         CPU Time: 7.79425s
+CFL: 5.48949e-07 (in elmt 3377)
+Steps: 606000   Time: 3636         CPU Time: 7.80382s
+CFL: 5.47341e-07 (in elmt 3377)
+Steps: 608000   Time: 3648         CPU Time: 7.77346s
+CFL: 5.35325e-07 (in elmt 3377)
+Writing: "mesh_19_stress.fld" (0.0457717s, XML)
+Steps: 610000   Time: 3660         CPU Time: 7.81026s
+CFL: 5.26048e-07 (in elmt 3391)
+Steps: 612000   Time: 3672         CPU Time: 7.81032s
+CFL: 5.21204e-07 (in elmt 3391)
+Steps: 614000   Time: 3684         CPU Time: 7.80318s
+CFL: 5.16398e-07 (in elmt 3390)
+Steps: 616000   Time: 3696         CPU Time: 7.80301s
+CFL: 5.11564e-07 (in elmt 3390)
+Steps: 618000   Time: 3708         CPU Time: 7.80841s
+CFL: 5.06942e-07 (in elmt 3389)
+Steps: 620000   Time: 3720         CPU Time: 7.81514s
+CFL: 5.02328e-07 (in elmt 3388)
+CPU time for filter ReynoldsStresses:        0.000245209s
+	 Percentage of time integration:     0.00313762%
+CPU time for filter HistoryPoints:           0.000373721s
+	 Percentage of time integration:     0.00478202%
+Total filters CPU Time:			     0.00061893s
+Steps: 622000   Time: 3732         CPU Time: 7.81647s
+CFL: 4.97748e-07 (in elmt 3388)
+Steps: 624000   Time: 3744         CPU Time: 7.80105s
+CFL: 4.93311e-07 (in elmt 3387)
+Steps: 626000   Time: 3756         CPU Time: 7.80794s
+CFL: 4.88837e-07 (in elmt 3386)
+Steps: 628000   Time: 3768         CPU Time: 7.78728s
+CFL: 4.84476e-07 (in elmt 3386)
+Steps: 630000   Time: 3780         CPU Time: 7.77881s
+CFL: 4.80132e-07 (in elmt 3385)
+Steps: 632000   Time: 3792         CPU Time: 7.78995s
+CFL: 4.75791e-07 (in elmt 3384)
+Steps: 634000   Time: 3804         CPU Time: 7.78472s
+CFL: 4.71654e-07 (in elmt 3384)
+Steps: 636000   Time: 3816         CPU Time: 7.80084s
+CFL: 4.67541e-07 (in elmt 3383)
+Steps: 638000   Time: 3828         CPU Time: 7.79328s
+CFL: 4.63437e-07 (in elmt 3383)
+Steps: 640000   Time: 3840         CPU Time: 7.78907s
+CFL: 4.59453e-07 (in elmt 3382)
+Writing: "mesh_20_stress.fld" (0.0255186s, XML)
+CPU time for filter ReynoldsStresses:        0.0277364s  
+	 Percentage of time integration:     0.356094% 
+CPU time for filter HistoryPoints:           0.000449797s
+	 Percentage of time integration:     0.00577472%
+Total filters CPU Time:			     0.0281862s
+Writing: "mesh_4.chk" (0.013634s, XML)
+Steps: 642000   Time: 3852         CPU Time: 7.83355s
+CFL: 4.55399e-07 (in elmt 3381)
+Steps: 644000   Time: 3864         CPU Time: 7.80995s
+CFL: 4.51494e-07 (in elmt 3381)
+Steps: 646000   Time: 3876         CPU Time: 7.82216s
+CFL: 4.47594e-07 (in elmt 3380)
+Steps: 648000   Time: 3888         CPU Time: 7.83409s
+CFL: 4.43668e-07 (in elmt 3380)
+Steps: 650000   Time: 3900         CPU Time: 7.83569s
+CFL: 4.3986e-07 (in elmt 3379)
+Steps: 652000   Time: 3912         CPU Time: 7.78234s
+CFL: 4.36028e-07 (in elmt 3378)
+Steps: 654000   Time: 3924         CPU Time: 7.83325s
+CFL: 4.32412e-07 (in elmt 3378)
+Steps: 656000   Time: 3936         CPU Time: 7.83137s
+CFL: 4.29094e-07 (in elmt 3377)
+Steps: 658000   Time: 3948         CPU Time: 7.81477s
+CFL: 4.256e-07 (in elmt 3377)
+Steps: 660000   Time: 3960         CPU Time: 7.81852s
+CFL: 4.21859e-07 (in elmt 3377)
+CPU time for filter ReynoldsStresses:        0.000230462s
+	 Percentage of time integration:     0.00294764%
+CPU time for filter HistoryPoints:           0.000361146s
+	 Percentage of time integration:     0.00461911%
+Total filters CPU Time:			     0.000591608s
+Steps: 662000   Time: 3972         CPU Time: 7.81941s
+CFL: 4.17908e-07 (in elmt 3377)
+Steps: 664000   Time: 3984         CPU Time: 7.79549s
+CFL: 4.13859e-07 (in elmt 3377)
+Steps: 666000   Time: 3996         CPU Time: 7.80323s
+CFL: 4.0985e-07 (in elmt 3377)
+Steps: 668000   Time: 4008         CPU Time: 7.81628s
+CFL: 4.05992e-07 (in elmt 3377)
+Steps: 670000   Time: 4020         CPU Time: 7.81334s
+CFL: 4.02336e-07 (in elmt 3377)
+Steps: 672000   Time: 4032         CPU Time: 7.81383s
+CFL: 3.98854e-07 (in elmt 3377)
+Writing: "mesh_21_stress.fld" (0.0217329s, XML)
+Steps: 674000   Time: 4044         CPU Time: 7.77107s
+CFL: 3.9546e-07 (in elmt 3377)
+Steps: 676000   Time: 4056         CPU Time: 7.78648s
+CFL: 3.92044e-07 (in elmt 3377)
+Steps: 678000   Time: 4068         CPU Time: 7.80442s
+CFL: 3.88511e-07 (in elmt 3377)
+Steps: 680000   Time: 4080         CPU Time: 7.76781s
+CFL: 3.84813e-07 (in elmt 3377)
+CPU time for filter ReynoldsStresses:        0.000229831s
+	 Percentage of time integration:     0.00295876%
+CPU time for filter HistoryPoints:           0.000368841s
+	 Percentage of time integration:     0.00474832%
+Total filters CPU Time:			     0.000598672s
+Steps: 682000   Time: 4092         CPU Time: 7.7668s 
+CFL: 3.80964e-07 (in elmt 3377)
+Steps: 684000   Time: 4104         CPU Time: 7.76796s
+CFL: 3.77028e-07 (in elmt 3377)
+Steps: 686000   Time: 4116         CPU Time: 7.7852s 
+CFL: 3.73092e-07 (in elmt 3377)
+Steps: 688000   Time: 4128         CPU Time: 7.77851s
+CFL: 3.69235e-07 (in elmt 3377)
+Steps: 690000   Time: 4140         CPU Time: 7.76935s
+CFL: 3.65498e-07 (in elmt 3377)
+Steps: 692000   Time: 4152         CPU Time: 7.76799s
+CFL: 3.61875e-07 (in elmt 3377)
+Steps: 694000   Time: 4164         CPU Time: 7.76649s
+CFL: 3.5832e-07 (in elmt 3377)
+Steps: 696000   Time: 4176         CPU Time: 7.76802s
+CFL: 3.54765e-07 (in elmt 3377)
+Steps: 698000   Time: 4188         CPU Time: 7.77263s
+CFL: 3.51144e-07 (in elmt 3377)
+Steps: 700000   Time: 4200         CPU Time: 7.78225s
+CFL: 3.47421e-07 (in elmt 3377)
+CPU time for filter ReynoldsStresses:        0.000223418s
+	 Percentage of time integration:     0.00287087%
+CPU time for filter HistoryPoints:           0.000384517s
+	 Percentage of time integration:     0.00494095%
+Total filters CPU Time:			     0.000607935s
+Steps: 702000   Time: 4212         CPU Time: 7.76181s
+CFL: 3.43594e-07 (in elmt 3377)
+Steps: 704000   Time: 4224         CPU Time: 7.77097s
+CFL: 3.39694e-07 (in elmt 3377)
+Writing: "mesh_22_stress.fld" (0.021185s, XML)
+Steps: 706000   Time: 4236         CPU Time: 7.79352s
+CFL: 3.35774e-07 (in elmt 3377)
+Steps: 708000   Time: 4248         CPU Time: 7.78557s
+CFL: 3.31885e-07 (in elmt 3377)
+Steps: 710000   Time: 4260         CPU Time: 7.78696s
+CFL: 3.28061e-07 (in elmt 3377)
+Steps: 712000   Time: 4272         CPU Time: 7.79044s
+CFL: 3.24307e-07 (in elmt 3377)
+Steps: 714000   Time: 4284         CPU Time: 7.78202s
+CFL: 3.20604e-07 (in elmt 3377)
+Steps: 716000   Time: 4296         CPU Time: 7.79218s
+CFL: 3.16914e-07 (in elmt 3377)
+Steps: 718000   Time: 4308         CPU Time: 7.78539s
+CFL: 3.13199e-07 (in elmt 3377)
+Steps: 720000   Time: 4320         CPU Time: 7.7702s 
+CFL: 3.09431e-07 (in elmt 3377)
+CPU time for filter ReynoldsStresses:        0.000216532s
+	 Percentage of time integration:     0.0027867%
+CPU time for filter HistoryPoints:           0.000364352s
+	 Percentage of time integration:     0.0046891%
+Total filters CPU Time:			     0.000580884s
+Steps: 722000   Time: 4332         CPU Time: 7.79071s
+CFL: 3.05602e-07 (in elmt 3377)
+Steps: 724000   Time: 4344         CPU Time: 7.81449s
+CFL: 3.01725e-07 (in elmt 3377)
+Steps: 726000   Time: 4356         CPU Time: 7.79162s
+CFL: 2.97826e-07 (in elmt 3377)
+Steps: 728000   Time: 4368         CPU Time: 7.78027s
+CFL: 2.93936e-07 (in elmt 3377)
+Steps: 730000   Time: 4380         CPU Time: 7.79013s
+CFL: 2.90076e-07 (in elmt 3377)
+Steps: 732000   Time: 4392         CPU Time: 7.76503s
+CFL: 2.86258e-07 (in elmt 3377)
+Steps: 734000   Time: 4404         CPU Time: 7.79787s
+CFL: 2.82474e-07 (in elmt 3377)
+Steps: 736000   Time: 4416         CPU Time: 7.7758s 
+CFL: 2.7871e-07 (in elmt 3377)
+Writing: "mesh_23_stress.fld" (0.021707s, XML)
+Steps: 738000   Time: 4428         CPU Time: 7.78035s
+CFL: 2.74947e-07 (in elmt 3377)
+Steps: 740000   Time: 4440         CPU Time: 7.75682s
+CFL: 2.71171e-07 (in elmt 3377)
+CPU time for filter ReynoldsStresses:        0.000221967s
+	 Percentage of time integration:     0.00286157%
+CPU time for filter HistoryPoints:           0.000367049s
+	 Percentage of time integration:     0.00473196%
+Total filters CPU Time:			     0.000589016s
+Steps: 742000   Time: 4452         CPU Time: 7.77348s
+CFL: 2.67376e-07 (in elmt 3377)
+Steps: 744000   Time: 4464         CPU Time: 7.79029s
+CFL: 2.63566e-07 (in elmt 3377)
+Steps: 746000   Time: 4476         CPU Time: 7.78013s
+CFL: 2.59752e-07 (in elmt 3377)
+Steps: 748000   Time: 4488         CPU Time: 7.76938s
+CFL: 2.55949e-07 (in elmt 3377)
+Steps: 750000   Time: 4500         CPU Time: 7.75673s
+CFL: 2.52165e-07 (in elmt 3377)
+Steps: 752000   Time: 4512         CPU Time: 7.77073s
+CFL: 2.48406e-07 (in elmt 3377)
+Steps: 754000   Time: 4524         CPU Time: 7.78698s
+CFL: 2.4467e-07 (in elmt 3377)
+Steps: 756000   Time: 4536         CPU Time: 7.79036s
+CFL: 2.40952e-07 (in elmt 3377)
+Steps: 758000   Time: 4548         CPU Time: 7.78259s
+CFL: 2.37245e-07 (in elmt 3377)
+Steps: 760000   Time: 4560         CPU Time: 7.78422s
+CFL: 2.33547e-07 (in elmt 3377)
+CPU time for filter ReynoldsStresses:        0.000232197s
+	 Percentage of time integration:     0.00298292%
+CPU time for filter HistoryPoints:           0.000361089s
+	 Percentage of time integration:     0.00463873%
+Total filters CPU Time:			     0.000593286s
+Steps: 762000   Time: 4572         CPU Time: 7.79033s
+CFL: 2.29859e-07 (in elmt 3377)
+Steps: 764000   Time: 4584         CPU Time: 7.77249s
+CFL: 2.26187e-07 (in elmt 3377)
+Steps: 766000   Time: 4596         CPU Time: 7.77844s
+CFL: 2.22538e-07 (in elmt 3377)
+Steps: 768000   Time: 4608         CPU Time: 7.77576s
+CFL: 2.18916e-07 (in elmt 3377)
+Writing: "mesh_24_stress.fld" (0.0213731s, XML)
+Steps: 770000   Time: 4620         CPU Time: 7.79359s
+CFL: 2.15324e-07 (in elmt 3377)
+Steps: 772000   Time: 4632         CPU Time: 7.77196s
+CFL: 2.11758e-07 (in elmt 3377)
+Steps: 774000   Time: 4644         CPU Time: 7.77136s
+CFL: 2.08213e-07 (in elmt 3377)
+Steps: 776000   Time: 4656         CPU Time: 7.79769s
+CFL: 2.04684e-07 (in elmt 3377)
+Steps: 778000   Time: 4668         CPU Time: 7.7676s 
+CFL: 2.01169e-07 (in elmt 3377)
+Steps: 780000   Time: 4680         CPU Time: 7.77914s
+CFL: 1.97669e-07 (in elmt 3377)
+CPU time for filter ReynoldsStresses:        0.000233412s
+	 Percentage of time integration:     0.00300049%
+CPU time for filter HistoryPoints:           0.000424283s
+	 Percentage of time integration:     0.00545411%
+Total filters CPU Time:			     0.000657695s
+Steps: 782000   Time: 4692         CPU Time: 7.77402s
+CFL: 1.9419e-07 (in elmt 3377)
+Steps: 784000   Time: 4704         CPU Time: 7.78628s
+CFL: 1.90742e-07 (in elmt 3377)
+Steps: 786000   Time: 4716         CPU Time: 7.78105s
+CFL: 1.87331e-07 (in elmt 3377)
+Steps: 788000   Time: 4728         CPU Time: 7.78317s
+CFL: 1.83965e-07 (in elmt 3377)
+Steps: 790000   Time: 4740         CPU Time: 7.76317s
+CFL: 1.80644e-07 (in elmt 3377)
+Steps: 792000   Time: 4752         CPU Time: 7.7872s 
+CFL: 1.77362e-07 (in elmt 3377)
+Steps: 794000   Time: 4764         CPU Time: 7.78144s
+CFL: 1.74113e-07 (in elmt 3377)
+Steps: 796000   Time: 4776         CPU Time: 7.7721s 
+CFL: 1.70889e-07 (in elmt 3377)
+Steps: 798000   Time: 4788         CPU Time: 7.76851s
+CFL: 1.67685e-07 (in elmt 3377)
+Steps: 800000   Time: 4800         CPU Time: 7.77271s
+CFL: 1.64518e-07 (in elmt 3046)
+Writing: "mesh_25_stress.fld" (0.0207495s, XML)
+CPU time for filter ReynoldsStresses:        0.0229058s  
+	 Percentage of time integration:     0.294695% 
+CPU time for filter HistoryPoints:           0.000353233s
+	 Percentage of time integration:     0.00454453%
+Total filters CPU Time:			     0.023259s 
+Writing: "mesh_5.chk" (0.0155071s, XML)
+Time-integration  : 3138.6s
+Writing: "mesh_stress.fld" (0.0188639s, XML)
+Writing: "mesh.fld" (0.0142935s, XML)
+-------------------------------------------
+Total Computation Time = 3227.24s
+-------------------------------------------
+L 2 error (variable u) : 0.000246737
+L inf error (variable u) : 1.83802e-05
+L 2 error (variable v) : 2.45586e-05
+L inf error (variable v) : 3.08525e-07
+L 2 error (variable p) : 0.000115179
+L inf error (variable p) : 3.11899e-07
+-------------------------------------------
+Region                       Elapsed time Avg (s)  Min (s)       Max (s)       Count         IO Level      
+Execute                      3227.25               3227.25       3227.26       1             0             
+
+Advection Terms              181.531               163.293       190.79        800001        0             
+Pressure BCs                 73.1929               53.7905       123.289       800001        0             
+Pressure Forcing             100.115               91.766        106.81        800000        0             
+Pressure Solve               837.679               807.973       855.305       800000        0             
+Viscous Forcing              67.0296               65.1721       68.8044       800000        0             
+Viscous Solve                1579.04               1561.78       1599.67       800000        0             
+RUN_EXIT=0

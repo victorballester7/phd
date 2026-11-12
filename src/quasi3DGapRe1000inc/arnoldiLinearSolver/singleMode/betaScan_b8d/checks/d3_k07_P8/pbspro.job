@@ -1,0 +1,8 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=32:mpiprocs=32:mem=32gb
+#PBS -l walltime=11:59:59
+#PBS -N chk_d3_k07_P8
+#PBS -e log.job
+#PBS -o output.job
+# verification of the b=8d beta scan (d3_w21, k=07): NUMMODES=8, dt=0.0035, NumSteps=20e3, base flow bf_d3_P8.fld
+source $HOME/Desktop/PhD/scripts/pbspro.sh
